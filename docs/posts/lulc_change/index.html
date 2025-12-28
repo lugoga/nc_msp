@@ -1,0 +1,2556 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.39">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Masumbuko Semba">
+<meta name="dcterms.date" content="2025-12-29">
+<meta name="description" content="Analyzing and comparing spatial patterns of land cover in Mkoani and Mkuranga Districts">
+
+<title>Land Cover Patterns in Mkoani and Mkuranga Districts</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-20cb7ac89268f2f6837cd43da0a0d99f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../images/coat_OG_web.png" alt="" class="navbar-logo">
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="../../about.html" aria-current="page"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../schedule.html"> 
+<span class="menu-text">Scope</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog.html"> 
+<span class="menu-text">Posts</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-reports" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Reports</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-reports">    
+        <li>
+    <a class="dropdown-item" href="../../reports/UN_Inception report_14092025_SM.pdf" target="_blank">
+ <span class="dropdown-text">Deliverable One: Inception Report</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-resources" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Resources</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-resources">    
+        <li>
+    <a class="dropdown-item" href="../../TOR_259658.pdf" target="_blank">
+ <span class="dropdown-text">Resources1: TOR</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <span class="nav-link">
+<span class="menu-text">WebApp</span>
+    </span>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../team.html"> 
+<span class="menu-text">Team</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../gallery.html"> 
+<span class="menu-text">Gallery</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/lugoga/stock_training_somalia"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Land Cover Patterns in Mkoani and Mkuranga Districts</li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Project Info</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../about.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">About This Marine Spatial Planning Initiative</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../team.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Meet Our Team</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../news.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">News &amp; Updates</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Weather Updates</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../weather.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Live Weather</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../news.html#current-conditions--field-operations" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Seasonal Calendar</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://www.ncei.noaa.gov/products/ocean-weather-forecast" class="sidebar-item-text sidebar-link" target="_blank">
+ <span class="menu-text">NOAA Marine Forecast</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://oceancurrents.rsmas.miami.edu/" class="sidebar-item-text sidebar-link" target="_blank">
+ <span class="menu-text">Ocean Current Maps</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://www.tides.noaa.gov/" class="sidebar-item-text sidebar-link" target="_blank">
+ <span class="menu-text">Sea Level Information</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://www.nhc.noaa.gov/" class="sidebar-item-text sidebar-link" target="_blank">
+ <span class="menu-text">Tropical Storm Tracking</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#understanding-spatial-patterns-in-land-cover" id="toc-understanding-spatial-patterns-in-land-cover" class="nav-link active" data-scroll-target="#understanding-spatial-patterns-in-land-cover">Understanding Spatial Patterns in Land Cover</a></li>
+  <li><a href="#loading-and-preparing-the-data" id="toc-loading-and-preparing-the-data" class="nav-link" data-scroll-target="#loading-and-preparing-the-data">Loading and Preparing the Data</a></li>
+  <li><a href="#creating-a-standardized-color-scheme" id="toc-creating-a-standardized-color-scheme" class="nav-link" data-scroll-target="#creating-a-standardized-color-scheme">Creating a Standardized Color Scheme</a></li>
+  <li><a href="#visualizing-land-cover-maps" id="toc-visualizing-land-cover-maps" class="nav-link" data-scroll-target="#visualizing-land-cover-maps">Visualizing Land Cover Maps</a></li>
+  <li><a href="#understanding-land-cover-transitions" id="toc-understanding-land-cover-transitions" class="nav-link" data-scroll-target="#understanding-land-cover-transitions">Understanding Land Cover Transitions</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a>
+  <ul class="collapse">
+  <li><a href="#spatial-analysis-and-raster-processing" id="toc-spatial-analysis-and-raster-processing" class="nav-link" data-scroll-target="#spatial-analysis-and-raster-processing">Spatial Analysis and Raster Processing</a></li>
+  <li><a href="#data-visualization" id="toc-data-visualization" class="nav-link" data-scroll-target="#data-visualization">Data Visualization</a></li>
+  <li><a href="#data-manipulation-and-analysis" id="toc-data-manipulation-and-analysis" class="nav-link" data-scroll-target="#data-manipulation-and-analysis">Data Manipulation and Analysis</a></li>
+  <li><a href="#data-sources" id="toc-data-sources" class="nav-link" data-scroll-target="#data-sources">Data Sources</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Land Cover Patterns in Mkoani and Mkuranga Districts</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">spatial-analysis</div>
+    <div class="quarto-category">land-cover</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    Analyzing and comparing spatial patterns of land cover in Mkoani and Mkuranga Districts
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Masumbuko Semba </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">December 29, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="understanding-spatial-patterns-in-land-cover" class="level2">
+<h2 class="anchored" data-anchor-id="understanding-spatial-patterns-in-land-cover">Understanding Spatial Patterns in Land Cover</h2>
+<p>Spatial patterns in land cover are the local arrangements and configurations of different land use types across a landscape. Rather than simply knowing what proportion of an area is forest or cropland, understanding the <em>pattern</em> of these land covers reveals much more about ecosystem function and human land use practices. For example, fragmented forests interspersed with agriculture indicate different management histories and conservation challenges than consolidated forest blocks.</p>
+<p>Spatial signatures provide a quantitative framework for capturing these patterns. They encode information about how land cover types are spatially organized—whether they form large contiguous patches, are highly fragmented, or follow specific spatial arrangements. In this post, I’ll demonstrate how to compare spatial signatures between two coastal Tanzanian districts and use visual analysis to identify their characteristic land cover patterns.</p>
+</section>
+<section id="loading-and-preparing-the-data" class="level2">
+<h2 class="anchored" data-anchor-id="loading-and-preparing-the-data">Loading and Preparing the Data</h2>
+<p>Working with spatial raster data requires careful data loading and preprocessing to ensure consistent and accurate analysis. We begin by loading specialized R packages designed for spatial analysis: <code>terra</code> for raster operations, <code>sf</code> for vector geometries, and <code>tidyterra</code> to bridge spatial data with tidyverse workflows. These packages provide efficient tools for reading, manipulating, and visualizing large spatial datasets.</p>
+<p>We source ESA WorldCover 10m resolution land cover data for our study areas. The Mkoani district data covers the Pemba region, while Mkuranga district is located on mainland Tanzania. Converting these rasters to factors (categorical data) is essential—it tells R that the numeric values represent discrete land cover categories rather than continuous measurements, which enables proper labeling and visualization.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyterra)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(tidyplots)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># library(webr)</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(patchwork)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(gt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>lulc_2020 <span class="ot">&lt;-</span> greenSD<span class="sc">::</span><span class="fu">get_esa_wc</span>(</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">bbox =</span> mkoani_bbox, </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">year =</span> <span class="dv">2021</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># place = 'Dar es Salaam, Tanzania', </span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">datatype =</span> <span class="st">"landcover"</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>lulc_2020 <span class="sc">|&gt;</span> </span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    terra<span class="sc">::</span><span class="fu">writeRaster</span>(</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">filename =</span> <span class="st">'data/mkoani_lulc_2021.tif'</span>,</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">overwrite=</span><span class="cn">TRUE</span>, </span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">datatype=</span><span class="st">'INT1U'</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Load the raster data for our study districts:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>pemba_lc20 <span class="ot">=</span> terra<span class="sc">::</span><span class="fu">rast</span>(<span class="st">'mkoani_lulc_2020.tif'</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as.factor</span>()</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>pemba_lc21 <span class="ot">=</span> terra<span class="sc">::</span><span class="fu">rast</span>(<span class="st">'mkoani_lulc_2021.tif'</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as.factor</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="creating-a-standardized-color-scheme" class="level2">
+<h2 class="anchored" data-anchor-id="creating-a-standardized-color-scheme">Creating a Standardized Color Scheme</h2>
+<p>Consistent color representation across all visualizations is crucial for effective communication and reproducibility in scientific analyses. We create a reference dataframe (<code>worldcover_df</code>) that maps each ESA WorldCover land cover category to a standardized hex color code based on official ESA specifications. This single reference ensures that forest always appears as dark green (#006400), water as blue (#0064c8), and so forth across all figures.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Based on official ESA WorldCover specifications</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>worldcover_df <span class="ot">=</span> <span class="fu">data.frame</span>(</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">value =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>, <span class="dv">40</span>, <span class="dv">50</span>, <span class="dv">60</span>, <span class="dv">70</span>, <span class="dv">80</span>, <span class="dv">90</span>, <span class="dv">95</span>, <span class="dv">100</span>),</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">label =</span> <span class="fu">c</span>(<span class="st">"Tree cover"</span>, <span class="st">"Shrubland"</span>, <span class="st">"Grassland"</span>, <span class="st">"Cropland"</span>, </span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Built-up"</span>, <span class="st">"Bare/sparse vegetation"</span>, <span class="st">"Snow and ice"</span>,</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Water bodies"</span>, <span class="st">"Herbaceous wetland"</span>, </span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Mangroves"</span>, <span class="st">"Moss and lichen"</span>),</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">color =</span> <span class="fu">c</span>(<span class="st">"#006400"</span>, <span class="st">"#ffbb22"</span>, <span class="st">"#ffff4c"</span>, <span class="st">"#f096ff"</span>, <span class="st">"#fa0000"</span>, </span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>            <span class="st">"#b4b4b4"</span>, <span class="st">"#f0f0f0"</span>, <span class="st">"#0064c8"</span>, <span class="st">"#0096a0"</span>, <span class="st">"#00cf75"</span>, <span class="st">"#fae6a0"</span>)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Beyond colors, we embed this metadata directly into our raster objects using the <code>levels()</code> and <code>coltab()</code> functions. This embeds both the categorical labels and color palette into the raster structure itself, making the visualizations self-contained and reproducible. Any downstream analysis or visualization automatically uses these definitions, eliminating inconsistencies and the need to repeatedly specify colors and labels.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set levels with labels</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(pemba_lc20) <span class="ot">=</span> worldcover_df <span class="sc">|&gt;</span> <span class="fu">select</span>(value, label)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Embed color palette into rasters</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">coltab</span>(pemba_lc20) <span class="ot">=</span> worldcover_df <span class="sc">|&gt;</span> <span class="fu">select</span>(value, color)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Set levels with labels</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(pemba_lc21) <span class="ot">=</span> worldcover_df <span class="sc">|&gt;</span> <span class="fu">select</span>(value, label)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Embed color palette into rasters</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="fu">coltab</span>(pemba_lc21) <span class="ot">=</span> worldcover_df <span class="sc">|&gt;</span> <span class="fu">select</span>(value, color)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>pemba_lc <span class="ot">=</span> <span class="fu">c</span>(pemba_lc20, pemba_lc21)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(pemba_lc) <span class="ot">=</span> <span class="fu">c</span>(<span class="st">'lc_2020'</span>, <span class="st">'lc_2021'</span>)</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="co"># pemba_lc |&gt; plot()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="visualizing-land-cover-maps" class="level2">
+<h2 class="anchored" data-anchor-id="visualizing-land-cover-maps">Visualizing Land Cover Maps</h2>
+<p>The Mkoani district encompasses the southern region of Pemba Island and represents a critical area for marine spatial planning integration. The land cover comparison between 2020 and 2021 reveals the baseline conditions and any changes occurring within the first year of the planning initiative. Understanding what happens on land is essential to marine planning because terrestrial land use directly influences coastal water quality, sediment loading, nutrient runoff, and ultimately the health of nearshore marine ecosystems. Forest cover provides watershed protection and reduces erosion, while agricultural expansion can increase sedimentation in coastal waters. The temporal comparison allows us to track whether land use changes are occurring and at what rate, informing both terrestrial and marine management strategies.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_spatraster</span>(<span class="at">data =</span> pemba_lc) <span class="sc">+</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> scales<span class="sc">::</span><span class="fu">pretty_breaks</span>(<span class="at">n =</span> <span class="dv">3</span>)) <span class="sc">+</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># scale_fill_identity(name = "Land Cover Type", guide = "legend") +</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>)<span class="sc">+</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>lyr, <span class="at">ncol=</span><span class="dv">2</span>, <span class="at">labeller =</span> <span class="fu">labeller</span>(<span class="at">lyr =</span> <span class="fu">c</span>(<span class="at">lc_2020 =</span> <span class="st">"2020: Baseline Land Cover"</span>, <span class="at">lc_2021 =</span> <span class="st">"2021: Current Land Cover"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="fig-mkoani-map" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-mkoani-map-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="lc_2020-2021.svg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mkoani-map-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Temporal Land Cover Comparison for Mkoani District (2020-2021). Side-by-side satellite imagery classification (10m resolution) shows forest (dark green), cropland (magenta), grassland (yellow), built-up areas (red), and other categories. The 2020 baseline establishes reference conditions, while the 2021 map reveals changes over the one year. Forest fragmentation and agricultural expansion patterns visible. Source: ESA WorldCover 10m resolution.
+</figcaption>
+</figure>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>dist <span class="ot">=</span> worldcover_df <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="sc">!</span>value  <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">70</span>, <span class="dv">100</span>)) <span class="sc">|&gt;</span> <span class="fu">distinct</span>(color,<span class="at">.keep_all =</span> T)<span class="sc">|&gt;</span> <span class="fu">arrange</span>(label)  <span class="sc">|&gt;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="sc">!</span>label <span class="sc">==</span> <span class="st">'Water bodies'</span>) </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>aa <span class="ot">=</span> pemba_lc[[<span class="dv">1</span>]] <span class="sc">|&gt;</span> </span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    terra<span class="sc">::</span><span class="fu">freq</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as.data.frame</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="at">label =</span> value) <span class="sc">|&gt;</span> </span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">year =</span> <span class="dv">2020</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">bind_rows</span>(</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    pemba_lc[[<span class="dv">2</span>]] <span class="sc">|&gt;</span> </span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>      terra<span class="sc">::</span><span class="fu">freq</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>      <span class="fu">as.data.frame</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>      <span class="fu">rename</span>(<span class="at">label =</span> value) <span class="sc">|&gt;</span> </span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">year =</span> <span class="dv">2021</span>)</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>     <span class="fu">left_join</span>(worldcover_df, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"label"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>     <span class="fu">mutate</span>(</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>      <span class="at">area_m2 =</span> count <span class="sc">*</span> <span class="dv">10</span><span class="sc">*</span><span class="dv">10</span>,</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>      <span class="at">area_ha =</span> area_m2<span class="sc">/</span><span class="fl">4063.2</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>      )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>aa <span class="sc">|&gt;</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="sc">!</span>label <span class="sc">==</span> <span class="st">'Water bodies'</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">year =</span> <span class="fu">as.factor</span>(year)) <span class="sc">|&gt;</span> </span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tidyplot</span>(<span class="at">x =</span> year, <span class="at">y =</span> area_ha, <span class="at">fill =</span> label) <span class="sc">|&gt;</span> </span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">add_barstack_absolute</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adjust_colors</span>(<span class="at">new_colors =</span> dist<span class="sc">$</span>color) <span class="sc">|&gt;</span> </span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adjust_size</span>(<span class="at">width =</span> <span class="fl">1.2</span>, <span class="at">height =</span> <span class="dv">3</span>, <span class="at">unit =</span> <span class="st">'in'</span>) <span class="sc">|&gt;</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adjust_font</span>(<span class="at">fontsize =</span> <span class="dv">12</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>   <span class="fu">adjust_y_axis</span>(<span class="at">breaks =</span> scales<span class="sc">::</span><span class="fu">pretty_breaks</span>(<span class="dv">5</span>), <span class="at">labels =</span> scales<span class="sc">::</span>comma, <span class="at">title =</span> <span class="st">'Area (hectares)'</span>) <span class="sc">|&gt;</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adjust_legend_title</span>(<span class="st">'Land Cover Type'</span>)  <span class="sc">|&gt;</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">remove_legend</span>() <span class="sc">|&gt;</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">remove_x_axis_title</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">reorder_color_labels</span>(dist<span class="sc">$</span>label)</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>aa <span class="sc">|&gt;</span> </span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="sc">!</span>label <span class="sc">==</span> <span class="st">'Water bodies'</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tidyplot</span>(<span class="at">x =</span> year, <span class="at">y =</span> area_ha, <span class="at">fill =</span> label) <span class="sc">|&gt;</span> </span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">add_areastack_relative</span>(<span class="at">alpha =</span> <span class="dv">1</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adjust_colors</span>(<span class="at">new_colors =</span> dist<span class="sc">$</span>color) <span class="sc">|&gt;</span> </span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adjust_size</span>(<span class="at">width =</span> <span class="dv">4</span>, <span class="at">height =</span> <span class="dv">3</span>, <span class="at">unit =</span> <span class="st">'in'</span>) <span class="sc">|&gt;</span></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adjust_font</span>(<span class="at">fontsize =</span> <span class="dv">12</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adjust_y_axis</span>(<span class="at">breaks =</span> scales<span class="sc">::</span><span class="fu">pretty_breaks</span>(<span class="dv">5</span>), <span class="at">labels =</span> scales<span class="sc">::</span>percent, <span class="at">title =</span> <span class="st">'Proportion of Total Area'</span>) <span class="sc">|&gt;</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adjust_x_axis</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">2020</span>, <span class="dv">2021</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adjust_legend_title</span>(<span class="st">'Land Cover Type'</span>)<span class="sc">|&gt;</span></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">remove_x_axis_title</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">reorder_color_labels</span>(dist<span class="sc">$</span>label)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>The composition analysis quantifies these visual observations, showing the relative proportions of each land cover type (<a href="#fig-mkoani-composition" class="quarto-xref">Figure&nbsp;2</a>). The stacked bar chart (left) displays absolute areas in hectares, revealing the total extent of each land cover category in 2020 and 2021. The area stack chart (right) shows the same data as proportions over time, making it easier to identify compositional shifts. Forest dominates, but the presence of significant grassland and cropland areas indicates active land use management and potential agricultural expansion in recent years. Comparing year-to-year changes reveals whether land use intensification or land recovery is occurring.</p>
+<div id="fig-mkoani-composition" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-mkoani-composition-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="lulc_mkoani_abs_bar_rel.svg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mkoani-composition-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Land Cover Composition and Temporal Change in Mkoani District (2020-2021).
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="understanding-land-cover-transitions" class="level2">
+<h2 class="anchored" data-anchor-id="understanding-land-cover-transitions">Understanding Land Cover Transitions</h2>
+<p>Beyond static snapshots, understanding <em>how</em> land cover types change from one category to another provides critical insights into ecosystem dynamics and land use trajectories. A transition matrix—also called a cross-tabulation or contingency table—reveals exactly which land cover types are converting to which alternatives. For example, are forests converting directly to cropland (indicating clearing for agriculture), or is forest first transitioning to grassland/shrubland (indicating intermediate disturbance)? These transition pathways reflect different management practices and have distinct implications for ecosystem recovery and conservation strategy.</p>
+<p>The transition matrix quantifies all land cover changes occurring between 2020 and 2021 in Mkoani district. Rows represent the 2020 baseline condition and columns represent the 2021 outcome. Diagonal values (where row and column match) indicate <em>persistence</em>—areas where the land cover remained unchanged. Off-diagonal values indicate <em>transitions</em>—areas where land cover shifted from one type to another. This granular perspective reveals not just net changes in composition, but the specific pathways through which landscape transformation is occurring.</p>
+<p>Understanding these transitions is essential for marine spatial planning because different conversion pathways have different implications for coastal water quality. Forest-to-cropland transitions typically increase nutrient and sediment runoff. Forest-to-built-up transitions concentrate impacts in specific locations affecting local hydrology. Grassland-to-cropland transitions may increase soil erosion. By identifying the dominant transition pathways, managers can target interventions precisely where they will have the greatest benefit for coastal ecosystem health.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>change <span class="ot">=</span> diffeR<span class="sc">::</span><span class="fu">crosstabm</span>(pemba_lc[[<span class="dv">1</span>]],pemba_lc[[<span class="dv">2</span>]], <span class="at">percent =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>labels_lulc <span class="ot">=</span> worldcover_df<span class="sc">$</span>label[<span class="fu">c</span>(<span class="sc">-</span><span class="dv">7</span>,<span class="sc">-</span><span class="dv">11</span>)]</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(change) <span class="ot">=</span> labels_lulc</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(change) <span class="ot">=</span> labels_lulc</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>change_ha <span class="ot">=</span> (change<span class="sc">*</span><span class="dv">100</span>)<span class="sc">/</span><span class="fl">4063.74</span>  <span class="co"># convert to hectares</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>change_ha <span class="sc">|&gt;</span> </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">round</span>(<span class="dv">1</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as_tibble</span>(<span class="at">rownames =</span> <span class="st">"lc_2020"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    gt<span class="sc">::</span><span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    gt<span class="sc">::</span><span class="fu">tab_header</span>(</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">title =</span> <span class="st">"Land Cover Transition Matrix"</span>,</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">subtitle =</span> <span class="st">"Area (hectares) of each land cover type in 2020 converting to 2021 categories"</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    gt<span class="sc">::</span><span class="fu">opt_stylize</span>(<span class="at">style =</span> <span class="dv">1</span>) <span class="sc">|&gt;</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    gt<span class="sc">::</span><span class="fu">tab_style</span>(</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">style =</span> gt<span class="sc">::</span><span class="fu">cell_fill</span>(<span class="at">color =</span> <span class="st">"#e8f4f8"</span>),</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">locations =</span> gt<span class="sc">::</span><span class="fu">cells_body</span>()</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    gt<span class="sc">::</span><span class="fu">fmt_number</span>(<span class="at">columns =</span> <span class="sc">-</span>lc_2020, <span class="at">decimals =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div id="tbl-transition-matrix" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-transition-matrix-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Land Cover Transition Matrix for Mkoani District (2020-2021). Values represent area in hectares. Rows indicate 2020 baseline land cover type; columns indicate 2021 outcome. Diagonal values show persistence (no change); off-diagonal values show transitions between categories. Large values in off-diagonal cells indicate active land conversion. For example, the Tree cover→Cropland cell reveals forest clearing for agriculture. The Tree cover→Herbaceous wetland cell suggests forest areas becoming more waterlogged or managed for wetland agriculture.
+</figcaption>
+<div aria-describedby="tbl-transition-matrix-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<div id="yoysvhziai" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#yoysvhziai table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#yoysvhziai thead, #yoysvhziai tbody, #yoysvhziai tfoot, #yoysvhziai tr, #yoysvhziai td, #yoysvhziai th {
+  border-style: none;
+}
+
+#yoysvhziai p {
+  margin: 0;
+  padding: 0;
+}
+
+#yoysvhziai .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #004D80;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #004D80;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#yoysvhziai .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#yoysvhziai .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#yoysvhziai .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#yoysvhziai .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#yoysvhziai .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #0076BA;
+}
+
+#yoysvhziai .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #0076BA;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #0076BA;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#yoysvhziai .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#yoysvhziai .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#yoysvhziai .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#yoysvhziai .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#yoysvhziai .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #0076BA;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#yoysvhziai .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#yoysvhziai .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #0076BA;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #0076BA;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#yoysvhziai .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #0076BA;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #0076BA;
+  vertical-align: middle;
+}
+
+#yoysvhziai .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#yoysvhziai .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#yoysvhziai .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: none;
+  border-top-width: 1px;
+  border-top-color: #89D3FE;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #89D3FE;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #89D3FE;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#yoysvhziai .gt_stub {
+  color: #FFFFFF;
+  background-color: #0076BA;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #0076BA;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#yoysvhziai .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#yoysvhziai .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#yoysvhziai .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#yoysvhziai .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#yoysvhziai .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #0076BA;
+}
+
+#yoysvhziai .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#yoysvhziai .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #0076BA;
+}
+
+#yoysvhziai .gt_grand_summary_row {
+  color: #333333;
+  background-color: #89D3FE;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#yoysvhziai .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #0076BA;
+}
+
+#yoysvhziai .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #0076BA;
+}
+
+#yoysvhziai .gt_striped {
+  background-color: #F4F4F4;
+}
+
+#yoysvhziai .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #0076BA;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #0076BA;
+}
+
+#yoysvhziai .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#yoysvhziai .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#yoysvhziai .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#yoysvhziai .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#yoysvhziai .gt_left {
+  text-align: left;
+}
+
+#yoysvhziai .gt_center {
+  text-align: center;
+}
+
+#yoysvhziai .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#yoysvhziai .gt_font_normal {
+  font-weight: normal;
+}
+
+#yoysvhziai .gt_font_bold {
+  font-weight: bold;
+}
+
+#yoysvhziai .gt_font_italic {
+  font-style: italic;
+}
+
+#yoysvhziai .gt_super {
+  font-size: 65%;
+}
+
+#yoysvhziai .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#yoysvhziai .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#yoysvhziai .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#yoysvhziai .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#yoysvhziai .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#yoysvhziai .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#yoysvhziai .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#yoysvhziai .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#yoysvhziai div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+
+<table class="gt_table do-not-create-environment cell caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead>
+<tr class="gt_heading header">
+<th colspan="10" class="gt_heading gt_title gt_font_normal">Land Cover Transition Matrix</th>
+</tr>
+<tr class="gt_heading even">
+<th colspan="10" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border">Area (hectares) of each land cover type in 2020 converting to 2021 categories</th>
+</tr>
+<tr class="gt_col_headings header">
+<th id="lc_2020" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">lc_2020</th>
+<th id="Tree-cover" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Tree cover</th>
+<th id="Shrubland" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Shrubland</th>
+<th id="Grassland" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Grassland</th>
+<th id="Cropland" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Cropland</th>
+<th id="Built-up" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Built-up</th>
+<th id="Bare/sparse-vegetation" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Bare/sparse vegetation</th>
+<th id="Water-bodies" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Water bodies</th>
+<th id="Herbaceous-wetland" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Herbaceous wetland</th>
+<th id="Mangroves" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Mangroves</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left" headers="lc_2020" style="background-color: #E8F4F8">Tree cover</td>
+<td class="gt_row gt_right" headers="Tree cover" style="background-color: #E8F4F8">75.3</td>
+<td class="gt_row gt_right" headers="Shrubland" style="background-color: #E8F4F8">179.2</td>
+<td class="gt_row gt_right" headers="Grassland" style="background-color: #E8F4F8">1.9</td>
+<td class="gt_row gt_right" headers="Cropland" style="background-color: #E8F4F8">427.2</td>
+<td class="gt_row gt_right" headers="Built-up" style="background-color: #E8F4F8">1.5</td>
+<td class="gt_row gt_right" headers="Bare/sparse vegetation" style="background-color: #E8F4F8">50.5</td>
+<td class="gt_row gt_right" headers="Water bodies" style="background-color: #E8F4F8">17.5</td>
+<td class="gt_row gt_right" headers="Herbaceous wetland" style="background-color: #E8F4F8">254.7</td>
+<td class="gt_row gt_right" headers="Mangroves" style="background-color: #E8F4F8">15.4</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="lc_2020" style="background-color: #E8F4F8">Shrubland</td>
+<td class="gt_row gt_right gt_striped" headers="Tree cover" style="background-color: #E8F4F8">0.5</td>
+<td class="gt_row gt_right gt_striped" headers="Shrubland" style="background-color: #E8F4F8">1,042.2</td>
+<td class="gt_row gt_right gt_striped" headers="Grassland" style="background-color: #E8F4F8">0.0</td>
+<td class="gt_row gt_right gt_striped" headers="Cropland" style="background-color: #E8F4F8">10.6</td>
+<td class="gt_row gt_right gt_striped" headers="Built-up" style="background-color: #E8F4F8">0.0</td>
+<td class="gt_row gt_right gt_striped" headers="Bare/sparse vegetation" style="background-color: #E8F4F8">0.1</td>
+<td class="gt_row gt_right gt_striped" headers="Water bodies" style="background-color: #E8F4F8">0.0</td>
+<td class="gt_row gt_right gt_striped" headers="Herbaceous wetland" style="background-color: #E8F4F8">80.0</td>
+<td class="gt_row gt_right gt_striped" headers="Mangroves" style="background-color: #E8F4F8">2.2</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="lc_2020" style="background-color: #E8F4F8">Grassland</td>
+<td class="gt_row gt_right" headers="Tree cover" style="background-color: #E8F4F8">0.0</td>
+<td class="gt_row gt_right" headers="Shrubland" style="background-color: #E8F4F8">0.5</td>
+<td class="gt_row gt_right" headers="Grassland" style="background-color: #E8F4F8">54.8</td>
+<td class="gt_row gt_right" headers="Cropland" style="background-color: #E8F4F8">77.9</td>
+<td class="gt_row gt_right" headers="Built-up" style="background-color: #E8F4F8">1.4</td>
+<td class="gt_row gt_right" headers="Bare/sparse vegetation" style="background-color: #E8F4F8">0.2</td>
+<td class="gt_row gt_right" headers="Water bodies" style="background-color: #E8F4F8">0.0</td>
+<td class="gt_row gt_right" headers="Herbaceous wetland" style="background-color: #E8F4F8">1.7</td>
+<td class="gt_row gt_right" headers="Mangroves" style="background-color: #E8F4F8">2.5</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="lc_2020" style="background-color: #E8F4F8">Cropland</td>
+<td class="gt_row gt_right gt_striped" headers="Tree cover" style="background-color: #E8F4F8">10.2</td>
+<td class="gt_row gt_right gt_striped" headers="Shrubland" style="background-color: #E8F4F8">23.8</td>
+<td class="gt_row gt_right gt_striped" headers="Grassland" style="background-color: #E8F4F8">279.6</td>
+<td class="gt_row gt_right gt_striped" headers="Cropland" style="background-color: #E8F4F8">8,194.5</td>
+<td class="gt_row gt_right gt_striped" headers="Built-up" style="background-color: #E8F4F8">8.6</td>
+<td class="gt_row gt_right gt_striped" headers="Bare/sparse vegetation" style="background-color: #E8F4F8">7.3</td>
+<td class="gt_row gt_right gt_striped" headers="Water bodies" style="background-color: #E8F4F8">347.4</td>
+<td class="gt_row gt_right gt_striped" headers="Herbaceous wetland" style="background-color: #E8F4F8">1,030.8</td>
+<td class="gt_row gt_right gt_striped" headers="Mangroves" style="background-color: #E8F4F8">7.3</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="lc_2020" style="background-color: #E8F4F8">Built-up</td>
+<td class="gt_row gt_right" headers="Tree cover" style="background-color: #E8F4F8">18.7</td>
+<td class="gt_row gt_right" headers="Shrubland" style="background-color: #E8F4F8">0.0</td>
+<td class="gt_row gt_right" headers="Grassland" style="background-color: #E8F4F8">31.3</td>
+<td class="gt_row gt_right" headers="Cropland" style="background-color: #E8F4F8">87.3</td>
+<td class="gt_row gt_right" headers="Built-up" style="background-color: #E8F4F8">185.3</td>
+<td class="gt_row gt_right" headers="Bare/sparse vegetation" style="background-color: #E8F4F8">24.0</td>
+<td class="gt_row gt_right" headers="Water bodies" style="background-color: #E8F4F8">2.2</td>
+<td class="gt_row gt_right" headers="Herbaceous wetland" style="background-color: #E8F4F8">9.9</td>
+<td class="gt_row gt_right" headers="Mangroves" style="background-color: #E8F4F8">260.6</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="lc_2020" style="background-color: #E8F4F8">Bare/sparse vegetation</td>
+<td class="gt_row gt_right gt_striped" headers="Tree cover" style="background-color: #E8F4F8">9.3</td>
+<td class="gt_row gt_right gt_striped" headers="Shrubland" style="background-color: #E8F4F8">0.5</td>
+<td class="gt_row gt_right gt_striped" headers="Grassland" style="background-color: #E8F4F8">13.7</td>
+<td class="gt_row gt_right gt_striped" headers="Cropland" style="background-color: #E8F4F8">157.2</td>
+<td class="gt_row gt_right gt_striped" headers="Built-up" style="background-color: #E8F4F8">50.6</td>
+<td class="gt_row gt_right gt_striped" headers="Bare/sparse vegetation" style="background-color: #E8F4F8">11,206.4</td>
+<td class="gt_row gt_right gt_striped" headers="Water bodies" style="background-color: #E8F4F8">24.9</td>
+<td class="gt_row gt_right gt_striped" headers="Herbaceous wetland" style="background-color: #E8F4F8">1,027.9</td>
+<td class="gt_row gt_right gt_striped" headers="Mangroves" style="background-color: #E8F4F8">371.4</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="lc_2020" style="background-color: #E8F4F8">Water bodies</td>
+<td class="gt_row gt_right" headers="Tree cover" style="background-color: #E8F4F8">0.7</td>
+<td class="gt_row gt_right" headers="Shrubland" style="background-color: #E8F4F8">0.9</td>
+<td class="gt_row gt_right" headers="Grassland" style="background-color: #E8F4F8">3.5</td>
+<td class="gt_row gt_right" headers="Cropland" style="background-color: #E8F4F8">680.8</td>
+<td class="gt_row gt_right" headers="Built-up" style="background-color: #E8F4F8">0.3</td>
+<td class="gt_row gt_right" headers="Bare/sparse vegetation" style="background-color: #E8F4F8">7.3</td>
+<td class="gt_row gt_right" headers="Water bodies" style="background-color: #E8F4F8">559.7</td>
+<td class="gt_row gt_right" headers="Herbaceous wetland" style="background-color: #E8F4F8">302.8</td>
+<td class="gt_row gt_right" headers="Mangroves" style="background-color: #E8F4F8">1.8</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="lc_2020" style="background-color: #E8F4F8">Herbaceous wetland</td>
+<td class="gt_row gt_right gt_striped" headers="Tree cover" style="background-color: #E8F4F8">7.3</td>
+<td class="gt_row gt_right gt_striped" headers="Shrubland" style="background-color: #E8F4F8">450.0</td>
+<td class="gt_row gt_right gt_striped" headers="Grassland" style="background-color: #E8F4F8">277.5</td>
+<td class="gt_row gt_right gt_striped" headers="Cropland" style="background-color: #E8F4F8">4,545.5</td>
+<td class="gt_row gt_right gt_striped" headers="Built-up" style="background-color: #E8F4F8">0.5</td>
+<td class="gt_row gt_right gt_striped" headers="Bare/sparse vegetation" style="background-color: #E8F4F8">62.9</td>
+<td class="gt_row gt_right gt_striped" headers="Water bodies" style="background-color: #E8F4F8">164.8</td>
+<td class="gt_row gt_right gt_striped" headers="Herbaceous wetland" style="background-color: #E8F4F8">57,254.8</td>
+<td class="gt_row gt_right gt_striped" headers="Mangroves" style="background-color: #E8F4F8">24.0</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="lc_2020" style="background-color: #E8F4F8">Mangroves</td>
+<td class="gt_row gt_right" headers="Tree cover" style="background-color: #E8F4F8">26.8</td>
+<td class="gt_row gt_right" headers="Shrubland" style="background-color: #E8F4F8">0.2</td>
+<td class="gt_row gt_right" headers="Grassland" style="background-color: #E8F4F8">0.8</td>
+<td class="gt_row gt_right" headers="Cropland" style="background-color: #E8F4F8">47.3</td>
+<td class="gt_row gt_right" headers="Built-up" style="background-color: #E8F4F8">97.5</td>
+<td class="gt_row gt_right" headers="Bare/sparse vegetation" style="background-color: #E8F4F8">80.0</td>
+<td class="gt_row gt_right" headers="Water bodies" style="background-color: #E8F4F8">9.1</td>
+<td class="gt_row gt_right" headers="Herbaceous wetland" style="background-color: #E8F4F8">69.6</td>
+<td class="gt_row gt_right" headers="Mangroves" style="background-color: #E8F4F8">91,272.7</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p><strong>Interpreting the transition matrix:</strong> Read each row to understand what happened to that 2020 land cover type. For instance, the “Tree cover” row shows how forest pixels were distributed across different categories in 2021. The largest value in that row indicates the most common fate of forests. Summing across a row gives the total area of that land cover type in 2020; summing down a column gives the total area of that type in 2021. Values on the diagonal represent stability—areas where land cover persisted unchanged and therefore represent the landscape’s resilience to conversion.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>change_ha <span class="sc">|&gt;</span> </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">round</span>(<span class="dv">1</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as_tibble</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="st">'x2020'</span> <span class="ot">=</span> labels_lulc, <span class="at">.before =</span> <span class="st">`</span><span class="at">Tree cover</span><span class="st">`</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_longer</span>(<span class="sc">-</span>x2020, <span class="at">names_to =</span> <span class="st">'x2021'</span>, <span class="at">values_to =</span> <span class="st">'area_ha'</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    gt<span class="sc">::</span><span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    gt<span class="sc">::</span><span class="fu">opt_stylize</span>(<span class="at">style =</span> <span class="dv">1</span>) <span class="sc">|&gt;</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    gt<span class="sc">::</span><span class="fu">fmt_number</span>(<span class="at">columns =</span> <span class="sc">-</span>area_ha, <span class="at">decimals =</span> <span class="dv">1</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    gt<span class="sc">::</span><span class="fu">cols_label</span>(</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">x2020 =</span> <span class="st">"2020"</span>,</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">x2021 =</span> <span class="st">"2021"</span>,</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>      <span class="at">area_ha =</span> <span class="st">"Area (hectares)"</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span> </span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    gt<span class="sc">::</span><span class="fu">tab_spanner</span>(<span class="at">columns =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="at">label =</span> <span class="st">"Land Cover"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>    gt<span class="sc">::</span><span class="fu">fmt_number</span>(<span class="at">columns =</span> area_ha, <span class="at">decimals =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div id="tbl-transition-matrix-long" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-transition-matrix-long-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2: Long-Format Land Cover Transition Matrix for Mkoani District (2020-2021). Each row represents a 2020 land cover type (x2020), and each column represents the corresponding 2021 outcome (x2021). The area_ha column quantifies the area in hectares transitioning from each 2020 category to each 2021 category.
+</figcaption>
+<div aria-describedby="tbl-transition-matrix-long-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<div id="qepvahmczf" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#qepvahmczf table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#qepvahmczf thead, #qepvahmczf tbody, #qepvahmczf tfoot, #qepvahmczf tr, #qepvahmczf td, #qepvahmczf th {
+  border-style: none;
+}
+
+#qepvahmczf p {
+  margin: 0;
+  padding: 0;
+}
+
+#qepvahmczf .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #004D80;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #004D80;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#qepvahmczf .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#qepvahmczf .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#qepvahmczf .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#qepvahmczf .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#qepvahmczf .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #0076BA;
+}
+
+#qepvahmczf .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #0076BA;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #0076BA;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#qepvahmczf .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#qepvahmczf .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#qepvahmczf .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#qepvahmczf .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#qepvahmczf .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #0076BA;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#qepvahmczf .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#qepvahmczf .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #0076BA;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #0076BA;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#qepvahmczf .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #0076BA;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #0076BA;
+  vertical-align: middle;
+}
+
+#qepvahmczf .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#qepvahmczf .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#qepvahmczf .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: none;
+  border-top-width: 1px;
+  border-top-color: #89D3FE;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #89D3FE;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #89D3FE;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#qepvahmczf .gt_stub {
+  color: #FFFFFF;
+  background-color: #0076BA;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #0076BA;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#qepvahmczf .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#qepvahmczf .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#qepvahmczf .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#qepvahmczf .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#qepvahmczf .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #0076BA;
+}
+
+#qepvahmczf .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#qepvahmczf .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #0076BA;
+}
+
+#qepvahmczf .gt_grand_summary_row {
+  color: #333333;
+  background-color: #89D3FE;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#qepvahmczf .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #0076BA;
+}
+
+#qepvahmczf .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #0076BA;
+}
+
+#qepvahmczf .gt_striped {
+  background-color: #F4F4F4;
+}
+
+#qepvahmczf .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #0076BA;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #0076BA;
+}
+
+#qepvahmczf .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#qepvahmczf .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#qepvahmczf .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#qepvahmczf .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#qepvahmczf .gt_left {
+  text-align: left;
+}
+
+#qepvahmczf .gt_center {
+  text-align: center;
+}
+
+#qepvahmczf .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#qepvahmczf .gt_font_normal {
+  font-weight: normal;
+}
+
+#qepvahmczf .gt_font_bold {
+  font-weight: bold;
+}
+
+#qepvahmczf .gt_font_italic {
+  font-style: italic;
+}
+
+#qepvahmczf .gt_super {
+  font-size: 65%;
+}
+
+#qepvahmczf .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#qepvahmczf .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#qepvahmczf .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#qepvahmczf .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#qepvahmczf .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#qepvahmczf .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#qepvahmczf .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#qepvahmczf .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#qepvahmczf div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+
+<table class="gt_table do-not-create-environment cell caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="gt_col_headings gt_spanner_row header">
+<th colspan="2" id="Land Cover" class="gt_center gt_columns_top_border gt_column_spanner_outer" data-quarto-table-cell-role="th" scope="colgroup"><div class="gt_column_spanner">
+Land Cover
+</div></th>
+<th rowspan="2" id="area_ha" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Area (hectares)</th>
+</tr>
+<tr class="gt_col_headings even">
+<th id="x2020" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">2020</th>
+<th id="x2021" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">2021</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left" headers="x2020">Tree cover</td>
+<td class="gt_row gt_left" headers="x2021">Tree cover</td>
+<td class="gt_row gt_right" headers="area_ha">75.3</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="x2020">Tree cover</td>
+<td class="gt_row gt_left gt_striped" headers="x2021">Shrubland</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">179.2</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="x2020">Tree cover</td>
+<td class="gt_row gt_left" headers="x2021">Grassland</td>
+<td class="gt_row gt_right" headers="area_ha">1.9</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="x2020">Tree cover</td>
+<td class="gt_row gt_left gt_striped" headers="x2021">Cropland</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">427.2</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="x2020">Tree cover</td>
+<td class="gt_row gt_left" headers="x2021">Built-up</td>
+<td class="gt_row gt_right" headers="area_ha">1.5</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="x2020">Tree cover</td>
+<td class="gt_row gt_left gt_striped" headers="x2021">Bare/sparse vegetation</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">50.5</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="x2020">Tree cover</td>
+<td class="gt_row gt_left" headers="x2021">Water bodies</td>
+<td class="gt_row gt_right" headers="area_ha">17.5</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="x2020">Tree cover</td>
+<td class="gt_row gt_left gt_striped" headers="x2021">Herbaceous wetland</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">254.7</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="x2020">Tree cover</td>
+<td class="gt_row gt_left" headers="x2021">Mangroves</td>
+<td class="gt_row gt_right" headers="area_ha">15.4</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="x2020">Shrubland</td>
+<td class="gt_row gt_left gt_striped" headers="x2021">Tree cover</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">0.5</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="x2020">Shrubland</td>
+<td class="gt_row gt_left" headers="x2021">Shrubland</td>
+<td class="gt_row gt_right" headers="area_ha">1,042.2</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="x2020">Shrubland</td>
+<td class="gt_row gt_left gt_striped" headers="x2021">Grassland</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">0.0</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="x2020">Shrubland</td>
+<td class="gt_row gt_left" headers="x2021">Cropland</td>
+<td class="gt_row gt_right" headers="area_ha">10.6</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="x2020">Shrubland</td>
+<td class="gt_row gt_left gt_striped" headers="x2021">Built-up</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">0.0</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="x2020">Shrubland</td>
+<td class="gt_row gt_left" headers="x2021">Bare/sparse vegetation</td>
+<td class="gt_row gt_right" headers="area_ha">0.1</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="x2020">Shrubland</td>
+<td class="gt_row gt_left gt_striped" headers="x2021">Water bodies</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">0.0</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="x2020">Shrubland</td>
+<td class="gt_row gt_left" headers="x2021">Herbaceous wetland</td>
+<td class="gt_row gt_right" headers="area_ha">80.0</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="x2020">Shrubland</td>
+<td class="gt_row gt_left gt_striped" headers="x2021">Mangroves</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">2.2</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="x2020">Grassland</td>
+<td class="gt_row gt_left" headers="x2021">Tree cover</td>
+<td class="gt_row gt_right" headers="area_ha">0.0</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="x2020">Grassland</td>
+<td class="gt_row gt_left gt_striped" headers="x2021">Shrubland</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">0.5</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="x2020">Grassland</td>
+<td class="gt_row gt_left" headers="x2021">Grassland</td>
+<td class="gt_row gt_right" headers="area_ha">54.8</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="x2020">Grassland</td>
+<td class="gt_row gt_left gt_striped" headers="x2021">Cropland</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">77.9</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="x2020">Grassland</td>
+<td class="gt_row gt_left" headers="x2021">Built-up</td>
+<td class="gt_row gt_right" headers="area_ha">1.4</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="x2020">Grassland</td>
+<td class="gt_row gt_left gt_striped" headers="x2021">Bare/sparse vegetation</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">0.2</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="x2020">Grassland</td>
+<td class="gt_row gt_left" headers="x2021">Water bodies</td>
+<td class="gt_row gt_right" headers="area_ha">0.0</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="x2020">Grassland</td>
+<td class="gt_row gt_left gt_striped" headers="x2021">Herbaceous wetland</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">1.7</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="x2020">Grassland</td>
+<td class="gt_row gt_left" headers="x2021">Mangroves</td>
+<td class="gt_row gt_right" headers="area_ha">2.5</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="x2020">Cropland</td>
+<td class="gt_row gt_left gt_striped" headers="x2021">Tree cover</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">10.2</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="x2020">Cropland</td>
+<td class="gt_row gt_left" headers="x2021">Shrubland</td>
+<td class="gt_row gt_right" headers="area_ha">23.8</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="x2020">Cropland</td>
+<td class="gt_row gt_left gt_striped" headers="x2021">Grassland</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">279.6</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="x2020">Cropland</td>
+<td class="gt_row gt_left" headers="x2021">Cropland</td>
+<td class="gt_row gt_right" headers="area_ha">8,194.5</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="x2020">Cropland</td>
+<td class="gt_row gt_left gt_striped" headers="x2021">Built-up</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">8.6</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="x2020">Cropland</td>
+<td class="gt_row gt_left" headers="x2021">Bare/sparse vegetation</td>
+<td class="gt_row gt_right" headers="area_ha">7.3</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="x2020">Cropland</td>
+<td class="gt_row gt_left gt_striped" headers="x2021">Water bodies</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">347.4</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="x2020">Cropland</td>
+<td class="gt_row gt_left" headers="x2021">Herbaceous wetland</td>
+<td class="gt_row gt_right" headers="area_ha">1,030.8</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="x2020">Cropland</td>
+<td class="gt_row gt_left gt_striped" headers="x2021">Mangroves</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">7.3</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="x2020">Built-up</td>
+<td class="gt_row gt_left" headers="x2021">Tree cover</td>
+<td class="gt_row gt_right" headers="area_ha">18.7</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="x2020">Built-up</td>
+<td class="gt_row gt_left gt_striped" headers="x2021">Shrubland</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">0.0</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="x2020">Built-up</td>
+<td class="gt_row gt_left" headers="x2021">Grassland</td>
+<td class="gt_row gt_right" headers="area_ha">31.3</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="x2020">Built-up</td>
+<td class="gt_row gt_left gt_striped" headers="x2021">Cropland</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">87.3</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="x2020">Built-up</td>
+<td class="gt_row gt_left" headers="x2021">Built-up</td>
+<td class="gt_row gt_right" headers="area_ha">185.3</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="x2020">Built-up</td>
+<td class="gt_row gt_left gt_striped" headers="x2021">Bare/sparse vegetation</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">24.0</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="x2020">Built-up</td>
+<td class="gt_row gt_left" headers="x2021">Water bodies</td>
+<td class="gt_row gt_right" headers="area_ha">2.2</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="x2020">Built-up</td>
+<td class="gt_row gt_left gt_striped" headers="x2021">Herbaceous wetland</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">9.9</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="x2020">Built-up</td>
+<td class="gt_row gt_left" headers="x2021">Mangroves</td>
+<td class="gt_row gt_right" headers="area_ha">260.6</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="x2020">Bare/sparse vegetation</td>
+<td class="gt_row gt_left gt_striped" headers="x2021">Tree cover</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">9.3</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="x2020">Bare/sparse vegetation</td>
+<td class="gt_row gt_left" headers="x2021">Shrubland</td>
+<td class="gt_row gt_right" headers="area_ha">0.5</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="x2020">Bare/sparse vegetation</td>
+<td class="gt_row gt_left gt_striped" headers="x2021">Grassland</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">13.7</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="x2020">Bare/sparse vegetation</td>
+<td class="gt_row gt_left" headers="x2021">Cropland</td>
+<td class="gt_row gt_right" headers="area_ha">157.2</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="x2020">Bare/sparse vegetation</td>
+<td class="gt_row gt_left gt_striped" headers="x2021">Built-up</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">50.6</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="x2020">Bare/sparse vegetation</td>
+<td class="gt_row gt_left" headers="x2021">Bare/sparse vegetation</td>
+<td class="gt_row gt_right" headers="area_ha">11,206.4</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="x2020">Bare/sparse vegetation</td>
+<td class="gt_row gt_left gt_striped" headers="x2021">Water bodies</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">24.9</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="x2020">Bare/sparse vegetation</td>
+<td class="gt_row gt_left" headers="x2021">Herbaceous wetland</td>
+<td class="gt_row gt_right" headers="area_ha">1,027.9</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="x2020">Bare/sparse vegetation</td>
+<td class="gt_row gt_left gt_striped" headers="x2021">Mangroves</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">371.4</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="x2020">Water bodies</td>
+<td class="gt_row gt_left" headers="x2021">Tree cover</td>
+<td class="gt_row gt_right" headers="area_ha">0.7</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="x2020">Water bodies</td>
+<td class="gt_row gt_left gt_striped" headers="x2021">Shrubland</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">0.9</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="x2020">Water bodies</td>
+<td class="gt_row gt_left" headers="x2021">Grassland</td>
+<td class="gt_row gt_right" headers="area_ha">3.5</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="x2020">Water bodies</td>
+<td class="gt_row gt_left gt_striped" headers="x2021">Cropland</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">680.8</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="x2020">Water bodies</td>
+<td class="gt_row gt_left" headers="x2021">Built-up</td>
+<td class="gt_row gt_right" headers="area_ha">0.3</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="x2020">Water bodies</td>
+<td class="gt_row gt_left gt_striped" headers="x2021">Bare/sparse vegetation</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">7.3</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="x2020">Water bodies</td>
+<td class="gt_row gt_left" headers="x2021">Water bodies</td>
+<td class="gt_row gt_right" headers="area_ha">559.7</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="x2020">Water bodies</td>
+<td class="gt_row gt_left gt_striped" headers="x2021">Herbaceous wetland</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">302.8</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="x2020">Water bodies</td>
+<td class="gt_row gt_left" headers="x2021">Mangroves</td>
+<td class="gt_row gt_right" headers="area_ha">1.8</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="x2020">Herbaceous wetland</td>
+<td class="gt_row gt_left gt_striped" headers="x2021">Tree cover</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">7.3</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="x2020">Herbaceous wetland</td>
+<td class="gt_row gt_left" headers="x2021">Shrubland</td>
+<td class="gt_row gt_right" headers="area_ha">450.0</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="x2020">Herbaceous wetland</td>
+<td class="gt_row gt_left gt_striped" headers="x2021">Grassland</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">277.5</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="x2020">Herbaceous wetland</td>
+<td class="gt_row gt_left" headers="x2021">Cropland</td>
+<td class="gt_row gt_right" headers="area_ha">4,545.5</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="x2020">Herbaceous wetland</td>
+<td class="gt_row gt_left gt_striped" headers="x2021">Built-up</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">0.5</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="x2020">Herbaceous wetland</td>
+<td class="gt_row gt_left" headers="x2021">Bare/sparse vegetation</td>
+<td class="gt_row gt_right" headers="area_ha">62.9</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="x2020">Herbaceous wetland</td>
+<td class="gt_row gt_left gt_striped" headers="x2021">Water bodies</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">164.8</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="x2020">Herbaceous wetland</td>
+<td class="gt_row gt_left" headers="x2021">Herbaceous wetland</td>
+<td class="gt_row gt_right" headers="area_ha">57,254.8</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="x2020">Herbaceous wetland</td>
+<td class="gt_row gt_left gt_striped" headers="x2021">Mangroves</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">24.0</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="x2020">Mangroves</td>
+<td class="gt_row gt_left" headers="x2021">Tree cover</td>
+<td class="gt_row gt_right" headers="area_ha">26.8</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="x2020">Mangroves</td>
+<td class="gt_row gt_left gt_striped" headers="x2021">Shrubland</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">0.2</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="x2020">Mangroves</td>
+<td class="gt_row gt_left" headers="x2021">Grassland</td>
+<td class="gt_row gt_right" headers="area_ha">0.8</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="x2020">Mangroves</td>
+<td class="gt_row gt_left gt_striped" headers="x2021">Cropland</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">47.3</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="x2020">Mangroves</td>
+<td class="gt_row gt_left" headers="x2021">Built-up</td>
+<td class="gt_row gt_right" headers="area_ha">97.5</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="x2020">Mangroves</td>
+<td class="gt_row gt_left gt_striped" headers="x2021">Bare/sparse vegetation</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">80.0</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="x2020">Mangroves</td>
+<td class="gt_row gt_left" headers="x2021">Water bodies</td>
+<td class="gt_row gt_right" headers="area_ha">9.1</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="x2020">Mangroves</td>
+<td class="gt_row gt_left gt_striped" headers="x2021">Herbaceous wetland</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">69.6</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="x2020">Mangroves</td>
+<td class="gt_row gt_left" headers="x2021">Mangroves</td>
+<td class="gt_row gt_right" headers="area_ha">91,272.7</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</figure>
+</div>
+</div>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<section id="spatial-analysis-and-raster-processing" class="level3">
+<h3 class="anchored" data-anchor-id="spatial-analysis-and-raster-processing">Spatial Analysis and Raster Processing</h3>
+<p><strong>terra:</strong> Hijmans, R. J. (2024). <em>terra: Spatial data analysis</em>. R package version 1.7-80. https://CRAN.R-project.org/package=terra - Core package for reading, writing, and manipulating raster (gridded) data - Used for loading ESA WorldCover tif files and raster operations</p>
+<p><strong>tidyterra:</strong> Hernangómez, D. (2024). <em>tidyterra: Tidy tools for spatial data</em>. R package version 0.5.2. https://CRAN.R-project.org/package=tidyterra - Bridges terra raster objects with tidyverse workflows - Enables piping and dplyr-style operations on spatial data</p>
+<p><strong>sf:</strong> Pebesma, E. (2018). Simple Features for R: Standardized Support for Spatial Vector Data. <em>The R Journal</em>, 10(1), 439–446. https://doi.org/10.32614/RJ-2018-009 - Handles vector spatial data and CRS operations - Provides spatial analysis and transformation capabilities</p>
+</section>
+<section id="data-visualization" class="level3">
+<h3 class="anchored" data-anchor-id="data-visualization">Data Visualization</h3>
+<p><strong>ggplot2:</strong> Wickham, H. (2016). <em>ggplot2: Elegant Graphics for Data Analysis</em> (2nd ed.). Springer-Verlag New York. https://ggplot2.tidyverse.org/ - Foundational grammar of graphics package for creating publication-quality figures - Used with tidyterra for spatial raster visualization</p>
+<p><strong>tidyplots:</strong> Slowikowski, K. (2024). <em>tidyplots: Tidy plots using ggplot2</em>. R package. https://github.com/slowkow/tidyplots - Provides ggplot2 theme customization and wrapper functions - Used for creating stacked bar and area charts with consistent styling</p>
+<p><strong>gt:</strong> Iannone, R., Cheng, J., &amp; Schloerke, B. (2024). <em>gt: Easily Create Presentation-Ready Display Tables</em>. R package version 0.10.1. https://CRAN.R-project.org/package=gt - Enables creation of formatted, publication-ready tables - Used for displaying transition matrices with professional styling and number formatting</p>
+<p><strong>patchwork:</strong> Pedersen, T. L. (2024). <em>patchwork: The Composer of Plots</em>. R package version 1.2.1. https://CRAN.R-project.org/package=patchwork - Simplifies composition of multiple ggplot2 plots - Imported for multi-plot layouts and figure combinations</p>
+<p><strong>webr:</strong> Andrews, B. (2024). <em>webr: Interactive Graphics in R</em>. R package. https://github.com/bwlewis/webr - Provides interactive visualization capabilities - Used for creating interactive pie and donut charts</p>
+</section>
+<section id="data-manipulation-and-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="data-manipulation-and-analysis">Data Manipulation and Analysis</h3>
+<p><strong>dplyr:</strong> Wickham, H., François, R., Henry, L., Müller, K., &amp; Posit Software, PBC. (2024). <em>dplyr: A Grammar of Data Manipulation</em>. R package version 1.1.4. https://CRAN.R-project.org/package=dplyr - Part of tidyverse ecosystem for data transformation - Used implicitly through pipes (<code>|&gt;</code>) for filtering, joining, and mutating land cover data</p>
+<p><strong>diffeR:</strong> Pontius Jr., R. G., &amp; Millones, M. (2011). Death to Kappa: birth of quantity disagreement and allocation disagreement for accuracy assessment. <em>International Journal of Remote Sensing</em>, 32(15), 4407–4429. - Specialized package for land use/cover change detection and comparison - <code>crosstabm()</code> function creates transition/contingency matrices from paired rasters</p>
+<p><strong>tidyverse:</strong> Wickham, H., Averick, M., Bryan, J., et al.&nbsp;(2019). Welcome to the tidyverse. <em>Journal of Open Source Software</em>, 4(43), 1686. https://doi.org/10.21105/joss.01686 - Meta-package providing consistent data manipulation philosophy - Core dependency for all data processing workflows</p>
+</section>
+<section id="data-sources" class="level3">
+<h3 class="anchored" data-anchor-id="data-sources">Data Sources</h3>
+<p><strong>ESA WorldCover:</strong> Zanaga, D., Van De Kerchove, R., Daems, D., De Keersmaecker, W., Brockmann, C., Kirches, G., … &amp; Arino, O. (2021). ESA WorldCover 10 m 2020 v100. Zenodo. https://doi.org/10.5281/zenodo.5571498 - 10-meter resolution global land cover dataset - Contains 11 land cover classes based on Sentinel-1 and Sentinel-2 satellite data</p>
+<hr>
+<p><strong>Citation suggestion for this article:</strong></p>
+<p>Semba, M. (2025). Land Cover Patterns in Mkoani and Mkuranga Districts. Marine Spatial Planning Initiative, University of Dar es Salaam. Retrieved from [blog URL]</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>© 2025 Semba | Marine Spatial Planning | Led by <a href="https://www.udsm.ac.tz">SOAF-UDSM</a> | <a href="mailto:msp.coastal.tz@udsm.ac.tz">Contact Us</a></p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
