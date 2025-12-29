@@ -256,7 +256,7 @@ toc: true
       </div>
 
       <div class="gallery-item" onclick="openModal(this)">
-        <img src="images/gallery/_JAY1618.jpg" alt="Data Collection" class="gallery-image">
+        <img src="images/gallery/JAY1618.jpg" alt="Data Collection" class="gallery-image">
         <div class="gallery-caption">
           <h3>Geospatial Data Collection</h3>
           <p>Multi-disciplinary field teams gathering marine resource data</p>
@@ -264,7 +264,7 @@ toc: true
       </div>
 
       <div class="gallery-item" onclick="openModal(this)">
-        <img src="images/gallery/_JAY1679.jpg" alt="Habitat Mapping" class="gallery-image">
+        <img src="images/gallery/JAY1679.jpg" alt="Habitat Mapping" class="gallery-image">
         <div class="gallery-caption">
           <h3>Coastal Habitat Assessment</h3>
           <p>Ground-truthing ecosystem classifications and habitat boundaries</p>
@@ -278,7 +278,7 @@ toc: true
     <h2 class="category-title">🤝 Stakeholder Engagement & Validation</h2>
     <div class="gallery-grid">
       <div class="gallery-item" onclick="openModal(this)">
-        <img src="images/gallery/_JAY1755.jpg" alt="Community Meeting" class="gallery-image">
+        <img src="images/gallery/JAY1755.jpg" alt="Community Meeting" class="gallery-image">
         <div class="gallery-caption">
           <h3>Community Stakeholder Meeting</h3>
           <p>District authorities and fishing community representatives discuss spatial planning outcomes</p>
@@ -286,7 +286,7 @@ toc: true
       </div>
 
       <div class="gallery-item" onclick="openModal(this)">
-        <img src="images/gallery/DSC_7671.JPG" alt="Coastal Engagement" class="gallery-image">
+        <img src="images/components/saba.jpg" alt="Coastal Engagement" class="gallery-image">
         <div class="gallery-caption">
           <h3>Collaborative Planning Workshop</h3>
           <p>Stakeholders and community leaders shaping sustainable management strategies</p>
