@@ -7,10 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Masumbuko Semba">
-<meta name="dcterms.date" content="2025-12-29">
-<meta name="description" content="Analyzing and comparing spatial patterns of land cover in Mkoani and Mkuranga Districts">
+<meta name="description" content="Analyzing and comparing temporal land cover patterns in Mkuranga District for marine spatial planning">
 
-<title>Land Cover Patterns in Mkoani and Mkuranga Districts</title>
+<title>Land Cover Change in Mkuranga District</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -103,6 +102,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<link href="../../site_libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
+
+<script src="../../site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+
+<script src="../../site_libs/echarts4r-4.8.0/echarts-en.min.js"></script>
+
+<script src="../../site_libs/echarts4r-4.8.0/ecStat.min.js"></script>
+
+<script src="../../site_libs/echarts4r-4.8.0/dataTool.min.js"></script>
+
+<script src="../../site_libs/echarts4r-binding-0.4.6/echarts4r.js"></script>
+
+<script src="../../site_libs/echarts-liquidfill-1.0.0/echarts-liquidfill.min.js"></script>
+
+<meta name="description" content="Marine Spatial Planning Initiative for Tanzania - Spatial analysis, coastal management, and ecosystem monitoring in Mkoani and Mkuranga districts">
+<meta name="keywords" content="marine spatial planning, coastal management, Tanzania, land cover analysis, ecosystem monitoring, Mkoani, Mkuranga, Pemba, Pwani">
+<meta name="author" content="Masumbuko Semba, SOAF-UDSM">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:title" content="Land Cover Change in Mkuranga District">
+<meta property="og:description" content="Analyzing and comparing temporal land cover patterns in Mkuranga District for marine spatial planning">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://lugoga.github.io/nc_msp/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Land Cover Change in Mkuranga District">
+<meta name="twitter:description" content="Analyzing and comparing temporal land cover patterns in Mkuranga District for marine spatial planning">
 
 
 <link rel="stylesheet" href="../../styles.css">
@@ -194,7 +218,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Land Cover Patterns in Mkoani and Mkuranga Districts</li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Land Cover Change in Mkuranga District</li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -303,6 +327,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#understanding-spatial-patterns-in-land-cover" id="toc-understanding-spatial-patterns-in-land-cover" class="nav-link active" data-scroll-target="#understanding-spatial-patterns-in-land-cover">Understanding Spatial Patterns in Land Cover</a></li>
   <li><a href="#loading-and-preparing-the-data" id="toc-loading-and-preparing-the-data" class="nav-link" data-scroll-target="#loading-and-preparing-the-data">Loading and Preparing the Data</a></li>
   <li><a href="#creating-a-standardized-color-scheme" id="toc-creating-a-standardized-color-scheme" class="nav-link" data-scroll-target="#creating-a-standardized-color-scheme">Creating a Standardized Color Scheme</a></li>
+  <li><a href="#land-cover-distribution-in-mkuranga-district" id="toc-land-cover-distribution-in-mkuranga-district" class="nav-link" data-scroll-target="#land-cover-distribution-in-mkuranga-district">Land Cover Distribution in Mkuranga District</a></li>
   <li><a href="#visualizing-land-cover-maps" id="toc-visualizing-land-cover-maps" class="nav-link" data-scroll-target="#visualizing-land-cover-maps">Visualizing Land Cover Maps</a></li>
   <li><a href="#understanding-land-cover-transitions" id="toc-understanding-land-cover-transitions" class="nav-link" data-scroll-target="#understanding-land-cover-transitions">Understanding Land Cover Transitions</a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a>
@@ -320,7 +345,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Land Cover Patterns in Mkoani and Mkuranga Districts</h1>
+<h1 class="title">Land Cover Change in Mkuranga District</h1>
   <div class="quarto-categories">
     <div class="quarto-category">spatial-analysis</div>
     <div class="quarto-category">land-cover</div>
@@ -329,7 +354,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div>
   <div class="description">
-    Analyzing and comparing spatial patterns of land cover in Mkoani and Mkuranga Districts
+    Analyzing and comparing temporal land cover patterns in Mkuranga District for marine spatial planning
   </div>
 </div>
 
@@ -343,12 +368,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           </div>
   </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">December 29, 2025</p>
-    </div>
-  </div>
   
     
   </div>
@@ -361,12 +380,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="understanding-spatial-patterns-in-land-cover" class="level2">
 <h2 class="anchored" data-anchor-id="understanding-spatial-patterns-in-land-cover">Understanding Spatial Patterns in Land Cover</h2>
 <p>Spatial patterns in land cover are the local arrangements and configurations of different land use types across a landscape. Rather than simply knowing what proportion of an area is forest or cropland, understanding the <em>pattern</em> of these land covers reveals much more about ecosystem function and human land use practices. For example, fragmented forests interspersed with agriculture indicate different management histories and conservation challenges than consolidated forest blocks.</p>
-<p>Spatial signatures provide a quantitative framework for capturing these patterns. They encode information about how land cover types are spatially organized—whether they form large contiguous patches, are highly fragmented, or follow specific spatial arrangements. In this post, I’ll demonstrate how to compare spatial signatures between two coastal Tanzanian districts and use visual analysis to identify their characteristic land cover patterns.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="echarts4r html-widget html-fill-item" id="htmlwidget-9b6a35e758b559753b8a" style="width:100%;height:500px;"></div>
+<script type="application/json" data-for="htmlwidget-9b6a35e758b559753b8a">{"x":{"theme":"","tl":false,"draw":true,"renderer":"canvas","events":[],"buttons":[],"opts":{"series":[{"type":"liquidFill","data":[0.7,0.5,0.4]}]},"dispose":true},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p>Spatial signatures provide a quantitative framework for capturing these patterns. They encode information about how land cover types are spatially organized—whether they form large contiguous patches, are highly fragmented, or follow specific spatial arrangements. In this post, I’ll demonstrate how to analyze and track temporal changes in land cover patterns across Mkuranga District and use visual analysis to identify drivers of landscape transformation in this critical coastal region.</p>
 </section>
 <section id="loading-and-preparing-the-data" class="level2">
 <h2 class="anchored" data-anchor-id="loading-and-preparing-the-data">Loading and Preparing the Data</h2>
 <p>Working with spatial raster data requires careful data loading and preprocessing to ensure consistent and accurate analysis. We begin by loading specialized R packages designed for spatial analysis: <code>terra</code> for raster operations, <code>sf</code> for vector geometries, and <code>tidyterra</code> to bridge spatial data with tidyverse workflows. These packages provide efficient tools for reading, manipulating, and visualizing large spatial datasets.</p>
-<p>We source ESA WorldCover 10m resolution land cover data for our study areas. The Mkoani district data covers the Pemba region, while Mkuranga district is located on mainland Tanzania. Converting these rasters to factors (categorical data) is essential—it tells R that the numeric values represent discrete land cover categories rather than continuous measurements, which enables proper labeling and visualization.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -377,9 +401,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(tidyplots)</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># library(webr)</span></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(patchwork)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(gt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(gt)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(echarts4r)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
+<p>We source ESA WorldCover 10m resolution land cover data for Mkuranga District, located on mainland Tanzania’s Pwani Region. This district encompasses critical coastal ecosystems where terrestrial and marine habitats interface. Converting these rasters to factors (categorical data) is essential—it tells R that the numeric values represent discrete land cover categories rather than continuous measurements, which enables proper labeling and visualization.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -392,21 +418,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>lulc_2020 <span class="sc">|&gt;</span> </span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    terra<span class="sc">::</span><span class="fu">writeRaster</span>(</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">filename =</span> <span class="st">'data/mkoani_lulc_2021.tif'</span>,</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">filename =</span> <span class="st">'data/mkuranga_lulc_2021.tif'</span>,</span>
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">overwrite=</span><span class="cn">TRUE</span>, </span>
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">datatype=</span><span class="st">'INT1U'</span></span>
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>Load the raster data for our study districts:</p>
+<p>Load the raster data for Mkuranga District:</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>pemba_lc20 <span class="ot">=</span> terra<span class="sc">::</span><span class="fu">rast</span>(<span class="st">'mkoani_lulc_2020.tif'</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as.factor</span>()</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>pemba_lc21 <span class="ot">=</span> terra<span class="sc">::</span><span class="fu">rast</span>(<span class="st">'mkoani_lulc_2021.tif'</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as.factor</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#posts/lulc_change/</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>mkuranga_lc20 <span class="ot">=</span> terra<span class="sc">::</span><span class="fu">rast</span>(<span class="st">'mkuranga_lulc_2020.tif'</span>)  <span class="sc">|&gt;</span> </span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    terra<span class="sc">::</span><span class="fu">crop</span>(terra<span class="sc">::</span><span class="fu">ext</span>(<span class="fl">39.2</span>, <span class="fl">39.48</span>, <span class="sc">-</span><span class="fl">7.55</span>, <span class="sc">-</span><span class="fl">7.1</span>), <span class="at">mask =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as.factor</span>()</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>mkuranga_lc21 <span class="ot">=</span> terra<span class="sc">::</span><span class="fu">rast</span>(<span class="st">'mkuranga_lulc_2021.tif'</span>)  <span class="sc">|&gt;</span> </span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    terra<span class="sc">::</span><span class="fu">crop</span>(terra<span class="sc">::</span><span class="fu">ext</span>(<span class="fl">39.2</span>, <span class="fl">39.48</span>, <span class="sc">-</span><span class="fl">7.55</span>, <span class="sc">-</span><span class="fl">7.1</span>), <span class="at">mask =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as.factor</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -433,174 +463,204 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set levels with labels</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(pemba_lc20) <span class="ot">=</span> worldcover_df <span class="sc">|&gt;</span> <span class="fu">select</span>(value, label)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(mkuranga_lc20) <span class="ot">=</span> worldcover_df <span class="sc">|&gt;</span> <span class="fu">select</span>(value, label)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Embed color palette into rasters</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">coltab</span>(pemba_lc20) <span class="ot">=</span> worldcover_df <span class="sc">|&gt;</span> <span class="fu">select</span>(value, color)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">coltab</span>(mkuranga_lc20) <span class="ot">=</span> worldcover_df <span class="sc">|&gt;</span> <span class="fu">select</span>(value, color)</span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Set levels with labels</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(pemba_lc21) <span class="ot">=</span> worldcover_df <span class="sc">|&gt;</span> <span class="fu">select</span>(value, label)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(mkuranga_lc21) <span class="ot">=</span> worldcover_df <span class="sc">|&gt;</span> <span class="fu">select</span>(value, label)</span>
 <span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Embed color palette into rasters</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="fu">coltab</span>(pemba_lc21) <span class="ot">=</span> worldcover_df <span class="sc">|&gt;</span> <span class="fu">select</span>(value, color)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="fu">coltab</span>(mkuranga_lc21) <span class="ot">=</span> worldcover_df <span class="sc">|&gt;</span> <span class="fu">select</span>(value, color)</span>
 <span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>pemba_lc <span class="ot">=</span> <span class="fu">c</span>(pemba_lc20, pemba_lc21)</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(pemba_lc) <span class="ot">=</span> <span class="fu">c</span>(<span class="st">'lc_2020'</span>, <span class="st">'lc_2021'</span>)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>mkuranga_lc <span class="ot">=</span> <span class="fu">c</span>(mkuranga_lc20, mkuranga_lc21)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(mkuranga_lc) <span class="ot">=</span> <span class="fu">c</span>(<span class="st">'lc_2020'</span>, <span class="st">'lc_2021'</span>)</span>
 <span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="co"># pemba_lc |&gt; plot()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="co"># mkuranga_lc |&gt; plot()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
+</div>
+</section>
+<section id="land-cover-distribution-in-mkuranga-district" class="level2">
+<h2 class="anchored" data-anchor-id="land-cover-distribution-in-mkuranga-district">Land Cover Distribution in Mkuranga District</h2>
+<p><a href="#fig-mkuranga-composition" class="quarto-xref">Figure&nbsp;1</a> is animated interactive pie chart that displays the relative abundance of each land cover type in Mkuranga District in 2020. Hover over each segment to view the exact pixel count for that category. The chart provides a quick visual summary of landscape composition, showing which land cover types dominate the district. For area calculations in hectares, pixel counts were mutiplied by 100 (since each pixel represents a 10m × 10m area, equaling 100 m<sup>2</sup>).</p>
+<div class="cell">
+<div id="fig-mkuranga-composition" class="cell-output-display quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-mkuranga-composition-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="echarts4r html-widget html-fill-item" id="htmlwidget-e5a5d21f9083eeb4a3a9" style="width:100%;height:500px;"></div>
+<script type="application/json" data-for="htmlwidget-e5a5d21f9083eeb4a3a9">{"x":{"theme":"","tl":false,"draw":true,"renderer":"canvas","events":[],"buttons":[],"opts":{"legend":{"data":["Tree cover","Shrubland","Grassland","Cropland","Built-up","Bare/sparse vegetation","Water bodies","Herbaceous wetland","Mangroves"]},"series":[{"name":"count","type":"pie","radius":["30%","70%"],"data":[{"value":4680039,"name":"Tree cover"},{"value":1409568,"name":"Shrubland"},{"value":4486680,"name":"Grassland"},{"value":56820,"name":"Cropland"},{"value":17310,"name":"Built-up"},{"value":126669,"name":"Bare/sparse vegetation"},{"value":6530466,"name":"Water bodies"},{"value":166640,"name":"Herbaceous wetland"},{"value":669808,"name":"Mangroves"}]}]},"dispose":true},"evals":[],"jsHooks":[]}</script>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mkuranga-composition-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Land Cover Composition of Mkuranga District
+</figcaption>
+</figure>
+</div>
 </div>
 </section>
 <section id="visualizing-land-cover-maps" class="level2">
 <h2 class="anchored" data-anchor-id="visualizing-land-cover-maps">Visualizing Land Cover Maps</h2>
-<p>The Mkoani district encompasses the southern region of Pemba Island and represents a critical area for marine spatial planning integration. The land cover comparison between 2020 and 2021 reveals the baseline conditions and any changes occurring within the first year of the planning initiative. Understanding what happens on land is essential to marine planning because terrestrial land use directly influences coastal water quality, sediment loading, nutrient runoff, and ultimately the health of nearshore marine ecosystems. Forest cover provides watershed protection and reduces erosion, while agricultural expansion can increase sedimentation in coastal waters. The temporal comparison allows us to track whether land use changes are occurring and at what rate, informing both terrestrial and marine management strategies.</p>
+<p>Mkuranga District, located on mainland Tanzania’s Pwani Region, encompasses coastal ecosystems with significant conservation value and economic importance for fishing communities. The land cover comparison between 2020 and 2021 reveals baseline conditions and the trajectory of landscape change within the first year of the marine spatial planning initiative. Understanding terrestrial land use is fundamental to marine planning because landscape patterns directly influence coastal ecosystem health. Forest cover protects watersheds, reduces erosion, and maintains water quality. Agricultural expansion increases nutrient runoff and sedimentation. Mangrove forests provide critical fish nursery habitat. Urban expansion concentrates impacts on local hydrology and water quality. Tracking these changes year-to-year allows us to assess whether land use intensification, landscape degradation, or conservation success is occurring—information essential for coastal management decisions.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_spatraster</span>(<span class="at">data =</span> pemba_lc) <span class="sc">+</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_spatraster</span>(<span class="at">data =</span> mkuranga_lc) <span class="sc">+</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> scales<span class="sc">::</span><span class="fu">pretty_breaks</span>(<span class="at">n =</span> <span class="dv">3</span>)) <span class="sc">+</span></span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># scale_fill_identity(name = "Land Cover Type", guide = "legend") +</span></span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>)<span class="sc">+</span></span>
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>lyr, <span class="at">ncol=</span><span class="dv">2</span>, <span class="at">labeller =</span> <span class="fu">labeller</span>(<span class="at">lyr =</span> <span class="fu">c</span>(<span class="at">lc_2020 =</span> <span class="st">"2020: Baseline Land Cover"</span>, <span class="at">lc_2021 =</span> <span class="st">"2021: Current Land Cover"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="fig-mkoani-map" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-mkuranga-map" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-mkoani-map-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="lc_2020-2021.svg" class="img-fluid figure-img">
+<div aria-describedby="fig-mkuranga-map-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="lulc_mkuranga_2020_2021.svg" class="img-fluid figure-img">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mkoani-map-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Temporal Land Cover Comparison for Mkoani District (2020-2021). Side-by-side satellite imagery classification (10m resolution) shows forest (dark green), cropland (magenta), grassland (yellow), built-up areas (red), and other categories. The 2020 baseline establishes reference conditions, while the 2021 map reveals changes over the one year. Forest fragmentation and agricultural expansion patterns visible. Source: ESA WorldCover 10m resolution.
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mkuranga-map-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Temporal Land Cover Comparison for Mkuranga District (2020-2021). Side-by-side satellite imagery classification (10m resolution) shows forest (dark green), cropland (magenta), grassland (yellow), built-up areas (red), and other categories. The 2020 baseline establishes reference conditions, while the 2021 map reveals changes over the one year. Forest fragmentation and agricultural expansion patterns visible. Source: ESA WorldCover 10m resolution.
 </figcaption>
 </figure>
 </div>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>dist <span class="ot">=</span> worldcover_df <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="sc">!</span>value  <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">70</span>, <span class="dv">100</span>)) <span class="sc">|&gt;</span> <span class="fu">distinct</span>(color,<span class="at">.keep_all =</span> T)<span class="sc">|&gt;</span> <span class="fu">arrange</span>(label)  <span class="sc">|&gt;</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="sc">!</span>label <span class="sc">==</span> <span class="st">'Water bodies'</span>) </span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>aa <span class="ot">=</span> pemba_lc[[<span class="dv">1</span>]] <span class="sc">|&gt;</span> </span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    terra<span class="sc">::</span><span class="fu">freq</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as.data.frame</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="at">label =</span> value) <span class="sc">|&gt;</span> </span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">year =</span> <span class="dv">2020</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">bind_rows</span>(</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    pemba_lc[[<span class="dv">2</span>]] <span class="sc">|&gt;</span> </span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>      terra<span class="sc">::</span><span class="fu">freq</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>      <span class="fu">as.data.frame</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>      <span class="fu">rename</span>(<span class="at">label =</span> value) <span class="sc">|&gt;</span> </span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">year =</span> <span class="dv">2021</span>)</span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>     <span class="fu">left_join</span>(worldcover_df, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"label"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>     <span class="fu">mutate</span>(</span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>      <span class="at">area_m2 =</span> count <span class="sc">*</span> <span class="dv">10</span><span class="sc">*</span><span class="dv">10</span>,</span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>      <span class="at">area_ha =</span> area_m2<span class="sc">/</span><span class="fl">4063.2</span></span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>      )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>dist <span class="ot">=</span> worldcover_df <span class="sc">|&gt;</span> </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="sc">!</span>value  <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">70</span>, <span class="dv">100</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">distinct</span>(color,<span class="at">.keep_all =</span> T)<span class="sc">|&gt;</span> </span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(label)  <span class="sc">|&gt;</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="sc">!</span>label <span class="sc">==</span> <span class="st">'Water bodies'</span>) </span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>mkuranga_composition <span class="ot">=</span> mkuranga_lc[[<span class="dv">1</span>]] <span class="sc">|&gt;</span> </span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    terra<span class="sc">::</span><span class="fu">freq</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as.data.frame</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="at">label =</span> value) <span class="sc">|&gt;</span> </span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">year =</span> <span class="dv">2020</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">bind_rows</span>(</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    mkuranga_lc[[<span class="dv">2</span>]] <span class="sc">|&gt;</span> </span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>      terra<span class="sc">::</span><span class="fu">freq</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>      <span class="fu">as.data.frame</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>      <span class="fu">rename</span>(<span class="at">label =</span> value) <span class="sc">|&gt;</span> </span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">year =</span> <span class="dv">2021</span>)</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>     <span class="fu">left_join</span>(worldcover_df, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"label"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>     <span class="fu">mutate</span>(</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>      <span class="at">area_m2 =</span> count <span class="sc">*</span> <span class="dv">10</span><span class="sc">*</span><span class="dv">10</span>,</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>      <span class="at">area_ha =</span> area_m2<span class="sc">/</span><span class="fl">4063.2</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>      )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
+<p>The composition analysis quantifies these visual observations, showing the relative proportions of each land cover type. The stacked bar chart (left) displays absolute areas in hectares, revealing the total extent of each land cover category in 2020 and 2021. The area stack chart (right) shows the same data as proportions over time, making it easier to identify compositional shifts. The dominant land cover in Mkuranga is revealed through this analysis, along with patterns of agricultural land use, natural vegetation, and human settlement. Comparing year-to-year changes reveals whether land use intensification or landscape recovery is occurring, with direct implications for the sustainable management of coastal resources.</p>
+<div class="columns">
+<div class="column">
+<p><strong>Composition 2020</strong></p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>aa <span class="sc">|&gt;</span> </span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="sc">!</span>label <span class="sc">==</span> <span class="st">'Water bodies'</span>) <span class="sc">|&gt;</span> </span>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>mkuranga_composition <span class="sc">|&gt;</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="sc">!</span>label <span class="sc">==</span> <span class="st">'Water bodies'</span> <span class="sc">&amp;</span> year <span class="sc">==</span> <span class="dv">2020</span>) <span class="sc">|&gt;</span> </span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">year =</span> <span class="fu">as.factor</span>(year)) <span class="sc">|&gt;</span> </span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tidyplot</span>(<span class="at">x =</span> year, <span class="at">y =</span> area_ha, <span class="at">fill =</span> label) <span class="sc">|&gt;</span> </span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">add_barstack_absolute</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adjust_colors</span>(<span class="at">new_colors =</span> dist<span class="sc">$</span>color) <span class="sc">|&gt;</span> </span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adjust_size</span>(<span class="at">width =</span> <span class="fl">1.2</span>, <span class="at">height =</span> <span class="dv">3</span>, <span class="at">unit =</span> <span class="st">'in'</span>) <span class="sc">|&gt;</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adjust_font</span>(<span class="at">fontsize =</span> <span class="dv">12</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>   <span class="fu">adjust_y_axis</span>(<span class="at">breaks =</span> scales<span class="sc">::</span><span class="fu">pretty_breaks</span>(<span class="dv">5</span>), <span class="at">labels =</span> scales<span class="sc">::</span>comma, <span class="at">title =</span> <span class="st">'Area (hectares)'</span>) <span class="sc">|&gt;</span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adjust_legend_title</span>(<span class="st">'Land Cover Type'</span>)  <span class="sc">|&gt;</span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">remove_legend</span>() <span class="sc">|&gt;</span></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">remove_x_axis_title</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">reorder_color_labels</span>(dist<span class="sc">$</span>label)</span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>aa <span class="sc">|&gt;</span> </span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="sc">!</span>label <span class="sc">==</span> <span class="st">'Water bodies'</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tidyplot</span>(<span class="at">x =</span> year, <span class="at">y =</span> area_ha, <span class="at">fill =</span> label) <span class="sc">|&gt;</span> </span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">add_areastack_relative</span>(<span class="at">alpha =</span> <span class="dv">1</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adjust_colors</span>(<span class="at">new_colors =</span> dist<span class="sc">$</span>color) <span class="sc">|&gt;</span> </span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adjust_size</span>(<span class="at">width =</span> <span class="dv">4</span>, <span class="at">height =</span> <span class="dv">3</span>, <span class="at">unit =</span> <span class="st">'in'</span>) <span class="sc">|&gt;</span></span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adjust_font</span>(<span class="at">fontsize =</span> <span class="dv">12</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adjust_y_axis</span>(<span class="at">breaks =</span> scales<span class="sc">::</span><span class="fu">pretty_breaks</span>(<span class="dv">5</span>), <span class="at">labels =</span> scales<span class="sc">::</span>percent, <span class="at">title =</span> <span class="st">'Proportion of Total Area'</span>) <span class="sc">|&gt;</span></span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adjust_x_axis</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">2020</span>, <span class="dv">2021</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adjust_legend_title</span>(<span class="st">'Land Cover Type'</span>)<span class="sc">|&gt;</span></span>
-<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">remove_x_axis_title</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">reorder_color_labels</span>(dist<span class="sc">$</span>label)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    echarts4r<span class="sc">::</span><span class="fu">e_chart</span>(label, <span class="at">timeline =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    echarts4r<span class="sc">::</span><span class="fu">e_pie</span>(area_ha, <span class="at">radius =</span> <span class="fu">c</span>(<span class="st">"50%"</span>, <span class="st">"70%"</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
+<div class="cell-output-display">
+<div class="echarts4r html-widget html-fill-item" id="htmlwidget-4e744ba3d22d2c101570" style="width:100%;height:500px;"></div>
+<script type="application/json" data-for="htmlwidget-4e744ba3d22d2c101570">{"x":{"theme":"","tl":false,"draw":true,"renderer":"canvas","events":[],"buttons":[],"opts":{"legend":{"data":["Tree cover","Shrubland","Grassland","Cropland","Built-up","Bare/sparse vegetation","Herbaceous wetland","Mangroves"]},"series":[{"name":"area_ha","type":"pie","radius":["50%","70%"],"data":[{"value":115181.1134081512,"name":"Tree cover"},{"value":34691.08092144123,"name":"Shrubland"},{"value":110422.3272297696,"name":"Grassland"},{"value":1398.405197873597,"name":"Cropland"},{"value":426.0189013585352,"name":"Built-up"},{"value":3117.468989958653,"name":"Bare/sparse vegetation"},{"value":4101.201023823587,"name":"Herbaceous wetland"},{"value":16484.7410907659,"name":"Mangroves"}]}]},"dispose":true},"evals":[],"jsHooks":[]}</script>
 </div>
-<p>The composition analysis quantifies these visual observations, showing the relative proportions of each land cover type (<a href="#fig-mkoani-composition" class="quarto-xref">Figure&nbsp;2</a>). The stacked bar chart (left) displays absolute areas in hectares, revealing the total extent of each land cover category in 2020 and 2021. The area stack chart (right) shows the same data as proportions over time, making it easier to identify compositional shifts. Forest dominates, but the presence of significant grassland and cropland areas indicates active land use management and potential agricultural expansion in recent years. Comparing year-to-year changes reveals whether land use intensification or land recovery is occurring.</p>
-<div id="fig-mkoani-composition" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-mkoani-composition-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="lulc_mkoani_abs_bar_rel.svg" class="img-fluid figure-img">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mkoani-composition-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: Land Cover Composition and Temporal Change in Mkoani District (2020-2021).
-</figcaption>
-</figure>
+</div><div class="column">
+<p><strong>Composition 2021</strong></p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>mkuranga_composition <span class="sc">|&gt;</span> </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="sc">!</span>label <span class="sc">==</span> <span class="st">'Water bodies'</span> <span class="sc">&amp;</span> year <span class="sc">==</span> <span class="dv">2021</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">year =</span> <span class="fu">as.factor</span>(year)) <span class="sc">|&gt;</span> </span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    echarts4r<span class="sc">::</span><span class="fu">e_chart</span>(label, <span class="at">timeline =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    echarts4r<span class="sc">::</span><span class="fu">e_pie</span>(area_ha, <span class="at">radius =</span> <span class="fu">c</span>(<span class="st">"50%"</span>, <span class="st">"70%"</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="echarts4r html-widget html-fill-item" id="htmlwidget-1321d690bc081bfe6052" style="width:100%;height:500px;"></div>
+<script type="application/json" data-for="htmlwidget-1321d690bc081bfe6052">{"x":{"theme":"","tl":false,"draw":true,"renderer":"canvas","events":[],"buttons":[],"opts":{"legend":{"data":["Tree cover","Shrubland","Grassland","Cropland","Built-up","Bare/sparse vegetation","Herbaceous wetland","Mangroves"]},"series":[{"name":"area_ha","type":"pie","radius":["50%","70%"],"data":[{"value":130263.8806851743,"name":"Tree cover"},{"value":9769.393581413664,"name":"Shrubland"},{"value":123652.2199251821,"name":"Grassland"},{"value":375.861390037409,"name":"Cropland"},{"value":684.6328017326246,"name":"Built-up"},{"value":2452.672770230361,"name":"Bare/sparse vegetation"},{"value":3247.588107895255,"name":"Herbaceous wetland"},{"value":14974.45363260484,"name":"Mangroves"}]}]},"dispose":true},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</div>
+</div>
+<p><strong>Interactive Donut Charts:</strong> The pie charts above provide an interactive visualization of land cover composition for Mkuranga District in 2020 and 2021. Hovering over each segment reveals the exact area in hectares for that land cover type, allowing for detailed exploration of landscape structure in each year.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>mkuranga_composition <span class="sc">|&gt;</span> </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="sc">!</span>label <span class="sc">==</span> <span class="st">'Water bodies'</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">year =</span> <span class="fu">as.factor</span>(year)) <span class="sc">|&gt;</span> </span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(year) <span class="sc">|&gt;</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    echarts4r<span class="sc">::</span><span class="fu">e_chart</span>(label, <span class="at">timeline =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    echarts4r<span class="sc">::</span><span class="fu">e_pie</span>(area_ha, <span class="at">radius =</span> <span class="fu">c</span>(<span class="st">"50%"</span>, <span class="st">"70%"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="echarts4r html-widget html-fill-item" id="htmlwidget-6f1adf84ff0a695854cf" style="width:100%;height:500px;"></div>
+<script type="application/json" data-for="htmlwidget-6f1adf84ff0a695854cf">{"x":{"theme":"","tl":true,"draw":true,"renderer":"canvas","events":[],"buttons":[],"opts":{"baseOption":{"timeline":{"data":["2020","2021"],"axisType":"category"},"series":[{"name":null,"type":"pie","radius":["50%","70%"]}]},"options":[{"series":[{"data":[{"value":115181.1134081512,"name":"Tree cover"},{"value":34691.08092144123,"name":"Shrubland"},{"value":110422.3272297696,"name":"Grassland"},{"value":1398.405197873597,"name":"Cropland"},{"value":426.0189013585352,"name":"Built-up"},{"value":3117.468989958653,"name":"Bare/sparse vegetation"},{"value":4101.201023823587,"name":"Herbaceous wetland"},{"value":16484.7410907659,"name":"Mangroves"}]}]},{"series":[{"data":[{"value":130263.8806851743,"name":"Tree cover"},{"value":9769.393581413664,"name":"Shrubland"},{"value":123652.2199251821,"name":"Grassland"},{"value":375.861390037409,"name":"Cropland"},{"value":684.6328017326246,"name":"Built-up"},{"value":2452.672770230361,"name":"Bare/sparse vegetation"},{"value":3247.588107895255,"name":"Herbaceous wetland"},{"value":14974.45363260484,"name":"Mangroves"}]}]}]},"dispose":true},"evals":[],"jsHooks":[]}</script>
+</div>
 </div>
 </section>
 <section id="understanding-land-cover-transitions" class="level2">
 <h2 class="anchored" data-anchor-id="understanding-land-cover-transitions">Understanding Land Cover Transitions</h2>
 <p>Beyond static snapshots, understanding <em>how</em> land cover types change from one category to another provides critical insights into ecosystem dynamics and land use trajectories. A transition matrix—also called a cross-tabulation or contingency table—reveals exactly which land cover types are converting to which alternatives. For example, are forests converting directly to cropland (indicating clearing for agriculture), or is forest first transitioning to grassland/shrubland (indicating intermediate disturbance)? These transition pathways reflect different management practices and have distinct implications for ecosystem recovery and conservation strategy.</p>
-<p>The transition matrix quantifies all land cover changes occurring between 2020 and 2021 in Mkoani district. Rows represent the 2020 baseline condition and columns represent the 2021 outcome. Diagonal values (where row and column match) indicate <em>persistence</em>—areas where the land cover remained unchanged. Off-diagonal values indicate <em>transitions</em>—areas where land cover shifted from one type to another. This granular perspective reveals not just net changes in composition, but the specific pathways through which landscape transformation is occurring.</p>
-<p>Understanding these transitions is essential for marine spatial planning because different conversion pathways have different implications for coastal water quality. Forest-to-cropland transitions typically increase nutrient and sediment runoff. Forest-to-built-up transitions concentrate impacts in specific locations affecting local hydrology. Grassland-to-cropland transitions may increase soil erosion. By identifying the dominant transition pathways, managers can target interventions precisely where they will have the greatest benefit for coastal ecosystem health.</p>
+<p>The transition matrix quantifies all land cover changes occurring between 2020 and 2021 in Mkuranga District. Rows represent the 2020 baseline condition and columns represent the 2021 outcome. Diagonal values (where row and column match) indicate <em>persistence</em>—areas where the land cover remained unchanged. Off-diagonal values indicate <em>transitions</em>—areas where land cover shifted from one type to another. This granular perspective reveals not just net changes in composition, but the specific pathways through which landscape transformation is occurring in Mkuranga.</p>
+<p>Understanding these transitions is essential for marine spatial planning in Mkuranga because different conversion pathways have different implications for coastal water quality and fishery productivity. Forest-to-cropland transitions typically increase nutrient and sediment runoff that degrade nearshore water quality. Mangrove loss directly reduces fish nursery habitat and coastal protection. Grassland-to-cropland transitions may increase soil erosion and sedimentation into coastal zones. Forest-to-built-up transitions concentrate impacts affecting local hydrology. By identifying the dominant transition pathways in Mkuranga, managers can target land-based interventions precisely where they will have the greatest benefit for coastal and fishery ecosystem health.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>change <span class="ot">=</span> diffeR<span class="sc">::</span><span class="fu">crosstabm</span>(pemba_lc[[<span class="dv">1</span>]],pemba_lc[[<span class="dv">2</span>]], <span class="at">percent =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>labels_lulc <span class="ot">=</span> worldcover_df<span class="sc">$</span>label[<span class="fu">c</span>(<span class="sc">-</span><span class="dv">7</span>,<span class="sc">-</span><span class="dv">11</span>)]</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(change) <span class="ot">=</span> labels_lulc</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(change) <span class="ot">=</span> labels_lulc</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>change_ha <span class="ot">=</span> (change<span class="sc">*</span><span class="dv">100</span>)<span class="sc">/</span><span class="fl">4063.74</span>  <span class="co"># convert to hectares</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>change <span class="ot">=</span> diffeR<span class="sc">::</span><span class="fu">crosstabm</span>(mkuranga_lc[[<span class="dv">1</span>]],mkuranga_lc[[<span class="dv">2</span>]], <span class="at">percent =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>labels_lulc <span class="ot">=</span> worldcover_df<span class="sc">$</span>label[<span class="fu">c</span>(<span class="sc">-</span><span class="dv">7</span>,<span class="sc">-</span><span class="dv">11</span>)]</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(change) <span class="ot">=</span> labels_lulc</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(change) <span class="ot">=</span> labels_lulc</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>change_ha <span class="ot">=</span> (change<span class="sc">*</span><span class="dv">100</span>)<span class="sc">/</span><span class="fl">4063.74</span>  <span class="co"># convert to hectares</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>change_ha <span class="sc">|&gt;</span> </span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">round</span>(<span class="dv">1</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as_tibble</span>(<span class="at">rownames =</span> <span class="st">"lc_2020"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    gt<span class="sc">::</span><span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    gt<span class="sc">::</span><span class="fu">tab_header</span>(</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">title =</span> <span class="st">"Land Cover Transition Matrix"</span>,</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">subtitle =</span> <span class="st">"Area (hectares) of each land cover type in 2020 converting to 2021 categories"</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    gt<span class="sc">::</span><span class="fu">opt_stylize</span>(<span class="at">style =</span> <span class="dv">1</span>) <span class="sc">|&gt;</span></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    gt<span class="sc">::</span><span class="fu">tab_style</span>(</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">style =</span> gt<span class="sc">::</span><span class="fu">cell_fill</span>(<span class="at">color =</span> <span class="st">"#e8f4f8"</span>),</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">locations =</span> gt<span class="sc">::</span><span class="fu">cells_body</span>()</span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    gt<span class="sc">::</span><span class="fu">fmt_number</span>(<span class="at">columns =</span> <span class="sc">-</span>lc_2020, <span class="at">decimals =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>change_ha <span class="sc">|&gt;</span> </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">round</span>(<span class="dv">1</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as_tibble</span>(<span class="at">rownames =</span> <span class="st">"lc_2020"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    gt<span class="sc">::</span><span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    gt<span class="sc">::</span><span class="fu">tab_header</span>(</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">title =</span> <span class="st">"Land Cover Transition Matrix"</span>,</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">subtitle =</span> <span class="st">"Area (hectares) of each land cover type in 2020 converting to 2021 categories in Mkuranga District"</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    gt<span class="sc">::</span><span class="fu">opt_stylize</span>(<span class="at">style =</span> <span class="dv">1</span>) <span class="sc">|&gt;</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    gt<span class="sc">::</span><span class="fu">tab_style</span>(</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">style =</span> gt<span class="sc">::</span><span class="fu">cell_fill</span>(<span class="at">color =</span> <span class="st">"#e8f4f8"</span>),</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">locations =</span> gt<span class="sc">::</span><span class="fu">cells_body</span>()</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>    gt<span class="sc">::</span><span class="fu">fmt_number</span>(<span class="at">columns =</span> <span class="sc">-</span>lc_2020, <span class="at">decimals =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div id="tbl-transition-matrix" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-transition-matrix-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;1: Land Cover Transition Matrix for Mkoani District (2020-2021). Values represent area in hectares. Rows indicate 2020 baseline land cover type; columns indicate 2021 outcome. Diagonal values show persistence (no change); off-diagonal values show transitions between categories. Large values in off-diagonal cells indicate active land conversion. For example, the Tree cover→Cropland cell reveals forest clearing for agriculture. The Tree cover→Herbaceous wetland cell suggests forest areas becoming more waterlogged or managed for wetland agriculture.
+Table&nbsp;1: Land Cover Transition Matrix for Mkuranga District (2020-2021). Values represent area in hectares. Rows indicate 2020 baseline land cover type; columns indicate 2021 outcome. Diagonal values show persistence (no change); off-diagonal values show transitions between categories. Large values in off-diagonal cells indicate active land conversion. For example, the Tree cover→Cropland cell reveals forest clearing for agriculture. The Mangrove→other transitions reveal changes in this critical coastal habitat.
 </figcaption>
 <div aria-describedby="tbl-transition-matrix-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="yoysvhziai" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#yoysvhziai table {
+<div id="kvhyvzvkff" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#kvhyvzvkff table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#yoysvhziai thead, #yoysvhziai tbody, #yoysvhziai tfoot, #yoysvhziai tr, #yoysvhziai td, #yoysvhziai th {
+#kvhyvzvkff thead, #kvhyvzvkff tbody, #kvhyvzvkff tfoot, #kvhyvzvkff tr, #kvhyvzvkff td, #kvhyvzvkff th {
   border-style: none;
 }
 
-#yoysvhziai p {
+#kvhyvzvkff p {
   margin: 0;
   padding: 0;
 }
 
-#yoysvhziai .gt_table {
+#kvhyvzvkff .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -626,12 +686,12 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkoani District (2020-2021). Valu
   border-left-color: #D3D3D3;
 }
 
-#yoysvhziai .gt_caption {
+#kvhyvzvkff .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#yoysvhziai .gt_title {
+#kvhyvzvkff .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -643,7 +703,7 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkoani District (2020-2021). Valu
   border-bottom-width: 0;
 }
 
-#yoysvhziai .gt_subtitle {
+#kvhyvzvkff .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -655,7 +715,7 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkoani District (2020-2021). Valu
   border-top-width: 0;
 }
 
-#yoysvhziai .gt_heading {
+#kvhyvzvkff .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -667,13 +727,13 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkoani District (2020-2021). Valu
   border-right-color: #D3D3D3;
 }
 
-#yoysvhziai .gt_bottom_border {
+#kvhyvzvkff .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #0076BA;
 }
 
-#yoysvhziai .gt_col_headings {
+#kvhyvzvkff .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #0076BA;
@@ -688,7 +748,7 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkoani District (2020-2021). Valu
   border-right-color: #D3D3D3;
 }
 
-#yoysvhziai .gt_col_heading {
+#kvhyvzvkff .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -708,7 +768,7 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkoani District (2020-2021). Valu
   overflow-x: hidden;
 }
 
-#yoysvhziai .gt_column_spanner_outer {
+#kvhyvzvkff .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -720,15 +780,15 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkoani District (2020-2021). Valu
   padding-right: 4px;
 }
 
-#yoysvhziai .gt_column_spanner_outer:first-child {
+#kvhyvzvkff .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#yoysvhziai .gt_column_spanner_outer:last-child {
+#kvhyvzvkff .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#yoysvhziai .gt_column_spanner {
+#kvhyvzvkff .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #0076BA;
@@ -740,11 +800,11 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkoani District (2020-2021). Valu
   width: 100%;
 }
 
-#yoysvhziai .gt_spanner_row {
+#kvhyvzvkff .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#yoysvhziai .gt_group_heading {
+#kvhyvzvkff .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -770,7 +830,7 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkoani District (2020-2021). Valu
   text-align: left;
 }
 
-#yoysvhziai .gt_empty_group_heading {
+#kvhyvzvkff .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -785,15 +845,15 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkoani District (2020-2021). Valu
   vertical-align: middle;
 }
 
-#yoysvhziai .gt_from_md > :first-child {
+#kvhyvzvkff .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#yoysvhziai .gt_from_md > :last-child {
+#kvhyvzvkff .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#yoysvhziai .gt_row {
+#kvhyvzvkff .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -812,7 +872,7 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkoani District (2020-2021). Valu
   overflow-x: hidden;
 }
 
-#yoysvhziai .gt_stub {
+#kvhyvzvkff .gt_stub {
   color: #FFFFFF;
   background-color: #0076BA;
   font-size: 100%;
@@ -825,7 +885,7 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkoani District (2020-2021). Valu
   padding-right: 5px;
 }
 
-#yoysvhziai .gt_stub_row_group {
+#kvhyvzvkff .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -839,15 +899,15 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkoani District (2020-2021). Valu
   vertical-align: top;
 }
 
-#yoysvhziai .gt_row_group_first td {
+#kvhyvzvkff .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#yoysvhziai .gt_row_group_first th {
+#kvhyvzvkff .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#yoysvhziai .gt_summary_row {
+#kvhyvzvkff .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -857,16 +917,16 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkoani District (2020-2021). Valu
   padding-right: 5px;
 }
 
-#yoysvhziai .gt_first_summary_row {
+#kvhyvzvkff .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #0076BA;
 }
 
-#yoysvhziai .gt_first_summary_row.thick {
+#kvhyvzvkff .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#yoysvhziai .gt_last_summary_row {
+#kvhyvzvkff .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -876,7 +936,7 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkoani District (2020-2021). Valu
   border-bottom-color: #0076BA;
 }
 
-#yoysvhziai .gt_grand_summary_row {
+#kvhyvzvkff .gt_grand_summary_row {
   color: #333333;
   background-color: #89D3FE;
   text-transform: inherit;
@@ -886,7 +946,7 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkoani District (2020-2021). Valu
   padding-right: 5px;
 }
 
-#yoysvhziai .gt_first_grand_summary_row {
+#kvhyvzvkff .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -896,7 +956,7 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkoani District (2020-2021). Valu
   border-top-color: #0076BA;
 }
 
-#yoysvhziai .gt_last_grand_summary_row_top {
+#kvhyvzvkff .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -906,11 +966,11 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkoani District (2020-2021). Valu
   border-bottom-color: #0076BA;
 }
 
-#yoysvhziai .gt_striped {
+#kvhyvzvkff .gt_striped {
   background-color: #F4F4F4;
 }
 
-#yoysvhziai .gt_table_body {
+#kvhyvzvkff .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #0076BA;
@@ -919,7 +979,7 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkoani District (2020-2021). Valu
   border-bottom-color: #0076BA;
 }
 
-#yoysvhziai .gt_footnotes {
+#kvhyvzvkff .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -933,7 +993,7 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkoani District (2020-2021). Valu
   border-right-color: #D3D3D3;
 }
 
-#yoysvhziai .gt_footnote {
+#kvhyvzvkff .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -942,7 +1002,7 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkoani District (2020-2021). Valu
   padding-right: 5px;
 }
 
-#yoysvhziai .gt_sourcenotes {
+#kvhyvzvkff .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -956,7 +1016,7 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkoani District (2020-2021). Valu
   border-right-color: #D3D3D3;
 }
 
-#yoysvhziai .gt_sourcenote {
+#kvhyvzvkff .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -964,72 +1024,72 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkoani District (2020-2021). Valu
   padding-right: 5px;
 }
 
-#yoysvhziai .gt_left {
+#kvhyvzvkff .gt_left {
   text-align: left;
 }
 
-#yoysvhziai .gt_center {
+#kvhyvzvkff .gt_center {
   text-align: center;
 }
 
-#yoysvhziai .gt_right {
+#kvhyvzvkff .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#yoysvhziai .gt_font_normal {
+#kvhyvzvkff .gt_font_normal {
   font-weight: normal;
 }
 
-#yoysvhziai .gt_font_bold {
+#kvhyvzvkff .gt_font_bold {
   font-weight: bold;
 }
 
-#yoysvhziai .gt_font_italic {
+#kvhyvzvkff .gt_font_italic {
   font-style: italic;
 }
 
-#yoysvhziai .gt_super {
+#kvhyvzvkff .gt_super {
   font-size: 65%;
 }
 
-#yoysvhziai .gt_footnote_marks {
+#kvhyvzvkff .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#yoysvhziai .gt_asterisk {
+#kvhyvzvkff .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#yoysvhziai .gt_indent_1 {
+#kvhyvzvkff .gt_indent_1 {
   text-indent: 5px;
 }
 
-#yoysvhziai .gt_indent_2 {
+#kvhyvzvkff .gt_indent_2 {
   text-indent: 10px;
 }
 
-#yoysvhziai .gt_indent_3 {
+#kvhyvzvkff .gt_indent_3 {
   text-indent: 15px;
 }
 
-#yoysvhziai .gt_indent_4 {
+#kvhyvzvkff .gt_indent_4 {
   text-indent: 20px;
 }
 
-#yoysvhziai .gt_indent_5 {
+#kvhyvzvkff .gt_indent_5 {
   text-indent: 25px;
 }
 
-#yoysvhziai .katex-display {
+#kvhyvzvkff .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#yoysvhziai div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#kvhyvzvkff div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1040,7 +1100,7 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkoani District (2020-2021). Valu
 <th colspan="10" class="gt_heading gt_title gt_font_normal">Land Cover Transition Matrix</th>
 </tr>
 <tr class="gt_heading even">
-<th colspan="10" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border">Area (hectares) of each land cover type in 2020 converting to 2021 categories</th>
+<th colspan="10" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border">Area (hectares) of each land cover type in 2020 converting to 2021 categories in Mkuranga District</th>
 </tr>
 <tr class="gt_col_headings header">
 <th id="lc_2020" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">lc_2020</th>
@@ -1058,111 +1118,111 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkoani District (2020-2021). Valu
 <tbody class="gt_table_body">
 <tr class="odd">
 <td class="gt_row gt_left" headers="lc_2020" style="background-color: #E8F4F8">Tree cover</td>
-<td class="gt_row gt_right" headers="Tree cover" style="background-color: #E8F4F8">75.3</td>
-<td class="gt_row gt_right" headers="Shrubland" style="background-color: #E8F4F8">179.2</td>
-<td class="gt_row gt_right" headers="Grassland" style="background-color: #E8F4F8">1.9</td>
-<td class="gt_row gt_right" headers="Cropland" style="background-color: #E8F4F8">427.2</td>
-<td class="gt_row gt_right" headers="Built-up" style="background-color: #E8F4F8">1.5</td>
-<td class="gt_row gt_right" headers="Bare/sparse vegetation" style="background-color: #E8F4F8">50.5</td>
-<td class="gt_row gt_right" headers="Water bodies" style="background-color: #E8F4F8">17.5</td>
-<td class="gt_row gt_right" headers="Herbaceous wetland" style="background-color: #E8F4F8">254.7</td>
-<td class="gt_row gt_right" headers="Mangroves" style="background-color: #E8F4F8">15.4</td>
+<td class="gt_row gt_right" headers="Tree cover" style="background-color: #E8F4F8">1,554.6</td>
+<td class="gt_row gt_right" headers="Shrubland" style="background-color: #E8F4F8">213.9</td>
+<td class="gt_row gt_right" headers="Grassland" style="background-color: #E8F4F8">2.7</td>
+<td class="gt_row gt_right" headers="Cropland" style="background-color: #E8F4F8">801.9</td>
+<td class="gt_row gt_right" headers="Built-up" style="background-color: #E8F4F8">102.1</td>
+<td class="gt_row gt_right" headers="Bare/sparse vegetation" style="background-color: #E8F4F8">14.8</td>
+<td class="gt_row gt_right" headers="Water bodies" style="background-color: #E8F4F8">34.3</td>
+<td class="gt_row gt_right" headers="Herbaceous wetland" style="background-color: #E8F4F8">228.5</td>
+<td class="gt_row gt_right" headers="Mangroves" style="background-color: #E8F4F8">164.5</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left gt_striped" headers="lc_2020" style="background-color: #E8F4F8">Shrubland</td>
-<td class="gt_row gt_right gt_striped" headers="Tree cover" style="background-color: #E8F4F8">0.5</td>
-<td class="gt_row gt_right gt_striped" headers="Shrubland" style="background-color: #E8F4F8">1,042.2</td>
-<td class="gt_row gt_right gt_striped" headers="Grassland" style="background-color: #E8F4F8">0.0</td>
-<td class="gt_row gt_right gt_striped" headers="Cropland" style="background-color: #E8F4F8">10.6</td>
-<td class="gt_row gt_right gt_striped" headers="Built-up" style="background-color: #E8F4F8">0.0</td>
+<td class="gt_row gt_right gt_striped" headers="Tree cover" style="background-color: #E8F4F8">4.0</td>
+<td class="gt_row gt_right gt_striped" headers="Shrubland" style="background-color: #E8F4F8">319.2</td>
+<td class="gt_row gt_right gt_striped" headers="Grassland" style="background-color: #E8F4F8">0.1</td>
+<td class="gt_row gt_right gt_striped" headers="Cropland" style="background-color: #E8F4F8">35.5</td>
+<td class="gt_row gt_right gt_striped" headers="Built-up" style="background-color: #E8F4F8">0.2</td>
 <td class="gt_row gt_right gt_striped" headers="Bare/sparse vegetation" style="background-color: #E8F4F8">0.1</td>
-<td class="gt_row gt_right gt_striped" headers="Water bodies" style="background-color: #E8F4F8">0.0</td>
-<td class="gt_row gt_right gt_striped" headers="Herbaceous wetland" style="background-color: #E8F4F8">80.0</td>
-<td class="gt_row gt_right gt_striped" headers="Mangroves" style="background-color: #E8F4F8">2.2</td>
+<td class="gt_row gt_right gt_striped" headers="Water bodies" style="background-color: #E8F4F8">7.8</td>
+<td class="gt_row gt_right gt_striped" headers="Herbaceous wetland" style="background-color: #E8F4F8">58.9</td>
+<td class="gt_row gt_right gt_striped" headers="Mangroves" style="background-color: #E8F4F8">0.2</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="lc_2020" style="background-color: #E8F4F8">Grassland</td>
-<td class="gt_row gt_right" headers="Tree cover" style="background-color: #E8F4F8">0.0</td>
-<td class="gt_row gt_right" headers="Shrubland" style="background-color: #E8F4F8">0.5</td>
-<td class="gt_row gt_right" headers="Grassland" style="background-color: #E8F4F8">54.8</td>
-<td class="gt_row gt_right" headers="Cropland" style="background-color: #E8F4F8">77.9</td>
-<td class="gt_row gt_right" headers="Built-up" style="background-color: #E8F4F8">1.4</td>
-<td class="gt_row gt_right" headers="Bare/sparse vegetation" style="background-color: #E8F4F8">0.2</td>
-<td class="gt_row gt_right" headers="Water bodies" style="background-color: #E8F4F8">0.0</td>
-<td class="gt_row gt_right" headers="Herbaceous wetland" style="background-color: #E8F4F8">1.7</td>
-<td class="gt_row gt_right" headers="Mangroves" style="background-color: #E8F4F8">2.5</td>
+<td class="gt_row gt_right" headers="Tree cover" style="background-color: #E8F4F8">18.6</td>
+<td class="gt_row gt_right" headers="Shrubland" style="background-color: #E8F4F8">0.3</td>
+<td class="gt_row gt_right" headers="Grassland" style="background-color: #E8F4F8">57.9</td>
+<td class="gt_row gt_right" headers="Cropland" style="background-color: #E8F4F8">1,151.2</td>
+<td class="gt_row gt_right" headers="Built-up" style="background-color: #E8F4F8">80.4</td>
+<td class="gt_row gt_right" headers="Bare/sparse vegetation" style="background-color: #E8F4F8">1.1</td>
+<td class="gt_row gt_right" headers="Water bodies" style="background-color: #E8F4F8">8.2</td>
+<td class="gt_row gt_right" headers="Herbaceous wetland" style="background-color: #E8F4F8">75.0</td>
+<td class="gt_row gt_right" headers="Mangroves" style="background-color: #E8F4F8">5.6</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left gt_striped" headers="lc_2020" style="background-color: #E8F4F8">Cropland</td>
-<td class="gt_row gt_right gt_striped" headers="Tree cover" style="background-color: #E8F4F8">10.2</td>
-<td class="gt_row gt_right gt_striped" headers="Shrubland" style="background-color: #E8F4F8">23.8</td>
-<td class="gt_row gt_right gt_striped" headers="Grassland" style="background-color: #E8F4F8">279.6</td>
-<td class="gt_row gt_right gt_striped" headers="Cropland" style="background-color: #E8F4F8">8,194.5</td>
-<td class="gt_row gt_right gt_striped" headers="Built-up" style="background-color: #E8F4F8">8.6</td>
-<td class="gt_row gt_right gt_striped" headers="Bare/sparse vegetation" style="background-color: #E8F4F8">7.3</td>
-<td class="gt_row gt_right gt_striped" headers="Water bodies" style="background-color: #E8F4F8">347.4</td>
-<td class="gt_row gt_right gt_striped" headers="Herbaceous wetland" style="background-color: #E8F4F8">1,030.8</td>
-<td class="gt_row gt_right gt_striped" headers="Mangroves" style="background-color: #E8F4F8">7.3</td>
+<td class="gt_row gt_right gt_striped" headers="Tree cover" style="background-color: #E8F4F8">326.9</td>
+<td class="gt_row gt_right gt_striped" headers="Shrubland" style="background-color: #E8F4F8">27.3</td>
+<td class="gt_row gt_right gt_striped" headers="Grassland" style="background-color: #E8F4F8">243.4</td>
+<td class="gt_row gt_right gt_striped" headers="Cropland" style="background-color: #E8F4F8">99,861.7</td>
+<td class="gt_row gt_right gt_striped" headers="Built-up" style="background-color: #E8F4F8">794.9</td>
+<td class="gt_row gt_right gt_striped" headers="Bare/sparse vegetation" style="background-color: #E8F4F8">52.8</td>
+<td class="gt_row gt_right gt_striped" headers="Water bodies" style="background-color: #E8F4F8">1,398.4</td>
+<td class="gt_row gt_right gt_striped" headers="Herbaceous wetland" style="background-color: #E8F4F8">7,692.3</td>
+<td class="gt_row gt_right gt_striped" headers="Mangroves" style="background-color: #E8F4F8">10.0</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="lc_2020" style="background-color: #E8F4F8">Built-up</td>
-<td class="gt_row gt_right" headers="Tree cover" style="background-color: #E8F4F8">18.7</td>
+<td class="gt_row gt_right" headers="Tree cover" style="background-color: #E8F4F8">285.7</td>
 <td class="gt_row gt_right" headers="Shrubland" style="background-color: #E8F4F8">0.0</td>
-<td class="gt_row gt_right" headers="Grassland" style="background-color: #E8F4F8">31.3</td>
-<td class="gt_row gt_right" headers="Cropland" style="background-color: #E8F4F8">87.3</td>
-<td class="gt_row gt_right" headers="Built-up" style="background-color: #E8F4F8">185.3</td>
-<td class="gt_row gt_right" headers="Bare/sparse vegetation" style="background-color: #E8F4F8">24.0</td>
-<td class="gt_row gt_right" headers="Water bodies" style="background-color: #E8F4F8">2.2</td>
-<td class="gt_row gt_right" headers="Herbaceous wetland" style="background-color: #E8F4F8">9.9</td>
-<td class="gt_row gt_right" headers="Mangroves" style="background-color: #E8F4F8">260.6</td>
+<td class="gt_row gt_right" headers="Grassland" style="background-color: #E8F4F8">41.0</td>
+<td class="gt_row gt_right" headers="Cropland" style="background-color: #E8F4F8">1,462.1</td>
+<td class="gt_row gt_right" headers="Built-up" style="background-color: #E8F4F8">1,734.6</td>
+<td class="gt_row gt_right" headers="Bare/sparse vegetation" style="background-color: #E8F4F8">33.3</td>
+<td class="gt_row gt_right" headers="Water bodies" style="background-color: #E8F4F8">22.3</td>
+<td class="gt_row gt_right" headers="Herbaceous wetland" style="background-color: #E8F4F8">100.5</td>
+<td class="gt_row gt_right" headers="Mangroves" style="background-color: #E8F4F8">421.1</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left gt_striped" headers="lc_2020" style="background-color: #E8F4F8">Bare/sparse vegetation</td>
-<td class="gt_row gt_right gt_striped" headers="Tree cover" style="background-color: #E8F4F8">9.3</td>
-<td class="gt_row gt_right gt_striped" headers="Shrubland" style="background-color: #E8F4F8">0.5</td>
-<td class="gt_row gt_right gt_striped" headers="Grassland" style="background-color: #E8F4F8">13.7</td>
-<td class="gt_row gt_right gt_striped" headers="Cropland" style="background-color: #E8F4F8">157.2</td>
-<td class="gt_row gt_right gt_striped" headers="Built-up" style="background-color: #E8F4F8">50.6</td>
-<td class="gt_row gt_right gt_striped" headers="Bare/sparse vegetation" style="background-color: #E8F4F8">11,206.4</td>
-<td class="gt_row gt_right gt_striped" headers="Water bodies" style="background-color: #E8F4F8">24.9</td>
-<td class="gt_row gt_right gt_striped" headers="Herbaceous wetland" style="background-color: #E8F4F8">1,027.9</td>
-<td class="gt_row gt_right gt_striped" headers="Mangroves" style="background-color: #E8F4F8">371.4</td>
+<td class="gt_row gt_right gt_striped" headers="Tree cover" style="background-color: #E8F4F8">56.7</td>
+<td class="gt_row gt_right gt_striped" headers="Shrubland" style="background-color: #E8F4F8">0.0</td>
+<td class="gt_row gt_right gt_striped" headers="Grassland" style="background-color: #E8F4F8">0.5</td>
+<td class="gt_row gt_right gt_striped" headers="Cropland" style="background-color: #E8F4F8">400.5</td>
+<td class="gt_row gt_right gt_striped" headers="Built-up" style="background-color: #E8F4F8">228.5</td>
+<td class="gt_row gt_right gt_striped" headers="Bare/sparse vegetation" style="background-color: #E8F4F8">14,796.6</td>
+<td class="gt_row gt_right gt_striped" headers="Water bodies" style="background-color: #E8F4F8">65.8</td>
+<td class="gt_row gt_right gt_striped" headers="Herbaceous wetland" style="background-color: #E8F4F8">676.6</td>
+<td class="gt_row gt_right gt_striped" headers="Mangroves" style="background-color: #E8F4F8">257.4</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="lc_2020" style="background-color: #E8F4F8">Water bodies</td>
-<td class="gt_row gt_right" headers="Tree cover" style="background-color: #E8F4F8">0.7</td>
-<td class="gt_row gt_right" headers="Shrubland" style="background-color: #E8F4F8">0.9</td>
-<td class="gt_row gt_right" headers="Grassland" style="background-color: #E8F4F8">3.5</td>
-<td class="gt_row gt_right" headers="Cropland" style="background-color: #E8F4F8">680.8</td>
-<td class="gt_row gt_right" headers="Built-up" style="background-color: #E8F4F8">0.3</td>
-<td class="gt_row gt_right" headers="Bare/sparse vegetation" style="background-color: #E8F4F8">7.3</td>
-<td class="gt_row gt_right" headers="Water bodies" style="background-color: #E8F4F8">559.7</td>
-<td class="gt_row gt_right" headers="Herbaceous wetland" style="background-color: #E8F4F8">302.8</td>
-<td class="gt_row gt_right" headers="Mangroves" style="background-color: #E8F4F8">1.8</td>
+<td class="gt_row gt_right" headers="Tree cover" style="background-color: #E8F4F8">4.2</td>
+<td class="gt_row gt_right" headers="Shrubland" style="background-color: #E8F4F8">16.6</td>
+<td class="gt_row gt_right" headers="Grassland" style="background-color: #E8F4F8">19.0</td>
+<td class="gt_row gt_right" headers="Cropland" style="background-color: #E8F4F8">11,031.4</td>
+<td class="gt_row gt_right" headers="Built-up" style="background-color: #E8F4F8">26.6</td>
+<td class="gt_row gt_right" headers="Bare/sparse vegetation" style="background-color: #E8F4F8">22.7</td>
+<td class="gt_row gt_right" headers="Water bodies" style="background-color: #E8F4F8">6,471.5</td>
+<td class="gt_row gt_right" headers="Herbaceous wetland" style="background-color: #E8F4F8">17,094.2</td>
+<td class="gt_row gt_right" headers="Mangroves" style="background-color: #E8F4F8">0.4</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left gt_striped" headers="lc_2020" style="background-color: #E8F4F8">Herbaceous wetland</td>
-<td class="gt_row gt_right gt_striped" headers="Tree cover" style="background-color: #E8F4F8">7.3</td>
-<td class="gt_row gt_right gt_striped" headers="Shrubland" style="background-color: #E8F4F8">450.0</td>
-<td class="gt_row gt_right gt_striped" headers="Grassland" style="background-color: #E8F4F8">277.5</td>
-<td class="gt_row gt_right gt_striped" headers="Cropland" style="background-color: #E8F4F8">4,545.5</td>
-<td class="gt_row gt_right gt_striped" headers="Built-up" style="background-color: #E8F4F8">0.5</td>
-<td class="gt_row gt_right gt_striped" headers="Bare/sparse vegetation" style="background-color: #E8F4F8">62.9</td>
-<td class="gt_row gt_right gt_striped" headers="Water bodies" style="background-color: #E8F4F8">164.8</td>
-<td class="gt_row gt_right gt_striped" headers="Herbaceous wetland" style="background-color: #E8F4F8">57,254.8</td>
-<td class="gt_row gt_right gt_striped" headers="Mangroves" style="background-color: #E8F4F8">24.0</td>
+<td class="gt_row gt_right gt_striped" headers="Tree cover" style="background-color: #E8F4F8">1.3</td>
+<td class="gt_row gt_right gt_striped" headers="Shrubland" style="background-color: #E8F4F8">107.3</td>
+<td class="gt_row gt_right gt_striped" headers="Grassland" style="background-color: #E8F4F8">11.2</td>
+<td class="gt_row gt_right gt_striped" headers="Cropland" style="background-color: #E8F4F8">8,862.6</td>
+<td class="gt_row gt_right gt_striped" headers="Built-up" style="background-color: #E8F4F8">76.4</td>
+<td class="gt_row gt_right gt_striped" headers="Bare/sparse vegetation" style="background-color: #E8F4F8">27.8</td>
+<td class="gt_row gt_right gt_striped" headers="Water bodies" style="background-color: #E8F4F8">1,759.5</td>
+<td class="gt_row gt_right gt_striped" headers="Herbaceous wetland" style="background-color: #E8F4F8">104,319.0</td>
+<td class="gt_row gt_right gt_striped" headers="Mangroves" style="background-color: #E8F4F8">0.7</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="lc_2020" style="background-color: #E8F4F8">Mangroves</td>
-<td class="gt_row gt_right" headers="Tree cover" style="background-color: #E8F4F8">26.8</td>
-<td class="gt_row gt_right" headers="Shrubland" style="background-color: #E8F4F8">0.2</td>
-<td class="gt_row gt_right" headers="Grassland" style="background-color: #E8F4F8">0.8</td>
-<td class="gt_row gt_right" headers="Cropland" style="background-color: #E8F4F8">47.3</td>
-<td class="gt_row gt_right" headers="Built-up" style="background-color: #E8F4F8">97.5</td>
-<td class="gt_row gt_right" headers="Bare/sparse vegetation" style="background-color: #E8F4F8">80.0</td>
-<td class="gt_row gt_right" headers="Water bodies" style="background-color: #E8F4F8">9.1</td>
-<td class="gt_row gt_right" headers="Herbaceous wetland" style="background-color: #E8F4F8">69.6</td>
-<td class="gt_row gt_right" headers="Mangroves" style="background-color: #E8F4F8">91,272.7</td>
+<td class="gt_row gt_right" headers="Tree cover" style="background-color: #E8F4F8">200.4</td>
+<td class="gt_row gt_right" headers="Shrubland" style="background-color: #E8F4F8">0.0</td>
+<td class="gt_row gt_right" headers="Grassland" style="background-color: #E8F4F8">0.0</td>
+<td class="gt_row gt_right" headers="Cropland" style="background-color: #E8F4F8">29.1</td>
+<td class="gt_row gt_right" headers="Built-up" style="background-color: #E8F4F8">203.4</td>
+<td class="gt_row gt_right" headers="Bare/sparse vegetation" style="background-color: #E8F4F8">23.4</td>
+<td class="gt_row gt_right" headers="Water bodies" style="background-color: #E8F4F8">0.3</td>
+<td class="gt_row gt_right" headers="Herbaceous wetland" style="background-color: #E8F4F8">1.6</td>
+<td class="gt_row gt_right" headers="Mangroves" style="background-color: #E8F4F8">160,242.6</td>
 </tr>
 </tbody>
 </table>
@@ -1173,50 +1233,50 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkoani District (2020-2021). Valu
 </figure>
 </div>
 </div>
-<p><strong>Interpreting the transition matrix:</strong> Read each row to understand what happened to that 2020 land cover type. For instance, the “Tree cover” row shows how forest pixels were distributed across different categories in 2021. The largest value in that row indicates the most common fate of forests. Summing across a row gives the total area of that land cover type in 2020; summing down a column gives the total area of that type in 2021. Values on the diagonal represent stability—areas where land cover persisted unchanged and therefore represent the landscape’s resilience to conversion.</p>
+<p><strong>Interpreting the transition matrix:</strong> Read each row to understand what happened to that 2020 land cover type in Mkuranga. For instance, the “Tree cover” row shows how forest pixels were distributed across different categories in 2021. The largest value in that row indicates the most common fate of forests—whether persistence, conversion to agriculture, or other uses. Summing across a row gives the total area of that land cover type in 2020; summing down a column gives the total area of that type in 2021. Values on the diagonal represent stability—areas where land cover persisted unchanged and therefore represent the landscape’s resilience to conversion.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>change_ha <span class="sc">|&gt;</span> </span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">round</span>(<span class="dv">1</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as_tibble</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="st">'x2020'</span> <span class="ot">=</span> labels_lulc, <span class="at">.before =</span> <span class="st">`</span><span class="at">Tree cover</span><span class="st">`</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_longer</span>(<span class="sc">-</span>x2020, <span class="at">names_to =</span> <span class="st">'x2021'</span>, <span class="at">values_to =</span> <span class="st">'area_ha'</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    gt<span class="sc">::</span><span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    gt<span class="sc">::</span><span class="fu">opt_stylize</span>(<span class="at">style =</span> <span class="dv">1</span>) <span class="sc">|&gt;</span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    gt<span class="sc">::</span><span class="fu">fmt_number</span>(<span class="at">columns =</span> <span class="sc">-</span>area_ha, <span class="at">decimals =</span> <span class="dv">1</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    gt<span class="sc">::</span><span class="fu">cols_label</span>(</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">x2020 =</span> <span class="st">"2020"</span>,</span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">x2021 =</span> <span class="st">"2021"</span>,</span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>      <span class="at">area_ha =</span> <span class="st">"Area (hectares)"</span></span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span> </span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    gt<span class="sc">::</span><span class="fu">tab_spanner</span>(<span class="at">columns =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="at">label =</span> <span class="st">"Land Cover"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>    gt<span class="sc">::</span><span class="fu">fmt_number</span>(<span class="at">columns =</span> area_ha, <span class="at">decimals =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>change_ha <span class="sc">|&gt;</span> </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">round</span>(<span class="dv">1</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as_tibble</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="st">'x2020'</span> <span class="ot">=</span> labels_lulc, <span class="at">.before =</span> <span class="st">`</span><span class="at">Tree cover</span><span class="st">`</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_longer</span>(<span class="sc">-</span>x2020, <span class="at">names_to =</span> <span class="st">'x2021'</span>, <span class="at">values_to =</span> <span class="st">'area_ha'</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    gt<span class="sc">::</span><span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    gt<span class="sc">::</span><span class="fu">opt_stylize</span>(<span class="at">style =</span> <span class="dv">1</span>) <span class="sc">|&gt;</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    gt<span class="sc">::</span><span class="fu">fmt_number</span>(<span class="at">columns =</span> <span class="sc">-</span>area_ha, <span class="at">decimals =</span> <span class="dv">1</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    gt<span class="sc">::</span><span class="fu">cols_label</span>(</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">x2020 =</span> <span class="st">"2020"</span>,</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">x2021 =</span> <span class="st">"2021"</span>,</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>      <span class="at">area_ha =</span> <span class="st">"Area (hectares)"</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span> </span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>    gt<span class="sc">::</span><span class="fu">tab_spanner</span>(<span class="at">columns =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="at">label =</span> <span class="st">"Land Cover"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>    gt<span class="sc">::</span><span class="fu">fmt_number</span>(<span class="at">columns =</span> area_ha, <span class="at">decimals =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div id="tbl-transition-matrix-long" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-transition-matrix-long-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;2: Long-Format Land Cover Transition Matrix for Mkoani District (2020-2021). Each row represents a 2020 land cover type (x2020), and each column represents the corresponding 2021 outcome (x2021). The area_ha column quantifies the area in hectares transitioning from each 2020 category to each 2021 category.
+Table&nbsp;2: Detailed Land Cover Transitions for Mkuranga District (2020-2021). Each row shows a specific transition from a 2020 land cover type to a 2021 outcome, with the corresponding area in hectares. This format facilitates filtering to identify specific conversion pathways of interest—for example, finding all areas converted from Forest to Cropland, or from Mangrove to other land cover types.
 </figcaption>
 <div aria-describedby="tbl-transition-matrix-long-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="qepvahmczf" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#qepvahmczf table {
+<div id="sqdoudjoul" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#sqdoudjoul table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#qepvahmczf thead, #qepvahmczf tbody, #qepvahmczf tfoot, #qepvahmczf tr, #qepvahmczf td, #qepvahmczf th {
+#sqdoudjoul thead, #sqdoudjoul tbody, #sqdoudjoul tfoot, #sqdoudjoul tr, #sqdoudjoul td, #sqdoudjoul th {
   border-style: none;
 }
 
-#qepvahmczf p {
+#sqdoudjoul p {
   margin: 0;
   padding: 0;
 }
 
-#qepvahmczf .gt_table {
+#sqdoudjoul .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1242,12 +1302,12 @@ Table&nbsp;2: Long-Format Land Cover Transition Matrix for Mkoani District (2020
   border-left-color: #D3D3D3;
 }
 
-#qepvahmczf .gt_caption {
+#sqdoudjoul .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#qepvahmczf .gt_title {
+#sqdoudjoul .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1259,7 +1319,7 @@ Table&nbsp;2: Long-Format Land Cover Transition Matrix for Mkoani District (2020
   border-bottom-width: 0;
 }
 
-#qepvahmczf .gt_subtitle {
+#sqdoudjoul .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1271,7 +1331,7 @@ Table&nbsp;2: Long-Format Land Cover Transition Matrix for Mkoani District (2020
   border-top-width: 0;
 }
 
-#qepvahmczf .gt_heading {
+#sqdoudjoul .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1283,13 +1343,13 @@ Table&nbsp;2: Long-Format Land Cover Transition Matrix for Mkoani District (2020
   border-right-color: #D3D3D3;
 }
 
-#qepvahmczf .gt_bottom_border {
+#sqdoudjoul .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #0076BA;
 }
 
-#qepvahmczf .gt_col_headings {
+#sqdoudjoul .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #0076BA;
@@ -1304,7 +1364,7 @@ Table&nbsp;2: Long-Format Land Cover Transition Matrix for Mkoani District (2020
   border-right-color: #D3D3D3;
 }
 
-#qepvahmczf .gt_col_heading {
+#sqdoudjoul .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1324,7 +1384,7 @@ Table&nbsp;2: Long-Format Land Cover Transition Matrix for Mkoani District (2020
   overflow-x: hidden;
 }
 
-#qepvahmczf .gt_column_spanner_outer {
+#sqdoudjoul .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1336,15 +1396,15 @@ Table&nbsp;2: Long-Format Land Cover Transition Matrix for Mkoani District (2020
   padding-right: 4px;
 }
 
-#qepvahmczf .gt_column_spanner_outer:first-child {
+#sqdoudjoul .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#qepvahmczf .gt_column_spanner_outer:last-child {
+#sqdoudjoul .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#qepvahmczf .gt_column_spanner {
+#sqdoudjoul .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #0076BA;
@@ -1356,11 +1416,11 @@ Table&nbsp;2: Long-Format Land Cover Transition Matrix for Mkoani District (2020
   width: 100%;
 }
 
-#qepvahmczf .gt_spanner_row {
+#sqdoudjoul .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#qepvahmczf .gt_group_heading {
+#sqdoudjoul .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1386,7 +1446,7 @@ Table&nbsp;2: Long-Format Land Cover Transition Matrix for Mkoani District (2020
   text-align: left;
 }
 
-#qepvahmczf .gt_empty_group_heading {
+#sqdoudjoul .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1401,15 +1461,15 @@ Table&nbsp;2: Long-Format Land Cover Transition Matrix for Mkoani District (2020
   vertical-align: middle;
 }
 
-#qepvahmczf .gt_from_md > :first-child {
+#sqdoudjoul .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#qepvahmczf .gt_from_md > :last-child {
+#sqdoudjoul .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#qepvahmczf .gt_row {
+#sqdoudjoul .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1428,7 +1488,7 @@ Table&nbsp;2: Long-Format Land Cover Transition Matrix for Mkoani District (2020
   overflow-x: hidden;
 }
 
-#qepvahmczf .gt_stub {
+#sqdoudjoul .gt_stub {
   color: #FFFFFF;
   background-color: #0076BA;
   font-size: 100%;
@@ -1441,7 +1501,7 @@ Table&nbsp;2: Long-Format Land Cover Transition Matrix for Mkoani District (2020
   padding-right: 5px;
 }
 
-#qepvahmczf .gt_stub_row_group {
+#sqdoudjoul .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1455,15 +1515,15 @@ Table&nbsp;2: Long-Format Land Cover Transition Matrix for Mkoani District (2020
   vertical-align: top;
 }
 
-#qepvahmczf .gt_row_group_first td {
+#sqdoudjoul .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#qepvahmczf .gt_row_group_first th {
+#sqdoudjoul .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#qepvahmczf .gt_summary_row {
+#sqdoudjoul .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1473,16 +1533,16 @@ Table&nbsp;2: Long-Format Land Cover Transition Matrix for Mkoani District (2020
   padding-right: 5px;
 }
 
-#qepvahmczf .gt_first_summary_row {
+#sqdoudjoul .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #0076BA;
 }
 
-#qepvahmczf .gt_first_summary_row.thick {
+#sqdoudjoul .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#qepvahmczf .gt_last_summary_row {
+#sqdoudjoul .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1492,7 +1552,7 @@ Table&nbsp;2: Long-Format Land Cover Transition Matrix for Mkoani District (2020
   border-bottom-color: #0076BA;
 }
 
-#qepvahmczf .gt_grand_summary_row {
+#sqdoudjoul .gt_grand_summary_row {
   color: #333333;
   background-color: #89D3FE;
   text-transform: inherit;
@@ -1502,7 +1562,7 @@ Table&nbsp;2: Long-Format Land Cover Transition Matrix for Mkoani District (2020
   padding-right: 5px;
 }
 
-#qepvahmczf .gt_first_grand_summary_row {
+#sqdoudjoul .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1512,7 +1572,7 @@ Table&nbsp;2: Long-Format Land Cover Transition Matrix for Mkoani District (2020
   border-top-color: #0076BA;
 }
 
-#qepvahmczf .gt_last_grand_summary_row_top {
+#sqdoudjoul .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1522,11 +1582,11 @@ Table&nbsp;2: Long-Format Land Cover Transition Matrix for Mkoani District (2020
   border-bottom-color: #0076BA;
 }
 
-#qepvahmczf .gt_striped {
+#sqdoudjoul .gt_striped {
   background-color: #F4F4F4;
 }
 
-#qepvahmczf .gt_table_body {
+#sqdoudjoul .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #0076BA;
@@ -1535,7 +1595,7 @@ Table&nbsp;2: Long-Format Land Cover Transition Matrix for Mkoani District (2020
   border-bottom-color: #0076BA;
 }
 
-#qepvahmczf .gt_footnotes {
+#sqdoudjoul .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1549,7 +1609,7 @@ Table&nbsp;2: Long-Format Land Cover Transition Matrix for Mkoani District (2020
   border-right-color: #D3D3D3;
 }
 
-#qepvahmczf .gt_footnote {
+#sqdoudjoul .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1558,7 +1618,7 @@ Table&nbsp;2: Long-Format Land Cover Transition Matrix for Mkoani District (2020
   padding-right: 5px;
 }
 
-#qepvahmczf .gt_sourcenotes {
+#sqdoudjoul .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1572,7 +1632,7 @@ Table&nbsp;2: Long-Format Land Cover Transition Matrix for Mkoani District (2020
   border-right-color: #D3D3D3;
 }
 
-#qepvahmczf .gt_sourcenote {
+#sqdoudjoul .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1580,72 +1640,72 @@ Table&nbsp;2: Long-Format Land Cover Transition Matrix for Mkoani District (2020
   padding-right: 5px;
 }
 
-#qepvahmczf .gt_left {
+#sqdoudjoul .gt_left {
   text-align: left;
 }
 
-#qepvahmczf .gt_center {
+#sqdoudjoul .gt_center {
   text-align: center;
 }
 
-#qepvahmczf .gt_right {
+#sqdoudjoul .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#qepvahmczf .gt_font_normal {
+#sqdoudjoul .gt_font_normal {
   font-weight: normal;
 }
 
-#qepvahmczf .gt_font_bold {
+#sqdoudjoul .gt_font_bold {
   font-weight: bold;
 }
 
-#qepvahmczf .gt_font_italic {
+#sqdoudjoul .gt_font_italic {
   font-style: italic;
 }
 
-#qepvahmczf .gt_super {
+#sqdoudjoul .gt_super {
   font-size: 65%;
 }
 
-#qepvahmczf .gt_footnote_marks {
+#sqdoudjoul .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#qepvahmczf .gt_asterisk {
+#sqdoudjoul .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#qepvahmczf .gt_indent_1 {
+#sqdoudjoul .gt_indent_1 {
   text-indent: 5px;
 }
 
-#qepvahmczf .gt_indent_2 {
+#sqdoudjoul .gt_indent_2 {
   text-indent: 10px;
 }
 
-#qepvahmczf .gt_indent_3 {
+#sqdoudjoul .gt_indent_3 {
   text-indent: 15px;
 }
 
-#qepvahmczf .gt_indent_4 {
+#sqdoudjoul .gt_indent_4 {
   text-indent: 20px;
 }
 
-#qepvahmczf .gt_indent_5 {
+#sqdoudjoul .gt_indent_5 {
   text-indent: 25px;
 }
 
-#qepvahmczf .katex-display {
+#sqdoudjoul .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#qepvahmczf div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#sqdoudjoul div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1672,72 +1732,72 @@ Land Cover
 <tr class="odd">
 <td class="gt_row gt_left" headers="x2020">Tree cover</td>
 <td class="gt_row gt_left" headers="x2021">Tree cover</td>
-<td class="gt_row gt_right" headers="area_ha">75.3</td>
+<td class="gt_row gt_right" headers="area_ha">1,554.6</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left gt_striped" headers="x2020">Tree cover</td>
 <td class="gt_row gt_left gt_striped" headers="x2021">Shrubland</td>
-<td class="gt_row gt_right gt_striped" headers="area_ha">179.2</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">213.9</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="x2020">Tree cover</td>
 <td class="gt_row gt_left" headers="x2021">Grassland</td>
-<td class="gt_row gt_right" headers="area_ha">1.9</td>
+<td class="gt_row gt_right" headers="area_ha">2.7</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left gt_striped" headers="x2020">Tree cover</td>
 <td class="gt_row gt_left gt_striped" headers="x2021">Cropland</td>
-<td class="gt_row gt_right gt_striped" headers="area_ha">427.2</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">801.9</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="x2020">Tree cover</td>
 <td class="gt_row gt_left" headers="x2021">Built-up</td>
-<td class="gt_row gt_right" headers="area_ha">1.5</td>
+<td class="gt_row gt_right" headers="area_ha">102.1</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left gt_striped" headers="x2020">Tree cover</td>
 <td class="gt_row gt_left gt_striped" headers="x2021">Bare/sparse vegetation</td>
-<td class="gt_row gt_right gt_striped" headers="area_ha">50.5</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">14.8</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="x2020">Tree cover</td>
 <td class="gt_row gt_left" headers="x2021">Water bodies</td>
-<td class="gt_row gt_right" headers="area_ha">17.5</td>
+<td class="gt_row gt_right" headers="area_ha">34.3</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left gt_striped" headers="x2020">Tree cover</td>
 <td class="gt_row gt_left gt_striped" headers="x2021">Herbaceous wetland</td>
-<td class="gt_row gt_right gt_striped" headers="area_ha">254.7</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">228.5</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="x2020">Tree cover</td>
 <td class="gt_row gt_left" headers="x2021">Mangroves</td>
-<td class="gt_row gt_right" headers="area_ha">15.4</td>
+<td class="gt_row gt_right" headers="area_ha">164.5</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left gt_striped" headers="x2020">Shrubland</td>
 <td class="gt_row gt_left gt_striped" headers="x2021">Tree cover</td>
-<td class="gt_row gt_right gt_striped" headers="area_ha">0.5</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">4.0</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="x2020">Shrubland</td>
 <td class="gt_row gt_left" headers="x2021">Shrubland</td>
-<td class="gt_row gt_right" headers="area_ha">1,042.2</td>
+<td class="gt_row gt_right" headers="area_ha">319.2</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left gt_striped" headers="x2020">Shrubland</td>
 <td class="gt_row gt_left gt_striped" headers="x2021">Grassland</td>
-<td class="gt_row gt_right gt_striped" headers="area_ha">0.0</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">0.1</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="x2020">Shrubland</td>
 <td class="gt_row gt_left" headers="x2021">Cropland</td>
-<td class="gt_row gt_right" headers="area_ha">10.6</td>
+<td class="gt_row gt_right" headers="area_ha">35.5</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left gt_striped" headers="x2020">Shrubland</td>
 <td class="gt_row gt_left gt_striped" headers="x2021">Built-up</td>
-<td class="gt_row gt_right gt_striped" headers="area_ha">0.0</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">0.2</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="x2020">Shrubland</td>
@@ -1747,112 +1807,112 @@ Land Cover
 <tr class="even">
 <td class="gt_row gt_left gt_striped" headers="x2020">Shrubland</td>
 <td class="gt_row gt_left gt_striped" headers="x2021">Water bodies</td>
-<td class="gt_row gt_right gt_striped" headers="area_ha">0.0</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">7.8</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="x2020">Shrubland</td>
 <td class="gt_row gt_left" headers="x2021">Herbaceous wetland</td>
-<td class="gt_row gt_right" headers="area_ha">80.0</td>
+<td class="gt_row gt_right" headers="area_ha">58.9</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left gt_striped" headers="x2020">Shrubland</td>
 <td class="gt_row gt_left gt_striped" headers="x2021">Mangroves</td>
-<td class="gt_row gt_right gt_striped" headers="area_ha">2.2</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="x2020">Grassland</td>
-<td class="gt_row gt_left" headers="x2021">Tree cover</td>
-<td class="gt_row gt_right" headers="area_ha">0.0</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left gt_striped" headers="x2020">Grassland</td>
-<td class="gt_row gt_left gt_striped" headers="x2021">Shrubland</td>
-<td class="gt_row gt_right gt_striped" headers="area_ha">0.5</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="x2020">Grassland</td>
-<td class="gt_row gt_left" headers="x2021">Grassland</td>
-<td class="gt_row gt_right" headers="area_ha">54.8</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left gt_striped" headers="x2020">Grassland</td>
-<td class="gt_row gt_left gt_striped" headers="x2021">Cropland</td>
-<td class="gt_row gt_right gt_striped" headers="area_ha">77.9</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="x2020">Grassland</td>
-<td class="gt_row gt_left" headers="x2021">Built-up</td>
-<td class="gt_row gt_right" headers="area_ha">1.4</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left gt_striped" headers="x2020">Grassland</td>
-<td class="gt_row gt_left gt_striped" headers="x2021">Bare/sparse vegetation</td>
 <td class="gt_row gt_right gt_striped" headers="area_ha">0.2</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="x2020">Grassland</td>
+<td class="gt_row gt_left" headers="x2021">Tree cover</td>
+<td class="gt_row gt_right" headers="area_ha">18.6</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="x2020">Grassland</td>
+<td class="gt_row gt_left gt_striped" headers="x2021">Shrubland</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">0.3</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="x2020">Grassland</td>
+<td class="gt_row gt_left" headers="x2021">Grassland</td>
+<td class="gt_row gt_right" headers="area_ha">57.9</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="x2020">Grassland</td>
+<td class="gt_row gt_left gt_striped" headers="x2021">Cropland</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">1,151.2</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="x2020">Grassland</td>
+<td class="gt_row gt_left" headers="x2021">Built-up</td>
+<td class="gt_row gt_right" headers="area_ha">80.4</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="x2020">Grassland</td>
+<td class="gt_row gt_left gt_striped" headers="x2021">Bare/sparse vegetation</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">1.1</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="x2020">Grassland</td>
 <td class="gt_row gt_left" headers="x2021">Water bodies</td>
-<td class="gt_row gt_right" headers="area_ha">0.0</td>
+<td class="gt_row gt_right" headers="area_ha">8.2</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left gt_striped" headers="x2020">Grassland</td>
 <td class="gt_row gt_left gt_striped" headers="x2021">Herbaceous wetland</td>
-<td class="gt_row gt_right gt_striped" headers="area_ha">1.7</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">75.0</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="x2020">Grassland</td>
 <td class="gt_row gt_left" headers="x2021">Mangroves</td>
-<td class="gt_row gt_right" headers="area_ha">2.5</td>
+<td class="gt_row gt_right" headers="area_ha">5.6</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left gt_striped" headers="x2020">Cropland</td>
 <td class="gt_row gt_left gt_striped" headers="x2021">Tree cover</td>
-<td class="gt_row gt_right gt_striped" headers="area_ha">10.2</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">326.9</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="x2020">Cropland</td>
 <td class="gt_row gt_left" headers="x2021">Shrubland</td>
-<td class="gt_row gt_right" headers="area_ha">23.8</td>
+<td class="gt_row gt_right" headers="area_ha">27.3</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left gt_striped" headers="x2020">Cropland</td>
 <td class="gt_row gt_left gt_striped" headers="x2021">Grassland</td>
-<td class="gt_row gt_right gt_striped" headers="area_ha">279.6</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">243.4</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="x2020">Cropland</td>
 <td class="gt_row gt_left" headers="x2021">Cropland</td>
-<td class="gt_row gt_right" headers="area_ha">8,194.5</td>
+<td class="gt_row gt_right" headers="area_ha">99,861.7</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left gt_striped" headers="x2020">Cropland</td>
 <td class="gt_row gt_left gt_striped" headers="x2021">Built-up</td>
-<td class="gt_row gt_right gt_striped" headers="area_ha">8.6</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">794.9</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="x2020">Cropland</td>
 <td class="gt_row gt_left" headers="x2021">Bare/sparse vegetation</td>
-<td class="gt_row gt_right" headers="area_ha">7.3</td>
+<td class="gt_row gt_right" headers="area_ha">52.8</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left gt_striped" headers="x2020">Cropland</td>
 <td class="gt_row gt_left gt_striped" headers="x2021">Water bodies</td>
-<td class="gt_row gt_right gt_striped" headers="area_ha">347.4</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">1,398.4</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="x2020">Cropland</td>
 <td class="gt_row gt_left" headers="x2021">Herbaceous wetland</td>
-<td class="gt_row gt_right" headers="area_ha">1,030.8</td>
+<td class="gt_row gt_right" headers="area_ha">7,692.3</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left gt_striped" headers="x2020">Cropland</td>
 <td class="gt_row gt_left gt_striped" headers="x2021">Mangroves</td>
-<td class="gt_row gt_right gt_striped" headers="area_ha">7.3</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">10.0</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="x2020">Built-up</td>
 <td class="gt_row gt_left" headers="x2021">Tree cover</td>
-<td class="gt_row gt_right" headers="area_ha">18.7</td>
+<td class="gt_row gt_right" headers="area_ha">285.7</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left gt_striped" headers="x2020">Built-up</td>
@@ -1862,217 +1922,217 @@ Land Cover
 <tr class="odd">
 <td class="gt_row gt_left" headers="x2020">Built-up</td>
 <td class="gt_row gt_left" headers="x2021">Grassland</td>
-<td class="gt_row gt_right" headers="area_ha">31.3</td>
+<td class="gt_row gt_right" headers="area_ha">41.0</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left gt_striped" headers="x2020">Built-up</td>
 <td class="gt_row gt_left gt_striped" headers="x2021">Cropland</td>
-<td class="gt_row gt_right gt_striped" headers="area_ha">87.3</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">1,462.1</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="x2020">Built-up</td>
 <td class="gt_row gt_left" headers="x2021">Built-up</td>
-<td class="gt_row gt_right" headers="area_ha">185.3</td>
+<td class="gt_row gt_right" headers="area_ha">1,734.6</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left gt_striped" headers="x2020">Built-up</td>
 <td class="gt_row gt_left gt_striped" headers="x2021">Bare/sparse vegetation</td>
-<td class="gt_row gt_right gt_striped" headers="area_ha">24.0</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">33.3</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="x2020">Built-up</td>
 <td class="gt_row gt_left" headers="x2021">Water bodies</td>
-<td class="gt_row gt_right" headers="area_ha">2.2</td>
+<td class="gt_row gt_right" headers="area_ha">22.3</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left gt_striped" headers="x2020">Built-up</td>
 <td class="gt_row gt_left gt_striped" headers="x2021">Herbaceous wetland</td>
-<td class="gt_row gt_right gt_striped" headers="area_ha">9.9</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">100.5</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="x2020">Built-up</td>
 <td class="gt_row gt_left" headers="x2021">Mangroves</td>
-<td class="gt_row gt_right" headers="area_ha">260.6</td>
+<td class="gt_row gt_right" headers="area_ha">421.1</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left gt_striped" headers="x2020">Bare/sparse vegetation</td>
 <td class="gt_row gt_left gt_striped" headers="x2021">Tree cover</td>
-<td class="gt_row gt_right gt_striped" headers="area_ha">9.3</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">56.7</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="x2020">Bare/sparse vegetation</td>
 <td class="gt_row gt_left" headers="x2021">Shrubland</td>
-<td class="gt_row gt_right" headers="area_ha">0.5</td>
+<td class="gt_row gt_right" headers="area_ha">0.0</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left gt_striped" headers="x2020">Bare/sparse vegetation</td>
 <td class="gt_row gt_left gt_striped" headers="x2021">Grassland</td>
-<td class="gt_row gt_right gt_striped" headers="area_ha">13.7</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="x2020">Bare/sparse vegetation</td>
-<td class="gt_row gt_left" headers="x2021">Cropland</td>
-<td class="gt_row gt_right" headers="area_ha">157.2</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left gt_striped" headers="x2020">Bare/sparse vegetation</td>
-<td class="gt_row gt_left gt_striped" headers="x2021">Built-up</td>
-<td class="gt_row gt_right gt_striped" headers="area_ha">50.6</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="x2020">Bare/sparse vegetation</td>
-<td class="gt_row gt_left" headers="x2021">Bare/sparse vegetation</td>
-<td class="gt_row gt_right" headers="area_ha">11,206.4</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left gt_striped" headers="x2020">Bare/sparse vegetation</td>
-<td class="gt_row gt_left gt_striped" headers="x2021">Water bodies</td>
-<td class="gt_row gt_right gt_striped" headers="area_ha">24.9</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="x2020">Bare/sparse vegetation</td>
-<td class="gt_row gt_left" headers="x2021">Herbaceous wetland</td>
-<td class="gt_row gt_right" headers="area_ha">1,027.9</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left gt_striped" headers="x2020">Bare/sparse vegetation</td>
-<td class="gt_row gt_left gt_striped" headers="x2021">Mangroves</td>
-<td class="gt_row gt_right gt_striped" headers="area_ha">371.4</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="x2020">Water bodies</td>
-<td class="gt_row gt_left" headers="x2021">Tree cover</td>
-<td class="gt_row gt_right" headers="area_ha">0.7</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left gt_striped" headers="x2020">Water bodies</td>
-<td class="gt_row gt_left gt_striped" headers="x2021">Shrubland</td>
-<td class="gt_row gt_right gt_striped" headers="area_ha">0.9</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="x2020">Water bodies</td>
-<td class="gt_row gt_left" headers="x2021">Grassland</td>
-<td class="gt_row gt_right" headers="area_ha">3.5</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left gt_striped" headers="x2020">Water bodies</td>
-<td class="gt_row gt_left gt_striped" headers="x2021">Cropland</td>
-<td class="gt_row gt_right gt_striped" headers="area_ha">680.8</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="x2020">Water bodies</td>
-<td class="gt_row gt_left" headers="x2021">Built-up</td>
-<td class="gt_row gt_right" headers="area_ha">0.3</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left gt_striped" headers="x2020">Water bodies</td>
-<td class="gt_row gt_left gt_striped" headers="x2021">Bare/sparse vegetation</td>
-<td class="gt_row gt_right gt_striped" headers="area_ha">7.3</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="x2020">Water bodies</td>
-<td class="gt_row gt_left" headers="x2021">Water bodies</td>
-<td class="gt_row gt_right" headers="area_ha">559.7</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left gt_striped" headers="x2020">Water bodies</td>
-<td class="gt_row gt_left gt_striped" headers="x2021">Herbaceous wetland</td>
-<td class="gt_row gt_right gt_striped" headers="area_ha">302.8</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="x2020">Water bodies</td>
-<td class="gt_row gt_left" headers="x2021">Mangroves</td>
-<td class="gt_row gt_right" headers="area_ha">1.8</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left gt_striped" headers="x2020">Herbaceous wetland</td>
-<td class="gt_row gt_left gt_striped" headers="x2021">Tree cover</td>
-<td class="gt_row gt_right gt_striped" headers="area_ha">7.3</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="x2020">Herbaceous wetland</td>
-<td class="gt_row gt_left" headers="x2021">Shrubland</td>
-<td class="gt_row gt_right" headers="area_ha">450.0</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left gt_striped" headers="x2020">Herbaceous wetland</td>
-<td class="gt_row gt_left gt_striped" headers="x2021">Grassland</td>
-<td class="gt_row gt_right gt_striped" headers="area_ha">277.5</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="x2020">Herbaceous wetland</td>
-<td class="gt_row gt_left" headers="x2021">Cropland</td>
-<td class="gt_row gt_right" headers="area_ha">4,545.5</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left gt_striped" headers="x2020">Herbaceous wetland</td>
-<td class="gt_row gt_left gt_striped" headers="x2021">Built-up</td>
 <td class="gt_row gt_right gt_striped" headers="area_ha">0.5</td>
 </tr>
 <tr class="odd">
+<td class="gt_row gt_left" headers="x2020">Bare/sparse vegetation</td>
+<td class="gt_row gt_left" headers="x2021">Cropland</td>
+<td class="gt_row gt_right" headers="area_ha">400.5</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="x2020">Bare/sparse vegetation</td>
+<td class="gt_row gt_left gt_striped" headers="x2021">Built-up</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">228.5</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="x2020">Bare/sparse vegetation</td>
+<td class="gt_row gt_left" headers="x2021">Bare/sparse vegetation</td>
+<td class="gt_row gt_right" headers="area_ha">14,796.6</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="x2020">Bare/sparse vegetation</td>
+<td class="gt_row gt_left gt_striped" headers="x2021">Water bodies</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">65.8</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="x2020">Bare/sparse vegetation</td>
+<td class="gt_row gt_left" headers="x2021">Herbaceous wetland</td>
+<td class="gt_row gt_right" headers="area_ha">676.6</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="x2020">Bare/sparse vegetation</td>
+<td class="gt_row gt_left gt_striped" headers="x2021">Mangroves</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">257.4</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="x2020">Water bodies</td>
+<td class="gt_row gt_left" headers="x2021">Tree cover</td>
+<td class="gt_row gt_right" headers="area_ha">4.2</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="x2020">Water bodies</td>
+<td class="gt_row gt_left gt_striped" headers="x2021">Shrubland</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">16.6</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="x2020">Water bodies</td>
+<td class="gt_row gt_left" headers="x2021">Grassland</td>
+<td class="gt_row gt_right" headers="area_ha">19.0</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="x2020">Water bodies</td>
+<td class="gt_row gt_left gt_striped" headers="x2021">Cropland</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">11,031.4</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="x2020">Water bodies</td>
+<td class="gt_row gt_left" headers="x2021">Built-up</td>
+<td class="gt_row gt_right" headers="area_ha">26.6</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="x2020">Water bodies</td>
+<td class="gt_row gt_left gt_striped" headers="x2021">Bare/sparse vegetation</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">22.7</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="x2020">Water bodies</td>
+<td class="gt_row gt_left" headers="x2021">Water bodies</td>
+<td class="gt_row gt_right" headers="area_ha">6,471.5</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="x2020">Water bodies</td>
+<td class="gt_row gt_left gt_striped" headers="x2021">Herbaceous wetland</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">17,094.2</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="x2020">Water bodies</td>
+<td class="gt_row gt_left" headers="x2021">Mangroves</td>
+<td class="gt_row gt_right" headers="area_ha">0.4</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="x2020">Herbaceous wetland</td>
+<td class="gt_row gt_left gt_striped" headers="x2021">Tree cover</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">1.3</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="x2020">Herbaceous wetland</td>
+<td class="gt_row gt_left" headers="x2021">Shrubland</td>
+<td class="gt_row gt_right" headers="area_ha">107.3</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="x2020">Herbaceous wetland</td>
+<td class="gt_row gt_left gt_striped" headers="x2021">Grassland</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">11.2</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="x2020">Herbaceous wetland</td>
+<td class="gt_row gt_left" headers="x2021">Cropland</td>
+<td class="gt_row gt_right" headers="area_ha">8,862.6</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_striped" headers="x2020">Herbaceous wetland</td>
+<td class="gt_row gt_left gt_striped" headers="x2021">Built-up</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">76.4</td>
+</tr>
+<tr class="odd">
 <td class="gt_row gt_left" headers="x2020">Herbaceous wetland</td>
 <td class="gt_row gt_left" headers="x2021">Bare/sparse vegetation</td>
-<td class="gt_row gt_right" headers="area_ha">62.9</td>
+<td class="gt_row gt_right" headers="area_ha">27.8</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left gt_striped" headers="x2020">Herbaceous wetland</td>
 <td class="gt_row gt_left gt_striped" headers="x2021">Water bodies</td>
-<td class="gt_row gt_right gt_striped" headers="area_ha">164.8</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">1,759.5</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="x2020">Herbaceous wetland</td>
 <td class="gt_row gt_left" headers="x2021">Herbaceous wetland</td>
-<td class="gt_row gt_right" headers="area_ha">57,254.8</td>
+<td class="gt_row gt_right" headers="area_ha">104,319.0</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left gt_striped" headers="x2020">Herbaceous wetland</td>
 <td class="gt_row gt_left gt_striped" headers="x2021">Mangroves</td>
-<td class="gt_row gt_right gt_striped" headers="area_ha">24.0</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">0.7</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="x2020">Mangroves</td>
 <td class="gt_row gt_left" headers="x2021">Tree cover</td>
-<td class="gt_row gt_right" headers="area_ha">26.8</td>
+<td class="gt_row gt_right" headers="area_ha">200.4</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left gt_striped" headers="x2020">Mangroves</td>
 <td class="gt_row gt_left gt_striped" headers="x2021">Shrubland</td>
-<td class="gt_row gt_right gt_striped" headers="area_ha">0.2</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">0.0</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="x2020">Mangroves</td>
 <td class="gt_row gt_left" headers="x2021">Grassland</td>
-<td class="gt_row gt_right" headers="area_ha">0.8</td>
+<td class="gt_row gt_right" headers="area_ha">0.0</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left gt_striped" headers="x2020">Mangroves</td>
 <td class="gt_row gt_left gt_striped" headers="x2021">Cropland</td>
-<td class="gt_row gt_right gt_striped" headers="area_ha">47.3</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">29.1</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="x2020">Mangroves</td>
 <td class="gt_row gt_left" headers="x2021">Built-up</td>
-<td class="gt_row gt_right" headers="area_ha">97.5</td>
+<td class="gt_row gt_right" headers="area_ha">203.4</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left gt_striped" headers="x2020">Mangroves</td>
 <td class="gt_row gt_left gt_striped" headers="x2021">Bare/sparse vegetation</td>
-<td class="gt_row gt_right gt_striped" headers="area_ha">80.0</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">23.4</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="x2020">Mangroves</td>
 <td class="gt_row gt_left" headers="x2021">Water bodies</td>
-<td class="gt_row gt_right" headers="area_ha">9.1</td>
+<td class="gt_row gt_right" headers="area_ha">0.3</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left gt_striped" headers="x2020">Mangroves</td>
 <td class="gt_row gt_left gt_striped" headers="x2021">Herbaceous wetland</td>
-<td class="gt_row gt_right gt_striped" headers="area_ha">69.6</td>
+<td class="gt_row gt_right gt_striped" headers="area_ha">1.6</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="x2020">Mangroves</td>
 <td class="gt_row gt_left" headers="x2021">Mangroves</td>
-<td class="gt_row gt_right" headers="area_ha">91,272.7</td>
+<td class="gt_row gt_right" headers="area_ha">160,242.6</td>
 </tr>
 </tbody>
 </table>
@@ -2111,7 +2171,7 @@ Land Cover
 <p><strong>ESA WorldCover:</strong> Zanaga, D., Van De Kerchove, R., Daems, D., De Keersmaecker, W., Brockmann, C., Kirches, G., … &amp; Arino, O. (2021). ESA WorldCover 10 m 2020 v100. Zenodo. https://doi.org/10.5281/zenodo.5571498 - 10-meter resolution global land cover dataset - Contains 11 land cover classes based on Sentinel-1 and Sentinel-2 satellite data</p>
 <hr>
 <p><strong>Citation suggestion for this article:</strong></p>
-<p>Semba, M. (2025). Land Cover Patterns in Mkoani and Mkuranga Districts. Marine Spatial Planning Initiative, University of Dar es Salaam. Retrieved from [blog URL]</p>
+<p>Semba, M. (2025). Land Cover Patterns in Mkuranga District. Marine Spatial Planning Initiative, University of Dar es Salaam. Retrieved from [blog URL]</p>
 
 
 </section>

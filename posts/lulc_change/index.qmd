@@ -1,10 +1,10 @@
 ---
-title: "Land Cover Patterns in Mkoani and Mkuranga Districts"
-description: "Analyzing and comparing spatial patterns of land cover in Mkoani and Mkuranga Districts"
+title: "Land Cover Change in Mkuranga District"
+description: "Analyzing and comparing temporal land cover patterns in Mkuranga District for marine spatial planning"
 author: "Masumbuko Semba"
-date: 2025-12-29
+da0te: 2025-12-30
 categories: [spatial-analysis, land-cover]
-image: "lulc_mkoani_relative_area.png"
+image: "lulc_mkuranga_2020_202_web1.png"
 execute: 
   eval: true
   warning: false
@@ -17,13 +17,21 @@ execute:
 
 Spatial patterns in land cover are the local arrangements and configurations of different land use types across a landscape. Rather than simply knowing what proportion of an area is forest or cropland, understanding the *pattern* of these land covers reveals much more about ecosystem function and human land use practices. For example, fragmented forests interspersed with agriculture indicate different management histories and conservation challenges than consolidated forest blocks.
 
-Spatial signatures provide a quantitative framework for capturing these patterns. They encode information about how land cover types are spatially organized—whether they form large contiguous patches, are highly fragmented, or follow specific spatial arrangements. In this post, I'll demonstrate how to compare spatial signatures between two coastal Tanzanian districts and use visual analysis to identify their characteristic land cover patterns.
+```{r}
+#| echo: false
+#|
+liquid <- data.frame(val = c(0.7, 0.5, 0.4))
+
+liquid |> 
+  echarts4r::e_charts() |> 
+  echarts4r::e_liquid(val) 
+```
+
+Spatial signatures provide a quantitative framework for capturing these patterns. They encode information about how land cover types are spatially organized—whether they form large contiguous patches, are highly fragmented, or follow specific spatial arrangements. In this post, I'll demonstrate how to analyze and track temporal changes in land cover patterns across Mkuranga District and use visual analysis to identify drivers of landscape transformation in this critical coastal region.
 
 ## Loading and Preparing the Data
 
 Working with spatial raster data requires careful data loading and preprocessing to ensure consistent and accurate analysis. We begin by loading specialized R packages designed for spatial analysis: `terra` for raster operations, `sf` for vector geometries, and `tidyterra` to bridge spatial data with tidyverse workflows. These packages provide efficient tools for reading, manipulating, and visualizing large spatial datasets.
-
-We source ESA WorldCover 10m resolution land cover data for our study areas. The Mkoani district data covers the Pemba region, while Mkuranga district is located on mainland Tanzania. Converting these rasters to factors (categorical data) is essential—it tells R that the numeric values represent discrete land cover categories rather than continuous measurements, which enables proper labeling and visualization.
 
 ```{r}
 #| eval: true
@@ -36,7 +44,10 @@ require(tidyplots)
 # library(webr)
 require(patchwork)
 require(gt)
+require(echarts4r)
 ```
+
+We source ESA WorldCover 10m resolution land cover data for Mkuranga District, located on mainland Tanzania's Pwani Region. This district encompasses critical coastal ecosystems where terrestrial and marine habitats interface. Converting these rasters to factors (categorical data) is essential—it tells R that the numeric values represent discrete land cover categories rather than continuous measurements, which enables proper labeling and visualization.
 
 
 
@@ -53,7 +64,7 @@ lulc_2020 <- greenSD::get_esa_wc(
 
 lulc_2020 |> 
     terra::writeRaster(
-        filename = 'data/mkoani_lulc_2021.tif',
+        filename = 'data/mkuranga_lulc_2021.tif',
          overwrite=TRUE, 
          datatype='INT1U'
     )
@@ -61,13 +72,17 @@ lulc_2020 |>
 
 ```
 
-Load the raster data for our study districts:
+Load the raster data for Mkuranga District:
 
 ```{r}
-pemba_lc20 = terra::rast('mkoani_lulc_2020.tif') |> 
+#posts/lulc_change/
+
+mkuranga_lc20 = terra::rast('mkuranga_lulc_2020.tif')  |> 
+    terra::crop(terra::ext(39.2, 39.48, -7.55, -7.1), mask = TRUE) |> 
     as.factor()
 
-pemba_lc21 = terra::rast('mkoani_lulc_2021.tif') |> 
+mkuranga_lc21 = terra::rast('mkuranga_lulc_2021.tif')  |> 
+    terra::crop(terra::ext(39.2, 39.48, -7.55, -7.1), mask = TRUE) |> 
     as.factor()
 
 
@@ -97,36 +112,55 @@ Beyond colors, we embed this metadata directly into our raster objects using the
 
 ```{r}
 # Set levels with labels
-levels(pemba_lc20) = worldcover_df |> select(value, label)
+levels(mkuranga_lc20) = worldcover_df |> select(value, label)
 
 # Embed color palette into rasters
-coltab(pemba_lc20) = worldcover_df |> select(value, color)
+coltab(mkuranga_lc20) = worldcover_df |> select(value, color)
 
 # Set levels with labels
-levels(pemba_lc21) = worldcover_df |> select(value, label)
+levels(mkuranga_lc21) = worldcover_df |> select(value, label)
 
 # Embed color palette into rasters
-coltab(pemba_lc21) = worldcover_df |> select(value, color)
+coltab(mkuranga_lc21) = worldcover_df |> select(value, color)
 
 
-pemba_lc = c(pemba_lc20, pemba_lc21)
-  names(pemba_lc) = c('lc_2020', 'lc_2021')
+mkuranga_lc = c(mkuranga_lc20, mkuranga_lc21)
+  names(mkuranga_lc) = c('lc_2020', 'lc_2021')
 
-# pemba_lc |> plot()
+# mkuranga_lc |> plot()
 
+```
+
+
+## Land Cover Distribution in Mkuranga District
+
+@fig-mkuranga-composition is animated interactive pie chart that displays the relative abundance of each land cover type in Mkuranga District in 2020. Hover over each segment to view the exact pixel count for that category. The chart provides a quick visual summary of landscape composition, showing which land cover types dominate the district. For area calculations in hectares, pixel counts were mutiplied by 100 (since each pixel represents a 10m × 10m area, equaling 100 m^2^).
+
+
+```{r}
+#| label: fig-mkuranga-composition
+#| fig-cap: "Land Cover Composition of Mkuranga District"
+#| echo: false
+#| 
+mkuranga_lc20 |> 
+    terra::freq() |> 
+    as_tibble() |> 
+    select(cover = value, count) |> 
+    echarts4r::e_chart(cover) |> 
+    echarts4r::e_pie(count, radius = c("30%", "70%"))
 ```
 
 ## Visualizing Land Cover Maps
 
-The Mkoani district encompasses the southern region of Pemba Island and represents a critical area for marine spatial planning integration. The land cover comparison between 2020 and 2021 reveals the baseline conditions and any changes occurring within the first year of the planning initiative. Understanding what happens on land is essential to marine planning because terrestrial land use directly influences coastal water quality, sediment loading, nutrient runoff, and ultimately the health of nearshore marine ecosystems. Forest cover provides watershed protection and reduces erosion, while agricultural expansion can increase sedimentation in coastal waters. The temporal comparison allows us to track whether land use changes are occurring and at what rate, informing both terrestrial and marine management strategies.
+Mkuranga District, located on mainland Tanzania's Pwani Region, encompasses coastal ecosystems with significant conservation value and economic importance for fishing communities. The land cover comparison between 2020 and 2021 reveals baseline conditions and the trajectory of landscape change within the first year of the marine spatial planning initiative. Understanding terrestrial land use is fundamental to marine planning because landscape patterns directly influence coastal ecosystem health. Forest cover protects watersheds, reduces erosion, and maintains water quality. Agricultural expansion increases nutrient runoff and sedimentation. Mangrove forests provide critical fish nursery habitat. Urban expansion concentrates impacts on local hydrology and water quality. Tracking these changes year-to-year allows us to assess whether land use intensification, landscape degradation, or conservation success is occurring—information essential for coastal management decisions.
 
 ```{r}
-#| label: fig-mkoani-map
-#| fig-cap: "Temporal Land Cover Comparison for Mkoani District (2020-2021). Side-by-side satellite imagery classification (10m resolution) shows forest (dark green), cropland (magenta), grassland (yellow), built-up areas (red), and other categories. The 2020 baseline establishes reference conditions, while the 2021 map reveals changes over the first implementation year. Forest fragmentation and agricultural expansion patterns visible here directly impact terrestrial-marine linkages affecting coastal water quality and fish habitat suitability. Source: ESA WorldCover 10m resolution."
 #| eval: false
+#| label: fig-mkuranga-map
+#| fig-cap: "Temporal Land Cover Comparison for Mkuranga District (2020-2021)"
 #| 
 ggplot() +
-  geom_spatraster(data = pemba_lc) +
+  geom_spatraster(data = mkuranga_lc) +
   scale_x_continuous(breaks = scales::pretty_breaks(n = 3)) +
   # scale_fill_identity(name = "Land Cover Type", guide = "legend") +
   theme_minimal(base_size = 12)+
@@ -134,19 +168,22 @@ ggplot() +
 ```
 
 
-![Temporal Land Cover Comparison for Mkoani District (2020-2021). Side-by-side satellite imagery classification (10m resolution) shows forest (dark green), cropland (magenta), grassland (yellow), built-up areas (red), and other categories. The 2020 baseline establishes reference conditions, while the 2021 map reveals changes over the one year. Forest fragmentation and agricultural expansion patterns visible. Source: ESA WorldCover 10m resolution.](lc_2020-2021.svg){#fig-mkoani-map}
+![Temporal Land Cover Comparison for Mkuranga District (2020-2021). Side-by-side satellite imagery classification (10m resolution) shows forest (dark green), cropland (magenta), grassland (yellow), built-up areas (red), and other categories. The 2020 baseline establishes reference conditions, while the 2021 map reveals changes over the one year. Forest fragmentation and agricultural expansion patterns visible. Source: ESA WorldCover 10m resolution.](lulc_mkuranga_2020_2021.svg){#fig-mkuranga-map}
 
 ```{r}
-dist = worldcover_df |> filter(!value  %in% c(70, 100)) |> distinct(color,.keep_all = T)|> arrange(label)  |>
+dist = worldcover_df |> 
+    filter(!value  %in% c(70, 100)) |> 
+    distinct(color,.keep_all = T)|> 
+    arrange(label)  |>
     filter(!label == 'Water bodies') 
 
-aa = pemba_lc[[1]] |> 
+mkuranga_composition = mkuranga_lc[[1]] |> 
     terra::freq() |> 
     as.data.frame() |> 
     rename(label = value) |> 
     mutate(year = 2020) |> 
     bind_rows(
-    pemba_lc[[2]] |> 
+    mkuranga_lc[[2]] |> 
       terra::freq() |> 
       as.data.frame() |> 
       rename(label = value) |> 
@@ -160,59 +197,61 @@ aa = pemba_lc[[1]] |>
       
 ```
 
+
+The composition analysis quantifies these visual observations, showing the relative proportions of each land cover type. The stacked bar chart (left) displays absolute areas in hectares, revealing the total extent of each land cover category in 2020 and 2021. The area stack chart (right) shows the same data as proportions over time, making it easier to identify compositional shifts. The dominant land cover in Mkuranga is revealed through this analysis, along with patterns of agricultural land use, natural vegetation, and human settlement. Comparing year-to-year changes reveals whether land use intensification or landscape recovery is occurring, with direct implications for the sustainable management of coastal resources.
+
+
+
+::: {.columns}
+::: {.column}
+
+**Composition 2020**
 ```{r}
-#| label: fig-mkoani-composition
-#| fig-cap: "Land Cover Composition of Mkoani District"
-#| eval: false
-#| 
-
-
-aa |> 
-    filter(!label == 'Water bodies') |> 
+mkuranga_composition |> 
+    filter(!label == 'Water bodies' & year == 2020) |> 
     mutate(year = as.factor(year)) |> 
-    tidyplot(x = year, y = area_ha, fill = label) |> 
-    add_barstack_absolute() |> 
-    adjust_colors(new_colors = dist$color) |> 
-    adjust_size(width = 1.2, height = 3, unit = 'in') |>
-    adjust_font(fontsize = 12) |> 
-   adjust_y_axis(breaks = scales::pretty_breaks(5), labels = scales::comma, title = 'Area (hectares)') |>
-    adjust_legend_title('Land Cover Type')  |>
-    remove_legend() |>
-    remove_x_axis_title() |> 
-    reorder_color_labels(dist$label)
-
-aa |> 
-    filter(!label == 'Water bodies') |> 
-    tidyplot(x = year, y = area_ha, fill = label) |> 
-    add_areastack_relative(alpha = 1) |> 
-    adjust_colors(new_colors = dist$color) |> 
-    adjust_size(width = 4, height = 3, unit = 'in') |>
-    adjust_font(fontsize = 12) |> 
-    adjust_y_axis(breaks = scales::pretty_breaks(5), labels = scales::percent, title = 'Proportion of Total Area') |>
-    adjust_x_axis(breaks = c(2020, 2021)) |>
-    adjust_legend_title('Land Cover Type')|>
-    remove_x_axis_title() |> 
-    reorder_color_labels(dist$label)
-
-
-
+    echarts4r::e_chart(label, timeline = FALSE) |> 
+    echarts4r::e_pie(area_ha, radius = c("50%", "70%")) 
 ```
 
-The composition analysis quantifies these visual observations, showing the relative proportions of each land cover type (@fig-mkoani-composition). The stacked bar chart (left) displays absolute areas in hectares, revealing the total extent of each land cover category in 2020 and 2021. The area stack chart (right) shows the same data as proportions over time, making it easier to identify compositional shifts. Forest dominates, but the presence of significant grassland and cropland areas indicates active land use management and potential agricultural expansion in recent years. Comparing year-to-year changes reveals whether land use intensification or land recovery is occurring.
+:::
+::: {.column}
+**Composition 2021**
 
-![Land Cover Composition and Temporal Change in Mkoani District (2020-2021).](lulc_mkoani_abs_bar_rel.svg){#fig-mkoani-composition}
+```{r}
+mkuranga_composition |> 
+    filter(!label == 'Water bodies' & year == 2021) |> 
+    mutate(year = as.factor(year)) |> 
+    echarts4r::e_chart(label, timeline = FALSE) |> 
+    echarts4r::e_pie(area_ha, radius = c("50%", "70%")) 
+```
+
+:::
+::: 
+
+**Interactive Donut Charts:** The pie charts above provide an interactive visualization of land cover composition for Mkuranga District in 2020 and 2021. Hovering over each segment reveals the exact area in hectares for that land cover type, allowing for detailed exploration of landscape structure in each year.
+
+
+```{r}
+mkuranga_composition |> 
+    filter(!label == 'Water bodies') |> 
+    mutate(year = as.factor(year)) |> 
+    group_by(year) |>
+    echarts4r::e_chart(label, timeline = TRUE) |> 
+    echarts4r::e_pie(area_ha, radius = c("50%", "70%"))
+```
 
 
 ## Understanding Land Cover Transitions
 
 Beyond static snapshots, understanding *how* land cover types change from one category to another provides critical insights into ecosystem dynamics and land use trajectories. A transition matrix—also called a cross-tabulation or contingency table—reveals exactly which land cover types are converting to which alternatives. For example, are forests converting directly to cropland (indicating clearing for agriculture), or is forest first transitioning to grassland/shrubland (indicating intermediate disturbance)? These transition pathways reflect different management practices and have distinct implications for ecosystem recovery and conservation strategy.
 
-The transition matrix quantifies all land cover changes occurring between 2020 and 2021 in Mkoani district. Rows represent the 2020 baseline condition and columns represent the 2021 outcome. Diagonal values (where row and column match) indicate *persistence*—areas where the land cover remained unchanged. Off-diagonal values indicate *transitions*—areas where land cover shifted from one type to another. This granular perspective reveals not just net changes in composition, but the specific pathways through which landscape transformation is occurring.
+The transition matrix quantifies all land cover changes occurring between 2020 and 2021 in Mkuranga District. Rows represent the 2020 baseline condition and columns represent the 2021 outcome. Diagonal values (where row and column match) indicate *persistence*—areas where the land cover remained unchanged. Off-diagonal values indicate *transitions*—areas where land cover shifted from one type to another. This granular perspective reveals not just net changes in composition, but the specific pathways through which landscape transformation is occurring in Mkuranga.
 
-Understanding these transitions is essential for marine spatial planning because different conversion pathways have different implications for coastal water quality. Forest-to-cropland transitions typically increase nutrient and sediment runoff. Forest-to-built-up transitions concentrate impacts in specific locations affecting local hydrology. Grassland-to-cropland transitions may increase soil erosion. By identifying the dominant transition pathways, managers can target interventions precisely where they will have the greatest benefit for coastal ecosystem health.
+Understanding these transitions is essential for marine spatial planning in Mkuranga because different conversion pathways have different implications for coastal water quality and fishery productivity. Forest-to-cropland transitions typically increase nutrient and sediment runoff that degrade nearshore water quality. Mangrove loss directly reduces fish nursery habitat and coastal protection. Grassland-to-cropland transitions may increase soil erosion and sedimentation into coastal zones. Forest-to-built-up transitions concentrate impacts affecting local hydrology. By identifying the dominant transition pathways in Mkuranga, managers can target land-based interventions precisely where they will have the greatest benefit for coastal and fishery ecosystem health.
 
 ```{r}
-change = diffeR::crosstabm(pemba_lc[[1]],pemba_lc[[2]], percent = FALSE)
+change = diffeR::crosstabm(mkuranga_lc[[1]],mkuranga_lc[[2]], percent = FALSE)
 labels_lulc = worldcover_df$label[c(-7,-11)]
 rownames(change) = labels_lulc
 colnames(change) = labels_lulc
@@ -223,7 +262,7 @@ change_ha = (change*100)/4063.74  # convert to hectares
 
 ```{r}
 #| label: tbl-transition-matrix
-#| tbl-cap: "Land Cover Transition Matrix for Mkoani District (2020-2021). Values represent area in hectares. Rows indicate 2020 baseline land cover type; columns indicate 2021 outcome. Diagonal values show persistence (no change); off-diagonal values show transitions between categories. Large values in off-diagonal cells indicate active land conversion. For example, the Tree cover→Cropland cell reveals forest clearing for agriculture. The Tree cover→Herbaceous wetland cell suggests forest areas becoming more waterlogged or managed for wetland agriculture."
+#| tbl-cap: "Land Cover Transition Matrix for Mkuranga District (2020-2021). Values represent area in hectares. Rows indicate 2020 baseline land cover type; columns indicate 2021 outcome. Diagonal values show persistence (no change); off-diagonal values show transitions between categories. Large values in off-diagonal cells indicate active land conversion. For example, the Tree cover→Cropland cell reveals forest clearing for agriculture. The Mangrove→other transitions reveal changes in this critical coastal habitat."
 
 
 change_ha |> 
@@ -232,7 +271,7 @@ change_ha |>
     gt::gt() |>
     gt::tab_header(
         title = "Land Cover Transition Matrix",
-        subtitle = "Area (hectares) of each land cover type in 2020 converting to 2021 categories"
+        subtitle = "Area (hectares) of each land cover type in 2020 converting to 2021 categories in Mkuranga District"
     ) |>
     gt::opt_stylize(style = 1) |>
     gt::tab_style(
@@ -242,11 +281,11 @@ change_ha |>
     gt::fmt_number(columns = -lc_2020, decimals = 1)
 ```
 
-**Interpreting the transition matrix:** Read each row to understand what happened to that 2020 land cover type. For instance, the "Tree cover" row shows how forest pixels were distributed across different categories in 2021. The largest value in that row indicates the most common fate of forests. Summing across a row gives the total area of that land cover type in 2020; summing down a column gives the total area of that type in 2021. Values on the diagonal represent stability—areas where land cover persisted unchanged and therefore represent the landscape's resilience to conversion.
+**Interpreting the transition matrix:** Read each row to understand what happened to that 2020 land cover type in Mkuranga. For instance, the "Tree cover" row shows how forest pixels were distributed across different categories in 2021. The largest value in that row indicates the most common fate of forests—whether persistence, conversion to agriculture, or other uses. Summing across a row gives the total area of that land cover type in 2020; summing down a column gives the total area of that type in 2021. Values on the diagonal represent stability—areas where land cover persisted unchanged and therefore represent the landscape's resilience to conversion.
 
 ```{r}
 #| label: tbl-transition-matrix-long
-#| tbl-cap: "Long-Format Land Cover Transition Matrix for Mkoani District (2020-2021). Each row represents a 2020 land cover type (x2020), and each column represents the corresponding 2021 outcome (x2021). The area_ha column quantifies the area in hectares transitioning from each 2020 category to each 2021 category."
+#| tbl-cap: "Detailed Land Cover Transitions for Mkuranga District (2020-2021). Each row shows a specific transition from a 2020 land cover type to a 2021 outcome, with the corresponding area in hectares. This format facilitates filtering to identify specific conversion pathways of interest—for example, finding all areas converted from Forest to Cropland, or from Mangrove to other land cover types."
 #| 
 change_ha |> 
     round(1) |> 
@@ -327,4 +366,4 @@ change_ha |>
 
 **Citation suggestion for this article:**
 
-Semba, M. (2025). Land Cover Patterns in Mkoani and Mkuranga Districts. Marine Spatial Planning Initiative, University of Dar es Salaam. Retrieved from [blog URL]
+Semba, M. (2025). Land Cover Patterns in Mkuranga District. Marine Spatial Planning Initiative, University of Dar es Salaam. Retrieved from [blog URL]

@@ -34,19 +34,15 @@ This Marine Spatial Planning initiative focuses on developing sustainable coasta
 
 The **Marine Spatial Planning Consultancy for Mkoani-Pemba and Mkuranga** is a collaborative initiative led by the University of Dar es Salaam, School of Aquatic Sciences and Fisheries Technology (SOAF) in partnership with coastal communities and government authorities. The consultancy aims to create comprehensive spatial plans that balance conservation objectives with sustainable use of marine resources.
 
-### Financial Support
+### Study Sites: Mkoani and Mkuranga
 
-This consultancy is financially supported by the **Nairobi Convention Secretariat**, which provides funding through its marine and coastal area management programs. The Nairobi Convention's support reflects Tanzania's commitment to regional cooperation on marine conservation and sustainable resource management in the Western Indian Ocean region. Some of the key institution partners include: 
+**Mkoani, Pemba (Unguja Region)** and **Mkuranga (Pwani Region)** represent key coastal areas with significant fishing activities and diverse marine ecosystems. These sites were selected for:
 
-- Department of Blue Economy, Vice President's Office
-- Ministry of Blue Economy, Revolutionary Government of Zanzibar
-- University of Dar es Salaam, SOAF** (Lead Institution)
-- Nelson Mandela African Institution of Science and Technology (NM-AIST)
-- The Nature Conservancy, Tanzania**
+- Strategic importance for Indian Ocean fisheries
+- Presence of multiple livelihood communities dependent on marine resources
+- High biodiversity value and conservation potential
+- Need for improved governance and management frameworks
 
-:::{.callout-note}
-This initiative operates within the framework of Tanzania's marine conservation policies and supports the implementation of integrated coastal zone management (ICZM) principles in the Pwani region.
-:::
 
 ### Consultancy Focus Areas
 
@@ -59,6 +55,20 @@ The initiative addresses key marine planning challenges through:
 | **Coastal Communities** | Support livelihoods while ensuring resource sustainability |
 | **Climate Resilience** | Build adaptive management strategies for environmental changes |
 | **Governance Coordination** | Strengthen institutional frameworks for marine resource management |
+
+### Financial Support
+
+This consultancy is financially supported by the **Nairobi Convention Secretariat**, which provides funding through its marine and coastal area management programs. The Nairobi Convention's support reflects Tanzania's commitment to regional cooperation on marine conservation and sustainable resource management in the Western Indian Ocean region. Some of the key institution partners include: 
+
+- Department of Blue Economy, Vice President's Office
+- Ministry of Blue Economy, Revolutionary Government of Zanzibar
+- University of Dar es Salaam, SOAF** (Lead Institution)
+- Nelson Mandela African Institution of Science and Technology (NM-AIST)
+- The Nature Conservancy, Tanzania**
+
+:::{.callout-note}
+This initiative operates within the framework of Tanzania's marine conservation policies and supports the implementation of Marine Spatial Planning in Tanzania.
+:::
 
 ## Spatial Planning Approach
 
@@ -79,15 +89,6 @@ Through this initiative, stakeholders will:
 - ✓ Strengthen coordination among government agencies, communities, and resource users
 - ✓ Build local capacity for marine resource monitoring and adaptive management
 - ✓ Contribute to Tanzania's marine conservation and sustainable development goals
-
-## Study Sites: Mkoani and Mkuranga
-
-**Mkoani, Pemba (Unguja Region)** and **Mkuranga (Pwani Region)** represent key coastal areas with significant fishing populations and diverse marine ecosystems. These sites were selected for:
-
-- Strategic importance for Indian Ocean fisheries
-- Presence of multiple livelihood communities dependent on marine resources
-- High biodiversity value and conservation potential
-- Need for improved governance and management frameworks
 
 ## Contact & Further Information
 
