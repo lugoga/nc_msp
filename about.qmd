@@ -1,5 +1,5 @@
 ---
-title: "About This Marine Spatial Planning Initiative"
+title: "Marine Spatial Planning"
 date: "2025-12-05"
 date-modified: today
 # author: 
@@ -91,6 +91,8 @@ Through this initiative, stakeholders will:
 - ✓ Contribute to Tanzania's marine conservation and sustainable development goals
 
 ## Contact & Further Information
+
+![](images/msp_logo.svg){width=150px style="margin-top: 10px;"} 
 
 :::{.callout-info}
 **Marine Spatial Planning Consultancy - Mkoani & Mkuranga**

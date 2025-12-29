@@ -108,6 +108,171 @@ ul.task-list li input[type="checkbox"] {
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Blog">
 <meta name="twitter:description" content="Marine Spatial Planning consultancy for coastal Tanzania districts - Mkoani (Pemba) and Mkuranga (Pwani). Spatial analysis, coastal management, and ecosystem monitoring.">
+<style>
+  body {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+  }
+  /* Allow selection in code blocks for accessibility */
+  pre, code, .sourceCode {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+  }
+</style>
+<script>
+  // Disable right-click context menu
+  document.addEventListener('contextmenu', function(event) {
+    event.preventDefault();
+    return false;
+  });
+  
+  // Disable keyboard shortcuts for copying and screenshots
+  document.addEventListener('keydown', function(event) {
+    // Block Ctrl+C, Ctrl+X, Ctrl+A
+    if (event.ctrlKey || event.metaKey) {
+      if (event.key === 'c' || event.key === 'C' || 
+          event.key === 'x' || event.key === 'X' || 
+          event.key === 'a' || event.key === 'A') {
+        event.preventDefault();
+        return false;
+      }
+    }
+    
+    // Block Print Screen, Fn+F13 (Mac), Win+Shift+S (Snipping Tool)
+    if (event.key === 'PrintScreen' || 
+        event.key === 'F13' ||
+        (event.shiftKey && event.ctrlKey && event.key === 's') ||
+        (event.shiftKey && event.metaKey && event.key === '4') ||
+        (event.shiftKey && event.metaKey && event.key === '3') ||
+        (event.shiftKey && event.metaKey && event.key === '5') ||
+        (event.shiftKey && event.key === 'PrintScreen')) {
+      event.preventDefault();
+      alert('Screenshots and screen capture are not permitted on this website. Content is protected.');
+      return false;
+    }
+  });
+  
+  // Block Snipping Tool via Win+Shift+S shortcut
+  document.addEventListener('keydown', function(event) {
+    if (event.key === 's' && event.shiftKey && event.metaKey && !event.ctrlKey) {
+      event.preventDefault();
+      alert('Snipping Tool is disabled on this website.');
+      return false;
+    }
+  });
+  
+  // Detect and block clipboard access attempts
+  if (navigator.clipboard) {
+    navigator.clipboard.addEventListener?.('paste', function(event) {
+      event.preventDefault();
+    });
+  }
+  
+  // Block drag and drop (prevents saving images)
+  document.addEventListener('dragstart', function(event) {
+    event.preventDefault();
+    return false;
+  });
+  
+  document.addEventListener('drop', function(event) {
+    event.preventDefault();
+    return false;
+  });
+  
+  // Detect inactive window (user may be using external screenshot tool)
+  let isWindowFocused = true;
+  window.addEventListener('blur', function() {
+    isWindowFocused = false;
+    console.warn('Window lost focus - screenshot may be attempted');
+  });
+  
+  window.addEventListener('focus', function() {
+    isWindowFocused = true;
+  });
+  
+  // Monitor for visibility changes (screenshot app may hide window)
+  document.addEventListener('visibilitychange', function() {
+    if (document.hidden) {
+      console.warn('Page hidden - possible screenshot in progress');
+    }
+  });
+  
+  // Smooth scrolling for all internal links
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+  
+</script>
+<script>
+  // Initialize scroll to top button after page loads
+  document.addEventListener('DOMContentLoaded', function() {
+    const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+    if (!scrollToTopBtn) {
+      // Create scroll to top button if it doesn't exist
+      const btn = document.createElement('button');
+      btn.id = 'scrollToTopBtn';
+      btn.innerHTML = '↑';
+      btn.style.cssText = `
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        z-index: 1000;
+        background-color: #3498db;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        font-size: 24px;
+        cursor: pointer;
+        display: none;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        transition: all 0.3s ease;
+        font-weight: bold;
+      `;
+      document.body.appendChild(btn);
+      
+      // Show/hide button based on scroll position
+      window.addEventListener('scroll', function() {
+        if (window.pageYOffset > 300) {
+          btn.style.display = 'block';
+        } else {
+          btn.style.display = 'none';
+        }
+      });
+      
+      // Scroll to top when button clicked
+      btn.addEventListener('click', function() {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      });
+      
+      // Hover effects
+      btn.addEventListener('mouseenter', function() {
+        this.style.backgroundColor = '#2980b9';
+        this.style.transform = 'scale(1.1)';
+      });
+      
+      btn.addEventListener('mouseleave', function() {
+        this.style.backgroundColor = '#3498db';
+        this.style.transform = 'scale(1)';
+      });
+    }
+  });
+</script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -150,7 +315,7 @@ window.Quarto = {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a href="./index.html" class="navbar-brand navbar-brand-logo">
-    <img src="./images/coat_OG_web.png" alt="" class="navbar-logo">
+    <img src="./images/msp_logo.png" alt="" class="navbar-logo">
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -306,7 +471,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./about.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">About This Marine Spatial Planning Initiative</span></a>
+ <span class="menu-text">Marine Spatial Planning</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -352,18 +517,6 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="https://oceancurrents.rsmas.miami.edu/" class="sidebar-item-text sidebar-link" target="_blank">
- <span class="menu-text">Ocean Current Maps</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="https://www.tides.noaa.gov/" class="sidebar-item-text sidebar-link" target="_blank">
- <span class="menu-text">Sea Level Information</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="https://www.nhc.noaa.gov/" class="sidebar-item-text sidebar-link" target="_blank">
  <span class="menu-text">Tropical Storm Tracking</span></a>
   </div>
@@ -372,12 +525,16 @@ window.Quarto = {
   </li>
     </ul>
     </div>
-</nav>
+<div class="quarto-sidebar-footer"><div class="sidebar-footer-item">
+<div style="text-align: center; margin: 20px 0;">
+<p><img src="images/coat_OG_web.png" class="img-fluid" style="margin: 10px 5px;" width="100"> <br> <img src="images/nc.png" class="img-fluid" style="margin: 10px 5px;" width="50"> <img src="images/msp_logo.svg" class="img-fluid" style="margin: 10px 5px;" width="50"> <img src="images/udsm.png" class="img-fluid" style="margin: 10px 5px;" width="50"> <img src="images/tnc.svg" class="img-fluid" style="margin: 10px 5px;" width="150"> <img src="images/wcs.png" class="img-fluid" style="margin: 10px 5px;" width="50"> <img src="images/wwf.png" class="img-fluid" style="margin: 10px 5px;" width="40"> <img src="images/wiomsa.png" class="img-fluid" style="margin: 10px 5px;" width="100"> <img src="images/Tafiri.png" class="img-fluid" style="margin: 10px 5px;" width="50"> <img src="images/zafiri.png" class="img-fluid" style="margin: 10px 5px;" width="50"> <img src="images/nmaist.jpg" class="img-fluid" style="margin: 10px 5px;" width="50"> <img src="images/dsfa_screenshot.png" class="img-fluid" style="margin: 10px 5px;" width="50"> <img src="images/IUCN_logo.svg" class="img-fluid" style="margin: 10px 5px;" width="50"></p>
+</div>
+</div></div></nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(8)</span></div><div class="category" data-category="RWNvc3lzdGVtJTIwTW9uaXRvcmluZw==">Ecosystem Monitoring <span class="quarto-category-count">(1)</span></div><div class="category" data-category="RWNvc3lzdGVtJTIwTW90aWZz">Ecosystem Motifs <span class="quarto-category-count">(1)</span></div><div class="category" data-category="SGFiaXRhdCUyMENsYXNzaWZpY2F0aW9u">Habitat Classification <span class="quarto-category-count">(1)</span></div><div class="category" data-category="TWFyaW5lJTIwU3BhdGlhbCUyMFBsYW5uaW5n">Marine Spatial Planning <span class="quarto-category-count">(1)</span></div><div class="category" data-category="UmFzdGVyJTIwQ29tcGFyaXNvbg==">Raster Comparison <span class="quarto-category-count">(1)</span></div><div class="category" data-category="U3BhdGlhbCUyMEFuYWx5c2lz">Spatial Analysis <span class="quarto-category-count">(2)</span></div><div class="category" data-category="VGVtcG9yYWwlMjBDaGFuZ2U=">Temporal Change <span class="quarto-category-count">(1)</span></div><div class="category" data-category="YmlvZGl2ZXJzaXR5">biodiversity <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Y2hhbmdlJTIwZGV0ZWN0aW9u">change detection <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Y29udGludW91cyUyMGRhdGE=">continuous data <span class="quarto-category-count">(1)</span></div><div class="category" data-category="ZWNvc3lzdGVtJTIwYW5hbHlzaXM=">ecosystem analysis <span class="quarto-category-count">(1)</span></div><div class="category" data-category="ZWNvc3lzdGVtJTIwYXNzZXNzbWVudA==">ecosystem assessment <span class="quarto-category-count">(1)</span></div><div class="category" data-category="ZWNvc3lzdGVtJTIwaGVhbHRo">ecosystem health <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Z2Vvc3BhdGlhbCUyMG1hcHBpbmc=">geospatial mapping <span class="quarto-category-count">(1)</span></div><div class="category" data-category="aW5kaWNhdG9yJTIwYW5hbHlzaXM=">indicator analysis <span class="quarto-category-count">(1)</span></div><div class="category" data-category="bGFuZC1jb3Zlcg==">land-cover <span class="quarto-category-count">(3)</span></div><div class="category" data-category="bWFyaW5lJTIwc3BhdGlhbCUyMHBsYW5uaW5n">marine spatial planning <span class="quarto-category-count">(1)</span></div><div class="category" data-category="bW9uaXRvcmluZw==">monitoring <span class="quarto-category-count">(1)</span></div><div class="category" data-category="cmVtb3RlJTIwc2Vuc2luZw==">remote sensing <span class="quarto-category-count">(1)</span></div><div class="category" data-category="c3BhdGlhbC1hbmFseXNpcw==">spatial-analysis <span class="quarto-category-count">(3)</span></div><div class="category" data-category="dGVtcG9yYWwlMjBhbmFseXNpcw==">temporal analysis <span class="quarto-category-count">(1)</span></div></div></div>
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(3)</span></div><div class="category" data-category="bGFuZC1jb3Zlcg==">land-cover <span class="quarto-category-count">(3)</span></div><div class="category" data-category="c3BhdGlhbC1hbmFseXNpcw==">spatial-analysis <span class="quarto-category-count">(3)</span></div></div></div>
 <!-- main -->
 <main class="content quarto-banner-title-block column-body" id="quarto-document-content">
 
@@ -492,216 +649,6 @@ Dec 28, 2025
 </div>
 <div class="listing-author">
 Masumbuko Semba
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="3" data-categories="bWFyaW5lJTIwc3BhdGlhbCUyMHBsYW5uaW5nJTJDZWNvc3lzdGVtJTIwYW5hbHlzaXMlMkNnZW9zcGF0aWFsJTIwbWFwcGluZyUyQ2Jpb2RpdmVyc2l0eQ==" data-listing-date-sort="1766782800000" data-listing-file-modified-sort="1766865934946" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7" data-listing-word-count-sort="1371">
-<div class="thumbnail">
-<p><a href="./posts/compare_pattern1/index.html" class="no-external"></a></p><a href="./posts/compare_pattern1/index.html" class="no-external">
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-</a><p><a href="./posts/compare_pattern1/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/compare_pattern1/index.html" class="no-external">Comparing Marine Ecosystem Patterns: Mkoani and Mkuranga Districts</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/compare_pattern1/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('bWFyaW5lJTIwc3BhdGlhbCUyMHBsYW5uaW5n'); return false;">
-marine spatial planning
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('ZWNvc3lzdGVtJTIwYW5hbHlzaXM='); return false;">
-ecosystem analysis
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Z2Vvc3BhdGlhbCUyMG1hcHBpbmc='); return false;">
-geospatial mapping
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('YmlvZGl2ZXJzaXR5'); return false;">
-biodiversity
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/compare_pattern1/index.html" class="no-external">Using spatial pattern metrics to compare marine ecosystem structure and configuration between Mkoani-Pemba and Mkuranga-Pwani districts, revealing critical insights for conservation planning.</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/compare_pattern1/index.html" class="no-external">
-<div class="listing-date">
-Dec 27, 2025
-</div>
-<div class="listing-author">
-Masumbuko Semba, Siajali Pamba
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="4" data-categories="U3BhdGlhbCUyMEFuYWx5c2lzJTJDRWNvc3lzdGVtJTIwTW9uaXRvcmluZyUyQ1Jhc3RlciUyMENvbXBhcmlzb24lMkNUZW1wb3JhbCUyMENoYW5nZQ==" data-listing-date-sort="1766782800000" data-listing-file-modified-sort="1766868234875" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="11" data-listing-word-count-sort="2006">
-<div class="thumbnail">
-<p><a href="./posts/continuous_raster_comparison/index.html" class="no-external"></a></p><a href="./posts/continuous_raster_comparison/index.html" class="no-external">
-<p><img loading="lazy" src="./posts/continuous_raster_comparison/workflows.png" class="thumbnail-image"></p>
-</a><p><a href="./posts/continuous_raster_comparison/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/continuous_raster_comparison/index.html" class="no-external">Comparing Continuous Ecosystem Health Metrics: Temporal Changes in Mkoani and Mkuranga</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/continuous_raster_comparison/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('U3BhdGlhbCUyMEFuYWx5c2lz'); return false;">
-Spatial Analysis
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('RWNvc3lzdGVtJTIwTW9uaXRvcmluZw=='); return false;">
-Ecosystem Monitoring
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('UmFzdGVyJTIwQ29tcGFyaXNvbg=='); return false;">
-Raster Comparison
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('VGVtcG9yYWwlMjBDaGFuZ2U='); return false;">
-Temporal Change
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/continuous_raster_comparison/index.html" class="no-external">Methods for comparing continuous raster data between baseline (2020) and current (2023) ecosystem health indices</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/continuous_raster_comparison/index.html" class="no-external">
-<div class="listing-date">
-Dec 27, 2025
-</div>
-<div class="listing-author">
-Masumbuko Semba, Siajali Pamba
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="5" data-categories="ZWNvc3lzdGVtJTIwaGVhbHRoJTJDY29udGludW91cyUyMGRhdGElMkNyZW1vdGUlMjBzZW5zaW5nJTJDaW5kaWNhdG9yJTIwYW5hbHlzaXM=" data-listing-date-sort="1766782800000" data-listing-file-modified-sort="1766866942473" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="12" data-listing-word-count-sort="2250">
-<div class="thumbnail">
-<p><a href="./posts/ecosystem_health_indicators/index.html" class="no-external"></a></p><a href="./posts/ecosystem_health_indicators/index.html" class="no-external">
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-</a><p><a href="./posts/ecosystem_health_indicators/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/ecosystem_health_indicators/index.html" class="no-external">Assessing Marine Ecosystem Health: Continuous Indicators for Mkoani and Mkuranga</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/ecosystem_health_indicators/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('ZWNvc3lzdGVtJTIwaGVhbHRo'); return false;">
-ecosystem health
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Y29udGludW91cyUyMGRhdGE='); return false;">
-continuous data
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('cmVtb3RlJTIwc2Vuc2luZw=='); return false;">
-remote sensing
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('aW5kaWNhdG9yJTIwYW5hbHlzaXM='); return false;">
-indicator analysis
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/ecosystem_health_indicators/index.html" class="no-external">Methods for analyzing continuous ecosystem health indicators using satellite data and geospatial metrics to compare marine ecosystem quality across Mkoani and Mkuranga districts.</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/ecosystem_health_indicators/index.html" class="no-external">
-<div class="listing-date">
-Dec 27, 2025
-</div>
-<div class="listing-author">
-Masumbuko Semba, Siajali Pamba
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="6" data-categories="bW9uaXRvcmluZyUyQ2NoYW5nZSUyMGRldGVjdGlvbiUyQ2Vjb3N5c3RlbSUyMGFzc2Vzc21lbnQlMkN0ZW1wb3JhbCUyMGFuYWx5c2lz" data-listing-date-sort="1766782800000" data-listing-file-modified-sort="1766866158665" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="10" data-listing-word-count-sort="1865">
-<div class="thumbnail">
-<p><a href="./posts/monitoring_ecosystem_change/index.html" class="no-external"></a></p><a href="./posts/monitoring_ecosystem_change/index.html" class="no-external">
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-</a><p><a href="./posts/monitoring_ecosystem_change/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/monitoring_ecosystem_change/index.html" class="no-external">Monitoring Ecosystem Changes in Mkoani and Mkuranga: From Baseline to Trend Analysis</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/monitoring_ecosystem_change/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('bW9uaXRvcmluZw=='); return false;">
-monitoring
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Y2hhbmdlJTIwZGV0ZWN0aW9u'); return false;">
-change detection
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('ZWNvc3lzdGVtJTIwYXNzZXNzbWVudA=='); return false;">
-ecosystem assessment
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('dGVtcG9yYWwlMjBhbmFseXNpcw=='); return false;">
-temporal analysis
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/monitoring_ecosystem_change/index.html" class="no-external">Methods for tracking marine ecosystem changes over time in Mkoani-Pemba and Mkuranga-Pwani, using spatial raster analysis and categorical data comparison to inform adaptive management.</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/monitoring_ecosystem_change/index.html" class="no-external">
-<div class="listing-date">
-Dec 27, 2025
-</div>
-<div class="listing-author">
-Masumbuko Semba, Siajali Pamba
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="7" data-categories="U3BhdGlhbCUyMEFuYWx5c2lzJTJDSGFiaXRhdCUyMENsYXNzaWZpY2F0aW9uJTJDRWNvc3lzdGVtJTIwTW90aWZzJTJDTWFyaW5lJTIwU3BhdGlhbCUyMFBsYW5uaW5n" data-listing-date-sort="1766782800000" data-listing-file-modified-sort="1766868229934" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="12" data-listing-word-count-sort="2251">
-<div class="thumbnail">
-<p><a href="./posts/spatial_ecosystem_motifs/index.html" class="no-external"></a></p><a href="./posts/spatial_ecosystem_motifs/index.html" class="no-external">
-<p><img loading="lazy" src="./posts/spatial_ecosystem_motifs/habitat_clusters.png" class="thumbnail-image"></p>
-</a><p><a href="./posts/spatial_ecosystem_motifs/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/spatial_ecosystem_motifs/index.html" class="no-external">Spatial Ecosystem Motifs: Identifying Unique and Representative Habitats in Mkoani and Mkuranga</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/spatial_ecosystem_motifs/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('U3BhdGlhbCUyMEFuYWx5c2lz'); return false;">
-Spatial Analysis
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('SGFiaXRhdCUyMENsYXNzaWZpY2F0aW9u'); return false;">
-Habitat Classification
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('RWNvc3lzdGVtJTIwTW90aWZz'); return false;">
-Ecosystem Motifs
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('TWFyaW5lJTIwU3BhdGlhbCUyMFBsYW5uaW5n'); return false;">
-Marine Spatial Planning
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/spatial_ecosystem_motifs/index.html" class="no-external">Methods for comparing spatial patterns of marine habitat composition and identifying unique ecosystem configurations</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/spatial_ecosystem_motifs/index.html" class="no-external">
-<div class="listing-date">
-Dec 27, 2025
-</div>
-<div class="listing-author">
-Masumbuko Semba, Siajali Pamba
 </div>
 </a>
 </div>

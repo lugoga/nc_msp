@@ -11,7 +11,6 @@ execute:
 ---
 
 
-
 ```{r}
 require(tidyverse)
 require(echarts4r)
@@ -23,6 +22,9 @@ require(echarts4r)
 **Location**: Mkoani (Pemba) and Mkuranga (Pwani Region), Tanzania
 
 ---
+
+
+
 
 ## Project Overview
 
@@ -63,7 +65,7 @@ This Marine Spatial Planning project aims to develop comprehensive spatial plans
 ```{r}
 echarts4r::e_chart() |> 
   echarts4r::e_gauge(
-    value = 90, 
+    value = 96, 
     name = "PERCENT", 
     max = 100
     )
@@ -71,6 +73,8 @@ echarts4r::e_chart() |>
 
 :::
 ::: 
+
+
 
 
 

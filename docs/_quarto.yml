@@ -11,12 +11,17 @@ project:
     - "!reports/*.qmd"      # Exclude all files in the reports folder
     - "!modules/*.qmd"      # Exclude all files in the modules folder
     - "!exercises/*.qmd"      # Exclude all files in the modules folder
+    - "!posts/compare_pattern1/*.qmd"
+    - "!posts/continuous_raster_comparison/*.qmd"
+    - "!posts/ecosystem_health_indicators/*.qmd"
+    - "!posts/monitoring_ecosystem_change/*.qmd"
+    - "!posts/spatial_ecosystem_motifs/*.qmd"
 
 website:
   # title: "Marine Spatial Planning Initiative - Tanzania"
   description: "Marine Spatial Planning consultancy for coastal Tanzania districts - Mkoani (Pemba) and Mkuranga (Pwani). Spatial analysis, coastal management, and ecosystem monitoring."
   navbar:
-    logo: images/coat_OG_web.png
+    logo: images/msp_logo.png
     background: secondary
     left:
       - text: "Home"
@@ -92,57 +97,41 @@ website:
           - text: "NOAA Marine Forecast"
             href: "https://www.ncei.noaa.gov/products/ocean-weather-forecast"
             target: "_blank"
-          - text: "Ocean Current Maps"
-            href: "https://oceancurrents.rsmas.miami.edu/"
-            target: "_blank"
-          - text: "Sea Level Information"
-            href: "https://www.tides.noaa.gov/"
-            target: "_blank"
+          # - text: "Ocean Current Maps"
+          #   href: "https://oceancurrents.rsmas.miami.edu/"
+          #   target: "_blank"
+          # - text: "Sea Level Information"
+          #   href: "https://www.tides.noaa.gov/"
+          #   target: "_blank"
           - text: "Tropical Storm Tracking"
             href: "https://www.nhc.noaa.gov/"
             target: "_blank"
-  
-      # - section: "MSP Resources & Networks"
-      #   contents:
-      #     - text: "Nairobi Convention"
-      #       href: "https://www.nairobiconvention.org/"
-      #       target: "_blank"
-      #     - text: "Nairobi Convention - Marine Spatial Planning"
-      #       href: "https://www.nairobiconvention.org/programs/integrated-management-marine-coastal-areas"
-      #       target: "_blank"
-      #     - text: "World Bank - Marine Spatial Planning"
-      #       href: "https://www.worldbank.org/en/topic/oceaneconomy"
-      #       target: "_blank"
-      #     - text: "UNESCO - Coastal Management"
-      #       href: "https://en.unesco.org/maritime"
-      #       target: "_blank"
-      #     - text: "IOC/UNESCO - Ocean Best Practices"
-      #       href: "https://www.oceanbestpractices.org/"
-      #       target: "_blank"
-      #     - text: "Western Indian Ocean - WIOMSA"
-      #       href: "https://www.wiomsa.org/"
-      #       target: "_blank"
-      #     - text: "FAO - Marine Spatial Planning"
-      #       href: "https://www.fao.org/about/what-we-do/fisheries-aquaculture"
-      #       target: "_blank"
-      #     - text: "IUCN - Oceans Initiative"
-      #       href: "https://www.iucn.org/our-work/topic/oceans"
-      #       target: "_blank"
-      #     - text: "Coastal Zone Management Centre"
-      #       href: "https://www.czmc.nl/"
-      #       target: "_blank"
-      #     - text: "UNEP - Coastal Management"
-      #       href: "https://www.unep.org/explore-topics/oceans-seas"
-      #       target: "_blank"
     
-      # - section: "Course Modules"
-        # contents:
-        #   - modules/module1.qmd
-        #   - modules/module2.qmd
-        #   - modules/module3.qmd
-        #   - modules/module4.qmd
-        #   - modules/module5.qmd
-        #   - modules/module6.qmd
+    # tools:
+    #   - icon: globe
+    #     href: https://www.udsm.ac.tz
+    #     text: UDSM
+    #     target: "_blank"
+    
+    footer: |
+      <div style="text-align: center; margin: 20px 0;">
+        ![](images/coat_OG_web.png){width=100px style="margin: 10px 5px;"} 
+        <br>
+        ![](images/nc.png){width=50px style="margin: 10px 5px;"} 
+        ![](images/msp_logo.svg){width=50px style="margin: 10px 5px;"} 
+        ![](images/udsm.png){width=50px style="margin: 10px 5px;"} 
+        ![](images/tnc.svg){width=150px style="margin: 10px 5px;"} 
+        ![](images/wcs.png){width=50px style="margin: 10px 5px;"} 
+        ![](images/wwf.png){width=40px style="margin: 10px 5px;"}
+        ![](images/wiomsa.png){width=100px style="margin: 10px 5px;"} 
+        ![](images/Tafiri.png){width=50px style="margin: 10px 5px;"}
+        ![](images/zafiri.png){width=50px style="margin: 10px 5px;"}
+        ![](images/nmaist.jpg){width=50px style="margin: 10px 5px;"} 
+        ![](images/dsfa_screenshot.png){width=50px style="margin: 10px 5px;"} 
+        ![](images/IUCN_logo.svg){width=50px style="margin: 10px 5px;"} 
+      </div> 
+      
+      
 
   page-footer:
     background: secondary
@@ -174,6 +163,172 @@ format:
           <meta name="twitter:card" content="summary_large_image">
           <meta name="twitter:title" content="Marine Spatial Planning Initiative - Tanzania">
           <meta name="twitter:description" content="Spatial analysis and coastal management for Tanzania's marine ecosystems">
+          <style>
+            body {
+              -webkit-user-select: none;
+              -moz-user-select: none;
+              -ms-user-select: none;
+              user-select: none;
+              -webkit-touch-callout: none;
+            }
+            /* Allow selection in code blocks for accessibility */
+            pre, code, .sourceCode {
+              -webkit-user-select: text;
+              -moz-user-select: text;
+              -ms-user-select: text;
+              user-select: text;
+            }
+          </style>
+          <script>
+            // Disable right-click context menu
+            document.addEventListener('contextmenu', function(event) {
+              event.preventDefault();
+              return false;
+            });
+            
+            // Disable keyboard shortcuts for copying and screenshots
+            document.addEventListener('keydown', function(event) {
+              // Block Ctrl+C, Ctrl+X, Ctrl+A
+              if (event.ctrlKey || event.metaKey) {
+                if (event.key === 'c' || event.key === 'C' || 
+                    event.key === 'x' || event.key === 'X' || 
+                    event.key === 'a' || event.key === 'A') {
+                  event.preventDefault();
+                  return false;
+                }
+              }
+              
+              // Block Print Screen, Fn+F13 (Mac), Win+Shift+S (Snipping Tool)
+              if (event.key === 'PrintScreen' || 
+                  event.key === 'F13' ||
+                  (event.shiftKey && event.ctrlKey && event.key === 's') ||
+                  (event.shiftKey && event.metaKey && event.key === '4') ||
+                  (event.shiftKey && event.metaKey && event.key === '3') ||
+                  (event.shiftKey && event.metaKey && event.key === '5') ||
+                  (event.shiftKey && event.key === 'PrintScreen')) {
+                event.preventDefault();
+                alert('Screenshots and screen capture are not permitted on this website. Content is protected.');
+                return false;
+              }
+            });
+            
+            // Block Snipping Tool via Win+Shift+S shortcut
+            document.addEventListener('keydown', function(event) {
+              if (event.key === 's' && event.shiftKey && event.metaKey && !event.ctrlKey) {
+                event.preventDefault();
+                alert('Snipping Tool is disabled on this website.');
+                return false;
+              }
+            });
+            
+            // Detect and block clipboard access attempts
+            if (navigator.clipboard) {
+              navigator.clipboard.addEventListener?.('paste', function(event) {
+                event.preventDefault();
+              });
+            }
+            
+            // Block drag and drop (prevents saving images)
+            document.addEventListener('dragstart', function(event) {
+              event.preventDefault();
+              return false;
+            });
+            
+            document.addEventListener('drop', function(event) {
+              event.preventDefault();
+              return false;
+            });
+            
+            // Detect inactive window (user may be using external screenshot tool)
+            let isWindowFocused = true;
+            window.addEventListener('blur', function() {
+              isWindowFocused = false;
+              console.warn('Window lost focus - screenshot may be attempted');
+            });
+            
+            window.addEventListener('focus', function() {
+              isWindowFocused = true;
+            });
+            
+            // Monitor for visibility changes (screenshot app may hide window)
+            document.addEventListener('visibilitychange', function() {
+              if (document.hidden) {
+                console.warn('Page hidden - possible screenshot in progress');
+              }
+            });
+            
+            // Smooth scrolling for all internal links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+              anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                  target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+              });
+            });
+            
+          </script>
+      - text: |
+          <script>
+            // Initialize scroll to top button after page loads
+            document.addEventListener('DOMContentLoaded', function() {
+              const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+              if (!scrollToTopBtn) {
+                // Create scroll to top button if it doesn't exist
+                const btn = document.createElement('button');
+                btn.id = 'scrollToTopBtn';
+                btn.innerHTML = '↑';
+                btn.style.cssText = `
+                  position: fixed;
+                  bottom: 30px;
+                  right: 30px;
+                  z-index: 1000;
+                  background-color: #3498db;
+                  color: white;
+                  border: none;
+                  border-radius: 50%;
+                  width: 50px;
+                  height: 50px;
+                  font-size: 24px;
+                  cursor: pointer;
+                  display: none;
+                  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+                  transition: all 0.3s ease;
+                  font-weight: bold;
+                `;
+                document.body.appendChild(btn);
+                
+                // Show/hide button based on scroll position
+                window.addEventListener('scroll', function() {
+                  if (window.pageYOffset > 300) {
+                    btn.style.display = 'block';
+                  } else {
+                    btn.style.display = 'none';
+                  }
+                });
+                
+                // Scroll to top when button clicked
+                btn.addEventListener('click', function() {
+                  window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                  });
+                });
+                
+                // Hover effects
+                btn.addEventListener('mouseenter', function() {
+                  this.style.backgroundColor = '#2980b9';
+                  this.style.transform = 'scale(1.1)';
+                });
+                
+                btn.addEventListener('mouseleave', function() {
+                  this.style.backgroundColor = '#3498db';
+                  this.style.transform = 'scale(1)';
+                });
+              }
+            });
+          </script>
 
 bibliography: references.bib
 execute: 

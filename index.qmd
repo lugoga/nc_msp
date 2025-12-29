@@ -121,6 +121,24 @@ Validation meeting bringing together district authorities, fishing communities, 
 - **Adaptive**: Built-in mechanisms for monitoring, evaluation, and plan refinement
 - **Scalable**: Approaches applicable to other coastal regions in Tanzania and the Indian Ocean
 
+
+```{r}
+#| fig-cap: "Project Implementation Progress Dashboard - Completion Status by Workpackage"
+
+tibble::tibble(
+  Task = c("Inception", "Biodiversity", "Field Data", "Ecosystem", "Bio-Economic", "Web App"),
+  Completion = c(96,10, 8, 15, 15, 28)
+  ) |> 
+  dplyr::group_by(Task) |>
+  dplyr::summarise(Completion = mean(Completion), .groups = "keep") |>
+  echarts4r::e_chart(timeline = TRUE)  |>
+  echarts4r::e_gauge(
+    value = c(96,10, 8, 15, 15, 28), 
+    name = c("Inception", "Biodiversity", "Field Data", "Ecosystem", "Bio-Economic", "Web App"), 
+    max = 100)  
+ 
+```
+
 ## Financial and Technical Support
 
 This initiative is supported by the **Nairobi Convention Secretariat**, which provides:

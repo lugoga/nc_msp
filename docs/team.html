@@ -77,6 +77,171 @@ ul.task-list li input[type="checkbox"] {
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="">
 <meta name="twitter:description" content="Marine Spatial Planning consultancy for coastal Tanzania districts - Mkoani (Pemba) and Mkuranga (Pwani). Spatial analysis, coastal management, and ecosystem monitoring.">
+<style>
+  body {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+  }
+  /* Allow selection in code blocks for accessibility */
+  pre, code, .sourceCode {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+  }
+</style>
+<script>
+  // Disable right-click context menu
+  document.addEventListener('contextmenu', function(event) {
+    event.preventDefault();
+    return false;
+  });
+  
+  // Disable keyboard shortcuts for copying and screenshots
+  document.addEventListener('keydown', function(event) {
+    // Block Ctrl+C, Ctrl+X, Ctrl+A
+    if (event.ctrlKey || event.metaKey) {
+      if (event.key === 'c' || event.key === 'C' || 
+          event.key === 'x' || event.key === 'X' || 
+          event.key === 'a' || event.key === 'A') {
+        event.preventDefault();
+        return false;
+      }
+    }
+    
+    // Block Print Screen, Fn+F13 (Mac), Win+Shift+S (Snipping Tool)
+    if (event.key === 'PrintScreen' || 
+        event.key === 'F13' ||
+        (event.shiftKey && event.ctrlKey && event.key === 's') ||
+        (event.shiftKey && event.metaKey && event.key === '4') ||
+        (event.shiftKey && event.metaKey && event.key === '3') ||
+        (event.shiftKey && event.metaKey && event.key === '5') ||
+        (event.shiftKey && event.key === 'PrintScreen')) {
+      event.preventDefault();
+      alert('Screenshots and screen capture are not permitted on this website. Content is protected.');
+      return false;
+    }
+  });
+  
+  // Block Snipping Tool via Win+Shift+S shortcut
+  document.addEventListener('keydown', function(event) {
+    if (event.key === 's' && event.shiftKey && event.metaKey && !event.ctrlKey) {
+      event.preventDefault();
+      alert('Snipping Tool is disabled on this website.');
+      return false;
+    }
+  });
+  
+  // Detect and block clipboard access attempts
+  if (navigator.clipboard) {
+    navigator.clipboard.addEventListener?.('paste', function(event) {
+      event.preventDefault();
+    });
+  }
+  
+  // Block drag and drop (prevents saving images)
+  document.addEventListener('dragstart', function(event) {
+    event.preventDefault();
+    return false;
+  });
+  
+  document.addEventListener('drop', function(event) {
+    event.preventDefault();
+    return false;
+  });
+  
+  // Detect inactive window (user may be using external screenshot tool)
+  let isWindowFocused = true;
+  window.addEventListener('blur', function() {
+    isWindowFocused = false;
+    console.warn('Window lost focus - screenshot may be attempted');
+  });
+  
+  window.addEventListener('focus', function() {
+    isWindowFocused = true;
+  });
+  
+  // Monitor for visibility changes (screenshot app may hide window)
+  document.addEventListener('visibilitychange', function() {
+    if (document.hidden) {
+      console.warn('Page hidden - possible screenshot in progress');
+    }
+  });
+  
+  // Smooth scrolling for all internal links
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+  
+</script>
+<script>
+  // Initialize scroll to top button after page loads
+  document.addEventListener('DOMContentLoaded', function() {
+    const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+    if (!scrollToTopBtn) {
+      // Create scroll to top button if it doesn't exist
+      const btn = document.createElement('button');
+      btn.id = 'scrollToTopBtn';
+      btn.innerHTML = '↑';
+      btn.style.cssText = `
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        z-index: 1000;
+        background-color: #3498db;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        font-size: 24px;
+        cursor: pointer;
+        display: none;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        transition: all 0.3s ease;
+        font-weight: bold;
+      `;
+      document.body.appendChild(btn);
+      
+      // Show/hide button based on scroll position
+      window.addEventListener('scroll', function() {
+        if (window.pageYOffset > 300) {
+          btn.style.display = 'block';
+        } else {
+          btn.style.display = 'none';
+        }
+      });
+      
+      // Scroll to top when button clicked
+      btn.addEventListener('click', function() {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      });
+      
+      // Hover effects
+      btn.addEventListener('mouseenter', function() {
+        this.style.backgroundColor = '#2980b9';
+        this.style.transform = 'scale(1.1)';
+      });
+      
+      btn.addEventListener('mouseleave', function() {
+        this.style.backgroundColor = '#3498db';
+        this.style.transform = 'scale(1)';
+      });
+    }
+  });
+</script>
 
 
 <link rel="stylesheet" href="styles.css">
@@ -90,7 +255,7 @@ ul.task-list li input[type="checkbox"] {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a href="./index.html" class="navbar-brand navbar-brand-logo">
-    <img src="./images/coat_OG_web.png" alt="" class="navbar-logo">
+    <img src="./images/msp_logo.png" alt="" class="navbar-logo">
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -230,7 +395,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./about.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">About This Marine Spatial Planning Initiative</span></a>
+ <span class="menu-text">Marine Spatial Planning</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -276,18 +441,6 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="https://oceancurrents.rsmas.miami.edu/" class="sidebar-item-text sidebar-link" target="_blank">
- <span class="menu-text">Ocean Current Maps</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="https://www.tides.noaa.gov/" class="sidebar-item-text sidebar-link" target="_blank">
- <span class="menu-text">Sea Level Information</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="https://www.nhc.noaa.gov/" class="sidebar-item-text sidebar-link" target="_blank">
  <span class="menu-text">Tropical Storm Tracking</span></a>
   </div>
@@ -296,7 +449,11 @@ ul.task-list li input[type="checkbox"] {
   </li>
     </ul>
     </div>
-</nav>
+<div class="quarto-sidebar-footer"><div class="sidebar-footer-item">
+<div style="text-align: center; margin: 20px 0;">
+<p><img src="images/coat_OG_web.png" class="img-fluid" style="margin: 10px 5px;" width="100"> <br> <img src="images/nc.png" class="img-fluid" style="margin: 10px 5px;" width="50"> <img src="images/msp_logo.svg" class="img-fluid" style="margin: 10px 5px;" width="50"> <img src="images/udsm.png" class="img-fluid" style="margin: 10px 5px;" width="50"> <img src="images/tnc.svg" class="img-fluid" style="margin: 10px 5px;" width="150"> <img src="images/wcs.png" class="img-fluid" style="margin: 10px 5px;" width="50"> <img src="images/wwf.png" class="img-fluid" style="margin: 10px 5px;" width="40"> <img src="images/wiomsa.png" class="img-fluid" style="margin: 10px 5px;" width="100"> <img src="images/Tafiri.png" class="img-fluid" style="margin: 10px 5px;" width="50"> <img src="images/zafiri.png" class="img-fluid" style="margin: 10px 5px;" width="50"> <img src="images/nmaist.jpg" class="img-fluid" style="margin: 10px 5px;" width="50"> <img src="images/dsfa_screenshot.png" class="img-fluid" style="margin: 10px 5px;" width="50"> <img src="images/IUCN_logo.svg" class="img-fluid" style="margin: 10px 5px;" width="50"></p>
+</div>
+</div></div></nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
@@ -342,27 +499,53 @@ ul.task-list li input[type="checkbox"] {
 <li>R programming for spatial data science</li>
 <li>Marine spatial planning frameworks</li>
 </ul>
-<p><strong>Links:</strong> - <a href="https://scholar.google.com/citations?user=yQ3rPAoAAAAJ&amp;hl=en">Google Scholar</a> - <a href="https://orcid.org/">ORCID</a> - <a href="https://www.udsm.ac.tz">SOAF Profile</a> - Email: siajali.pamba@udsm.ac.tz</p>
+<p><strong>Links:</strong></p>
+<ul>
+<li><a href="https://scholar.google.com/citations?user=yQ3rPAoAAAAJ&amp;hl=en">Google Scholar</a></li>
+<li><a href="https://orcid.org/">ORCID</a></li>
+<li><a href="https://www.udsm.ac.tz">SOAF Profile</a></li>
+<li>Email: siajali.pamba@udsm.ac.tz</li>
+</ul>
 </section>
 </div>
 <div class="g-col-12 g-col-md-6">
 <p><img src="images/team/semba.jpg" class="rounded-circle img-fluid" style="width: 200px; height: 200px; object-fit: cover; box-shadow: 0 4px 8px rgba(0,0,0,0.2);"></p>
 <section id="masumbuko-semba-phd" class="level3">
 <h3 class="anchored" data-anchor-id="masumbuko-semba-phd">Masumbuko Semba, PhD</h3>
-<p><strong>Role:</strong> Data Scientist &amp; Field Data Collection Lead<br>
+<p><strong>Role:</strong> Data Analyst, Graphics &amp; Web Application Design Lead<br>
 <strong>Affiliation:</strong> Nelson Mandela African Institution of Science and Technology (NM-AIST)</p>
-<p><em>Data scientist and ecosystem researcher specializing in field survey design, coastal ecosystem monitoring, and community-based resource management in East Africa.</em></p>
-<p>Dr.&nbsp;Semba coordinates project implementation and leads field data collection and ecosystem monitoring. He designs and validates field survey protocols, integrating remote sensing with ground-truth data collection. His expertise spans decision support system development and data visualization, enabling coastal stakeholders to understand and act on complex ecosystem information through dashboards and interactive digital tools.</p>
+<p><em>Data scientist specializing in spatial and statistical analysis, interactive data visualization, and web application developement for complex spatial and ecological datasets.</em></p>
+<p>Dr.&nbsp;Semba leads data analysis, statistical modeling, and interactive graphics development for the Marine Spatial Planning Initiative. His expertise spans spatial and statistical analysis, automation of analytical workflows, and full-stack development of interactive visualization platforms using modern programming frameworks.</p>
+<!-- He designs and develops web-based applications and dashboards that transform complex spatial and statistical outputs into actionable insights for coastal stakeholders.  -->
 <p><strong>Key Focus Areas:</strong></p>
 <ul>
-<li>Field survey design and implementation</li>
-<li>Ecosystem data collection and validation</li>
-<li>Remote sensing applications for coastal monitoring</li>
-<li>Data visualization for stakeholder communication</li>
-<li>Dashboard and Data Driven Decision Support platform design</li>
-<li>Digital tools for marine spatial planning implementation</li>
+<li>Data analysis and statistical modeling</li>
+<li>Spatial analysis and geostatistics</li>
+<li>Interactive graphics and data visualization</li>
+<li>Web application design and development</li>
+<li>Algorithm development and optimization</li>
+<li>Workflow automation and report generation</li>
+<li>Raster and vector spatial data analysis</li>
+<li>Decision support system architecture</li>
 </ul>
-<p><strong>Links:</strong> - <a href="https://scholar.google.com/citations?user=MASUMBUKO">Google Scholar</a> - <a href="https://orcid.org/">ORCID</a> - <a href="https://nm-aist.ac.tz">NM-AIST Profile</a> - Email: masumbuko.semba@nm-aist.ac.tz</p>
+<!-- **Technical Skills:**
+
+- **Programming Languages:** Python, R, MATLAB
+- **Markup & Documentation:** HTML, Markdown, Quarto, LaTeX
+- **Interactive Graphics:** Shiny (R), Plotly, JavaScript/D3.js, Echarts
+- **IDEs & Tools:** Positron, RStudio, VS Code, Jupyter
+- **Web Technologies:** Quarto websites, Shiny apps, REST APIs
+- **Spatial Analysis:** terra, sf, tidyterra, GDAL, PostGIS
+- **Statistical Methods:** Regression analysis, time-series analysis, spatial autocorrelation, machine learning
+- **Automation:** Script-based workflow automation, batch processing, cloud computing -->
+<p><strong>Links:</strong></p>
+<ul>
+<li><a href="https://scholar.google.com/citations?user=MASUMBUKO">Google Scholar</a></li>
+<li><a href="https://orcid.org/">ORCID</a></li>
+<li><a href="https://github.com/lugoga">GitHub</a></li>
+<li><a href="https://nm-aist.ac.tz">NM-AIST Profile</a></li>
+<li>Email: masumbuko.semba@nm-aist.ac.tz</li>
+</ul>
 </section>
 </div>
 <div class="g-col-12 g-col-md-6">
@@ -382,7 +565,13 @@ ul.task-list li input[type="checkbox"] {
 <li>Livelihood impact assessment and community engagement</li>
 <li>Policy translation and stakeholder communication</li>
 </ul>
-<p><strong>Links:</strong> - <a href="https://scholar.google.com/citations?user=4dc4cM4AAAAJ&amp;hl=en">Google Scholar</a> - <a href="https://orcid.org/">ORCID</a> - <a href="https://www.udsm.ac.tz">SOAF Profile</a> - Email: julius.francis@udsm.ac.tz</p>
+<p><strong>Links:</strong></p>
+<ul>
+<li><a href="https://scholar.google.com/citations?user=4dc4cM4AAAAJ&amp;hl=en">Google Scholar</a></li>
+<li><a href="https://orcid.org/">ORCID</a></li>
+<li><a href="https://www.udsm.ac.tz">SOAF Profile</a></li>
+<li>Email: julius.francis@udsm.ac.tz</li>
+</ul>
 </section>
 </div>
 <div class="g-col-12 g-col-md-6">
@@ -400,7 +589,12 @@ ul.task-list li input[type="checkbox"] {
 <li>Coastal community engagement and participatory planning</li>
 <li>GIS and spatial data management</li>
 </ul>
-<p><strong>Links:</strong> - <a href="https://www.nature.org/en-us/about-us/where-we-work/africa/tanzania/">The Nature Conservancy - Tanzania</a> - <a href="https://orcid.org/">ORCID</a> - Email: empina@tnc.org</p>
+<p><strong>Links:</strong></p>
+<ul>
+<li><a href="https://www.nature.org/en-us/about-us/where-we-work/africa/tanzania/">The Nature Conservancy - Tanzania</a></li>
+<li><a href="https://orcid.org/">ORCID</a></li>
+<li>Email: empina@tnc.org</li>
+</ul>
 </section>
 </div>
 <div class="g-col-12 g-col-md-6">
@@ -410,7 +604,7 @@ ul.task-list li input[type="checkbox"] {
 <p><strong>Role:</strong> Field Operations &amp; Logistics Coordinator<br>
 <strong>Affiliation:</strong> School of Aquatic Sciences and Fisheries Technology (SOAF)</p>
 <p><em>Field operations specialist with expertise in survey coordination, equipment management, and community-based data collection for coastal research projects.</em></p>
-<p>Samson coordinates all field activities and logistics for the Marine Spatial Planning Initiative. He manages survey equipment, organizes fieldwork schedules, coordinates with local communities and fishing associations, and ensures smooth implementation of data collection protocols. His experience in coastal fieldwork and community engagement is essential for successful ground-truthing of satellite data and stakeholder involvement.</p>
+<p>Mr.&nbsp;Samson coordinates all field activities and logistics for the Marine Spatial Planning Initiative. He manages survey equipment, organizes fieldwork schedules, coordinates with local communities and fishing associations, and ensures smooth implementation of data collection protocols. His experience in coastal fieldwork and community engagement is essential for successful ground-truthing of satellite data and stakeholder involvement.</p>
 <p><strong>Key Focus Areas:</strong></p>
 <ul>
 <li>Field survey coordination and management</li>
@@ -420,7 +614,12 @@ ul.task-list li input[type="checkbox"] {
 <li>Coastal fieldwork and site access coordination</li>
 <li>Stakeholder communication and feedback collection</li>
 </ul>
-<p><strong>Links:</strong> - <a href="https://www.udsm.ac.tz">SOAF Profile</a> - <a href="https://orcid.org/">ORCID</a> - Email: samson.job@udsm.ac.tz</p>
+<p><strong>Links:</strong></p>
+<ul>
+<li><a href="https://www.udsm.ac.tz">SOAF Profile</a></li>
+<li><a href="https://orcid.org/">ORCID</a></li>
+<li>Email: samson.job@udsm.ac.tz</li>
+</ul>
 </section>
 </div>
 <div class="g-col-12 g-col-md-6">
@@ -430,7 +629,7 @@ ul.task-list li input[type="checkbox"] {
 <p><strong>Role:</strong> Socio-Economic Analysis &amp; Livelihood Coordinator<br>
 <strong>Affiliation:</strong> School of Aquatic Sciences and Fisheries Technology (SOAF)</p>
 <p><em>Socio-economic specialist focused on understanding fishing livelihoods, community needs, and social dimensions of marine spatial planning in coastal Tanzania.</em></p>
-<p>Gervas conducts socio-economic assessments and livelihood analysis for the communities in Mkoani and Mkuranga districts. He documents fishing practices, income sources, and community priorities, ensuring that marine spatial planning outcomes address local livelihood needs and support sustainable resource management. His work bridges ecological science and human wellbeing, making spatial plans locally relevant and socially acceptable.</p>
+<p>Mr.&nbsp;Gervas conducts socio-economic assessments and livelihood analysis for the communities in Mkoani and Mkuranga districts. He documents fishing practices, income sources, and community priorities, ensuring that marine spatial planning outcomes address local livelihood needs and support sustainable resource management. His work bridges ecological science and human wellbeing, making spatial plans locally relevant and socially acceptable.</p>
 <p><strong>Key Focus Areas:</strong></p>
 <ul>
 <li>Socio-economic assessment and livelihood analysis</li>
@@ -440,7 +639,12 @@ ul.task-list li input[type="checkbox"] {
 <li>Social dimension integration in marine spatial planning</li>
 <li>Participatory planning and community feedback</li>
 </ul>
-<p><strong>Links:</strong> - <a href="https://www.udsm.ac.tz">SOAF Profile</a> - <a href="https://orcid.org/">ORCID</a> - Email: gervas.maro@udsm.ac.tz</p>
+<p><strong>Links:</strong></p>
+<ul>
+<li><a href="https://www.udsm.ac.tz">SOAF Profile</a></li>
+<li><a href="https://orcid.org/">ORCID</a></li>
+<li>Email: gervas.maro@udsm.ac.tz</li>
+</ul>
 </section>
 </div>
 </div>

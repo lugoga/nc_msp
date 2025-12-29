@@ -35,6 +35,7 @@ Dr. Pamba leads the Marine Spatial Planning Initiative as institutional lead at 
 - Marine spatial planning frameworks
 
 **Links:**
+
 - [Google Scholar](https://scholar.google.com/citations?user=yQ3rPAoAAAAJ&hl=en)
 - [ORCID](https://orcid.org/)
 - [SOAF Profile](https://www.udsm.ac.tz)
@@ -47,25 +48,42 @@ Dr. Pamba leads the Marine Spatial Planning Initiative as institutional lead at 
 
 ### Masumbuko Semba, PhD
 
-**Role:** Data Scientist & Field Data Collection Lead  
+**Role:** Data Analyst, Graphics & Web Application Design Lead  
 **Affiliation:** Nelson Mandela African Institution of Science and Technology (NM-AIST)
 
-*Data scientist and ecosystem researcher specializing in field survey design, coastal ecosystem monitoring, and community-based resource management in East Africa.*
+*Data scientist specializing in spatial and statistical analysis, interactive data visualization, and web application developement for complex spatial and ecological datasets.*
 
-Dr. Semba coordinates project implementation and leads field data collection and ecosystem monitoring. He designs and validates field survey protocols, integrating remote sensing with ground-truth data collection. His expertise spans decision support system development and data visualization, enabling coastal stakeholders to understand and act on complex ecosystem information through dashboards and interactive digital tools.
+Dr. Semba leads data analysis, statistical modeling, and interactive graphics development for the Marine Spatial Planning Initiative. His expertise spans spatial and statistical analysis, automation of analytical workflows, and full-stack development of interactive visualization platforms using modern programming frameworks.
+
+<!-- He designs and develops web-based applications and dashboards that transform complex spatial and statistical outputs into actionable insights for coastal stakeholders.  -->
 
 **Key Focus Areas:**
 
-- Field survey design and implementation
-- Ecosystem data collection and validation
-- Remote sensing applications for coastal monitoring
-- Data visualization for stakeholder communication
-- Dashboard and Data Driven Decision Support platform design
-- Digital tools for marine spatial planning implementation
+- Data analysis and statistical modeling
+- Spatial analysis and geostatistics
+- Interactive graphics and data visualization
+- Web application design and development
+- Algorithm development and optimization
+- Workflow automation and report generation
+- Raster and vector spatial data analysis
+- Decision support system architecture
+
+<!-- **Technical Skills:**
+
+- **Programming Languages:** Python, R, MATLAB
+- **Markup & Documentation:** HTML, Markdown, Quarto, LaTeX
+- **Interactive Graphics:** Shiny (R), Plotly, JavaScript/D3.js, Echarts
+- **IDEs & Tools:** Positron, RStudio, VS Code, Jupyter
+- **Web Technologies:** Quarto websites, Shiny apps, REST APIs
+- **Spatial Analysis:** terra, sf, tidyterra, GDAL, PostGIS
+- **Statistical Methods:** Regression analysis, time-series analysis, spatial autocorrelation, machine learning
+- **Automation:** Script-based workflow automation, batch processing, cloud computing -->
 
 **Links:**
+
 - [Google Scholar](https://scholar.google.com/citations?user=MASUMBUKO)
 - [ORCID](https://orcid.org/)
+- [GitHub](https://github.com/lugoga)
 - [NM-AIST Profile](https://nm-aist.ac.tz)
 - Email: masumbuko.semba@nm-aist.ac.tz
 
@@ -93,6 +111,7 @@ Dr. Julius develops policy recommendations and governance frameworks for sustain
 - Policy translation and stakeholder communication
 
 **Links:**
+
 - [Google Scholar](https://scholar.google.com/citations?user=4dc4cM4AAAAJ&hl=en)
 - [ORCID](https://orcid.org/)
 - [SOAF Profile](https://www.udsm.ac.tz)
@@ -120,6 +139,7 @@ Emmanuel develops the digital visualization platform and conducts bio-economic c
 - GIS and spatial data management
 
 **Links:**
+
 - [The Nature Conservancy - Tanzania](https://www.nature.org/en-us/about-us/where-we-work/africa/tanzania/)
 - [ORCID](https://orcid.org/)
 - Email: empina@tnc.org
@@ -137,7 +157,7 @@ Emmanuel develops the digital visualization platform and conducts bio-economic c
 
 *Field operations specialist with expertise in survey coordination, equipment management, and community-based data collection for coastal research projects.*
 
-Samson coordinates all field activities and logistics for the Marine Spatial Planning Initiative. He manages survey equipment, organizes fieldwork schedules, coordinates with local communities and fishing associations, and ensures smooth implementation of data collection protocols. His experience in coastal fieldwork and community engagement is essential for successful ground-truthing of satellite data and stakeholder involvement.
+Mr. Samson coordinates all field activities and logistics for the Marine Spatial Planning Initiative. He manages survey equipment, organizes fieldwork schedules, coordinates with local communities and fishing associations, and ensures smooth implementation of data collection protocols. His experience in coastal fieldwork and community engagement is essential for successful ground-truthing of satellite data and stakeholder involvement.
 
 **Key Focus Areas:**
 
@@ -149,6 +169,7 @@ Samson coordinates all field activities and logistics for the Marine Spatial Pla
 - Stakeholder communication and feedback collection
 
 **Links:**
+
 - [SOAF Profile](https://www.udsm.ac.tz)
 - [ORCID](https://orcid.org/)
 - Email: samson.job@udsm.ac.tz
@@ -166,7 +187,7 @@ Samson coordinates all field activities and logistics for the Marine Spatial Pla
 
 *Socio-economic specialist focused on understanding fishing livelihoods, community needs, and social dimensions of marine spatial planning in coastal Tanzania.*
 
-Gervas conducts socio-economic assessments and livelihood analysis for the communities in Mkoani and Mkuranga districts. He documents fishing practices, income sources, and community priorities, ensuring that marine spatial planning outcomes address local livelihood needs and support sustainable resource management. His work bridges ecological science and human wellbeing, making spatial plans locally relevant and socially acceptable.
+Mr. Gervas conducts socio-economic assessments and livelihood analysis for the communities in Mkoani and Mkuranga districts. He documents fishing practices, income sources, and community priorities, ensuring that marine spatial planning outcomes address local livelihood needs and support sustainable resource management. His work bridges ecological science and human wellbeing, making spatial plans locally relevant and socially acceptable.
 
 **Key Focus Areas:**
 
@@ -178,6 +199,7 @@ Gervas conducts socio-economic assessments and livelihood analysis for the commu
 - Participatory planning and community feedback
 
 **Links:**
+
 - [SOAF Profile](https://www.udsm.ac.tz)
 - [ORCID](https://orcid.org/)
 - Email: gervas.maro@udsm.ac.tz

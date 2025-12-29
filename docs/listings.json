@@ -4,12 +4,7 @@
     "items": [
       "/posts/lulc_change/index.html",
       "/posts/lulc_pattern/index.html",
-      "/posts/finding_unique_land_cover_patterns/index.html",
-      "/posts/compare_pattern1/index.html",
-      "/posts/continuous_raster_comparison/index.html",
-      "/posts/ecosystem_health_indicators/index.html",
-      "/posts/monitoring_ecosystem_change/index.html",
-      "/posts/spatial_ecosystem_motifs/index.html"
+      "/posts/finding_unique_land_cover_patterns/index.html"
     ]
   }
 ]
