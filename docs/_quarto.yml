@@ -47,7 +47,30 @@ website:
 
     right:
       - icon: github
-        href: https://github.com/lugoga/stock_training_somalia
+        href: https://github.com/lugoga/nc_msp/
+        target: "_blank"
+      - icon: linkedin
+        href: https://www.linkedin.com/in/masumbuko-semba-20936a4b/
+        target: "_blank"
+      - icon: youtube
+        # text: YouTube
+        href: https://www.youtube.com/channel/UC9uZ1KPyo7zIzI4BnUtHPfA
+        target: "_blank"
+      - icon: eye
+        # text: BES
+        href: https://semba.shinyapps.io/besa/
+        target: "_blank"
+      - icon: binoculars
+        # text: Cages
+        href: https://semba.shinyapps.io/vizingaApp/
+        target: "_blank"
+      - icon: sun
+        # text: KWALA
+        href: https://semba.shinyapps.io/digital/
+        target: "_blank"
+      - icon: email
+        href: mailto:lugosemba@gmail.com
+        target: "_blank"
 
   sidebar:
     style: "floating"
@@ -151,6 +174,7 @@ format:
           <meta name="twitter:card" content="summary_large_image">
           <meta name="twitter:title" content="Marine Spatial Planning Initiative - Tanzania">
           <meta name="twitter:description" content="Spatial analysis and coastal management for Tanzania's marine ecosystems">
+
 bibliography: references.bib
 execute: 
   freeze: auto
