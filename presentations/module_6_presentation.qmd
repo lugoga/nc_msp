@@ -1,0 +1,1150 @@
+---
+title: "Module 6: Practical Field Exercises at Landing Sites"
+subtitle: "Somali Fish Stock Training"
+date: "2025-12-05"
+date-modified: today
+author: 
+    - name: "Dr. Masumbuko Semba"
+      affiliation: "Nelson Mandela African Institution of Science and Technology"
+      email: "lugosemba@gmail.com"
+    - name: "Dr. Rushingisha George"
+      affiliation: "Tangania Fisheries Research Institute"
+      email: "george.rushingisha@tafiri.go.tz"
+    - name: "Dr. Mary Kishe"
+      affiliation: "Tanzania Fisheries Research Institute"
+      email: "mary.kishe@tafiri.go.tz"
+    - name: "Dr. Ismael Kimirei"
+      affiliation: "Tanzania Fisheries Research Institute"
+      email: "ismael.kimirei@tafiri.go.tz"
+format: revealjs
+theme: default
+transition: slide
+background-transition: fade
+highlight-style: github
+embed-resources: true
+---
+
+```{r}
+require(sf)
+require(tidyverse)
+require(sizeMat)
+require(gt)
+require(tidyplots)
+require(patchwork)
+require(leaflet)
+```
+
+## Welcome to Module 6
+
+**Practical Field Exercises at Landing Sites**
+
+:::: {.columns}
+::: {.column width="50%"}
+### Learning Objectives
+- Conduct hands-on data collection
+- Master field measurement techniques
+- Implement quality control in field
+- Work with fishing communities
+- Troubleshoot real-world challenges
+:::
+
+::: {.column width="50%"}
+### Why This Matters
+- **Theory meets practice** at landing sites
+- Direct engagement with fisheries
+- Real data collection experience
+- Community relationship building
+- Evidence gathering for management
+:::
+::::
+
+---
+
+## Module 6 Structure
+
+### Three-Day Field Program:
+
+::: {.columns}
+::: {.column width="33%"}
+**Day 1: Setup**
+- Site orientation
+- Equipment check
+- Community engagement
+- Training refresher
+:::
+
+::: {.column width="33%"}
+**Day 2: Data Collection**
+- Full sampling day
+- Hands-on measurement
+- Quality control
+- Data entry practice
+:::
+
+::: {.column width="33%"}
+**Day 3: Analysis**
+- Data review
+- Preliminary results
+- Discussion with fishers
+- Lessons learned
+:::
+::::
+
+---
+
+## Pre-Field Preparation
+
+### Week Before Fieldwork:
+
+::: {.incremental}
+- **Confirm schedule** with landing site managers
+- **Brief community** on data collection purpose
+- **Test all equipment** (scales, rulers, forms)
+- **Prepare backup supplies** (batteries, paper, ink)
+- **Arrange transportation** and logistics
+- **Train any local staff** assisting
+- **Brief the team** on protocols and safety
+:::
+
+---
+
+## Essential Field Equipment
+
+### Measurement & Recording:
+
+::: {.columns}
+::: {.column width="50%"}
+**Measurement Tools**
+- Measuring board (marked 0-60cm)
+- Digital scale (0-50kg capacity)
+- Backup ruler (waterproof)
+- Calipers for precision
+- pH meter (for water)
+- Thermometer
+
+**Safety Equipment**
+- First aid kit
+- Sun protection
+- Rubber boots
+- Gloves
+- Hand sanitizer
+- Insect repellent
+:::
+
+::: {.column width="50%"}
+**Recording Tools**
+- Waterproof forms (laminated)
+- Pencils (work when wet)
+- Clipboard with case
+- Backup paper & forms
+- Camera for documentation
+- Digital recorder
+
+**Data Management**
+- Laptop/tablet
+- Mobile app (offline capable)
+- Backup power bank
+- USB drives
+- Data entry sheets
+:::
+::::
+
+---
+
+## Equipment Calibration
+
+### Before Every Field Day:
+
+```r
+# Create calibration log
+calibration_log <- tibble(
+  date = Sys.Date(),
+  equipment = c("Scale A", "Measuring Board", "Scale B"),
+  last_calibrated = as.Date(c("2024-01-10", "2024-01-08", "2024-01-15")),
+  status = c("PASS", "PASS", "FAIL - Recalibrate"),
+  checked_by = c("Ahmed", "Ahmed", "Mohamed")
+)
+
+# Record in field book
+cat(
+  "EQUIPMENT CALIBRATION -", format(Sys.Date(), "%Y-%m-%d"), "\n",
+  "Scale: [TEST WITH 1KG WEIGHT] - Result: ___kg\n",
+  "Ruler: [MEASURE REFERENCE OBJECT] - Result: ___cm\n",
+  file = "field_log.txt"
+)
+```
+
+---
+
+## Site Preparation
+
+### Arrival Procedures:
+
+**Checklist:**
+
+::: {.callout-note}
+- [ ] Meet site manager/fisher representative
+- [ ] Identify landing area & vessel schedule
+- [ ] Set up measurement station (protected from weather)
+- [ ] Position scale on flat, stable surface
+- [ ] Organize forms and materials
+- [ ] Brief fishers on sampling procedure
+- [ ] Take site photos
+- [ ] Note weather conditions
+- [ ] Confirm contact information
+:::
+
+---
+
+## Fish Measurement Protocol
+
+### Standard Procedure:
+
+**Step 1: Species Identification**
+```
+Before measuring, identify fish correctly
+
+- Use ID guide provided
+- Consult fisher if uncertain
+- Record common name AND scientific name
+- Note any unusual features
+```
+
+**Step 2: Length Measurement**
+```
+- Use fork length (snout to middle tail fin)
+- Place fish on measuring board
+- Read to nearest 0.1 cm
+- Record immediately on form
+```
+
+---
+
+## Fish Measurement (continued)
+
+### Step 3: Weight Measurement
+
+```
+- Use tared scale (zeroed before weighing)
+- Place fish in weighing pan
+- Wait for reading to stabilize
+- Read to nearest 0.1 kg
+- Record immediately
+```
+
+### Step 4: Additional Data
+
+```
+- Sex (if identifiable): M/F/Unknown
+- Maturity stage: 1-5 scale
+- Condition: Normal/Injured/Diseased
+- Special observations: Notes field
+```
+
+---
+
+## Field Data Form Example
+
+### Standardized Format:
+
+```
+DAILY LANDING RECORD
+Site: _____________ Date: _________ Observer: _________
+Weather: __________ Vessel ID: _______ Effort (hours): ___
+
+| Species | Length(cm) | Weight(kg) | Sex | Maturity | Notes |
+|---------|-----------|-----------|-----|----------|-------|
+| Tuna    | 45.2      | 12.5      | M   | 3        | Good  |
+| Mackerel| 32.1      | 8.3       | F   | 4        | Damaged|
+| ...     |           |           |     |          |       |
+
+Total Fish Measured: ___ 
+Total Landings Observed: ___
+Sampling Rate: ____%
+```
+
+---
+
+## Quality Control in Field
+
+### Real-Time Checks:
+
+```r
+# Create QC checking function
+field_qc_check <- function(species, length_cm, weight_kg) {
+  
+  issues <- character(0)
+  
+  # Length checks
+  if (length_cm < 5) issues <- c(issues, "Length too small")
+  if (length_cm > 200) issues <- c(issues, "Length too large")
+  
+  # Weight checks
+  if (weight_kg < 0.1) issues <- c(issues, "Weight too light")
+  if (weight_kg > 500) issues <- c(issues, "Weight too heavy")
+  
+  # Plausibility check
+  expected_max_weight <- 0.01 * (length_cm ^ 3)
+  if (weight_kg > expected_max_weight * 2) {
+    issues <- c(issues, "Weight implausible for length")
+  }
+  
+  return(issues)
+}
+
+# Use in field
+if (length(field_qc_check("Tuna", 45, 12.5)) > 0) {
+  print("⚠ FLAG THIS RECORD FOR REVIEW")
+}
+```
+
+---
+
+## Duplicate Prevention
+
+### In-Field Checks:
+
+```r
+# Keep running list of measured fish
+measured_fish <- tibble(
+  species = character(),
+  length_cm = numeric(),
+  time = POSIXct()
+)
+
+# Before recording, check if already measured
+check_duplicate <- function(new_species, new_length) {
+  recent <- measured_fish |>
+    filter(
+      species == new_species,
+      abs(length_cm - new_length) < 0.5,
+      time > Sys.time() - minutes(5)
+    )
+  
+  if (nrow(recent) > 0) {
+    print("⚠ POSSIBLE DUPLICATE - ASK FISHER")
+  }
+}
+```
+
+---
+
+## Working with Fishing Communities
+
+### Building Trust & Partnership:
+
+::: {.incremental}
+- **Explain the purpose** clearly in local language
+- **Show respect** for fisher knowledge
+- **Ask permission** before photographing
+- **Offer small compensation** where appropriate
+- **Share preliminary results** with community
+- **Thank fishers** for cooperation
+- **Return with findings** later
+- **Listen to concerns** about management
+:::
+
+---
+
+## Communication in Field
+
+### Key Phrases (Somali):
+
+```
+English          →  Somali
+Good morning     →  Subax wanaagsan
+Thank you        →  Mahadsanid
+What is this fish? → Kalluun yahan waxaa?
+How many vessels? → Doonni yiman?
+What time landing? → Saacada yahan?
+Can I measure?   →  Miyaan tiri karaa?
+```
+
+### Always:
+- Speak clearly and slowly
+- Use hand gestures
+- Have local assistant help
+- Repeat important information
+
+---
+
+## Daily Data Recording
+
+### End-of-Day Procedures:
+
+**Before Leaving Site:**
+1. Count total records collected
+2. Verify all forms complete
+3. Check for missing species ID
+4. Review flags & corrections
+5. Take photos of forms
+6. Back up data to cloud
+7. Thank site staff
+8. Confirm next visit date
+
+---
+
+## Evening Data Entry
+
+### Process at Accommodation:
+
+```r
+# file: evening_data_entry.R
+
+# Import paper form data
+daily_data <- tibble(
+  landing_date = Sys.Date(),
+  species = c("Tuna", "Mackerel", "Shark"),
+  length_cm = c(45.2, 32.1, 48.5),
+  weight_kg = c(12.5, 8.3, 14.2)
+)
+
+# Run QC checks from Module 5
+source('scripts/field_qc.R')
+daily_data_clean <- validate_landing_data(daily_data)
+
+# Create daily summary
+summary_stats <- daily_data_clean |>
+  group_by(species) |>
+  summarise(
+    n = n(),
+    mean_L = mean(length_cm),
+    mean_W = mean(weight_kg)
+  )
+
+# Save to backup location
+write.csv(daily_data_clean, 
+  paste0('backups/daily_', Sys.Date(), '.csv'))
+```
+
+---
+
+## Troubleshooting Common Field Problems
+
+### Problem: Scale Not Working
+
+**Solutions:**
+- Check batteries (carry spares)
+- Verify scale is on flat surface
+- Clean sensor with dry cloth
+- Use backup scale if available
+- Fall back to weight estimates
+- Recalibrate after power restored
+
+### Problem: Can't Identify Fish
+
+**Solutions:**
+- Ask the fisher (they're experts!)
+- Take clear photo for later ID
+- Compare with ID guide carefully
+- Group as "Unknown" if unsure
+- Mark for follow-up verification
+
+---
+
+## Troubleshooting (continued)
+
+### Problem: Fishers Uncooperative
+
+**Solutions:**
+- Explain benefits of monitoring
+- Offer monetary compensation
+- Involve community leaders
+- Choose different time of day
+- Work with local assistant
+- Emphasize sustainable fisheries
+
+### Problem: Too Many Fish to Sample
+
+**Solutions:**
+- Sample systematically (every nth fish)
+- Increase team size
+- Sample during slower period
+- Pre-arrange larger monitoring team
+- Document sampling rate clearly
+- Scale up numbers using sampling fraction
+
+---
+
+## Safety in Field
+
+### Personal Safety Checklist:
+
+::: {.callout-important}
+- [ ] Let someone know where you're going
+- [ ] Carry charged mobile phone
+- [ ] Avoid isolated areas
+- [ ] Wear visible/professional clothing
+- [ ] Work in pairs when possible
+- [ ] Know local emergency contacts
+- [ ] Respect local customs & regulations
+- [ ] Don't accept rides from strangers
+- [ ] Keep valuables secure
+- [ ] Check weather before departure
+:::
+
+---
+
+## Health Precautions
+
+### Disease Prevention:
+
+::: {.columns}
+::: {.column width="50%"}
+**Before Field Work**
+- Vaccinations current
+- Malaria medication
+- Travel insurance
+- Medical clearance
+
+**During Field Work**
+- Wear gloves (cuts hazard)
+- Wash hands regularly
+- Use hand sanitizer
+- Avoid touching face
+:::
+
+::: {.column width="50%"}
+**Fish Handling Safety**
+- Watch for sharp spines
+- Avoid parasites
+- Be cautious with teeth
+- Don't eat uncooked fish
+- Cover any cuts/wounds
+
+**Water Safety**
+- Don't drink untreated water
+- Be cautious wading
+- Watch for currents
+- Respect tidal patterns
+:::
+::::
+
+---
+
+## Site-Specific Considerations
+
+### Berbera Region:
+
+```
+- Large commercial port
+- High landing volumes
+- Mix of artisanal & semi-industrial
+- Best in early morning (peak landing)
+- Can get very hot
+- Coordinate with port authority
+```
+
+### Mogadishu Region:
+
+```
+- Variable landing patterns
+- Urban setting
+- Access may be restricted
+- Security clearance needed
+- Multiple landing sites
+- Plan visits carefully
+```
+
+---
+
+## Regional Notes (continued)
+
+### Other Regions:
+
+**Kismayo/Southern:**
+- Remote location
+- Seasonal variations
+- Limited infrastructure
+- May need 2-3 day visit
+- Fuel availability varies
+
+**Borama/Northwest:**
+- Semi-arid climate
+- Smaller landings
+- Community engagement essential
+- Water scarcity
+- Accommodation limited
+
+---
+
+## Three-Day Field Exercise Plan
+
+### Day 1: Orientation & Setup
+
+**Morning (2 hours):**
+- Travel to site
+- Meet with site manager
+- Explain project
+- Brief on protocols
+
+**Afternoon (3 hours):**
+- Set up measurement station
+- Equipment checks
+- Team training
+- Prepare forms & supplies
+
+**Evening:**
+- Team briefing
+- Prepare for next day
+- Early rest
+
+---
+
+## Day 2: Full Data Collection
+
+**Early Morning (4 hours):**
+- Arrive before landings
+- Calibrate all equipment
+- Greet fishers
+- Begin measurements
+
+**Mid-Day (2 hours):**
+- Continue sampling
+- Data entry checks
+- Lunch & brief rest
+
+**Late Afternoon (2 hours):**
+- Final measurements
+- Complete data review
+- Thank fishers
+- Pack equipment
+
+**Evening:**
+- Data entry (all collected data)
+- Create daily summary
+- Identify problems
+- Plan Day 3
+
+---
+
+## Day 3: Analysis & Discussion
+
+**Morning (2 hours):**
+- Quick field verification
+- Collect additional data if needed
+
+**Mid-Day (2 hours):**
+- Data analysis
+- Create summary tables
+- Preliminary visualizations
+
+**Afternoon (2 hours):**
+- Community presentation
+- Discuss findings with fishers
+- Gather feedback & observations
+- Schedule follow-up
+
+**Evening:**
+- Final packing
+- Team debrief
+- Record lessons learned
+
+---
+
+## Data Analysis After Fieldwork
+
+### Evening Summary Analysis:
+
+```r
+# Immediate post-collection analysis
+field_summary <- daily_data |>
+  summarise(
+    total_records = n(),
+    species_count = n_distinct(species),
+    mean_length = mean(length_cm, na.rm = TRUE),
+    median_length = median(length_cm, na.rm = TRUE),
+    length_range = paste0(
+      min(length_cm, na.rm = TRUE), "-",
+      max(length_cm, na.rm = TRUE), " cm"
+    ),
+    sampling_issues = sum(is.na(weight_kg))
+  )
+
+# Display to team
+print(field_summary)
+
+# Quick visualization
+daily_data |>
+  tidyplot(x = species, fill = species) |>
+  add_bar(stat = 'count') |>
+  adjust_title('Daily Catch Composition')
+```
+
+---
+
+## Community Feedback Session
+
+### Presentation Structure (1 hour):
+
+**Introduction (10 min):**
+- Thank fishers for cooperation
+- Explain why monitoring important
+- Preview findings
+
+**Results (30 min):**
+- Show size distributions
+- Discuss species trends
+- Compare with historical patterns
+
+**Discussion (20 min):**
+- Ask fisher observations
+- Discuss management implications
+- Gather local knowledge
+
+---
+
+## Documenting Field Experience
+
+### Field Journal Template:
+
+```markdown
+## Field Trip: [Site Name], [Date]
+
+### Overview
+- Arrival time: 
+- Team members:
+- Weather conditions:
+- Notable observations:
+
+### Data Collection
+- Total fish measured: 
+- Species represented:
+- Issues encountered:
+- Quality assessment:
+
+### Community Engagement
+- Fishers met:
+- Feedback received:
+- Trust/cooperation level:
+- Recommendations for future:
+
+### Lessons Learned
+- What went well:
+- What was challenging:
+- Equipment issues:
+- Protocol improvements:
+
+### Photos
+[Attach field photos]
+```
+
+---
+
+## Team Debriefing
+
+### End-of-Trip Meeting (1 hour):
+
+::: {.callout-note}
+**Discuss:**
+1. What data quality issues arose?
+2. How effective were protocols?
+3. What was community response?
+4. What equipment needs?
+5. Any safety concerns?
+6. Protocol improvements?
+7. Schedule next field visit?
+8. Assignment of data entry tasks?
+:::
+
+---
+
+## Hands-On Exercise: Simulated Landing Site
+
+### In Training Session:
+
+**Setup (30 min):**
+- Arrange measurement station
+- Set up equipment
+- Create sample fish specimens
+
+**Practice (60 min):**
+- Each participant measures 20 fish
+- Practice data recording
+- Peer review of measurements
+- QC checking
+
+**Debrief (30 min):**
+- Discuss measurement consistency
+- Compare results across team
+- Troubleshoot issues
+- Plan improvements
+
+---
+
+## Sample Fish for Practice
+
+### Creating Practice Dataset:
+
+```r
+# Simulate realistic landing composition
+practice_fish <- tibble(
+  species = rep(c("Tuna", "Mackerel", "Shark", "Jacks"), 5),
+  length_cm = c(
+    rnorm(5, 42, 3),    # Tuna: mean 42cm
+    rnorm(5, 28, 2),    # Mackerel: mean 28cm
+    rnorm(5, 45, 4),    # Shark: mean 45cm
+    rnorm(5, 22, 2)     # Jacks: mean 22cm
+  ),
+  weight_kg = NA  # Will measure during exercise
+)
+
+# Print for reference
+print(practice_fish)
+
+# Create measurement form
+write_xlsx(list("Practice Data" = practice_fish),
+  "exercise_practice_form.xlsx")
+```
+
+---
+
+## Post-Fieldwork Report
+
+### Structure & Content:
+
+::: {.callout-note}
+**Essential Sections:**
+
+1. **Executive Summary** (1 page)
+   - Key findings
+   - Main recommendations
+
+2. **Field Activities** (1 page)
+   - Dates and locations
+   - Team members
+   - Hours spent
+   - Data collected
+
+3. **Results** (2-3 pages)
+   - Summary tables
+   - Key figures
+   - Species composition
+   - Size distributions
+
+4. **Community Feedback** (1 page)
+   - Fisher observations
+   - Local knowledge
+   - Concerns raised
+
+5. **Lessons & Recommendations** (1 page)
+   - What worked well
+   - What needs improvement
+   - Protocol refinements
+   - Next steps
+:::
+
+---
+
+## Integration with Modules 1-5
+
+### Complete Training Cycle:
+
+:::: {.columns}
+::: {.column width="20%"}
+**Module 1**
+Concepts
+:::
+
+::: {.column width="20%"}
+**Module 2**
+Protocol
+:::
+
+::: {.column width="20%"}
+**Module 3**
+Indicators
+:::
+
+::: {.column width="20%"}
+**Module 4**
+Storage
+:::
+
+::: {.column width="20%"}
+**Module 5**
+Analysis
+↓
+**Module 6**
+FIELD
+:::
+::::
+
+**Field experience validates everything learned!**
+
+---
+
+## Preparing for Independent Fieldwork
+
+### Before You Go Solo:
+
+::: {.incremental}
+- [ ] Completed all 5 modules
+- [ ] Practiced in simulated exercise
+- [ ] Been supervised on 1 full field day
+- [ ] Reviewed and passed competency test
+- [ ] Have all necessary equipment
+- [ ] Know who to contact for support
+- [ ] Have documented protocols
+- [ ] Understand local context
+- [ ] Can troubleshoot basic problems
+- [ ] Know safety procedures
+:::
+
+---
+
+## Building Long-Term Monitoring
+
+### Scaling to Multiple Sites:
+
+**Months 1-2:**
+- Train on 1 site monthly
+- Perfect protocols
+- Build relationships
+
+**Months 3-6:**
+- Add second site
+- Expand frequency
+- Train local staff
+- Create templates
+
+**Months 7-12:**
+- Full region coverage
+- Monthly assessments
+- Quarterly reports
+- Community feedback
+
+**Year 2+:**
+- Establish routine
+- Adaptive management
+- Expand monitoring
+- Regional coordination
+
+---
+
+## Quality Assurance Program
+
+### Ongoing Verification:
+
+```r
+# Compare measurements: Same fish, two people
+comparison_data <- tibble(
+  observer_1 = c(45.2, 32.1, 28.5, 41.3),
+  observer_2 = c(45.1, 32.3, 28.4, 41.5),
+  difference = observer_2 - observer_1,
+  percent_diff = (difference / observer_1) * 100
+)
+
+# Target: <2% difference
+comparison_data |>
+  summarise(
+    mean_diff = mean(abs(percent_diff)),
+    max_diff = max(abs(percent_diff)),
+    consistency = "PASS" # if mean < 2%
+  )
+```
+
+---
+
+## Unexpected Situations
+
+### How to Handle...
+
+**Dispute Over Fish:**
+- Measure independently
+- Ask fisher's opinion
+- Use compromise value
+- Document in notes
+
+**Damaged/Spoiled Fish:**
+- Record as "degraded"
+- Note condition
+- Measure if possible
+- Don't exclude from count
+
+**Fishing During Rainy Season:**
+- Wear rain gear
+- Protect forms with plastic
+- Have umbrella for scale
+- Use waterproof recording
+
+**Difficult Access:**
+- Scout location beforehand
+- Ask fishers for advice
+- Bring extra supplies
+- Plan longer time
+
+---
+
+## Communicating Results Locally
+
+### Non-Technical Presentation:
+
+::: {.columns}
+::: {.column width="50%"}
+**Use Simple Language:**
+- ✓ "Fish are smaller now"
+- ✗ "Mean length decreased significantly"
+
+**Use Visuals:**
+- ✓ Bar charts, photos
+- ✗ Complex statistics
+:::
+
+::: {.column width="50%"}
+**Tell Story:**
+- What we found
+- Why it matters
+- What to do
+
+**Ask for Input:**
+- "Do you see this change?"
+- "What's your experience?"
+- "How should we respond?"
+:::
+::::
+
+---
+
+## Key Takeaways
+
+### Module 6 Summary:
+
+::: {.incremental}
+1. Field preparation is critical for success
+2. Equipment must be calibrated and tested
+3. Quality control starts in the field
+4. Community engagement builds support
+5. Clear protocols prevent errors
+6. Real-time data checking catches issues
+7. Safety comes first always
+8. Team debriefing improves processes
+9. Local knowledge is valuable
+10. Field experience validates training
+:::
+
+---
+
+## Practical Skills Checklist
+
+### By End of Module 6, You Can:
+
+- [ ] Measure fish length accurately
+- [ ] Use scale correctly
+- [ ] Identify common species
+- [ ] Record data without errors
+- [ ] Implement QC in field
+- [ ] Work respectfully with communities
+- [ ] Handle safety situations
+- [ ] Troubleshoot equipment
+- [ ] Analyze daily results
+- [ ] Present findings clearly
+
+---
+
+## Next Steps
+
+### After Module 6:
+
+::: {.callout-note}
+1. **Schedule** regular monitoring visits
+2. **Establish** routine with site
+3. **Train** local assistants
+4. **Create** regional protocols
+5. **Build** database of observations
+6. **Report** findings to managers
+7. **Engage** communities in results
+8. **Iterate** protocols based on learning
+9. **Scale** to additional sites
+10. **Sustain** long-term monitoring
+:::
+
+---
+
+## Feedback & Continuous Improvement
+
+### Process Improvement:
+
+After each field trip:
+1. Document what worked
+2. Note what was challenging
+3. Suggest protocol changes
+4. Share with wider team
+5. Update standard procedures
+6. Train others on improvements
+7. Track effectiveness over time
+
+---
+
+## Questions & Discussion
+
+### Field Exercise Specific:
+
+- Which landing sites will you work at?
+- What challenges do you anticipate?
+- How will you build community trust?
+- What local language do you speak?
+- How often can you monitor?
+- Who will work with you?
+
+---
+
+## Final Exercise: Your Field Plan
+
+### Create 3-Day Field Plan:
+
+**Include:**
+1. Target site (with rationale)
+2. Equipment list
+3. Team composition
+4. Daily schedule
+5. Communication plan
+6. Safety procedures
+7. Community approach
+8. Quality control measures
+9. Expected outcomes
+10. Contingency plans
+
+**Deliverable:** 2-3 page field plan document
+
+---
+
+## Certification & Competency
+
+### Module 6 Assessment:
+
+Requirements to pass:
+- ✓ Completed 3-day field exercise
+- ✓ Measured minimum 100 fish
+- ✓ Less than 2% measurement error
+- ✓ Collected complete metadata
+- ✓ Demonstrated team skills
+- ✓ Produced competency report
+- ✓ Received supervisor approval
+
+---
+
+## Thank You
+
+**Somali Fish Stock Training**
+
+**Module 6: Practical Field Exercises at Landing Sites**
+
+*From theory to practice in fisheries monitoring*
+
+---
+
+## Congratulations!
+
+### You Have Completed:
+
+- ✓ **Module 1**: Fundamentals & Concepts
+- ✓ **Module 2**: Data Collection Protocols
+- ✓ **Module 3**: Data-Limited Methods
+- ✓ **Module 4**: Data Processing & Storage
+- ✓ **Module 5**: Data Analysis Methods
+- ✓ **Module 6**: Field Exercises
+
+### Next: Regional Coordination & Implementation
+
+Questions? Contact the training team.

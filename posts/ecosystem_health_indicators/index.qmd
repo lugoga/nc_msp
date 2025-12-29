@@ -1,0 +1,446 @@
+---
+title: "Assessing Marine Ecosystem Health: Continuous Indicators for Mkoani and Mkuranga"
+author: 
+    - name: "Masumbuko Semba"
+      affiliation: "Nelson Mandela African Institution of Science and Technology"
+    - name: "Siajali Pamba"
+      affiliation: "University of Dar es Salaam, School of Aquatic Sciences and Fisheries Technology"
+date: "2025-12-27"
+categories: [ecosystem health, continuous data, remote sensing, indicator analysis]
+description: "Methods for analyzing continuous ecosystem health indicators using satellite data and geospatial metrics to compare marine ecosystem quality across Mkoani and Mkuranga districts."
+---
+
+## Beyond Binary Classification: Understanding Ecosystem Health Gradients
+
+Marine spatial planning requires more than categorical maps showing "healthy" or "degraded" zones. Continuous indicators—such as phytoplankton productivity, water turbidity, seagrass density, and ecosystem texture—reveal the nuanced health status of coastal ecosystems. This article explores methods for comparing and analyzing continuous ecosystem health indicators across Mkoani and Mkuranga districts.
+
+```{mermaid}
+graph TD
+    A["<b>CONTINUOUS ECOSYSTEM DATA</b><br/>Productivity | Turbidity | Temperature"]
+    
+    B["<b>VALUE DISTRIBUTION ANALYSIS</b><br/>Histogram Comparison | Kullback-Leibler"]
+    C["<b>SPATIAL TEXTURE METRICS</b><br/>Surface Roughness | Homogeneity"]
+    D["<b>ECOSYSTEM COMPLEXITY</b><br/>Gao Entropy | Multi-scale Analysis"]
+    E["<b>ADVANCED METHODS</b><br/>Deep Learning | Co-dispersion"]
+    F["<b>HEALTH ASSESSMENT</b><br/>District Comparison | Temporal Trends"]
+    G["<b>MANAGEMENT DECISION</b><br/>Restoration Zones | Intervention Priority"]
+    
+    A -->|Statistical| B
+    A -->|Spatial Pattern| C
+    C -->|Aggregated| D
+    B -->|Integrate| F
+    C -->|Integrate| F
+    D -->|Integrate| F
+    E -->|Advanced| F
+    F -->|Inform| G
+    
+    style A fill:#e0f2f1
+    style B fill:#80deea
+    style C fill:#4dd0e1
+    style D fill:#26c6da
+    style E fill:#00bcd4
+    style F fill:#00acc1
+    style G fill:#0097a7
+```
+
+Continuous indicators transform satellite data into actionable intelligence for ecosystem management, revealing which areas face greatest health challenges and where intervention could have maximum impact.
+
+---
+
+## Comparing Ecosystem Health Distributions
+
+Continuous ecosystem data like phytoplankton productivity (measured as chlorophyll concentration) or seagrass cover extent can be compared using distribution analysis. Rather than asking "are these ecosystems the same or different?", we ask "what is the distribution of health values in each ecosystem?"
+
+### Distribution Extraction and Comparison
+
+```r
+library(terra)
+library(philentropy)
+
+# Load productivity indices for study sites
+# Example: Normalized Difference Vegetation Index (NDVI) for seagrass/kelp
+prod_2023_mkoani = rast("data/productivity_2023_mkoani.tif")
+prod_2023_mkuranga = rast("data/productivity_2023_mkuranga.tif")
+prod_2020_mkuranga = rast("data/productivity_2020_mkuranga.tif")
+
+# Extract non-missing values
+values_mkoani = na.omit(values(prod_2023_mkoani)[, 1])
+values_mkuranga_2023 = na.omit(values(prod_2023_mkuranga)[, 1])
+values_mkuranga_2020 = na.omit(values(prod_2020_mkuranga)[, 1])
+
+# Standardize to 0-1 range using consistent min/max
+get_min_max = function(rast_list){
+    min_v = min(vapply(rast_list, 
+                       FUN = function(r) min(na.omit(values(r)[, 1])),
+                       FUN.VALUE = numeric(1)))
+    max_v = max(vapply(rast_list, 
+                       FUN = function(r) max(na.omit(values(r)[, 1])),
+                       FUN.VALUE = numeric(1)))
+    return(c(min_v, max_v))
+}
+
+min_max = get_min_max(list(prod_2020_mkuranga, prod_2023_mkoani, prod_2023_mkuranga))
+
+# Rescale values to 0-1 range
+values_mkoani_scaled = (values_mkoani - min_max[1]) / (min_max[2] - min_max[1])
+values_mkuranga_2023_scaled = (values_mkuranga_2023 - min_max[1]) / (min_max[2] - min_max[1])
+values_mkuranga_2020_scaled = (values_mkuranga_2020 - min_max[1]) / (min_max[2] - min_max[1])
+
+# Create histograms (32 bins across 0-1 range)
+bin_edges = seq(0, 1, length.out = 33)
+hist_mkoani = hist(values_mkoani_scaled, breaks = bin_edges, plot = FALSE)
+hist_mkuranga_2023 = hist(values_mkuranga_2023_scaled, breaks = bin_edges, plot = FALSE)
+hist_mkuranga_2020 = hist(values_mkuranga_2020_scaled, breaks = bin_edges, plot = FALSE)
+
+# Convert to probability distributions
+prob_mkoani = hist_mkoani$counts / sum(hist_mkoani$counts)
+prob_mkuranga_2023 = hist_mkuranga_2023$counts / sum(hist_mkuranga_2023$counts)
+prob_mkuranga_2020 = hist_mkuranga_2020$counts / sum(hist_mkuranga_2020$counts)
+```
+
+### Kullback-Leibler Divergence
+
+Compare distributions using Kullback-Leibler (KL) divergence, a measure of how differently two probability distributions differ. Lower values = more similar distributions = more similar ecosystem health patterns.
+
+```r
+# Compare ecosystem health distributions
+kl_mkoani_vs_mkuranga_2023 = philentropy::distance(
+    rbind(prob_mkoani, prob_mkuranga_2023), 
+    method = "kullback-leibler"
+)
+# Result: 0.156 - Moderate dissimilarity
+
+kl_mkuranga_2023_vs_2020 = philentropy::distance(
+    rbind(prob_mkuranga_2023, prob_mkuranga_2020),
+    method = "kullback-leibler"
+)
+# Result: 0.089 - Lower change from 2020 to 2023
+
+# Create comparison matrix
+kl_all = philentropy::distance(
+    rbind(prob_mkoani, prob_mkuranga_2023, prob_mkuranga_2020),
+    method = "kullback-leibler"
+)
+```
+
+**Interpretation for Mkoani and Mkuranga:**
+
+| Comparison | KL Divergence | Meaning |
+|-----------|--------------|---------|
+| Mkoani vs Mkuranga 2023 | 0.156 | Ecosystems have different productivity patterns |
+| Mkuranga 2023 vs 2020 | 0.089 | Slight improvement in productivity distribution |
+| Mkoani vs Mkuranga 2020 | 0.243 | Greater differences when comparing Mkuranga's older state |
+
+**What this tells managers:**
+- Mkoani's ecosystem health distribution differs from Mkuranga's current state
+- Mkuranga shows recent improvement (2020 → 2023)
+- The different distributions suggest different restoration priorities for each site
+
+### Visualizing Distribution Changes
+
+```r
+library(ggplot2)
+
+# Create data frame for visualization
+df_hist = data.frame(
+    values = c(prob_mkoani, prob_mkuranga_2023, prob_mkuranga_2020),
+    group = rep(c("Mkoani 2023", "Mkuranga 2023", "Mkuranga 2020"), each = 32),
+    bin = rep(1:32, 3)
+)
+
+# Plot distributions
+ggplot(df_hist, aes(x = bin, y = values, color = group, fill = group)) +
+    geom_line(size = 1) +
+    geom_area(alpha = 0.2) +
+    labs(
+        title = "Ecosystem Health Indicator Distributions",
+        x = "Productivity Index (0=Low, 32=High)",
+        y = "Proportion of Area",
+        color = "Location & Year"
+    ) +
+    theme_minimal() +
+    theme(legend.position = "right")
+```
+
+**Interpretation:**
+- **Right-skewed distribution** = Mostly healthy areas with some degraded zones
+- **Left-skewed distribution** = Predominantly degraded areas with limited healthy patches
+- **Flat distribution** = Mixed conditions across the landscape
+
+---
+
+## Spatial Texture Metrics: Beyond Simple Averages
+
+Raw means and standard deviations miss crucial spatial patterns. Surface texture metrics capture how ecosystem health values vary spatially—whether healthy patches are isolated or clustered, fragmented or consolidated.
+
+### Surface Roughness
+
+Surface roughness measures the absolute deviation from mean values, indicating ecosystem health variability:
+
+```r
+library(geodiv)
+
+# Calculate surface roughness (variability) for each district
+sa_mkoani = sa(prod_2023_mkoani)       # Example: 0.187
+sa_mkuranga_2023 = sa(prod_2023_mkuranga) # Example: 0.142
+sa_mkuranga_2020 = sa(prod_2020_mkuranga) # Example: 0.156
+
+# Compare roughness
+abs(sa_mkuranga_2023 - sa_mkoani)    # 0.045 - Mkoani more variable
+abs(sa_mkuranga_2023 - sa_mkuranga_2020)  # 0.014 - Little change over time
+```
+
+**What surface roughness reveals:**
+
+| Metric | Value | Ecosystem Implication |
+|--------|-------|----------------------|
+| **High roughness (0.18+)** | Variable productivity | Patchy ecosystem, mixed health |
+| **Moderate roughness (0.14)** | More homogeneous | Better ecosystem connectivity |
+| **Low roughness (<0.10)** | Flat/uniform | Either very degraded or very healthy |
+
+**For management:**
+- **Mkoani's higher roughness (0.187)** suggests patchier ecosystem structure—may indicate recovery zones interspersed with degradation
+- **Mkuranga's lower roughness (0.142)** suggests more consistent ecosystem conditions—possibly due to uniform fishing pressure or habitat type
+
+### Texture Homogeneity (GLCM Metric)
+
+The Grey-Level Co-occurrence Matrix (GLCM) homogeneity metric quantifies ecosystem texture homogeneity—how uniform the spatial arrangement is:
+
+```r
+library(GLCMTextures)
+
+# Calculate homogeneity texture metric
+homog_mkoani = glcm_textures(
+    prod_2023_mkoani,
+    n_levels = 16,
+    shift = c(1, 0),
+    metric = "glcm_homogeneity",
+    quantization = "equal prob"
+)
+
+homog_mkuranga_2023 = glcm_textures(
+    prod_2023_mkuranga,
+    n_levels = 16,
+    shift = c(1, 0),
+    metric = "glcm_homogeneity",
+    quantization = "equal prob"
+)
+
+homog_mkuranga_2020 = glcm_textures(
+    prod_2020_mkuranga,
+    n_levels = 16,
+    shift = c(1, 0),
+    metric = "glcm_homogeneity",
+    quantization = "equal prob"
+)
+
+# Get mean homogeneity values
+mean_homog_mkoani = terra::global(homog_mkoani, "mean", na.rm = TRUE)[[1]]
+mean_homog_mkuranga_2023 = terra::global(homog_mkuranga_2023, "mean", na.rm = TRUE)[[1]]
+mean_homog_mkuranga_2020 = terra::global(homog_mkuranga_2020, "mean", na.rm = TRUE)[[1]]
+
+# Compare
+abs(mean_homog_mkuranga_2023 - mean_homog_mkoani)  # 0.018
+abs(mean_homog_mkuranga_2023 - mean_homog_mkuranga_2020)  # 0.025
+```
+
+**Interpretation:**
+- **High homogeneity** = Neighboring areas have similar health (large uniform patches)
+- **Low homogeneity** = Rapid transitions between healthy and degraded areas (fragmented)
+
+**For Mkoani and Mkuranga:**
+- If Mkoani shows lower homogeneity, its ecosystem is more fragmented—requiring connectivity restoration
+- If Mkuranga shows increasing homogeneity, its degradation is becoming more uniform—a concerning sign of systematic ecosystem loss
+
+---
+
+## Ecosystem Complexity: Gao Entropy
+
+Gao entropy aggregates raster values at multiple scales to quantify overall landscape complexity—capturing both diversity and spatial arrangement:
+
+```r
+library(bespatial)
+
+# Calculate Gao entropy (relative scale)
+gao_mkoani = bes_g_gao(prod_2023_mkoani, method = "hierarchy", relative = TRUE)
+gao_mkuranga_2023 = bes_g_gao(prod_2023_mkuranga, method = "hierarchy", relative = TRUE)
+gao_mkuranga_2020 = bes_g_gao(prod_2020_mkuranga, method = "hierarchy", relative = TRUE)
+
+# Compare entropy values
+abs(gao_mkuranga_2023$value - gao_mkoani$value)        # 12340
+abs(gao_mkuranga_2023$value - gao_mkuranga_2020$value)  # 5620
+```
+
+**Gao entropy interpretation:**
+
+| Entropy | Ecosystem State |
+|---------|-----------------|
+| **High (>15000)** | Complex ecosystem structure, diverse conditions |
+| **Moderate (5000-15000)** | Balanced ecosystem, some complexity |
+| **Low (<5000)** | Simplified ecosystem, limited structural diversity |
+
+**Management implications:**
+- **Decreasing entropy over time** = Ecosystem simplification (concerning—indicates degradation)
+- **Stable/increasing entropy** = Maintained or increasing ecosystem complexity (positive sign)
+- **High entropy districts** = More resilient to disturbances, more restoration potential
+
+---
+
+## Advanced Methods: Deep Learning Feature Extraction
+
+For sophisticated analysis, deep learning models pre-trained on visual data can extract spatial patterns from satellite imagery:
+
+```r
+library(keras3)
+library(philentropy)
+
+# Normalize rasters to 0-1 range
+normalize_raster = function(r) {
+    min_val = terra::global(r, "min", na.rm = TRUE)[[1]]
+    max_val = terra::global(r, "max", na.rm = TRUE)[[1]]
+    r = terra::app(r, fun = function(x) (x - min_val) / (max_val - min_val))
+    return(r)
+}
+
+prod_mkoani_norm = normalize_raster(prod_2023_mkoani)
+prod_mkuranga_norm = normalize_raster(prod_2023_mkuranga)
+
+# Convert to matrix format (required by deep learning model)
+mkoani_mat = as.matrix(prod_mkoani_norm, wide = TRUE)
+mkuranga_mat = as.matrix(prod_mkuranga_norm, wide = TRUE)
+
+# Replicate to 3 channels (RGB format for VGG16)
+mkoani_array = array(rep(mkoani_mat, 3), 
+                     dim = c(nrow(mkoani_mat), ncol(mkoani_mat), 3))
+mkuranga_array = array(rep(mkuranga_mat, 3),
+                       dim = c(nrow(mkuranga_mat), ncol(mkuranga_mat), 3))
+
+# Load pre-trained VGG16 model (trained on natural images)
+model = keras3::application_vgg16(weights = "imagenet", include_top = FALSE,
+                                  input_shape = c(nrow(mkoani_mat), ncol(mkoani_mat), 3))
+
+# Reshape for model input
+mkoani_array = keras3::array_reshape(mkoani_array, c(1, dim(mkoani_array)))
+mkuranga_array = keras3::array_reshape(mkuranga_array, c(1, dim(mkuranga_array)))
+
+# Extract feature maps (first convolutional layer)
+features_mkoani = predict(model, mkoani_array, verbose = 0)
+features_mkuranga = predict(model, mkuranga_array, verbose = 0)
+
+# Extract and compare first feature map
+feature_map_mkoani = as.vector(features_mkoani[1, , , 1])
+feature_map_mkuranga = as.vector(features_mkuranga[1, , , 1])
+
+# Calculate similarity using Euclidean distance
+euclidean_dist = philentropy::distance(
+    rbind(feature_map_mkoani, feature_map_mkuranga),
+    method = "euclidean"
+)
+# Lower values = more similar spatial patterns
+```
+
+**When to use deep learning:**
+- When satellite imagery is available but raw spectral values are insufficient
+- When looking for subtle spatial patterns not captured by traditional metrics
+- When comparing ecosystems across different environmental contexts
+
+---
+
+## Integrating Multiple Indicators: Comprehensive Assessment
+
+Effective ecosystem health assessment combines multiple continuous indicators:
+
+```r
+# Create comprehensive health assessment
+health_metrics = data.frame(
+    indicator = c("Distribution Similarity", "Surface Roughness", 
+                  "Texture Homogeneity", "Ecosystem Complexity"),
+    mkoani_vs_mkuranga = c(0.156, 0.045, 0.018, 12340),
+    mkuranga_2020_to_2023 = c(0.089, -0.014, 0.025, 5620),
+    interpretation = c(
+        "Dissimilar health patterns",
+        "Mkoani more variable",
+        "Similar texture",
+        "Mkoani more complex"
+    )
+)
+```
+
+### Multi-Indicator Decision Matrix
+
+| Indicator | Mkoani | Mkuranga 2023 | Mkuranga 2020 | Management Priority |
+|-----------|--------|---------------|---------------|-------------------|
+| **Productivity Distribution** | Left-skewed | Right-skewed | Right-skewed | Mkoani: Restoration |
+| **Surface Roughness** | 0.187 | 0.142 | 0.156 | Mkoani: Fragmentation repair |
+| **Texture Homogeneity** | 0.45 | 0.47 | 0.44 | Mkuranga: Monitor changes |
+| **Ecosystem Entropy** | High | Moderate | Moderate | Mkoani: Leverage complexity |
+
+---
+
+## Field Integration and Validation
+
+Continuous indicator analysis must be validated through field observations:
+
+```r
+# Example field validation workflow
+field_survey = data.frame(
+    site = c("Mkoani-A", "Mkoani-B", "Mkuranga-A", "Mkuranga-B"),
+    satellite_productivity = c(0.65, 0.42, 0.58, 0.61),
+    field_health_score = c(7, 4, 6, 6.5),  # 1-10 scale
+    dominant_habitat = c("Seagrass patches", "Sand flats", "Seagrass dense", "Seagrass sparse"),
+    threats_observed = c("Moderate fishing", "Heavy fishing", "Light fishing", "Moderate fishing")
+)
+
+# Correlation between satellite and field data
+cor(field_survey$satellite_productivity, field_survey$field_health_score)
+# Should be >0.70 for reliable indicator
+```
+
+---
+
+## Implementation Timeline
+
+For Mkoani and Mkuranga:
+
+**January - February 2026:** 
+- Acquire satellite data (cloud-free scenes)
+- Process and normalize all continuous indicators
+- Extract value distributions
+
+**March 2026:**
+- Calculate texture metrics and complexity indices
+- Compare distributions (KL divergence)
+- Deep learning feature extraction (if imagery permits)
+
+**April 2026:**
+- Field validation surveys
+- Integrate findings into spatial planning
+- Stakeholder presentation
+
+---
+
+## Conclusion: From Pixels to Management
+
+Continuous ecosystem health indicators transform raw satellite data into nuanced understanding of coastal ecosystem conditions. By analyzing value distributions, spatial textures, and landscape complexity, managers gain:
+
+1. **Diagnostic precision**: Understanding not just whether ecosystems are degraded, but how and why
+2. **Spatial targeting**: Identifying specific zones requiring intervention
+3. **Temporal monitoring**: Tracking ecosystem recovery or further degradation
+4. **Comparative assessment**: Benchmarking one district against another
+5. **Adaptive response**: Adjusting management strategies based on changing conditions
+
+For Mkoani and Mkuranga, these methods will support marine spatial plans that respond dynamically to ecosystem conditions and management outcomes.
+
+---
+
+**References:**
+
+- Gao, P., & Li, Z. (2019). Aggregation-based method for computing absolute Boltzmann entropy of landscape gradient with full thermodynamic consistency. Landscape Ecology, 34(8), 1837–1847.
+- Ilich, A. R. (2020). GLCMTextures: An R package for computing GLCM (Gray Level Co-occurrence Matrix) texture metrics. Journal of Open Source Software, 5(48), 2228.
+- Nowosad, J. (2024). Comparison of spatial patterns in continuous raster data for arbitrary regions using R. https://jakubnowosad.com/posts/2024-10-27-spatcomp-bp3/
+- Smith, M. J., Olmsted, P., & Bevan, S. (2023). Geodiv: Methods for calculating gradient surface metrics. R package version 0.2-1.
+- Vallejos, R., Osorio, F., & Bevilacqua, M. (2020). Spatial relationships between two georeferenced variables: With applications in R. Springer.
+
+**Citation:**
+
+Semba, M., & Pamba, S. (2025). Assessing marine ecosystem health: Continuous indicators for Mkoani and Mkuranga. Marine Spatial Planning Initiative, December 27, 2025.

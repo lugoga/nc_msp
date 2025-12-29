@@ -1,0 +1,114 @@
+---
+title: "About This Marine Spatial Planning Initiative"
+date: "2025-12-05"
+date-modified: today
+# author: 
+#     - name: "Masumbuko Semba"
+#       affiliation: "Nelson Mandela African Institution of Science and Technology (NM-AIST)"
+#       email: "lugosemba@gmail.com"
+#     - name: "Siajali Pamba"
+#       affiliation: "University of Dar es Salaam, School of Aquatic Sciences and Fisheries Technology (SOAF)"
+#     - name: "Julius Francis"
+#       affiliation: "University of Dar es Salaam, School of Aquatic Sciences and Fisheries Technology (SOAF)"
+#     - name: "Emmanuel Mpina"
+#       affiliation: "The Nature Conservancy (TNC), Tanzania"
+execute: 
+  warning: false
+  message: false
+  comment: ""
+---
+
+## Overview
+
+This Marine Spatial Planning initiative focuses on developing sustainable coastal resource management strategies in Mkoani (Pemba Island), Zanzibar and Mkuranga districts within the Pwani region of mainland Tanzania. The consultancy integrates scientific research, stakeholder engagement, and participatory planning to support evidence-based marine governance.
+
+::: {style="position: relative; display: inline-block; width: 100%; float: right; margin-left: 20px; margin-bottom: 15px;"}
+![](images/components/deep_thinking_pemba.jpg){fig-alt="Stakeholder validation and engagement" .img-fluid style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); display: block; width: 100%;"}
+
+::: {style="position: absolute; bottom: 15px; left: 15px; right: 15px; background: rgba(0, 0, 0, 0.4); color: white; padding: 12px 15px; border-radius: 8px; font-size: 14px; font-weight: 500; backdrop-filter: blur(5px);"}
+**Coastal Engagement in Mkoani-Pemba:** Community stakeholders participating in marine spatial planning discussions
+:::
+:::
+
+## About the Consultancy
+
+The **Marine Spatial Planning Consultancy for Mkoani-Pemba and Mkuranga** is a collaborative initiative led by the University of Dar es Salaam, School of Aquatic Sciences and Fisheries Technology (SOAF) in partnership with coastal communities and government authorities. The consultancy aims to create comprehensive spatial plans that balance conservation objectives with sustainable use of marine resources.
+
+### Financial Support
+
+This consultancy is financially supported by the **Nairobi Convention Secretariat**, which provides funding through its marine and coastal area management programs. The Nairobi Convention's support reflects Tanzania's commitment to regional cooperation on marine conservation and sustainable resource management in the Western Indian Ocean region. Some of the key institution partners include: 
+
+- Department of Blue Economy, Vice President's Office
+- Ministry of Blue Economy, Revolutionary Government of Zanzibar
+- University of Dar es Salaam, SOAF** (Lead Institution)
+- Nelson Mandela African Institution of Science and Technology (NM-AIST)
+- The Nature Conservancy, Tanzania**
+
+:::{.callout-note}
+This initiative operates within the framework of Tanzania's marine conservation policies and supports the implementation of integrated coastal zone management (ICZM) principles in the Pwani region.
+:::
+
+### Consultancy Focus Areas
+
+The initiative addresses key marine planning challenges through:
+
+| Focus Area | Objective |
+|-----------|-----------|
+| **Fisheries Management** | Develop sustainable fishing zones and seasonal closures based on resource dynamics |
+| **Biodiversity Conservation** | Identify and protect critical marine habitats and species |
+| **Coastal Communities** | Support livelihoods while ensuring resource sustainability |
+| **Climate Resilience** | Build adaptive management strategies for environmental changes |
+| **Governance Coordination** | Strengthen institutional frameworks for marine resource management |
+
+## Spatial Planning Approach
+
+This initiative employs a participatory and science-based approach to marine spatial planning, drawing on:
+
+- **Community engagement**: Inclusive consultation with fishers, boat owners, and coastal residents
+- **Ecological data**: Scientific surveys of fish populations, habitats, and marine biodiversity
+- **Socioeconomic analysis**: Assessment of livelihood patterns and economic dependencies on marine resources
+- **Institutional coordination**: Collaboration with district authorities and national management frameworks
+- **Adaptive management**: Iterative planning process with monitoring and refinement
+
+## Consultancy Outcomes
+
+Through this initiative, stakeholders will:
+
+- ✓ Develop comprehensive marine spatial plans for Mkoani and Mkuranga districts
+- ✓ Establish evidence-based zones for fishing, conservation, and sustainable use
+- ✓ Strengthen coordination among government agencies, communities, and resource users
+- ✓ Build local capacity for marine resource monitoring and adaptive management
+- ✓ Contribute to Tanzania's marine conservation and sustainable development goals
+
+## Study Sites: Mkoani and Mkuranga
+
+**Mkoani, Pemba (Unguja Region)** and **Mkuranga (Pwani Region)** represent key coastal areas with significant fishing populations and diverse marine ecosystems. These sites were selected for:
+
+- Strategic importance for Indian Ocean fisheries
+- Presence of multiple livelihood communities dependent on marine resources
+- High biodiversity value and conservation potential
+- Need for improved governance and management frameworks
+
+## Contact & Further Information
+
+:::{.callout-info}
+**Marine Spatial Planning Consultancy - Mkoani & Mkuranga**
+
+**Project Leadership:**
+
+- **Siajali Pamba** - University of Dar es Salaam, SOAF
+- **Masumbuko Semba** - NM-AIST
+- **Julius Francis** - University of Dar es Salaam, SOAF
+- **Emmanuel Mpina** - The Nature Conservancy, Tanzania
+
+📍 University of Dar es Salaam, School of Aquatic Sciences and Fisheries Technology (SOAF)  
+P.O. Box 60091, Dar es Salaam, Tanzania  
+🌐 Website: [SOAF](https://www.udsm.ac.tz/school-aquatic-sciences-and-fisheries-technology)  
+📧 Email: siajali.pamba@udsm.ac.tz
+:::
+
+
+
+
+
+

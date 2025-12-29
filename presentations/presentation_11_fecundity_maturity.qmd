@@ -1,0 +1,334 @@
+---
+title: "Fecundity and Maturity Analysis"
+subtitle: "Somali Fish Stock Training"
+date: today
+author: 
+    - name: "Masumbuko Semba"
+      affiliation: "NMAIST"
+    - name: "Catherine Mwakosya"
+      affiliation: "TAFIRI"
+format: revealjs
+theme: default
+transition: slide
+background-transition: fade
+highlight-style: github
+embed-resources: true
+execute:
+  eval: true
+  echo: true
+  warning: false
+code-fold: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+require(tidyverse)
+require(tidyplots)
+require(sizeMat) # For maturity analysis
+require(TropFishR)
+```
+
+## Fecundity and Maturity Analysis
+
+:::: {.columns}
+::: {.column width="50%"}
+### Learning Objectives
+- Define fecundity and maturity.
+- Understand methods for maturity staging.
+- Learn how to estimate Length at 50% Maturity (L50).
+- Recognize the importance of these parameters in stock assessment.
+:::
+
+::: {.column width="50%"}
+### Why This Matters
+- Reproductive capacity determines a stock's ability to replenish itself.
+- L50 is a key input for many data-limited models (like LBSPR).
+- Helps set size limits to protect spawning stock.
+:::
+::::
+
+---
+
+## Key Definitions
+
+**Fecundity**
+: The number of eggs an individual female can produce in a spawning season. It generally increases with size and age.
+
+**Maturity**
+: The state of being reproductively active. We often classify fish as either "immature" or "mature."
+
+**Length at 50% Maturity (L50)**
+: The length at which 50% of the individuals in the population are mature. This is a critical biological reference point.
+
+---
+
+## How to Determine Maturity
+
+Maturity is determined by visually inspecting the gonads. A common method is a macroscopic staging scale.
+
+**Example 5-Stage Scale:**
+
+| Stage | Description | Status |
+|:------|:--------------------------------|:---------|
+| 1 | Immature / Virgin | Immature |
+| 2 | Developing / Resting | Immature |
+| 3 | Ripe / Spawning | **Mature** |
+| 4 | Running Ripe / Spent | **Mature** |
+| 5 | Recovering | **Mature** |
+
+*In practice, stages 3, 4, and 5 are typically classified as "Mature" for analysis.*
+
+---
+
+## Estimating Length at 50% Maturity (L50)
+
+We model the proportion of mature fish at each length class to find the length where that proportion is 0.5 (50%).
+
+**Step 1: Collect Maturity Data**
+For each fish, record its length and maturity stage (e.g., 1-5).
+
+**Step 2: Create a Binary "Mature" Column**
+Code individuals as `0` (immature) or `1` (mature).
+
+**Step 3: Fit a Logistic Regression Model**
+This model describes the S-shaped curve of maturation probability.
+
+---
+
+## Practical Example: Estimating L50 {.scrollable}
+
+
+```{r}
+#| echo: false
+#| 
+lw = readxl::read_excel('../data_shared/ProjKalluun_master_data_entry.xlsx', sheet = 'Section 3', skip= 4) |> 
+    janitor::clean_names() |> 
+    filter(!is.na(landing_site))
+
+lw = lw |> 
+ mutate(
+    year = year(date_dd_mm_yy),
+    month = month(date_dd_mm_yy, label = TRUE),
+    day = day(date_dd_mm_yy), 
+    .after = date_dd_mm_yy
+ ) |> 
+    mutate(
+    weight_kg = as.numeric(weight_kg),
+    length_cm = as.numeric(length_cm)
+    )
+
+# lw |> write_csv('../data_shared/lw2.csv')
+
+yft = lw |> filter(fish_type_code == 'YFT')
+```
+
+
+:::: {.columns}
+::: {.column width="50%"}
+
+- Yellowfin tuna (*Thunnus albacares*) typically range from 40-180 cm fork length, with peak catches occurring between 80-120 cm
+
+
+:::
+
+::: {.column width="50%"}
+
+
+```{r}
+#| eval: false
+
+#| 
+yft |> 
+    tidyplot(x = length_cm) |>
+    add_histogram(binwidth = 5, boundary = 0, fill = '#2196F3', alpha = 0.85) |> 
+    add_reference_lines(x = c(94.3)) |> 
+    adjust_size(width = 2.5, height = 1.2, unit = 'in') |> 
+    adjust_x_axis(title = 'Length (cm)', limits = c(0, 180), breaks = scales::pretty_breaks(n = 6)) |> 
+    adjust_y_axis(title = 'Frequency', breaks = scales::pretty_breaks(n = 5)) |>
+    adjust_title('Length Distribution by Fish Group', fontsize = 12, fontweight = 'bold') |>
+    adjust_font(fontsize = 14) |> 
+    split_plot(by = region, ncol = 1)
+```
+
+
+![](plots/region_yft_histogram.svg)
+:::
+::::
+
+
+
+## Length frequency
+
+```{r}
+#| eval: false
+#| echo: false
+
+# yellowfin |> pull(fl) |> summary()
+
+yft_lfq = yft |>
+   mutate(
+    date = as_date(date_dd_mm_yy)
+    ) |> 
+  TropFishR::lfqCreate(
+    Lname = "length_cm", 
+    Dname = "date", 
+    bin_size = 2, 
+    species = "Yellowfin", 
+    length_unit = "cm", 
+    aggregate_dates = TRUE
+    )
+
+
+yft_lfq_mod = yft_lfq |> 
+  TropFishR::lfqModify(
+    bin_size = 4, 
+    aggregate = "quarter", 
+    vectorise_catch = FALSE
+    ) |> 
+  TropFishR::lfqRestructure(
+    MA = 11, 
+    addl.sqrt = TRUE
+    )
+
+```
+
+```{r}
+#| eval: false
+#| echo: false
+#| 
+par(mfrow = c(1,1))
+yft_lfq_mod |> 
+  plot(
+    Fname = "catch", 
+    las = 1, ylim = c(30,160) 
+    )
+
+# yft_lfq_mod |> 
+#   plot(Fname = "rcounts", las = 1, ylim = c(30,160))
+
+```
+
+![](plots/lfq_yft.svg)
+
+
+## Partition YFT into juvenile and adults
+
+:::: {.columns}
+::: {.column width="50%"}
+
+
+
+```{r}
+#| echo: true
+#| code-fold: false
+#| warning: false
+## partitioning withFrequentist regression 
+
+classified_yft = yft |> 
+  classify_mature(
+    varNames = c("length_cm", "weight_kg"),
+    varSex = NULL, 
+    selectSex = NULL,
+    method = "ld"
+  )
+
+# classified_yft |> plot()
+```
+
+:::
+
+::: {.column width="50%"}
+
+
+
+```{r}
+#| echo: false
+#| eval: false
+
+classified_yft |> 
+  plot(
+    main = 'L50 of Yellowfin',
+    xlab = 'Length (cm)', 
+    ylab = 'Weight (kg)',
+     cex.main = 2,    # Title size (2x default)
+     cex.lab = 1.8,   # Axis label size (1.5x default)
+     cex.axis = 1.6
+  )
+```
+
+![](plots/yft_adult_juvenile.svg){width="70%"}
+
+:::
+::::
+
+
+## Estimated L50
+
+```{r}
+my_ogive_fq = morph_mature(
+    data = classified_yft, 
+    method = "fq", 
+    niter = 1000
+    )
+
+my_ogive_tb = my_ogive_fq |> 
+    print() |> 
+    as.data.frame() |> 
+    as_tibble() |> 
+    mutate(Freq = as.numeric(Freq)) |> 
+    pivot_wider(names_from = Var1 , values_from  = Freq) 
+    
+
+
+```
+
+:::: {.columns}
+::: {.column width="50%"}
+
+- The S-shaped curve is called the "maturity ogive."
+- The estimated L50 is **`r my_ogive_tb$L50[1] |> round(1)` cm**.
+
+```{r}
+  my_ogive_tb |> 
+    gt::gt() |> 
+    gt::fmt_number(columns = everything(), decimals = 2)
+```
+:::
+
+::: {.column width="50%"}
+
+
+```{r}
+#| eval: false
+#| code-fold: true
+#| 
+ my_ogive_fq |> plot(
+    main = 'L50 of Yellowfin',
+    xlab = 'Length (cm)', 
+    ylab = 'Proportion',
+     cex.main = 2,    # Title size (2x default)
+     cex.lab = 1.8,   # Axis label size (1.5x default)
+     cex.axis = 1.6
+     )   
+```
+
+![](plots/tuna_ogive.svg){width="60%"}
+
+:::
+::::
+
+
+
+
+## Key Takeaways
+
+-   **Fecundity** and **Maturity** are fundamental to a stock's reproductive potential.
+-   **L50** is a critical biological reference point that tells us the size at which fish start contributing to the next generation.
+-   Estimating L50 requires collecting both **length**, **weight** and **gonad maturity stage** data in the field.
+-   This parameter is a required input for many length-based stock assessment models you will learn about next.
+
+---
+
+## Questions & Discussion
+
+**Thank You**

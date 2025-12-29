@@ -1,0 +1,954 @@
+---
+title: "Module 3: Data-Limited Stock Assessment Methods"
+subtitle: "Somali Fish Stock Training"
+date: "2025-12-05"
+date-modified: today
+author: 
+    - name: "Dr. Masumbuko Semba"
+      affiliation: "Nelson Mandela African Institution of Science and Technology"
+      email: "lugosemba@gmail.com"
+    - name: "Dr. Rushingisha George"
+      affiliation: "Tangania Fisheries Research Institute"
+      email: "george.rushingisha@tafiri.go.tz"
+    - name: "Dr. Mary Kishe"
+      affiliation: "Tanzania Fisheries Research Institute"
+      email: "mary.kishe@tafiri.go.tz"
+    - name: "Dr. Ismael Kimirei"
+      affiliation: "Tanzania Fisheries Research Institute"
+      email: "ismael.kimirei@tafiri.go.tz"
+format: revealjs
+theme: default
+transition: slide
+background-transition: fade
+highlight-style: github
+embed-resources: true
+---
+
+```{r}
+require(sf)
+require(tidyverse)
+require(sizeMat)
+require(gt)
+require(tidyplots)
+require(patchwork)
+require(leaflet)
+```
+
+## Welcome to Module 3
+
+**Data-Limited Stock Assessment Methods**
+
+:::: {.columns}
+::: {.column width="50%"}
+### Learning Objectives
+- Apply length-based assessment models
+- Use empirical indicators for status
+- Conduct practical R-based analyses
+- Make evidence-based recommendations
+:::
+
+::: {.column width="50%"}
+### Why This Matters
+- **Most requested** training component
+- **Lowest expertise** area identified
+- **Directly applicable** to Somali data
+- **Actionable** for decision-makers
+:::
+::::
+
+---
+
+## What Are Data-Limited Methods?
+
+Stock assessments when you have:
+
+::: {.columns}
+::: {.column width="50%"}
+**What You DON'T Have:**
+- ✗ Age structure data
+- ✗ Long time series
+- ✗ Detailed catch history
+- ✗ Tagging studies
+- ✗ Population surveys
+:::
+
+::: {.column width="50%"}
+**What You DO Have:**
+- ✓ Length measurements
+- ✓ Catch data
+- ✓ Basic life history
+- ✓ Landing information
+- ✓ Recent time series
+:::
+::::
+
+---
+
+## Why Length-Based Methods?
+
+### Length is Easy to Measure:
+
+::: {.incremental}
+- Simple equipment (measuring ruler)
+- Minimal training required
+- Immediate feedback
+- Low cost
+- High consistency
+:::
+
+### Length Contains Information:
+
+Size distributions reveal:
+- Population age structure
+- Growth rates
+- Fishing pressure
+- Recruitment patterns
+
+---
+
+## Key Concept: Growth
+
+### Von Bertalanffy Growth Model:
+
+Fish length increases over time following a curve:
+
+$$L_t = L_∞ (1 - e^{-K(t-t_0)})$$
+
+Where:
+- **L∞**: Asymptotic length (max size)
+- **K**: Growth rate (how fast)
+- **t**: Age
+- **t₀**: Age at length zero
+
+---
+
+## Length-Based Methods Overview
+
+### Three Main Approaches:
+
+::: {.columns}
+::: {.column width="33%"}
+**1. LBB Model**
+Length-Based Bayesian
+- Estimates from data
+- Complex but flexible
+- Best when trained
+:::
+
+::: {.column width="33%"}
+**2. LIME Model**
+Length-Integrated Mixed Effects
+- Uses length frequencies
+- Integrated framework
+- Well-developed
+:::
+
+::: {.column width="33%"}
+**3. Empirical Indicators**
+Simple heuristics
+- Easy to calculate
+- Transparent
+- Immediate insights
+:::
+::::
+
+---
+
+## Empirical Indicators: Length Metrics
+
+### Mean Length:
+
+Average size of fish in catch
+
+```r
+mean_length <- data |>
+  group_by(year) |>
+  summarise(mean_L = mean(length_cm, na.rm = TRUE))
+```
+
+**Interpretation:**
+- Increasing trend = good (growing population)
+- Decreasing trend = concern (overfishing)
+
+---
+
+## Empirical Indicators: Median Length
+
+### Median Length:
+
+Middle value of size distribution
+
+:::: {.columns}
+::: {.column width="50%"}
+**Robust to outliers**
+- Not affected by very large fish
+- Better than mean for skewed data
+- Easier to communicate
+:::
+
+::: {.column width="50%"}
+**Calculate in R:**
+```r
+median_length <- data |>
+  group_by(year) |>
+  summarise(
+    med_L = median(length_cm, na.rm = TRUE)
+  )
+```
+:::
+::::
+
+---
+
+## Empirical Indicators: L95 & Lmax
+
+### L95 (95th Percentile):
+
+Size at which 95% of fish are smaller
+
+::: {.incremental}
+- Indicates presence of large fish
+- Decreasing L95 = concerning pattern
+- Vulnerable to sampling gaps
+:::
+
+### Lmax (Maximum Observed):
+
+Largest fish in catch
+
+- Changes with sampling intensity
+- Indicator of recruitment & growth
+- Use cautiously (influenced by luck)
+
+---
+
+## Empirical Indicators: Proportion Mature
+
+### Size-at-Maturity Concept:
+
+Many fish below breeding size = recruitment problem
+
+```r
+# Define maturity based on size threshold
+data_mature <- data |>
+  mutate(
+    mature = if_else(length_cm >= 35, "Mature", "Immature")
+  ) |>
+  group_by(year, mature) |>
+  summarise(count = n(), .groups = 'drop') |>
+  pivot_wider(names_from = mature, values_from = count) |>
+  mutate(prop_mature = Mature / (Mature + Immature))
+```
+
+---
+
+## Empirical Indicators: Catch Composition
+
+### Species Dominance:
+
+Track which species dominate catch
+
+```r
+composition <- data |>
+  filter(!is.na(fish_group)) |>
+  group_by(year, fish_group) |>
+  summarise(count = n(), .groups = 'drop') |>
+  group_by(year) |>
+  mutate(proportion = count / sum(count))
+```
+
+**Red Flags:**
+- One species >50% = concentration risk
+- Rapid shifts = ecosystem change
+- Loss of diversity = vulnerability
+
+---
+
+## Practical Example: Somali Data Analysis
+
+### Our Dataset Recap:
+
+```{r}
+#| echo: false
+#| eval: false
+
+# This represents your actual data
+tibble(
+  Metric = c("Records", "Years", "Regions", "Species", "Avg Length", "Avg Weight"),
+  Value = c("3,571", "2017-2023", "6", "7 groups", "32.4 cm", "8.2 kg")
+) |>
+  gt() |>
+  tab_header(title = "Somali Landing Data Summary") |>
+  opt_stylize(style = 6, color = 'gray')
+```
+
+---
+
+## Analysis 1: Mean Length Trends
+
+### R Code Example:
+
+```r
+length_trends <- lw |>
+  filter(!is.na(length_cm), !fish_group == 'Rays and Skates') |>
+  group_by(year, fish_group) |>
+  summarise(
+    mean_length = mean(length_cm, na.rm = TRUE),
+    n = n(),
+    .groups = 'drop'
+  )
+
+# Visualize
+length_trends |>
+  tidyplot(x = year, y = mean_length, color = fish_group) |>
+  add_data_points(size = 2) |>
+  add_curve_fit(method = 'loess') |>
+  adjust_title('Mean Length Trends')
+```
+
+---
+
+## Analysis 2: Size Structure Changes
+
+### Length-Frequency Distributions:
+
+```r
+lw |>
+  filter(year %in% c(2017, 2023), !is.na(length_cm)) |>
+  tidyplot(x = length_cm, fill = factor(year)) |>
+  add_histogram(alpha = 0.6, binwidth = 5) |>
+  adjust_title('Size Structure: 2017 vs 2023') |>
+  adjust_x_axis(title = 'Length (cm)') |>
+  adjust_y_axis(title = 'Frequency')
+```
+
+---
+
+## Analysis 3: Maturity-Based Assessment
+
+### Proportion of Fish Above Maturity Size:
+
+```r
+# Assume maturity at 30cm for demonstration
+maturity_threshold <- 30
+
+maturity_analysis <- lw |>
+  filter(!is.na(length_cm)) |>
+  mutate(mature = length_cm >= maturity_threshold) |>
+  group_by(year) |>
+  summarise(
+    prop_mature = sum(mature) / n(),
+    n_immature = sum(!mature),
+    .groups = 'drop'
+  )
+```
+
+**Interpretation:**
+- Declining prop_mature = recruitment failure
+- High immature % = good recruitment
+- Threshold varies by species
+
+---
+
+## Analysis 4: Growth Estimation
+
+### Length-Weight Relationships:
+
+```r
+# Fit allometric model: W = a * L^b
+growth_model <- lw |>
+  filter(!is.na(length_cm), !is.na(weight_kg)) |>
+  lm(log(weight_kg) ~ log(length_cm), data = .)
+
+# Extract parameters
+a <- exp(coef(growth_model)[1])
+b <- coef(growth_model)[2]
+
+# Interpretation: b ~= 3 (isometric growth)
+# b < 3 = getting thinner as grow (poor condition)
+# b > 3 = getting heavier as grow (good condition)
+```
+
+---
+
+## Analysis 5: Regional Comparison
+
+### Stock Status by Region:
+
+```r
+regional_status <- lw |>
+  filter(!is.na(region), !is.na(length_cm)) |>
+  group_by(region) |>
+  summarise(
+    mean_length = mean(length_cm),
+    median_length = median(length_cm),
+    l95 = quantile(length_cm, 0.95),
+    n = n(),
+    cpue_2023 = sum(year == 2023) / n_distinct(landing_site),
+    .groups = 'drop'
+  )
+```
+
+---
+
+## Traffic Light Assessment
+
+### Simple Decision Framework:
+
+```r
+regional_status <- regional_status |>
+  mutate(
+    status = case_when(
+      mean_length > 35 & cpue_2023 > 20 ~ "GREEN: Healthy",
+      mean_length > 30 & cpue_2023 > 15 ~ "YELLOW: Caution",
+      TRUE ~ "RED: Concerning"
+    )
+  )
+```
+
+---
+
+## Interpreting Length-Based Results
+
+### What Mean Length Tells Us:
+
+::: {.columns}
+::: {.column width="50%"}
+**Increasing Mean Length**
+- ✓ Stock recovering
+- ✓ Good recruitment
+- ✓ Reduced fishing
+- ✓ Positive trend
+:::
+
+::: {.column width="50%"}
+**Decreasing Mean Length**
+- ✗ Fishing pressure high
+- ✗ Recruitment issues
+- ✗ Population aging
+- ✗ Negative trend
+:::
+::::
+
+---
+
+## Reference Points Concept
+
+### Management Targets:
+
+Define desired stock conditions:
+
+::: {.incremental}
+- **Target reference point (TRP)**: What we aim for
+- **Limit reference point (LRP)**: Below this = risky
+- **Precautionary approach**: Stay well above LRP
+:::
+
+### Example from Data:
+```r
+# Hypothetical reference points
+target_mean_length <- 35  # cm
+limit_mean_length <- 25   # cm
+
+status <- mean_length |>
+  mutate(
+    risk = case_when(
+      mean_L > target_mean_length ~ "Low",
+      mean_L > limit_mean_length ~ "Medium",
+      TRUE ~ "High"
+    )
+  )
+```
+
+---
+
+## Uncertainty in Assessments
+
+### Sources of Uncertainty:
+
+::: {.columns}
+::: {.column width="50%"}
+**Data Uncertainty**
+- Sampling bias
+- Measurement error
+- Incomplete coverage
+- Missing years
+:::
+
+::: {.column width="50%"}
+**Model Uncertainty**
+- Simplifying assumptions
+- Parameter estimates
+- Biological variability
+- Environmental factors
+:::
+::::
+
+### Best Practice:
+Always communicate uncertainty with estimates!
+
+---
+
+## Decision-Making Under Uncertainty
+
+### Precautionary Principle:
+
+When uncertain, be conservative:
+
+```r
+# Don't just report point estimate
+result <- tibble(
+  estimate = 32.5,
+  lower_ci = 30.2,
+  upper_ci = 34.8,
+  recommendation = "Maintain current effort, monitor closely"
+)
+```
+
+---
+
+## Practical Workshop: Your Assessment
+
+### Exercise Data:
+
+Use the Somali landing data to assess one species
+
+**Steps:**
+1. Filter to one fish group
+2. Calculate key indicators
+3. Interpret results
+4. Recommend management action
+
+### Deliverable:
+One-page stock assessment report
+
+---
+
+## Stock Assessment Report Template
+
+### Minimum Contents:
+
+::: {.callout-note}
+**1. Executive Summary** (1 paragraph)
+- Stock status: Green/Yellow/Red
+- Key findings
+- Main recommendation
+
+**2. Data & Methods** (brief)
+- Data sources
+- Indicators used
+- Time period
+
+**3. Results** (with figures)
+- Key metrics & trends
+- Comparisons with history
+
+**4. Conclusions**
+- Stock status interpretation
+- Uncertainties
+- Management recommendations
+
+**5. References**
+- Data sources
+- Methods citations
+:::
+
+---
+
+## Case Study: Example Report
+
+### Berbera Tuna Stock:
+
+::: {.callout-important}
+**Status: YELLOW (Caution)**
+
+Mean length declining 2.1 cm/year (2017-2023)
+- 2017: 37.2 cm
+- 2023: 34.5 cm
+
+Interpretation: Increasing fishing pressure or recruitment declining
+
+Recommendation: 
+- Monitor closely next 6 months
+- Reduce catch if trend continues
+- Increase sampling frequency
+:::
+
+---
+
+## Communicating Results to Decision-Makers
+
+### Avoid Technical Jargon:
+
+Instead of:
+> "The von Bertalanffy growth model shows K=0.28, indicating asymptotic length of 55cm..."
+
+Say:
+> "Fish are growing to about 55cm maximum. They reach adult size at 5-6 years old."
+
+---
+
+## Visualizations for Policy Makers
+
+### Keep It Simple:
+
+::: {.incremental}
+- **One main message per chart**
+- **Use traffic light colors** (Red/Yellow/Green)
+- **Show trends clearly**
+- **Label axes in plain language**
+- **Include uncertainty** (error bars)
+- **Highlight key changes**
+:::
+
+---
+
+## Management Actions Based on Assessment
+
+### Green Status Actions:
+
+```
+✓ Maintain current fishing levels
+✓ Continue regular monitoring
+✓ Share success with community
+✓ Document best practices
+```
+
+---
+
+## Management Actions: Yellow Status
+
+### Caution Response:
+
+```
+⚠ Reduce fishing effort by 10-20%
+⚠ Increase monitoring frequency
+⚠ Investigate cause of decline
+⚠ Consult stakeholders
+```
+
+---
+
+## Management Actions: Red Status
+
+### Urgent Response:
+
+```
+✗ Implement immediate catch reductions
+✗ Restrict fishing areas or seasons
+✗ Emergency data collection
+✗ Convene management committee
+```
+
+---
+
+## Long-Term Monitoring Strategy
+
+### Building Your Program:
+
+**Year 1:** Establish baseline
+- Collect data at all sites
+- Train staff
+- Test protocols
+
+**Year 2-3:** Annual assessments
+- Compare with baseline
+- Detect trends
+- Refine methods
+
+**Year 4+:** Adaptive management
+- Adjust regulations
+- Scale sampling
+- Expand to new areas
+
+---
+
+## R Resources for Module 3
+
+### Useful Packages:
+
+```r
+# Length-based analysis
+library(TropFishR)  # Von Bertalanffy, LBB
+library(sizeMat)    # Maturity analysis
+
+# Data visualization
+library(ggplot2)    # Publication-quality plots
+library(tidyplots)  # Simple, professional graphics
+
+# Statistical summaries
+library(rstatix)    # Quick statistics
+library(gt)         # Professional tables
+```
+
+---
+
+## Available Software Tools
+
+### Free & Open Source:
+
+- **LBSPR** (Length-Based Spawning Potential Ratio)
+- **LBB** (Length-Based Bayesian)
+- **SAMtool** (Stock Assessment Methods)
+- **FishLife** (Life history estimation)
+
+All work in R or standalone
+
+---
+
+## Key Takeaways
+
+### Module 3 Summary:
+
+::: {.incremental}
+1. Data-limited methods work with what you have
+2. Length-based indicators reveal stock status
+3. Simple metrics often more useful than complex models
+4. Uncertainty is inevitable—communicate it clearly
+5. Trends matter more than absolute values
+6. Regular monitoring enables adaptive management
+7. Transparent methods build stakeholder confidence
+:::
+
+---
+
+## Integrating All Three Modules
+
+### Complete Assessment Framework:
+
+:::: {.columns}
+::: {.column width="33%"}
+**Module 1**
+Concepts
+- Stock assessment principles
+- Key indicators
+- Data types
+:::
+
+::: {.column width="33%"}
+**Module 2**
+Operations
+- Sampling design
+- Data quality
+- Field protocols
+:::
+
+::: {.column width="33%"}
+**Module 3**
+Analysis
+- Length methods
+- Indicators
+- Management
+:::
+::::
+
+---
+
+## Building Capacity in Somalia
+
+### Realistic Implementation:
+
+**Immediate (0-3 months):**
+- Train 1-2 lead analysts
+- Set up R environment
+- Conduct first assessments
+
+**Short-term (3-12 months):**
+- Expand to all regions
+- Develop annual reports
+- Build stakeholder engagement
+
+**Long-term (1-2 years):**
+- Integrate into policy
+- Adaptive management cycle
+- Regional coordination
+
+---
+
+## Next Steps for Participants
+
+### After Training:
+
+::: {.callout-note}
+1. **Practice**: Analyze data from your region
+2. **Collaborate**: Share findings with colleagues
+3. **Document**: Create assessment procedures
+4. **Communicate**: Present to decision-makers
+5. **Iterate**: Refine methods based on feedback
+6. **Scale**: Expand to other stocks
+:::
+
+---
+
+## Resources & Continued Learning
+
+### Online Training:
+- FAO e-learning modules
+- NOAA fisheries courses
+- R programming resources
+
+### Publications:
+- Froese & Pauly (FishBase)
+- Hordyk et al. (LBB methods)
+- Costello et al. (Data-limited approaches)
+
+### Networking:
+- IOTC (Indian Ocean Tuna Commission)
+- Regional fisheries bodies
+- International assessment workshops
+
+---
+
+## Common Pitfalls to Avoid
+
+### Don't:
+
+::: {.incremental}
+- Over-interpret single year changes
+- Ignore measurement uncertainty
+- Use methods beyond your understanding
+- Skip quality control checks
+- Extrapolate beyond data range
+- Report false precision
+- Ignore biological reality
+:::
+
+---
+
+## Success Indicators
+
+### How to Know It's Working:
+
+- ✓ Decision-makers use assessments
+- ✓ Fishers understand recommendations
+- ✓ Data quality improving annually
+- ✓ Stocks responding to management
+- ✓ Stakeholders engaged
+- ✓ Capacity growing locally
+- ✓ Methods documented & standardized
+
+---
+
+## Troubleshooting Guide
+
+### Problem: No Obvious Trend
+
+**Cause:** High variability, short time series
+**Solution:** Use longer window, increase sampling
+
+### Problem: Conflicting Indicators
+
+**Cause:** Different metrics tell different stories
+**Solution:** Investigate causes, use weight of evidence
+
+### Problem: Results Don't Match Expectations
+
+**Cause:** Data issues, biological reality
+**Solution:** Quality check, consult experts, revise understanding
+
+---
+
+## Questions for Your Assessment
+
+### Before Making Recommendations:
+
+- What changed and why?
+- Is the trend significant or noise?
+- What's the uncertainty?
+- Have I verified the data?
+- Do results match other evidence?
+- Are there alternative explanations?
+- What will decision-makers do with this?
+- How confident am I in the conclusion?
+
+---
+
+## Course Wrap-Up
+
+### You Have Learned:
+
+- ✓ **Module 1**: Conceptual foundations
+- ✓ **Module 2**: Operational protocols
+- ✓ **Module 3**: Practical analysis methods
+
+### You Can Now:
+
+- Design monitoring programs
+- Collect quality data
+- Analyze fish populations
+- Assess stock status
+- Make recommendations
+- Communicate findings
+
+---
+
+## Celebration & Commitment
+
+### You Are Now a Stock Assessment Practitioner!
+
+::: {.callout-success}
+**Next:** Go implement these methods in your fisheries
+
+**Remember:** Good data + simple analysis > complex methods + poor data
+
+**Support:** Network with colleagues, reach out when stuck, share successes
+:::
+
+---
+
+## Certificate & Continuation
+
+### Today's Training Included:
+
+- ✓ 3 comprehensive modules
+- ✓ Practical exercises
+- ✓ Real data analysis
+- ✓ R programming skills
+- ✓ Decision-making frameworks
+
+### Next Level:
+- Advanced modeling (LIME, LBB)
+- Ecosystem approaches
+- Stakeholder engagement
+- Regional coordination
+
+---
+
+## Thank You
+
+**Somali Fish Stock Training**
+
+**Module 3: Data-Limited Assessment Methods**
+
+*Empowering evidence-based fisheries management in Somalia*
+
+---
+
+## Final Activity: Your Commitment
+
+### Reflect and Share:
+
+- What will YOU do first?
+- Which stock will you assess?
+- How will you share knowledge?
+- What support do you need?
+- Who will you work with?
+
+---
+
+## Contact & Support
+
+### Training Team:
+
+📧 Email: [training contact]
+📱 Phone: [contact number]
+🌐 Website: [program website]
+
+### Resources Available:
+- Data templates
+- R code repository
+- Reference documents
+- Discussion forum
+- Monthly webinars
+
+**Questions? Contact the team anytime!**

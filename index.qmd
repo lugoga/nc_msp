@@ -1,0 +1,140 @@
+---
+title: "Marine Spatial Planning"
+subtitle: "Mkoani-Pemba and Mkuranga, Pwani Region, Tanzania"
+date: "2025-12-27"
+date-modified: today
+# author: 
+#     - name: "Siajali Pamba"
+#       affiliation: "University of Dar es Salaam, School of Aquatic Sciences and Fisheries Technology (SOAF)"
+#     - name: "Masumbuko Semba"
+#       affiliation: "Nelson Mandela African Institution of Science and Technology (NM-AIST)"
+#       email: "lugosemba@gmail.com"
+#     - name: "Julius Francis"
+#       affiliation: "University of Dar es Salaam, School of Aquatic Sciences and Fisheries Technology (SOAF)"
+#     - name: "Emmanuel Mpina"
+#       affiliation: "The Nature Conservancy (TNC), Tanzania"
+---
+
+
+
+## About MSP
+
+This Marine Spatial Planning project develops comprehensive spatial plans for sustainable coastal and marine resource management in Mkoani (Pemba) and Mkuranga (Pwani Region), Tanzania. The initiative integrates scientific research, stakeholder engagement, and participatory planning to support evidence-based marine governance and blue economy development.
+
+:::{.callout-important}
+**Target Audience:** Marine resource managers, fisheries professionals, conservation practitioners, and policy makers seeking to improve coastal governance and sustainable use of marine resources in Tanzania and the broader Indian Ocean region.
+:::
+
+<!-- ## 🌊 Live Weather Update - Field Operations Dashboard
+
+:::{.callout-tip}
+### Current Conditions for Coastal Operations
+
+**Mkoani-Pemba & Mkuranga Study Sites** | Updated: Today
+
+| Metric | Current Status | Field Impact |
+|--------|---|---|
+| **Wind Pattern** | Northeast Monsoon (Kaskazi) | ✓ Optimal for operations |
+| **Sea State** | Calm to Moderate (0.5-1.5m) | ✓ Safe for vessel deployment |
+| **Air Temperature** | 26-28°C | ✓ Suitable for fieldwork |
+| **Sea Temperature** | 24-26°C | ✓ Stable, excellent for surveys |
+| **Rainfall Outlook** | Minimal to Light | ✓ Clear skies expected |
+| **Visibility** | Excellent | ✓ Ideal for remote sensing |
+
+**⚡ Key Takeaway:** Current conditions are **EXCELLENT** for biodiversity field surveys and stakeholder engagement activities scheduled for January 2026. Early mornings (06:00-10:00 local time) offer the calmest sea states.
+
+**Seasonal Note:** The Northeast Monsoon season (Dec 2025 - Mar 2026) is the prime operational window. Conditions will transition to Southeast Monsoon (Habagika) in April, bringing increased rainfall and rougher seas.
+
+[View Detailed Seasonal Information](news.qmd#current-conditions--field-operations){.btn .btn-outline-secondary}
+::: -->
+
+---
+
+
+## Consultancy Core Components
+
+::: {.grid}
+
+::: {.g-col-12 .g-col-md-6}
+![](images/components/moja.jpg){fig-alt="Project overview and partnerships" .img-fluid style="border-radius: 10px; margin-bottom: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"}
+
+### 📋 [About the Initiative](about.qmd)
+Project overview, focus areas, spatial planning approach, and key partnerships. Learn about the initiative's vision and implementation framework.
+:::
+
+::: {.g-col-12 .g-col-md-6}
+![](images/components/mbili.jpg){fig-alt="Project timeline and deliverables" .img-fluid style="border-radius: 10px; margin-bottom: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"}
+
+### 📅 [Scope of Work](schedule.qmd)
+Detailed project timeline, deliverables, target completion dates, and project team responsibilities. Track progress across six major work packages.
+:::
+
+::: {.g-col-12 .g-col-md-6}
+![](images/components/tatu.jpg){fig-alt="Marine biodiversity assessment" .img-fluid style="border-radius: 10px; margin-bottom: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"}
+
+### 🌿 Biodiversity Assessment
+Decadal trends in marine biodiversity loss and gain, geospatial mapping of mangrove ecosystems, and ground-truthed validation data. **Due: 25 January 2026**
+:::
+
+::: {.g-col-12 .g-col-md-6}
+![](images/components/nne.jpg){fig-alt="Field data collection and mapping" .img-fluid style="border-radius: 10px; margin-bottom: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"}
+
+### 🗺️ Field Data Collection
+Comprehensive multi-disciplinary data collection including physical, biological, geomorphological, and socioeconomic data across study sites. **Due: 25 January 2026**
+:::
+
+::: {.g-col-12 .g-col-md-6}
+![](images/components/tano.jpg){fig-alt="Ecosystem services valuation" .img-fluid style="border-radius: 10px; margin-bottom: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"}
+
+### 💰 Ecosystem Valuation
+Economic valuation of coastal and marine ecosystem goods and services in USD, including comparative risk analysis and stakeholder-validated recommendations. **Due: 31 March 2026**
+:::
+
+::: {.g-col-12 .g-col-md-6}
+![](images/components/sita.jpg){fig-alt="Bio-economic analysis and modeling" .img-fluid style="border-radius: 10px; margin-bottom: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"}
+
+### 📊 Bio-Economic Analysis
+Cost-benefit analysis of proposed bioeconomic activities, green/blue finance instruments, and policy guidance for blue economy growth and ecosystem resilience. **Due: 31 March 2026**
+:::
+
+::: {.g-col-12 .g-col-md-6}
+![](images/components/saba.jpg){fig-alt="Digital visualization platform" .img-fluid style="border-radius: 10px; margin-bottom: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"}
+
+### 💻 Digital Visualization
+Interactive dashboard, web maps, and story maps illustrating marine biodiversity and ecosystem status across Tanzania with focused analysis on Mkuranga and Mkoani. **Due: 15 April 2026**
+:::
+
+::: {.g-col-12 .g-col-md-6}
+![](images/components/validation.jpg){fig-alt="Stakeholder validation and engagement" .img-fluid style="border-radius: 10px; margin-bottom: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"}
+
+### 🤝 Stakeholder Validation
+Validation meeting bringing together district authorities, fishing communities, and government representatives to review and endorse spatial planning outputs. **Scheduled: 28 February 2026**
+:::
+
+:::
+
+## Implementation Approach
+
+- **Evidence-Based**: Grounded in scientific data and international best practices for marine spatial planning
+- **Participatory**: Inclusive engagement with fishing communities, government agencies, and conservation partners
+- **Integrative**: Combines biological, geomorphological, socioeconomic, and economic analyses
+- **Adaptive**: Built-in mechanisms for monitoring, evaluation, and plan refinement
+- **Scalable**: Approaches applicable to other coastal regions in Tanzania and the Indian Ocean
+
+## Financial and Technical Support
+
+This initiative is supported by the **Nairobi Convention Secretariat**, which provides:
+
+- **Technical Expertise**: Guidance on implementing regional marine spatial planning standards and best practices aligned with the Nairobi Convention framework for Eastern African, Indian Ocean, and Indian Seas regions
+- **Financial Resources**: Grant funding and technical assistance to support project implementation, field activities, and capacity building
+- **Regional Coordination**: Connection to the broader Nairobi Convention network of coastal states and regional organizations working on marine conservation and sustainable use
+
+The project aligns with the Nairobi Convention's objectives for protecting, managing, and developing the marine and coastal environment of the Eastern African region.
+
+## Getting Started
+
+[Learn More About the Initiative](about.qmd){.btn .btn-primary .btn-lg} [View Project Timeline & Deliverables](schedule.qmd){.btn .btn-secondary .btn-lg}
+
+---
+
+**Project Duration:** September 2025 - April 2026 | **Study Sites:** Mkoani-Pemba and Mkuranga-Pwani | **Language:** English

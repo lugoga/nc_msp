@@ -1,0 +1,163 @@
+---
+title: "Presentation 10: Trophic Level"
+subtitle: "Somali Fish Stock Training"
+date: "2025-12-15"
+author: 
+    - name: "Mwijage"
+      affiliation: "TAFIRI"
+format: revealjs
+theme: default
+transition: slide
+background-transition: fade
+highlight-style: github
+embed-resources: true
+execute:
+  eval: true
+  echo: true
+  warning: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+require(tidyverse)
+require(tidyplots)
+require(gt)
+
+# Load data
+lw <- readxl::read_excel('../data_shared/ProjKalluun_master_data_entry.xlsx', sheet = 'Section 3', skip = 4) |> 
+    janitor::clean_names() |> 
+    filter(!is.na(landing_site)) |> 
+    mutate(
+      year = year(date_dd_mm_yy),
+      month = month(date_dd_mm_yy, label = TRUE),
+      .after = date_dd_mm_yy
+    )
+```
+
+## Welcome to Presentation 10
+
+**Trophic Level: Understanding the Marine Food Web**
+
+:::: {.columns}
+::: {.column width="50%"}
+### Learning Objectives
+- Define what a trophic level is.
+- Understand its importance in fisheries management.
+- Learn about "fishing down the food web."
+- Calculate the Mean Trophic Index of the catch.
+:::
+
+::: {.column width="50%"}
+### Why This Matters
+- Provides an ecosystem-level view of fishing impacts.
+- A key indicator for Ecosystem-Based Fisheries Management (EBFM).
+- Helps detect long-term changes in the marine environment.
+:::
+::::
+
+---
+
+## What is a Trophic Level?
+
+A trophic level is the position an organism occupies in a food chain. It represents a "step" in the flow of energy.
+
+*   **Level 1**: **Primary Producers** (e.g., Phytoplankton) - Create their own food.
+*   **Level 2**: **Primary Consumers** (Herbivores, e.g., Zooplankton) - Eat producers.
+*   **Level 3**: **Secondary Consumers** (Carnivores, e.g., Mackerel) - Eat primary consumers.
+*   **Level 4**: **Tertiary Consumers** (Carnivores, e.g., Tuna) - Eat secondary consumers.
+*   **Level 5**: **Apex Predators** (e.g., large Sharks) - Top of the food chain.
+
+---
+
+## The Marine Food Web
+
+In reality, it's a complex web, not a simple chain. A single species can feed at multiple trophic levels.
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| out-width: "70%"
+knitr::include_graphics("https://www.researchgate.net/profile/Francisco-Arreguin-Sanchez/publication/237699929/figure/fig1/AS:669456224948248@1536622154429/A-simplified-marine-food-web-showing-the-flow-of-energy-and-biomass-from-lower-to.png")
+```
+
+*Source: Arreguín-Sánchez (2014)*
+
+---
+
+## Why is Trophic Level Important?
+
+1.  **Ecosystem Health Indicator**: The average trophic level of the catch can signal major shifts in the ecosystem.
+2.  **"Fishing Down the Food Web"**: This is a classic sign of overfishing. Fisheries first deplete large, high-trophic-level predators and then shift to targeting smaller, lower-trophic-level species.
+3.  **Management Strategy**: High-trophic-level species (like sharks) are often long-lived and slow to reproduce, requiring more conservative management than low-trophic-level species (like sardines).
+
+---
+
+## Calculating Mean Trophic Index (MTI) of the Catch
+
+We can estimate the health of the fishery by tracking the average trophic level of the fish we catch over time.
+
+**Step 1: Assign Trophic Levels to Fish Groups**
+
+We use known values from sources like FishBase.
+
+```{r}
+#| echo: true
+trophic_levels <- tibble::tribble(
+  ~fish_group,       ~trophic_level,
+  "Tuna",            4.4,
+  "Shark",           4.5,
+  "Billfish",        4.5,
+  "Jacks",           3.9,
+  "Mackerel",        3.6,
+  "Rays and Skates", 3.5,
+  "Other",           3.7  # Average assumption
+)
+```
+
+---
+
+## Calculating MTI of the Catch (cont.)
+
+**Step 2: Calculate the weighted mean trophic level for each year.**
+
+```{r}
+#| echo: true
+mti_by_year <- lw |>
+  filter(!is.na(fish_group)) |>
+  left_join(trophic_levels, by = "fish_group") |>
+  group_by(year) |>
+  summarise(
+    mti = mean(trophic_level, na.rm = TRUE),
+    .groups = 'drop'
+  )
+```
+
+**Step 3: Visualize the trend.**
+
+```{r}
+mti_by_year |>
+  filter(!is.na(year)) |> 
+  tidyplot(x = year, y = mti) |>
+  add_data_points(size = 4) |>
+  add_curve_fit(method = 'loess', linewidth = 1.2) |>
+  adjust_y_axis(title = "Mean Trophic Index (MTI) of Catch") |>
+  adjust_x_axis(title = "Year", breaks = seq(min(mti_by_year$year, na.rm=T), max(mti_by_year$year, na.rm=T), by = 1)) |>
+  adjust_title("Trend in Mean Trophic Level of Somali Catch")
+```
+
+**Interpretation**: A consistent downward trend would be a strong warning sign of "fishing down the food web." Our data shows some fluctuation but no clear, steep decline yet.
+
+---
+
+## Key Takeaways
+
+-   Trophic level is a fundamental concept for understanding an organism's role in the ecosystem.
+-   Tracking the **Mean Trophic Index (MTI)** of the catch is a powerful, simple indicator of ecosystem health.
+-   A declining MTI is a classic sign of **"fishing down the food web,"** indicating unsustainable pressure on top predators.
+-   This analysis is a core component of **Ecosystem-Based Fisheries Management (EBFM)**.
+
+---
+
+## Questions & Discussion
+
+**Thank You**

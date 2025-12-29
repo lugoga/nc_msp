@@ -1,0 +1,435 @@
+---
+title: "Live Weather"
+toc: false
+---
+
+```{=html}
+<style>
+.weather-widget {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 15px;
+  padding: 25px;
+  color: white;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  max-width: 500px;
+  margin: 20px auto;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.weather-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+  padding-bottom: 15px;
+}
+
+.location-info h2 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.update-time {
+  font-size: 12px;
+  opacity: 0.9;
+}
+
+.weather-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.temperature-display {
+  font-size: 48px;
+  font-weight: 700;
+}
+
+.weather-icon {
+  font-size: 80px;
+}
+
+.weather-condition {
+  font-size: 18px;
+  opacity: 0.95;
+}
+
+.weather-parameters {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.parameter {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  padding: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.parameter:hover {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px);
+}
+
+.param-icon {
+  font-size: 28px;
+  margin-bottom: 8px;
+}
+
+.param-label {
+  font-size: 12px;
+  opacity: 0.8;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.param-value {
+  font-size: 20px;
+  font-weight: 700;
+  margin-top: 5px;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+}
+
+.modal-content {
+  background-color: white;
+  margin: 10% auto;
+  padding: 30px;
+  border-radius: 15px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+  color: #333;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #667eea;
+  padding-bottom: 15px;
+}
+
+.modal-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #667eea;
+}
+
+.close-btn {
+  font-size: 28px;
+  font-weight: bold;
+  color: #999;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.close-btn:hover {
+  color: #333;
+}
+
+.modal-body {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #555;
+}
+
+.modal-body p {
+  margin: 10px 0;
+}
+
+.info-link {
+  color: #667eea;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.info-link:hover {
+  text-decoration: underline;
+}
+
+.field-alert {
+  background: #fff3cd;
+  border-left: 4px solid #ffc107;
+  padding: 12px;
+  margin-top: 15px;
+  border-radius: 5px;
+  font-size: 14px;
+  color: #856404;
+}
+
+.favorable {
+  background: #d4edda;
+  border-left-color: #28a745;
+  color: #155724;
+}
+
+.caution {
+  background: #fff3cd;
+  border-left-color: #ffc107;
+  color: #856404;
+}
+
+.warning {
+  background: #f8d7da;
+  border-left-color: #dc3545;
+  color: #721c24;
+}
+
+.source-info {
+  text-align: center;
+  font-size: 12px;
+  opacity: 0.9;
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+}
+</style>
+
+<div class="weather-widget">
+  <div class="weather-header">
+    <div class="location-info">
+      <h2>🌊 Coastal Tanzania</h2>
+      <p class="update-time">Northeast Monsoon (Kaskazi)<br>Updated: Today</p>
+    </div>
+  </div>
+
+  <div class="weather-main">
+    <div>
+      <div class="temperature-display">26°C</div>
+      <div class="weather-condition">Partly Cloudy</div>
+    </div>
+    <div class="weather-icon">⛅</div>
+  </div>
+
+  <div class="weather-parameters">
+    <div class="parameter" onclick="openModal('wind')">
+      <div class="param-icon">💨</div>
+      <div class="param-label">Wind</div>
+      <div class="param-value">15 knots</div>
+    </div>
+
+    <div class="parameter" onclick="openModal('waves')">
+      <div class="param-icon">🌊</div>
+      <div class="param-label">Wave Height</div>
+      <div class="param-value">0.8m</div>
+    </div>
+
+    <div class="parameter" onclick="openModal('temp')">
+      <div class="param-icon">🌡️</div>
+      <div class="param-label">Sea Temp</div>
+      <div class="param-value">25°C</div>
+    </div>
+
+    <div class="parameter" onclick="openModal('visibility')">
+      <div class="param-icon">👁️</div>
+      <div class="param-label">Visibility</div>
+      <div class="param-value">Excellent</div>
+    </div>
+
+    <div class="parameter" onclick="openModal('humidity')">
+      <div class="param-icon">💧</div>
+      <div class="param-label">Humidity</div>
+      <div class="param-value">75%</div>
+    </div>
+
+    <div class="parameter" onclick="openModal('pressure')">
+      <div class="param-icon">🔽</div>
+      <div class="param-label">Pressure</div>
+      <div class="param-value">1013 mb</div>
+    </div>
+  </div>
+
+  <div class="field-alert favorable">
+    ✅ <strong>Field Operations Status:</strong> EXCELLENT - Optimal conditions for coastal surveys and marine activities
+  </div>
+
+  <div class="source-info">
+    Data reflects typical Northeast Monsoon season conditions (Dec 2025 - Mar 2026)<br>
+    <a href="news.qmd" class="info-link">View detailed seasonal information</a>
+  </div>
+</div>
+
+<!-- Modals for each parameter -->
+
+<!-- Wind Modal -->
+<div id="windModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <span class="modal-title">💨 Wind Conditions</span>
+      <button class="close-btn" onclick="closeModal('wind')">&times;</button>
+    </div>
+    <div class="modal-body">
+      <p><strong>Current Speed:</strong> 15 knots (28 km/h)</p>
+      <p><strong>Direction:</strong> Northeast (Kaskazi)</p>
+      <p><strong>Gusts:</strong> Up to 20 knots</p>
+      <p><strong>Optimal for Operations:</strong> Yes</p>
+      <div class="field-alert favorable">
+        Northeast monsoon winds are predictable and favorable for vessel operations and fieldwork during this season.
+      </div>
+      <p style="margin-top: 15px; font-size: 13px;">
+        <a href="https://www.ncei.noaa.gov/products/ocean-weather-forecast" class="info-link" target="_blank">
+          View detailed wind forecasts →
+        </a>
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- Wave Height Modal -->
+<div id="wavesModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <span class="modal-title">🌊 Wave Conditions</span>
+      <button class="close-btn" onclick="closeModal('waves')">&times;</button>
+    </div>
+    <div class="modal-body">
+      <p><strong>Significant Wave Height:</strong> 0.8m (calm)</p>
+      <p><strong>Maximum Wave Height:</strong> 1.5m</p>
+      <p><strong>Period:</strong> 6-8 seconds</p>
+      <p><strong>Optimal for Survey Vessels:</strong> Yes</p>
+      <div class="field-alert favorable">
+        Current conditions are ideal for biodiversity surveys, ecosystem monitoring, and community engagement activities. Water conditions are safe for field operations.
+      </div>
+      <p style="margin-top: 15px; font-size: 13px;">
+        <a href="https://www.ndbc.noaa.gov/" class="info-link" target="_blank">
+          View real-time buoy data →
+        </a>
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- Sea Temperature Modal -->
+<div id="tempModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <span class="modal-title">🌡️ Sea Temperature</span>
+      <button class="close-btn" onclick="closeModal('temp')">&times;</button>
+    </div>
+    <div class="modal-body">
+      <p><strong>Surface Temperature:</strong> 25°C</p>
+      <p><strong>Typical Range:</strong> 24-26°C during Northeast Monsoon</p>
+      <p><strong>Stability:</strong> Moderate to stable</p>
+      <p><strong>Ecosystem Impact:</strong> Favorable for marine surveys</p>
+      <div class="field-alert favorable">
+        Stable sea temperatures support marine biodiversity assessment and ecosystem monitoring. Excellent conditions for both field sampling and community engagement in coastal areas.
+      </div>
+      <p style="margin-top: 15px; font-size: 13px;">
+        <a href="news.qmd#current-conditions--field-operations" class="info-link">
+          View full seasonal analysis →
+        </a>
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- Visibility Modal -->
+<div id="visibilityModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <span class="modal-title">👁️ Visibility & Sky Conditions</span>
+      <button class="close-btn" onclick="closeModal('visibility')">&times;</button>
+    </div>
+    <div class="modal-body">
+      <p><strong>Visibility:</strong> Excellent (&gt;10 km)</p>
+      <p><strong>Cloud Cover:</strong> Partly cloudy (40%)</p>
+      <p><strong>Sky Condition:</strong> Mostly clear</p>
+      <p><strong>Precipitation Probability:</strong> 10%</p>
+      <div class="field-alert favorable">
+        Excellent visibility is ideal for remote sensing activities, aerial surveys, and visual ecosystem assessment. Low precipitation probability supports outdoor field activities.
+      </div>
+      <p style="margin-top: 15px; font-size: 13px;">
+        <a href="https://www.wunderground.com/" class="info-link" target="_blank">
+          Check detailed forecasts →
+        </a>
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- Humidity Modal -->
+<div id="humidityModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <span class="modal-title">💧 Humidity Levels</span>
+      <button class="close-btn" onclick="closeModal('humidity')">&times;</button>
+    </div>
+    <div class="modal-body">
+      <p><strong>Relative Humidity:</strong> 75%</p>
+      <p><strong>Dew Point:</strong> 20°C</p>
+      <p><strong>Comfort Level:</strong> Moderate</p>
+      <p><strong>Equipment Impact:</strong> Manageable</p>
+      <div class="field-alert caution">
+        Moderate humidity is typical for coastal areas. Ensure proper care for electronic equipment and maintain hydration during field operations. Use protective covers for sensitive instruments.
+      </div>
+      <p style="margin-top: 15px; font-size: 13px;">
+        Recommended: UV-protected field clothing and equipment maintenance protocols.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- Pressure Modal -->
+<div id="pressureModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <span class="modal-title">🔽 Atmospheric Pressure</span>
+      <button class="close-btn" onclick="closeModal('pressure')">&times;</button>
+    </div>
+    <div class="modal-body">
+      <p><strong>Current Pressure:</strong> 1013 mb</p>
+      <p><strong>Trend:</strong> Stable</p>
+      <p><strong>Interpretation:</strong> Fair weather conditions</p>
+      <p><strong>Weather Stability:</strong> Expected to remain stable</p>
+      <div class="field-alert favorable">
+        Stable atmospheric pressure indicates predictable weather patterns. Excellent conditions for planning multi-day field campaigns and stakeholder engagement activities.
+      </div>
+      <p style="margin-top: 15px; font-size: 13px;">
+        No significant weather systems approaching coastal Tanzania.
+      </p>
+    </div>
+  </div>
+</div>
+
+<script>
+function openModal(param) {
+  const modalId = param + 'Modal';
+  document.getElementById(modalId).style.display = 'block';
+}
+
+function closeModal(param) {
+  const modalId = param + 'Modal';
+  document.getElementById(modalId).style.display = 'none';
+}
+
+// Close modal when clicking outside of it
+window.onclick = function(event) {
+  if (event.target.classList.contains('modal')) {
+    event.target.style.display = 'none';
+  }
+}
+</script>
+```

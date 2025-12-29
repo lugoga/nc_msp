@@ -1,0 +1,1015 @@
+---
+title: "Module 4: Data Processing and Storage"
+subtitle: "Somali Fish Stock Training"
+date: "2025-12-05"
+date-modified: today
+author: 
+    - name: "Dr. Masumbuko Semba"
+      affiliation: "Nelson Mandela African Institution of Science and Technology"
+      email: "lugosemba@gmail.com"
+    - name: "Dr. Rushingisha George"
+      affiliation: "Tangania Fisheries Research Institute"
+      email: "george.rushingisha@tafiri.go.tz"
+    - name: "Dr. Mary Kishe"
+      affiliation: "Tanzania Fisheries Research Institute"
+      email: "mary.kishe@tafiri.go.tz"
+    - name: "Dr. Ismael Kimirei"
+      affiliation: "Tanzania Fisheries Research Institute"
+      email: "ismael.kimirei@tafiri.go.tz"
+format: revealjs
+theme: default
+transition: slide
+background-transition: fade
+highlight-style: github
+embed-resources: true
+---
+
+```{r}
+require(sf)
+require(tidyverse)
+require(sizeMat)
+require(gt)
+require(tidyplots)
+require(patchwork)
+require(leaflet)
+```
+
+## Welcome to Module 4
+
+**Data Processing and Storage**
+
+:::: {.columns}
+::: {.column width="50%"}
+### Learning Objectives
+- Transform raw data into analysis-ready format
+- Implement data cleaning workflows
+- Establish secure storage protocols
+- Create reproducible pipelines
+- Document data provenance
+:::
+
+::: {.column width="50%"}
+### Why This Matters
+- Raw data ≠ usable data
+- Poor storage = data loss
+- Reproducibility requires documentation
+- Data governance enables sustainability
+- Efficient workflows save time & resources
+:::
+::::
+
+---
+
+## Data Journey: Raw to Insights
+
+### The Processing Pipeline:
+
+```{r}
+#| echo: false
+#| fig-align: center
+
+tibble(
+  stage = c("Collection", "Entry", "Cleaning", "Validation", "Aggregation", "Analysis"),
+  quality = c(30, 50, 70, 85, 92, 100),
+  color = c('#FF6F00', '#FF9800', '#FFC107', '#CDDC39', '#8BC34A', '#4CAF50')
+) |>
+  ggplot(aes(x = factor(stage, levels = stage), y = quality, fill = color)) +
+  geom_col(alpha = 0.8) +
+  geom_text(aes(label = paste0(quality, "%")), vjust = -0.5, size = 4, fontface = 'bold') +
+  scale_fill_identity(guide = 'none') +
+  labs(
+    title = "Data Quality Improvement Through Processing",
+    x = "Processing Stage",
+    y = "Data Quality (%)"
+  ) +
+  ylim(0, 110) +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1, size = 10),
+    plot.title = element_text(face = 'bold', hjust = 0.5, size = 12)
+  )
+```
+
+---
+
+## Stage 1: Data Collection & Entry
+
+### Field to Database:
+
+::: {.incremental}
+- Paper forms captured in field
+- Mobile apps with real-time sync
+- Excel spreadsheets maintained locally
+- Google Forms for simple surveys
+- Manual transcription (highest error risk)
+:::
+
+### Entry Quality Control:
+- Range validation at entry time
+- Dropdown menus prevent typos
+- Required field checking
+- Duplicate prevention
+
+---
+
+## Stage 2: Data Import into R
+
+### Reading Common Formats:
+
+```r
+# Excel files
+library(readxl)
+data_raw <- read_excel('data_shared/raw_landings.xlsx', sheet = 'Section 3')
+
+# CSV files
+data_raw <- read.csv('landing_data.csv', stringsAsFactors = FALSE)
+
+# Google Sheets
+library(googlesheets4)
+data_raw <- read_sheet('https://docs.google.com/spreadsheets/d/...')
+
+# SPSS/Stata
+library(haven)
+data_raw <- read_sav('data.sav')
+```
+
+---
+
+## Stage 3: Data Cleaning
+
+### The 80/20 Rule:
+
+80% of analysis time is spent cleaning data
+
+### Common Issues:
+
+```r
+# Inconsistent region names
+data |> distinct(region)
+# Output: "Berbera", "berbera", "BERBERA", " Berbera"
+
+# Missing values represented differently
+# NA, "NA", "", "N/A", "missing", -999
+
+# Impossible values
+# Length: -5, 0, 500 cm
+# Weight: -2, 0, 10000 kg
+```
+
+---
+
+## Cleaning Step 1: Standardization
+
+### Consistent Naming Conventions:
+
+```r
+data_clean <- data_raw |>
+  # Standardize region names
+  mutate(
+    region = toupper(trimws(region)),
+    region = recode(region,
+      'BERBERA' = 'Berbera',
+      'MOGADISHU' = 'Mogadishu',
+      'KISMAYO' = 'Kismayo',
+      'BORAMA' = 'Borama',
+      'BAIDOA' = 'Baidoa',
+      'GALKACYO' = 'Galkacyo'
+    )
+  ) |>
+  # Standardize species names
+  mutate(
+    fish_group = tolower(trimws(fish_group)),
+    fish_group = str_to_title(fish_group)
+  )
+```
+
+---
+
+## Cleaning Step 2: Date/Time Processing
+
+### Temporal Data Handling:
+
+```r
+data_clean <- data_clean |>
+  mutate(
+    # Parse date field
+    landing_date = as.Date(landing_date, format = '%d/%m/%Y'),
+    
+    # Extract temporal components
+    year = year(landing_date),
+    month = month(landing_date, label = TRUE),
+    day_of_week = wday(landing_date, label = TRUE),
+    week = week(landing_date),
+    
+    # Validate dates
+    landing_date = if_else(
+      landing_date > today() | landing_date < as.Date('2017-01-01'),
+      NA_Date_,
+      landing_date
+    )
+  )
+```
+
+---
+
+## Cleaning Step 3: Outlier Detection
+
+### Identifying Impossible Values:
+
+```r
+# Define biologically plausible ranges
+data_clean <- data_raw |>
+  mutate(
+    # Flag suspicious lengths
+    length_flag = case_when(
+      length_cm < 5 ~ "too_small",
+      length_cm > 200 ~ "too_large",
+      is.na(length_cm) ~ "missing",
+      TRUE ~ "valid"
+    ),
+    
+    # Flag suspicious weights
+    weight_flag = case_when(
+      weight_kg < 0.1 ~ "too_light",
+      weight_kg > 500 ~ "too_heavy",
+      is.na(weight_kg) ~ "missing",
+      TRUE ~ "valid"
+    )
+  )
+
+# Review flagged records
+data_clean |> filter(length_flag != "valid" | weight_flag != "valid")
+```
+
+---
+
+## Cleaning Step 4: Handle Missing Values
+
+### Missing Data Strategies:
+
+::: {.columns}
+::: {.column width="50%"}
+**Option 1: Remove Records**
+```r
+# Remove if key variable missing
+data_clean <- data_clean |>
+  filter(!is.na(length_cm),
+         !is.na(fish_group))
+```
+
+**Option 2: Impute**
+```r
+# Fill with group mean
+data_clean <- data_clean |>
+  group_by(fish_group) |>
+  mutate(
+    length_cm = coalesce(
+      length_cm,
+      mean(length_cm, na.rm = TRUE)
+    )
+  )
+```
+:::
+
+::: {.column width="50%"}
+**Option 3: Mark as Special**
+```r
+# Keep but flag
+data_clean <- data_clean |>
+  mutate(
+    length_missing = is.na(length_cm),
+    length_cm = replace_na(length_cm, 0)
+  )
+```
+
+**Option 4: Document**
+```r
+# Count missing by variable
+data_clean |>
+  summarise(
+    across(everything(),
+      list(missing = ~sum(is.na(.)))
+    )
+  )
+```
+:::
+::::
+
+---
+
+## Cleaning Step 5: Duplicate Detection
+
+### Finding Repeated Records:
+
+```r
+# Exact duplicates
+data_clean |>
+  janitor::get_dupes(
+    landing_date, region, fish_group, length_cm
+  )
+
+# Near duplicates (same values, different timestamp)
+data_clean |>
+  group_by(region, landing_site, fish_group, length_cm) |>
+  filter(n() > 1) |>
+  arrange(region, landing_site, landing_date)
+```
+
+---
+
+## Stage 4: Data Validation
+
+### Statistical Checks:
+
+```r
+# Distribution review
+data_clean |>
+  group_by(fish_group) |>
+  summarise(
+    n = n(),
+    mean_length = mean(length_cm, na.rm = TRUE),
+    sd_length = sd(length_cm, na.rm = TRUE),
+    min_length = min(length_cm, na.rm = TRUE),
+    max_length = max(length_cm, na.rm = TRUE),
+    .groups = 'drop'
+  )
+
+# Check for implausible relationships
+data_clean |>
+  filter(is.na(weight_kg) & !is.na(length_cm)) |>
+  nrow() # How many length but no weight?
+```
+
+---
+
+## Stage 5: Data Aggregation
+
+### Creating Analysis Datasets:
+
+```r
+# Daily aggregates
+daily_summary <- data_clean |>
+  group_by(landing_date, region, landing_site) |>
+  summarise(
+    total_landings = n(),
+    num_species = n_distinct(fish_group),
+    mean_length = mean(length_cm, na.rm = TRUE),
+    .groups = 'drop'
+  )
+
+# Monthly summaries
+monthly_summary <- data_clean |>
+  group_by(year, month, region, fish_group) |>
+  summarise(
+    catch = n(),
+    mean_length = mean(length_cm, na.rm = TRUE),
+    .groups = 'drop'
+  )
+```
+
+---
+
+## Data Storage Fundamentals
+
+### Storage Decision Tree:
+
+```{r}
+#| echo: false
+#| fig-align: center
+
+tibble(
+  option = c("Small Dataset\n(< 100 MB)", "Medium\n(100 MB - 10 GB)", "Large\n(> 10 GB)", "Real-time\nUpdates"),
+  solution = c("CSV/Excel", "SQLite", "SQL Server/\nPostgreSQL", "Cloud Database"),
+  x = c(1, 2, 3, 4),
+  y = c(1, 1, 1, 1)
+) |>
+  ggplot(aes(x = x, y = y)) +
+  geom_point(size = 12, color = '#1976D2', alpha = 0.7) +
+  geom_text(aes(label = option), size = 3, fontface = 'bold') +
+  annotate('text', x = c(1, 2, 3, 4), y = 0.5, label = c(
+    '✓ Simple\n✗ Limited',
+    '✓ Local\n✗ Slow query',
+    '✓ Powerful\n✗ Complex',
+    '✓ Modern\n✗ Costs'
+  ), size = 2.5) +
+  ylim(0, 1.5) +
+  xlim(0.5, 4.5) +
+  theme_minimal() +
+  theme(axis.text = element_blank(), axis.title = element_blank(), panel.grid = element_blank())
+```
+
+---
+
+## Option 1: CSV Files (Simple)
+
+### Advantages:
+
+::: {.incremental}
+- ✓ Open format, no special software
+- ✓ Version control friendly (Git)
+- ✓ Human readable
+- ✓ Easy to share and archive
+:::
+
+### Disadvantages:
+
+::: {.incremental}
+- ✗ No data types enforcement
+- ✗ Slow for large files
+- ✗ No built-in backup
+- ✗ Concurrent access issues
+:::
+
+### Best For:
+Somali implementation with limited resources
+
+---
+
+## Option 2: SQLite Database (Local)
+
+### Advantages:
+
+::: {.incremental}
+- ✓ Single file format
+- ✓ Fast queries
+- ✓ Data integrity constraints
+- ✓ No server required
+:::
+
+### Disadvantages:
+
+::: {.incremental}
+- ✗ Learning curve
+- ✗ Limited concurrent users
+- ✗ Backups manual
+:::
+
+### Setup in R:
+
+```r
+library(RSQLite)
+
+# Create connection
+con <- dbConnect(SQLite(), 'fisheries_data.db')
+
+# Write data
+dbWriteTable(con, 'landings', data_clean, 
+             overwrite = TRUE)
+
+# Query data
+data_query <- dbGetQuery(con, 
+  'SELECT * FROM landings WHERE year = 2023')
+```
+
+---
+
+## Option 3: Excel Workbooks (Moderate)
+
+### Structured Multi-Sheet Approach:
+
+```r
+library(writexl)
+
+# Create multi-sheet workbook
+sheets <- list(
+  'Raw Data' = data_raw,
+  'Cleaned Data' = data_clean,
+  'Daily Summary' = daily_summary,
+  'Monthly Summary' = monthly_summary,
+  'Data Dictionary' = data_dictionary
+)
+
+write_xlsx(sheets, 'fisheries_analysis.xlsx')
+```
+
+### Advantages:
+- ✓ Familiar to most users
+- ✓ Can include metadata
+- ✓ Easy to share
+
+---
+
+## Recommended: Hybrid Approach
+
+### For Somalia Implementation:
+
+**Local Storage:**
+```
+Project Folder/
+├── raw_data/
+│   ├── 2024_berbera_landings.xlsx
+│   ├── 2024_mogadishu_landings.xlsx
+│   └── ...
+├── processed_data/
+│   ├── clean_landings_2024.csv
+│   └── summary_tables.xlsx
+├── scripts/
+│   ├── 01_data_import.R
+│   ├── 02_data_cleaning.R
+│   └── 03_analysis.R
+└── reports/
+    ├── 2024_assessment.html
+    └── figures/
+```
+
+---
+
+## Creating a Data Dictionary
+
+### Essential Documentation:
+
+```r
+data_dictionary <- tibble(
+  Variable = c('landing_date', 'region', 'landing_site', 'fish_group', 'length_cm', 'weight_kg'),
+  Description = c(
+    'Date fish was landed',
+    'Coastal region of Somalia',
+    'Specific landing location',
+    'Type of fish caught',
+    'Fish fork length in centimeters',
+    'Fish whole weight in kilograms'
+  ),
+  Type = c('Date', 'Character', 'Character', 'Character', 'Numeric', 'Numeric'),
+  Units = c('YYYY-MM-DD', 'Text', 'Text', 'Category', 'cm', 'kg'),
+  Range = c('2017-01-01 to today', 'Berbera, Mogadishu...', 'See lookup table', 'See lookup table', '5-200', '0.1-500'),
+  Missing_Code = c('NA', 'NA', 'NA', 'NA', 'NA', 'NA')
+)
+
+write_xlsx(list('Dictionary' = data_dictionary), 'data_dictionary.xlsx')
+```
+
+---
+
+## Reproducible Analysis Scripts
+
+### Version 1: Linear Script
+
+```r
+# file: 01_analysis_berbera.R
+# purpose: Monthly assessment for Berbera region
+# author: [Your Name]
+# date: 2024-01-15
+
+# Load libraries
+library(tidyverse)
+library(gt)
+
+# Import data
+data_raw <- read.csv('raw_data/berbera_2024.csv')
+
+# Clean and process
+source('scripts/02_cleaning_functions.R')
+data_clean <- clean_landing_data(data_raw)
+
+# Analysis
+results <- analyze_stock_status(data_clean)
+
+# Output
+write.csv(results, 'processed_data/berbera_results.csv')
+```
+
+---
+
+## Version 2: Modular Approach
+
+### Better for Maintenance:
+
+```r
+# file: functions/data_cleaning.R
+clean_landing_data <- function(data) {
+  data |>
+    mutate(
+      landing_date = as.Date(landing_date),
+      region = toupper(trimws(region))
+    ) |>
+    filter(!is.na(length_cm)) |>
+    filter(length_cm > 5 & length_cm < 200)
+}
+
+# file: functions/analysis.R
+analyze_stock_status <- function(data) {
+  data |>
+    group_by(year, region, fish_group) |>
+    summarise(
+      mean_length = mean(length_cm, na.rm = TRUE),
+      cpue = n() / n_distinct(landing_site),
+      .groups = 'drop'
+    )
+}
+
+# file: main_analysis.R
+source('functions/data_cleaning.R')
+source('functions/analysis.R')
+
+data_clean <- clean_landing_data(data_raw)
+results <- analyze_stock_status(data_clean)
+```
+
+---
+
+## Backup & Disaster Recovery
+
+### The 3-2-1 Rule:
+
+:::: {.columns}
+::: {.column width="33%"}
+**3 Copies**
+- Original
+- Local backup
+- Cloud backup
+:::
+
+::: {.column width="33%"}
+**2 Media Types**
+- Hard drive
+- Cloud storage
+- USB (offsite)
+:::
+
+::: {.column width="33%"}
+**1 Offsite**
+- Google Drive
+- OneDrive
+- Dropbox
+:::
+::::
+
+---
+
+## Backup Implementation
+
+### Automated Backup Script:
+
+```r
+# file: backup.R
+backup_data <- function() {
+  timestamp <- format(Sys.time(), '%Y%m%d_%H%M%S')
+  
+  # Create backup directory
+  dir.create('backups', showWarnings = FALSE)
+  
+  # Backup raw data
+  file.copy(
+    'raw_data/',
+    paste0('backups/raw_', timestamp, '/'),
+    recursive = TRUE
+  )
+  
+  # Backup processed data
+  file.copy(
+    'processed_data/',
+    paste0('backups/processed_', timestamp, '/'),
+    recursive = TRUE
+  )
+  
+  message(paste("Backup completed:", timestamp))
+}
+
+# Schedule weekly execution
+# Windows: Task Scheduler
+# Linux/Mac: cron job
+```
+
+---
+
+## Version Control with Git
+
+### Why Version Control Matters:
+
+::: {.incremental}
+- Track changes to scripts
+- Collaborate with team members
+- Revert mistakes easily
+- Document evolution
+- Transparent workflow
+:::
+
+### Basic Workflow:
+
+```bash
+# Initialize repository
+git init
+
+# Stage changes
+git add data_cleaning.R
+
+# Commit with message
+git commit -m "Fix outlier detection for weights"
+
+# Push to GitHub
+git push origin main
+```
+
+---
+
+## Data Access Control
+
+### Protecting Sensitive Information:
+
+```r
+# Identify sensitive fields
+sensitive_fields <- c('fisher_name', 'vessel_id', 'phone_number')
+
+# Create anonymized version
+data_public <- data_clean |>
+  select(-all_of(sensitive_fields))
+
+# Create restricted version for analysis
+data_restricted <- data_clean |>
+  filter(year == 2024)  # Current year only
+
+# Save with different access levels
+write.csv(data_public, 'shared/landing_data_public.csv')
+write.csv(data_restricted, 'restricted/landing_data_internal.csv')
+```
+
+---
+
+## Documentation Best Practices
+
+### README File Template:
+
+```markdown
+# Somali Fisheries Landing Data
+
+## Description
+Monthly fish landing records from 6 coastal regions
+(2017-2024)
+
+## Data Dictionary
+See `data_dictionary.xlsx`
+
+## Processing Steps
+1. Raw data entered in mobile app
+2. Exported monthly to Excel
+3. Cleaned in R (see scripts/)
+4. Aggregated for analysis
+
+## Contact
+Data Manager: [name@email.com]
+
+## Last Updated
+2024-01-15
+```
+
+---
+
+## Data Quality Reports
+
+### Automated Quality Checks:
+
+```r
+generate_quality_report <- function(data) {
+  report <- list(
+    total_records = nrow(data),
+    date_range = paste(
+      min(data$landing_date), 'to', max(data$landing_date)
+    ),
+    missing_by_variable = colSums(is.na(data)),
+    unique_regions = n_distinct(data$region),
+    unique_species = n_distinct(data$fish_group),
+    outliers_detected = sum(
+      data$length_cm < 5 | data$length_cm > 200 |
+      data$weight_kg < 0.1 | data$weight_kg > 500
+    )
+  )
+  
+  return(report)
+}
+
+quality_report <- generate_quality_report(data_clean)
+```
+
+---
+
+## Pipeline Automation
+
+### Complete Workflow Example:
+
+```r
+# file: monthly_pipeline.R
+# Runs automatically first day of month
+
+# 1. Import new data
+new_data <- read.csv(Sys.getenv('NEW_DATA_FILE'))
+
+# 2. Append to historical
+historical <- read.csv('processed_data/all_landings.csv')
+combined <- bind_rows(historical, new_data)
+
+# 3. Clean
+combined_clean <- clean_landing_data(combined)
+
+# 4. Generate summaries
+monthly_summary <- generate_monthly_summary(combined_clean)
+annual_summary <- generate_annual_summary(combined_clean)
+
+# 5. Create reports
+render_assessment_report(monthly_summary)
+
+# 6. Backup
+backup_data()
+
+# 7. Log
+cat(
+  paste("Pipeline completed", Sys.time()),
+  file = 'logs/pipeline.log',
+  append = TRUE
+)
+```
+
+---
+
+## Scaling Storage as Data Grows
+
+### Growth Roadmap:
+
+**Year 1 (Pilot):**
+- CSV files in OneDrive
+- Manual backups weekly
+- Single analyst
+
+**Year 2 (Expansion):**
+- SQLite database
+- Automated backups daily
+- 2-3 team members
+
+**Year 3+ (Full Operation):**
+- PostgreSQL server
+- Cloud hosting (AWS/Azure)
+- Regional coordinators
+- Real-time dashboards
+
+---
+
+## Training & Handover
+
+### Documentation for Team:
+
+```r
+# Create onboarding guide
+onboarding <- list(
+  access = "How to access data systems",
+  backup = "Weekly backup procedures",
+  troubleshooting = "Common errors and fixes",
+  contacts = "Who to contact for help",
+  references = "Links to training materials"
+)
+
+# Create quick reference cards
+quick_ref <- tibble(
+  Task = c("Import data", "Clean outliers", "Generate report"),
+  Command = c("source('scripts/import.R')", 
+              "source('scripts/clean.R')",
+              "rmarkdown::render('report.Rmd')"),
+  Notes = c("Set file path first", "Check ranges", "Check plots")
+)
+```
+
+---
+
+## Key Takeaways
+
+### Module 4 Summary:
+
+::: {.incremental}
+1. Data cleaning is 80% of analysis work
+2. Standardization prevents errors later
+3. Documentation enables reproducibility
+4. Backups prevent data loss disasters
+5. Version control tracks evolution
+6. Automation improves efficiency
+7. Access control protects data integrity
+8. Scalability allows future growth
+:::
+
+---
+
+## Common Mistakes to Avoid
+
+### Don't:
+
+::: {.incremental}
+- Modify raw data directly (keep original)
+- Skip metadata documentation
+- Ignore backup protocols
+- Use manual data entry without QC
+- Create many versions without naming
+- Share sensitive data publicly
+- Forget to document decisions
+- Delete old files without review
+:::
+
+---
+
+## Practical Exercise
+
+### Your Data Pipeline:
+
+Design a processing workflow for your region:
+
+1. **Input**: Where does data come from?
+2. **Cleaning**: What issues will you address?
+3. **Storage**: Where will you keep files?
+4. **Backup**: How often and where?
+5. **Output**: What reports do you need?
+
+**Deliverable**: One-page data management plan
+
+---
+
+## Tools Summary
+
+```{r}
+#| echo: false
+
+tibble(
+  Tool = c("R/RStudio", "Git/GitHub", "OneDrive/Google Drive", "SQLite", "Excel"),
+  Purpose = c("Analysis & scripting", "Version control", "Cloud backup", "Database", "Simple storage"),
+  Cost = c("Free", "Free", "Free (limited)", "Free", "Paid"),
+  Difficulty = c("Medium", "Medium", "Easy", "Medium", "Easy"),
+  `Recommended` = c("Yes", "Optional", "Yes", "Optional", "Yes")
+) |>
+  gt() |>
+  tab_header(
+    title = "Data Processing Tools Comparison",
+    subtitle = "For Somali implementation"
+  ) |>
+  tab_options(
+    table.width = px(800),
+    table.font.size = '10px',
+    heading.title.font.size = '13px'
+  ) |>
+  opt_stylize(style = 6, color = 'gray')
+```
+
+---
+
+## Resources & References
+
+### R Documentation:
+- R for Data Science (https://r4ds.had.co.nz/)
+- tidyverse packages (tidyverse.org)
+- Data cleaning guides
+
+### Version Control:
+- Git documentation (git-scm.com)
+- GitHub Pages for hosting
+
+### Data Management:
+- FAIR data principles
+- Open Data Foundation
+- Data governance frameworks
+
+---
+
+## Integration with Previous Modules
+
+### Complete Workflow:
+
+1. **Module 1**: Understand data needs
+2. **Module 2**: Collect quality data
+3. **Module 3**: Analyze stocks
+4. **Module 4**: Process & store data
+5. **Repeat**: Continuous improvement
+
+---
+
+## Next Steps
+
+### After Module 4:
+
+::: {.callout-note}
+1. Set up your data folder structure
+2. Create a data dictionary for your region
+3. Write cleaning functions
+4. Establish backup procedures
+5. Document your workflow
+6. Train team members
+:::
+
+---
+
+## Questions & Discussion
+
+### Topics for Discussion:
+
+- What storage option works best for you?
+- What challenges do you anticipate?
+- How will you train others?
+- What tools can you access?
+- How will you scale over time?
+
+---
+
+## Thank You
+
+**Somali Fish Stock Training**
+
+**Module 4: Data Processing and Storage**
+
+*Building sustainable, scalable data systems*
+
+Next: Advanced applications and regional coordination
+
+Questions? Contact the training team.

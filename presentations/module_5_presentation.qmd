@@ -1,0 +1,933 @@
+---
+title: "Module 5: Data Analysis Methods"
+subtitle: "Somali Fish Stock Training"
+date: "2025-12-05"
+date-modified: today
+author: 
+    - name: "Dr. Masumbuko Semba"
+      affiliation: "Nelson Mandela African Institution of Science and Technology"
+      email: "lugosemba@gmail.com"
+    - name: "Dr. Rushingisha George"
+      affiliation: "Tangania Fisheries Research Institute"
+      email: "george.rushingisha@tafiri.go.tz"
+    - name: "Dr. Mary Kishe"
+      affiliation: "Tanzania Fisheries Research Institute"
+      email: "mary.kishe@tafiri.go.tz"
+    - name: "Dr. Ismael Kimirei"
+      affiliation: "Tanzania Fisheries Research Institute"
+      email: "ismael.kimirei@tafiri.go.tz"
+format: revealjs
+theme: default
+transition: slide
+background-transition: fade
+highlight-style: github
+embed-resources: true
+---
+
+```{r}
+require(sf)
+require(tidyverse)
+require(sizeMat)
+require(gt)
+require(tidyplots)
+require(patchwork)
+require(leaflet)
+require(rstatix)
+```
+
+## Welcome to Module 5
+
+**Data Analysis Methods**
+
+:::: {.columns}
+::: {.column width="50%"}
+### Learning Objectives
+- Master descriptive statistics
+- Apply statistical tests appropriately
+- Create publication-quality visualizations
+- Interpret results correctly
+- Communicate findings effectively
+:::
+
+::: {.column width="50%"}
+### Why This Matters
+- **Transforms clean data into insights**
+- Statistics reveal patterns & trends
+- Visualizations communicate clearly
+- Proper interpretation prevents errors
+- Evidence-based decisions require rigor
+:::
+::::
+
+---
+
+## The Analysis Framework
+
+### Five-Step Process:
+
+```{r}
+#| echo: false
+#| fig-align: center
+
+tibble(
+  step = c("1. Explore", "2. Describe", "3. Test", "4. Visualize", "5. Interpret"),
+  description = c(
+    "Understand data structure",
+    "Calculate summaries",
+    "Statistical tests",
+    "Create plots",
+    "Draw conclusions"
+  ),
+  x = 1:5,
+  y = rep(1, 5)
+) |>
+  ggplot(aes(x = x, y = y)) +
+  geom_point(size = 10, color = '#1976D2', alpha = 0.8) +
+  geom_path(color = '#666666', size = 1.2, 
+            arrow = arrow(type = 'closed', length = unit(0.3, 'cm'))) +
+  geom_text(aes(label = step), nudge_y = 0.15, size = 3.5, fontface = 'bold') +
+  geom_text(aes(label = description), nudge_y = -0.15, size = 2.5) +
+  ylim(0.5, 1.5) +
+  xlim(0.5, 5.5) +
+  theme_minimal() +
+  theme(axis.text = element_blank(), axis.title = element_blank(), panel.grid = element_blank())
+```
+
+---
+
+## Step 1: Exploratory Data Analysis (EDA)
+
+### Understand Your Data Structure:
+
+```r
+# Get overview
+glimpse(data)
+str(data)
+
+# Check dimensions
+dim(data)
+
+# List variables and types
+names(data)
+data_types <- sapply(data, class)
+
+# Quick summary
+summary(data)
+```
+
+---
+
+## EDA: Missing Data Inspection
+
+### Visualize Missing Patterns:
+
+```r
+library(naniar)
+
+# Summary of missing values
+data |>
+  miss_var_summary() |>
+  arrange(desc(pct_miss))
+
+# Visualize missing data pattern
+vis_miss(data)
+
+# Check if missingness is random
+mcar_test(data)
+```
+
+---
+
+## EDA: Distribution Exploration
+
+### Check Data Distributions:
+
+```r
+# Univariate distributions
+data |>
+  select(where(is.numeric)) |>
+  pivot_longer(everything()) |>
+  tidyplot(x = value, fill = name) |>
+  add_histogram(alpha = 0.7, binwidth = 5) |>
+  split_plot(by = name)
+
+# Check normality assumption
+data |>
+  select(length_cm, weight_kg) |>
+  shapiro_test()  # p > 0.05 = normal
+```
+
+---
+
+## Step 2: Descriptive Statistics
+
+### Central Tendency:
+
+```r
+# Mean vs Median (robust to outliers)
+data |>
+  group_by(fish_group) |>
+  summarise(
+    mean_length = mean(length_cm, na.rm = TRUE),
+    median_length = median(length_cm, na.rm = TRUE),
+    n = n(),
+    .groups = 'drop'
+  )
+```
+
+### Dispersion:
+
+```r
+# Spread of data
+data |>
+  group_by(region) |>
+  summarise(
+    mean = mean(length_cm, na.rm = TRUE),
+    sd = sd(length_cm, na.rm = TRUE),
+    iqr = IQR(length_cm, na.rm = TRUE),  # Interquartile range
+    cv = sd / mean * 100,  # Coefficient of variation
+    .groups = 'drop'
+  )
+```
+
+---
+
+## Comprehensive Summary Statistics
+
+### Using tidyr & rstatix:
+
+```r
+# Full statistical summary
+summary_stats <- data |>
+  filter(!is.na(length_cm), !fish_group == 'Rays and Skates') |>
+  group_by(fish_group) |>
+  rstatix::get_summary_stats(length_cm) |>
+  select(fish_group, n, mean, sd, median, iqr, min, max)
+
+summary_stats |>
+  gt() |>
+  fmt_number(columns = -c(fish_group, n), decimals = 2) |>
+  opt_stylize(style = 6, color = 'gray')
+```
+
+---
+
+## Step 3: Statistical Testing
+
+### Comparing Two Groups:
+
+```r
+# Are two regions different in mean size?
+# Use t-test (if normal) or Mann-Whitney (if not)
+
+data |>
+  filter(region %in% c('Berbera', 'Mogadishu')) |>
+  group_by(region) |>
+  shapiro_test(length_cm)  # Check normality
+
+# If normal: t-test
+data |>
+  filter(region %in% c('Berbera', 'Mogadishu')) |>
+  t_test(length_cm ~ region)
+
+# If not normal: Mann-Whitney U
+data |>
+  filter(region %in% c('Berbera', 'Mogadishu')) |>
+  wilcox_test(length_cm ~ region)
+```
+
+---
+
+## Comparing Multiple Groups: ANOVA
+
+### Testing Differences Across Regions:
+
+```r
+# Analysis of Variance (ANOVA)
+anova_result <- data |>
+  anova_test(length_cm ~ region)
+
+anova_result
+
+# If significant, which groups differ?
+# Post-hoc test
+data |>
+  tukey_hsd(length_cm ~ region)
+```
+
+---
+
+## Correlation & Relationship Testing
+
+### Length-Weight Relationship:
+
+```r
+# Pearson correlation
+data |>
+  cor_test(length_cm, weight_kg)
+
+# Linear regression
+model <- lm(weight_kg ~ length_cm, data = data)
+summary(model)
+
+# Extract coefficients
+coef(model)  # Intercept & slope
+r_squared <- summary(model)$r.squared
+```
+
+---
+
+## Time Series Analysis: Trend Testing
+
+### Detecting Significant Trends:
+
+```r
+# Prepare data
+trend_data <- data |>
+  group_by(year) |>
+  summarise(
+    mean_length = mean(length_cm, na.rm = TRUE),
+    n = n(),
+    .groups = 'drop'
+  )
+
+# Linear regression for trend
+trend_model <- lm(mean_length ~ year, data = trend_data)
+summary(trend_model)
+
+# Slope interpretation:
+# Positive slope = increasing over time
+# Negative slope = decreasing over time
+# p-value < 0.05 = statistically significant
+```
+
+---
+
+## Effect Size Interpretation
+
+### Practical vs Statistical Significance:
+
+```r
+# Cohen's d for effect size (two groups)
+data |>
+  filter(region %in% c('Berbera', 'Mogadishu')) |>
+  cohens_d(length_cm ~ region)
+
+# Effect size interpretation:
+# |d| < 0.2 = negligible
+# |d| 0.2-0.5 = small
+# |d| 0.5-0.8 = medium
+# |d| > 0.8 = large
+```
+
+---
+
+## Step 4: Visualization Best Practices
+
+### Plot Types by Purpose:
+
+::: {.columns}
+::: {.column width="50%"}
+**Distribution**
+- Histogram
+- Density plot
+- Box plot
+- Violin plot
+
+**Relationship**
+- Scatter plot
+- Line graph
+- Trend line
+:::
+
+::: {.column width="50%"}
+**Comparison**
+- Bar chart
+- Box plot
+- Dot plot
+- Slope graph
+
+**Composition**
+- Stacked bar
+- Area chart
+- Pie chart (avoid!)
+:::
+::::
+
+---
+
+## Effective Histograms
+
+### Visualizing Size Distributions:
+
+```r
+data |>
+  filter(!is.na(length_cm), !fish_group == 'Rays and Skates') |>
+  tidyplot(x = length_cm) |>
+  add_histogram(binwidth = 5, fill = '#2196F3', alpha = 0.85) |>
+  adjust_x_axis(
+    title = 'Fish Length (cm)',
+    breaks = scales::pretty_breaks(n = 8)
+  ) |>
+  adjust_y_axis(title = 'Frequency') |>
+  adjust_title('Length Distribution', fontsize = 13, fontweight = 'bold') |>
+  split_plot(by = fish_group, n_col = 2)
+```
+
+---
+
+## Scatter Plots with Trends
+
+### Length-Weight Relationships:
+
+```r
+data |>
+  filter(!is.na(length_cm), !is.na(weight_kg)) |>
+  tidyplot(x = length_cm, y = weight_kg, color = fish_group) |>
+  add_data_points(alpha = 0.5, size = 2) |>
+  add_curve_fit(method = 'lm', linewidth = 1) |>
+  adjust_x_axis(title = 'Length (cm)') |>
+  adjust_y_axis(title = 'Weight (kg)') |>
+  adjust_title('Allometric Growth Relationships', 
+               fontsize = 13, fontweight = 'bold')
+```
+
+---
+
+## Time Series Visualization
+
+### Trends Over Time:
+
+```r
+data |>
+  group_by(year, fish_group) |>
+  summarise(mean_length = mean(length_cm, na.rm = TRUE), .groups = 'drop') |>
+  tidyplot(x = year, y = mean_length, color = fish_group) |>
+  add_data_points(size = 2.5) |>
+  add_curve_fit(method = 'loess', linewidth = 1) |>
+  adjust_x_axis(
+    title = 'Year',
+    breaks = seq(2017, 2023, by = 1)
+  ) |>
+  adjust_y_axis(title = 'Mean Length (cm)') |>
+  adjust_title('Length Trends by Species', fontsize = 13, fontweight = 'bold') |>
+  adjust_legend_title('Fish Group')
+```
+
+---
+
+## Box Plots for Comparison
+
+### Regional Size Differences:
+
+```r
+data |>
+  filter(!is.na(length_cm)) |>
+  tidyplot(x = reorder(region, length_cm, FUN = median), y = length_cm) |>
+  add_boxplot(fill = '#4CAF50', alpha = 0.7) |>
+  add_data_points(alpha = 0.2, size = 1, color = 'gray') |>
+  adjust_x_axis(title = 'Region') |>
+  adjust_y_axis(title = 'Length (cm)') |>
+  adjust_title('Size Distribution by Region', fontsize = 13, fontweight = 'bold')
+```
+
+---
+
+## Professional Table Creation
+
+### Formatted Statistical Summary:
+
+```r
+summary_table <- data |>
+  group_by(region, fish_group) |>
+  summarise(
+    n = n(),
+    mean_L = mean(length_cm, na.rm = TRUE),
+    sd_L = sd(length_cm, na.rm = TRUE),
+    mean_W = mean(weight_kg, na.rm = TRUE),
+    .groups = 'drop'
+  )
+
+summary_table |>
+  gt(groupname_col = 'region') |>
+  cols_label(
+    fish_group = 'Species',
+    n = 'N',
+    mean_L = 'Mean Length (cm)',
+    sd_L = 'SD',
+    mean_W = 'Mean Weight (kg)'
+  ) |>
+  fmt_number(columns = c(mean_L, sd_L, mean_W), decimals = 2) |>
+  opt_stylize(style = 6, color = 'gray')
+```
+
+---
+
+## Step 5: Interpreting Results
+
+### Key Interpretation Principles:
+
+::: {.incremental}
+1. **Start with confidence intervals**, not just p-values
+2. **Effect sizes matter more** than statistical significance
+3. **Consider practical significance**: Is 1cm difference meaningful?
+4. **Look at data visually** before trusting statistics
+5. **Account for multiple testing** (adjust p-values)
+6. **State assumptions clearly** about your data
+7. **Acknowledge limitations** and uncertainties
+:::
+
+---
+
+## P-Values: Common Misinterpretations
+
+### What p-value DOES mean:
+
+```
+p = 0.03 means:
+"If the null hypothesis is true, we'd see data 
+this extreme 3% of the time by chance alone"
+```
+
+### What p-value DOES NOT mean:
+
+```
+✗ Probability the result is true
+✗ Probability the hypothesis is true
+✗ How big the effect is
+✗ How important the finding is
+```
+
+---
+
+## Confidence Intervals vs P-Values
+
+### Better Approach:
+
+```r
+# Instead of: "p < 0.05, significant difference"
+# Report: "Mean difference: 5.2 cm (95% CI: 2.1 to 8.3 cm)"
+
+# Calculate confidence intervals
+data |>
+  filter(region %in% c('Berbera', 'Mogadishu')) |>
+  group_by(region) |>
+  summarise(
+    mean = mean(length_cm, na.rm = TRUE),
+    se = sd(length_cm, na.rm = TRUE) / sqrt(n()),
+    ci_lower = mean - 1.96 * se,
+    ci_upper = mean + 1.96 * se,
+    .groups = 'drop'
+  )
+```
+
+---
+
+## Regional Stock Status Interpretation
+
+### Integrated Analysis Example:
+
+```r
+stock_assessment <- data |>
+  group_by(region) |>
+  summarise(
+    mean_length = mean(length_cm, na.rm = TRUE),
+    trend = cor(year, length_cm, use = 'complete.obs'),
+    cpue = n() / n_distinct(landing_site),
+    diversity = n_distinct(fish_group),
+    .groups = 'drop'
+  ) |>
+  mutate(
+    status = case_when(
+      mean_length > 35 & trend > 0.1 & cpue > 20 ~ "GREEN",
+      mean_length > 30 & cpue > 15 ~ "YELLOW",
+      TRUE ~ "RED"
+    )
+  )
+```
+
+---
+
+## Common Analysis Pitfalls
+
+### Avoid These Mistakes:
+
+::: {.incremental}
+1. **P-hacking**: Testing many hypotheses until p < 0.05
+2. **Multiple comparisons**: Adjust p-values for multiple tests
+3. **Ignoring assumptions**: Check normality, homogeneity of variance
+4. **Extrapolation**: Don't predict beyond data range
+5. **Correlation ≠ causation**: Relationships don't prove causality
+6. **Publication bias**: Negative results are also important
+7. **False precision**: Report uncertainty appropriately
+:::
+
+---
+
+## Handling Multiple Comparisons
+
+### Correction Methods:
+
+```r
+# Bonferroni correction (conservative)
+alpha_adjusted <- 0.05 / number_of_tests
+
+# FDR (false discovery rate) correction (liberal)
+p_values <- c(0.001, 0.023, 0.045, 0.089, 0.12)
+p_adjust(p_values, method = 'BH')  # Benjamini-Hochberg
+
+# Built-in: Tukey HSD for multiple comparisons
+data |>
+  tukey_hsd(length_cm ~ region)
+```
+
+---
+
+## Regression: Understanding Assumptions
+
+### Before Running Linear Model:
+
+```r
+# 1. Linearity: visual inspection
+plot(data$length_cm, data$weight_kg)
+
+# 2. Normality: residuals should be normal
+model <- lm(weight_kg ~ length_cm, data = data)
+shapiro.test(residuals(model))
+
+# 3. Homogeneity of variance
+data |>
+  levene_test(weight_kg ~ region)
+
+# 4. Independence: no autocorrelation
+car::durbinWatsonTest(model)
+```
+
+---
+
+## Reporting Statistical Results
+
+### Standard Format:
+
+::: {.callout-note}
+**Good reporting:**
+> "Mean length differed significantly between regions (F₂,₉₈ = 4.52, p = 0.013). Berbera fish were larger (M = 35.2, SD = 5.1) than Mogadishu (M = 32.1, SD = 4.8)."
+
+**Include:**
+- Test statistic (F, t, χ²)
+- Degrees of freedom
+- P-value
+- Descriptive statistics (means, SDs)
+- Effect size when appropriate
+:::
+
+---
+
+## Creating Analysis Reports
+
+### R Markdown Template:
+
+```r
+# file: analysis_report.Rmd
+---
+title: "Stock Assessment Report 2024"
+author: "Data Analyst"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+# Executive Summary
+Key findings and recommendations
+
+# Methods
+Data sources, analytical approaches
+
+# Results
+Figures and tables with interpretation
+
+# Discussion
+What do results mean?
+
+# Conclusion
+Recommendations for management
+```
+
+---
+
+## Automating Analysis Reports
+
+### Generate Reports Programmatically:
+
+```r
+# file: generate_regional_reports.R
+regions <- unique(data$region)
+
+for (region in regions) {
+  regional_data <- filter(data, region == !!region)
+  
+  rmarkdown::render(
+    'templates/regional_assessment.Rmd',
+    params = list(region_name = region, region_data = regional_data),
+    output_file = paste0('reports/', region, '_2024.html')
+  )
+}
+```
+
+---
+
+## Sensitivity Analysis
+
+### Test Robustness of Results:
+
+```r
+# Remove potential outliers and reanalyze
+data_no_outliers <- data |>
+  filter(length_cm > quantile(length_cm, 0.05, na.rm = TRUE),
+         length_cm < quantile(length_cm, 0.95, na.rm = TRUE))
+
+# Compare results
+comparison <- tibble(
+  analysis = c('Full data', 'Without outliers'),
+  mean_length = c(
+    mean(data$length_cm, na.rm = TRUE),
+    mean(data_no_outliers$length_cm, na.rm = TRUE)
+  ),
+  trend = c(
+    cor(data$year, data$length_cm, use = 'complete.obs'),
+    cor(data_no_outliers$year, data_no_outliers$length_cm, use = 'complete.obs')
+  )
+)
+```
+
+---
+
+## Bayesian Alternative: Credible Intervals
+
+### Probabilistic Framework:
+
+```r
+library(bayesplot)
+library(rstanarm)
+
+# Bayesian regression
+bayes_model <- stan_glm(
+  weight_kg ~ length_cm + fish_group,
+  data = data,
+  prior = normal(0, 2),
+  chains = 4, iter = 2000
+)
+
+# Credible intervals (more intuitive than confidence intervals)
+posterior_interval(bayes_model)
+```
+
+---
+
+## Data Visualization in Reports
+
+### High-Quality Figures:
+
+```r
+# Save publication-quality plots
+ggsave(
+  'figures/length_trends.png',
+  plot = last_plot(),
+  width = 8, height = 6,
+  dpi = 300,  # High resolution
+  device = 'png'
+)
+
+# Vector format for documents
+ggsave(
+  'figures/length_trends.pdf',
+  plot = last_plot(),
+  width = 8, height = 6,
+  device = 'pdf'
+)
+```
+
+---
+
+## Dashboard Development
+
+### Interactive Visualization:
+
+```r
+library(shiny)
+
+ui <- fluidPage(
+  selectInput("region", "Select Region:",
+    choices = unique(data$region)
+  ),
+  plotOutput("length_plot"),
+  tableOutput("summary_stats")
+)
+
+server <- function(input, output) {
+  output$length_plot <- renderPlot({
+    data |>
+      filter(region == input$region) |>
+      tidyplot(x = year, y = length_cm, color = fish_group) |>
+      add_data_points() |>
+      add_curve_fit()
+  })
+}
+
+shinyApp(ui, server)
+```
+
+---
+
+## Integration with Previous Modules
+
+### Complete Analysis Pipeline:
+
+1. **Module 1**: Understand concepts
+2. **Module 2**: Collect quality data
+3. **Module 3**: Apply indicators
+4. **Module 4**: Process & store
+5. **Module 5**: Analyze rigorously
+
+---
+
+## Statistical Software Recommendations
+
+### R Packages for Fisheries:
+
+```{r}
+#| echo: false
+
+tibble(
+  Package = c("tidyverse", "rstatix", "ggplot2", "gt", "TropFishR", "lme4"),
+  Purpose = c("Data manipulation", "Statistics", "Visualization", "Tables", "Fisheries models", "Mixed effects"),
+  Install = c("install.packages('tidyverse')", rep("...", 5))
+) |>
+  gt() |>
+  tab_header(title = "Essential R Packages for Module 5") |>
+  tab_options(table.width = px(700), table.font.size = '10px') |>
+  opt_stylize(style = 6, color = 'gray')
+```
+
+---
+
+## Key Takeaways
+
+### Module 5 Summary:
+
+::: {.incremental}
+1. Exploratory analysis comes before formal testing
+2. Descriptive statistics communicate data structure
+3. Choose appropriate tests based on data type
+4. Visualizations should tell clear stories
+5. Report confidence intervals, not just p-values
+6. Effect sizes matter more than significance
+7. Document assumptions and limitations
+8. Automate repetitive analyses
+9. Sensitivity analysis tests robustness
+10. Integrate across all previous modules
+:::
+
+---
+
+## Quality Checklist Before Reporting
+
+### Before Publishing Results:
+
+::: {.callout-note}
+- [ ] Raw data checked for errors
+- [ ] Assumptions verified
+- [ ] Multiple tests corrected for
+- [ ] Effect sizes reported
+- [ ] Confidence intervals included
+- [ ] Figures are clear and labeled
+- [ ] Limitations acknowledged
+- [ ] Code is reproducible
+- [ ] Results validated
+- [ ] Alternative interpretations considered
+:::
+
+---
+
+## Practical Exercise
+
+### Analyze Your Regional Data:
+
+1. **Explore**: Summarize key variables
+2. **Compare**: Test differences between regions
+3. **Visualize**: Create publication-quality plot
+4. **Interpret**: What do results mean?
+5. **Report**: Write 1-page summary
+
+**Deliverable**: Analysis summary with figure
+
+---
+
+## Common Questions
+
+### Q: How do I handle non-normal data?
+
+A: Use non-parametric tests (Mann-Whitney, Kruskal-Wallis) or transform data
+
+### Q: What if my sample sizes are small?
+
+A: Use exact tests, bootstrap methods, or report uncertainty honestly
+
+### Q: Can I use multiple statistical tests?
+
+A: Yes, but adjust p-values for multiple comparisons
+
+---
+
+## Resources for Further Learning
+
+### Online Courses:
+- Coursera: Statistics with R
+- DataCamp: Statistical Thinking
+- YouTube: StatQuest with Josh Starmer
+
+### Books:
+- "R for Data Science" (Wickham & Grolemund)
+- "Applied Statistical Inference" (Held & Sabanés Bové)
+- "Statistical Rethinking" (McElreath)
+
+---
+
+## Next Steps
+
+### After Module 5:
+
+::: {.callout-note}
+1. **Practice** analyzing different subsets of data
+2. **Create** analysis templates for your region
+3. **Document** assumptions and methods
+4. **Share** results with colleagues
+5. **Iterate** based on feedback
+6. **Build** dashboards for monitoring
+7. **Train** others in your methods
+:::
+
+---
+
+## Questions & Discussion
+
+### Topics for Exploration:
+
+- What analyses are most important for your stocks?
+- How will you handle uncertainty in reports?
+- What visualizations work best for your audience?
+- How frequently will you conduct analyses?
+- Who needs to understand the methods?
+
+---
+
+## Thank You
+
+**Somali Fish Stock Training**
+
+**Module 5: Data Analysis Methods**
+
+*Transforming data into evidence-based decisions*
+
+Next: Regional coordination and implementation
+
+Questions? Contact the training team.

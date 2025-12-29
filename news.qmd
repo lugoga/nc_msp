@@ -1,0 +1,206 @@
+---
+title: "News & Updates"
+toc: true
+---
+
+## Featured Announcement
+
+:::{.callout-important}
+## Website Launch - December 28, 2025
+
+The Marine Spatial Planning Initiative website is now live! This comprehensive platform serves as the central hub for project documentation, technical resources, and stakeholder engagement for the Mkoani-Pemba and Mkuranga-Pwani coastal zones in Tanzania.
+
+**Access Resources:**
+
+- 📊 Detailed project scope and deliverables tracking
+- 📚 Technical blog series on spatial analysis methods
+- 🔗 MSP resource library and international networks
+- 👥 Meet our core leadership and partner institutions
+- 📧 [Contact the team](about.qmd) for collaboration opportunities
+:::
+
+---
+
+## Current Conditions & Field Operations
+
+:::{.callout-warning}
+### 🌊 Coastal Weather & Seasonal Information for Field Operations
+
+**Current Season (December 2025 - March 2026): Northeast Monsoon (Kaskazi)**
+
+This period is the prime season for coastal field operations with favorable conditions for marine research and vessel deployment.
+
+| Aspect | Details |
+|--------|---------|
+| **Wind Pattern** | Northeast winds (Kaskazi), 10-20 knots |
+| **Sea State** | Calm to moderate seas (0.5-1.5m waves) |
+| **Rainfall** | Minimal to moderate (short rains ending in December) |
+| **Sea Temperature** | 24-26°C (warm and stable) |
+| **Visibility** | Excellent visibility for surveys and observations |
+| **Best Days** | Early mornings typically offer calmest conditions |
+
+**Field Campaign Implications:**
+- ✓ January 2026 field surveys scheduled during optimal conditions
+- ✓ Excellent conditions for biodiversity validation work
+- ✓ Safe for community engagement and stakeholder meetings
+- ✓ Suitable for remote sensing data collection with minimal cloud cover
+
+**Upcoming Weather Consideration:**
+The transition to the Southeast Monsoon (Habagika) typically begins in April, bringing increased rainfall and potentially rougher seas. This aligns with our project timeline to complete major fieldwork before April.
+
+:::
+
+---
+
+## Latest News & Updates
+
+### 🔬 **December 2025 - Spatial Analysis Blog Series Published**
+
+We have launched a comprehensive technical blog series covering advanced spatial analysis methods tailored for marine ecosystem assessment and coastal planning:
+
+:::{.grid}
+
+::: {.g-col-12 .g-col-md-6}
+**Ecosystem Pattern Analysis**
+
+- Comparing marine ecosystem patterns using Shannon diversity indices
+- Edge density metrics for habitat fragmentation assessment
+- Spatial ecosystem signatures and landscape composition analysis
+:::
+
+::: {.g-col-12 .g-col-md-6}
+**Change Detection & Monitoring**
+
+- Temporal ecosystem change monitoring techniques
+- Binary difference rasters and confusion matrix analysis
+- Cross-entropy and V-measure metrics for change validation
+:::
+
+::: {.g-col-12 .g-col-md-6}
+**Ecosystem Health Assessment**
+
+- Continuous health indicators using KL divergence
+- Texture homogeneity and GLCM analysis
+- Deep learning approaches for ecosystem feature extraction
+:::
+
+::: {.g-col-12 .g-col-md-6}
+**Multi-Scale Comparison Methods**
+
+- RMSE, MAE, and focal correlation analysis
+- Surface roughness and ecosystem stability metrics
+- SSIM and multi-resolution ecosystem health assessment
+:::
+
+:::
+
+**[Read the full blog series](blog.qmd)** for detailed R code examples, methodology explanations, and applications to coastal management.
+
+---
+
+### 📍 **January 2026 - Field Validation Campaign**
+
+Comprehensive field surveys are being mobilized across both study sites:
+
+| Aspect | Details |
+|--------|---------|
+| **Timeline** | January 15-31, 2026 |
+| **Locations** | Mkoani District (Pemba Island) & Mkuranga District (Pwani Region) |
+| **Lead Team** | Dr. Masumbuko Semba (NM-AIST) & Dr. Siajali Pamba (SOAF) |
+| **Activities** | Biodiversity validation • Ecosystem classification verification • Ground-truth habitat mapping • Community engagement |
+| **Stakeholders** | Local fishing communities • District authorities • Conservation partners |
+
+**Expected Outputs:**
+
+- ✓ Validated ecosystem type classifications
+- ✓ Ground-truth biodiversity and habitat extent data
+- ✓ Baseline monitoring indicators established
+- ✓ Community knowledge integration documented
+
+---
+
+### 🤝 **February 28, 2026 - Stakeholder Validation Workshop**
+
+A comprehensive stakeholder validation meeting will present interim findings and gather feedback:
+
+**Agenda:**
+
+1. Spatial ecosystem classification results
+2. Habitat uniqueness and conservation priority mapping
+3. Preliminary biodiversity assessment findings
+4. Community perspectives and local knowledge integration
+5. Policy recommendations framework
+
+**Participants:**
+
+- Government representatives (Mainland Tanzania & Zanzibar)
+- District leadership (Mkoani & Mkuranga)
+- Fishing associations and community representatives
+- Conservation NGO partners
+- Academic institutions and research team
+
+**Venue:** To be confirmed (likely Dar es Salaam or Zanzibar)
+
+---
+
+### 💼 **Project Deliverables Timeline**
+
+:::{.callout-note}
+## Key Milestones & Deliverables
+
+| Date | Deliverable | Lead Institution | Description |
+|------|------------|------------------|-------------|
+| **Jan 25, 2026** | Biodiversity Assessment Report | SOAF (Siajali Pamba) | Comprehensive ecosystem classification and species habitat analysis |
+| **Jan 25, 2026** | Field Data Collection & GIS Mapping | NM-AIST (Masumbuko Semba) | Validated spatial datasets and field survey reports |
+| **Feb 28, 2026** | Stakeholder Validation Meeting | Core Team | Community feedback and policy alignment workshop |
+| **Mar 31, 2026** | Ecosystem Services Valuation | SOAF (Julius Francis) | Economic and livelihood impact assessment |
+| **Mar 31, 2026** | Bio-Economic Analysis | TNC (Emmanuel Mpina) | Cost-benefit analysis and economic modeling |
+| **Apr 30, 2026** | Digital Visualization Platform | NM-AIST/TNC (Emmanuel Mpina) | Interactive web-based marine spatial planning tool |
+
+:::
+
+---
+
+## How to Stay Informed
+
+### Contact the Team
+
+**For General Inquiries & Project Updates:**
+
+- 📧 **Email:** siajali.pamba@udsm.ac.tz
+- 📞 **WhatsApp/Phone:** +255 717 000 000
+- 🏢 **Mailing Address:** School of Aquatic Sciences and Fisheries (SOAF), University of Dar es Salaam
+
+### Follow Our Work
+
+- 📚 **Blog Posts:** [Technical resources on spatial analysis methods](blog.qmd)
+- 👥 **Meet the Team:** [Core leadership and partner institutions](team.qmd)
+- ℹ️ **Project Details:** [About the consultancy](about.qmd)
+- 🔗 **Networks & Resources:** [MSP initiatives and international partnerships](_quarto.yml)
+
+### Subscribe for Updates
+
+Subscribe to project announcements by contacting our coordination team:
+
+- **Siajali Pamba** (Project Lead): siajali.pamba@udsm.ac.tz
+- **Masumbuko Semba** (Implementation Coordinator): masumbuko.semba@nm-aist.ac.tz
+
+---
+
+## Recent Highlights
+
+:::{.callout-tip}
+### What's New This Month?
+
+✨ **Website Launch** - Complete digital infrastructure for stakeholder engagement  
+📊 **Technical Blog Series** - 5 comprehensive posts on spatial analysis methods  
+🌍 **MSP Resources Section** - Curated links to 10+ international marine planning networks  
+👥 **Professional Team Page** - Enhanced profiles with ORCID links and expertise areas  
+📋 **News Feed** - Real-time project updates and milestone tracking  
+
+:::
+
+---
+
+*Last updated: December 28, 2025*  
+*Next update: January 15, 2026 (Field Campaign Launch)*

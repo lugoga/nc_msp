@@ -1,0 +1,49 @@
+project:
+  type: website
+  output-dir: docs
+  render:
+    - docs/
+
+website:
+  title: "Somali Fish Stock Training Program"
+  navbar:
+    logo: "assets/logo.png"
+    background: primary
+    search: true
+    left:
+      - text: "Home"
+        href: index.qmd
+      - text: "Schedule"
+        href: schedule.qmd
+      - text: "Resources"
+        menu:
+          - text: "Data Templates"
+            href: resources/templates.qmd
+          - text: "Reference Materials"
+            href: resources/references.qmd
+          - text: "Tools & Software"
+            href: resources/tools.qmd
+      - text: "About"
+        href: about.qmd
+    right:
+      - icon: github
+        href: https://github.com/somaliafisheries/training-program
+
+  page-footer:
+    left: |
+      © 2024-2025 Somali Fish Stock Training Program
+      In partnership with Tanzania Fisheries Research Institute (TAFIRI)
+    center: |
+      Built with Quarto | License: CC BY 4.0
+    right: |
+      [Contact](mailto:contact@tafiri.go.tz) | [GitHub](https://github.com/somaliafisheries/training-program)
+
+format:
+  html:
+    theme: cosmo
+    css: assets/custom.css
+    toc: true
+    number-sections: false
+    highlight-style: github
+    code-fold: true
+    code-summary: "Show code"

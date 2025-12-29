@@ -1,0 +1,744 @@
+---
+title: "Module 2: Data Collection Protocols & Sampling Design"
+subtitle: "Somali Fish Stock Training"
+date: "2025-12-05"
+date-modified: today
+author: 
+    - name: "Dr. Masumbuko Semba"
+      affiliation: "Nelson Mandela African Institution of Science and Technology"
+      email: "lugosemba@gmail.com"
+    - name: "Dr. Rushingisha George"
+      affiliation: "Tangania Fisheries Research Institute"
+      email: "george.rushingisha@tafiri.go.tz"
+    - name: "Dr. Mary Kishe"
+      affiliation: "Tanzania Fisheries Research Institute"
+      email: "mary.kishe@tafiri.go.tz"
+    - name: "Dr. Ismael Kimirei"
+      affiliation: "Tanzania Fisheries Research Institute"
+      email: "ismael.kimirei@tafiri.go.tz"
+format: revealjs
+theme: default
+transition: slide
+background-transition: fade
+highlight-style: github
+embed-resources: true
+---
+
+```{r}
+require(sf)
+require(tidyverse)
+require(sizeMat)
+require(gt)
+require(tidyplots)
+require(patchwork)
+require(leaflet)
+```
+
+## Welcome to Module 2
+
+**Data Collection Protocols & Sampling Design**
+
+:::: {.columns}
+::: {.column width="50%"}
+### Learning Objectives
+- Design effective sampling schemes
+- Understand quality control procedures
+- Master catch/effort data handling
+- Implement data validation protocols
+:::
+
+::: {.column width="50%"}
+### Why This Matters
+- **High-priority area** from needs assessment
+- Addresses key implementation gaps
+- Directly improves data quality
+- Supports sustainable monitoring
+:::
+::::
+
+---
+
+## The Data Quality Foundation
+
+### Why Data Collection Matters:
+
+::: {.incremental}
+- Poor data → poor decisions
+- Good protocols → reliable assessments
+- Consistent methods → comparable results
+- Quality control → confidence in findings
+:::
+
+### Module 2 Focus:
+Practical, implementable protocols for Somali context
+
+---
+
+## Core Sampling Principles
+
+### Five Key Concepts:
+
+::: {.columns}
+::: {.column width="50%"}
+**1. Representativeness**
+- Sample reflects population
+- Avoid biased selection
+- Random or stratified approach
+
+**2. Consistency**
+- Same methods over time
+- Standardized procedures
+- Documented protocols
+:::
+
+::: {.column width="50%"}
+**3. Adequacy**
+- Sufficient sample size
+- Temporal coverage
+- Spatial distribution
+
+**4. Independence**
+- Samples unrelated to each other
+- Avoid pseudo-replication
+- Account for dependencies
+:::
+::::
+
+---
+
+## Sampling Design Types
+
+### Stratified Sampling Strategy
+
+Divide population into strata, sample from each:
+
+```{r}
+#| echo: false
+#| fig-align: center
+
+tibble(
+  stratum = c("Berbera", "Mogadishu", "Kismayo", "Borama", "Baidoa", "Galkacyo"),
+  allocation = c(25, 30, 20, 10, 10, 5),
+  x = seq(1, 6),
+  y = rep(1, 6)
+) |>
+  ggplot(aes(x = reorder(stratum, -allocation), y = allocation, fill = stratum)) +
+  geom_col(alpha = 0.8) +
+  geom_text(aes(label = paste0(allocation, "%")), vjust = -0.5, size = 4, fontface = 'bold') +
+  scale_fill_brewer(palette = 'Set2', guide = 'none') +
+  labs(
+    title = "Proportional Allocation by Region",
+    x = "Region (Stratum)",
+    y = "Sampling Allocation (%)"
+  ) +
+  ylim(0, 35) +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    plot.title = element_text(face = 'bold', hjust = 0.5)
+  )
+```
+
+---
+
+## Sampling Approaches for Somalia
+
+### Option 1: Census Sampling
+**Sample every landing during monitoring period**
+
+:::: {.columns}
+::: {.column width="50%"}
+**Advantages:**
+- ✓ No missing data
+- ✓ Highest precision
+- ✓ Detect all changes
+:::
+
+::: {.column width="50%"}
+**Challenges:**
+- ✗ High cost
+- ✗ Requires many staff
+- ✗ Logistically difficult
+:::
+::::
+
+---
+
+## Sampling Approaches (continued)
+
+### Option 2: Systematic Sampling
+**Sample every nth landing (e.g., every 5th fish)**
+
+:::: {.columns}
+::: {.column width="50%"}
+**Advantages:**
+- ✓ Balanced coverage
+- ✓ Practical to implement
+- ✓ Moderate cost
+:::
+
+::: {.column width="50%"}
+**Challenges:**
+- ✗ May miss patterns
+- ✗ Requires discipline
+- ✗ Vulnerable to bias
+:::
+::::
+
+---
+
+## Sampling Approaches (continued)
+
+### Option 3: Random Sampling
+**Randomly select landings to measure**
+
+:::: {.columns}
+::: {.column width="50%"}
+**Advantages:**
+- ✓ Statistically sound
+- ✓ Unbiased
+- ✓ Defensible method
+:::
+
+::: {.column width="50%"}
+**Challenges:**
+- ✗ Gaps in coverage
+- ✗ Lower precision
+- ✗ Requires planning
+:::
+::::
+
+---
+
+## Recommended Protocol for Somalia
+
+### Stratified-Systematic Approach:
+
+1. **Stratify by region** (6 regions: Berbera, Mogadishu, etc.)
+2. **Allocate proportionally** to landing volumes
+3. **Sample systematically** within each region
+4. **Monthly rotations** at sites to avoid bias
+5. **Document everything** for quality control
+
+---
+
+## Catch Data Collection
+
+### What to Record:
+
+::: {.columns}
+::: {.column width="50%"}
+**Essential Variables**
+- [ ] Date and time
+- [ ] Landing site/location
+- [ ] Vessel/fisher ID
+- [ ] Species/fish group
+- [ ] Total catch (count)
+- [ ] Total weight
+:::
+
+::: {.column width="50%"}
+**Biological Data**
+- [ ] Individual lengths
+- [ ] Individual weights
+- [ ] Sex (if identifiable)
+- [ ] Maturity stage
+- [ ] Condition assessment
+:::
+::::
+
+---
+
+## Catch Data Form Example
+
+```{r}
+#| echo: false
+
+tibble(
+  `Field` = c("Landing_Date", "Region", "Landing_Site", "Fish_Group", "Sample_ID", "Length_cm", "Weight_kg", "Notes"),
+  `Type` = c("Date (YYYY-MM-DD)", "Text", "Text", "Dropdown", "Numeric", "Numeric", "Numeric", "Text"),
+  `Required` = c("Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "No"),
+  `Example` = c("2024-01-15", "Berbera", "Port_North", "Tuna", "BER_001", "45.2", "12.5", "Good condition")
+) |>
+  gt() |>
+  tab_header(
+    title = "Standardized Catch Data Form",
+    subtitle = "Fields and requirements for field collection"
+  ) |>
+  cols_label(
+    Field = "Data Field",
+    Type = "Data Type",
+    Required = "Required?",
+    Example = "Example Value"
+  ) |>
+  tab_options(
+    table.width = px(900),
+    table.font.size = '10px',
+    heading.title.font.size = '13px',
+    heading.subtitle.font.size = '11px'
+  ) |>
+  opt_stylize(style = 6, color = 'gray')
+```
+
+---
+
+## Effort Data Collection
+
+### What Constitutes "Effort"?
+
+::: {.incremental}
+- **Fishing effort**: Days fished, hours at sea, gear type
+- **Landing site effort**: Number of vessels arriving
+- **Spatial effort**: Geographic distribution of fishing
+- **Temporal effort**: Daily, monthly, seasonal patterns
+:::
+
+### Why Effort Matters:
+To calculate CPUE, we need **both catch AND effort**
+
+---
+
+## Effort Data: Practical Implementation
+
+### Daily Log Sheet:
+
+```{r}
+#| echo: false
+
+tibble(
+  `Date` = c("2024-01-15", "2024-01-15", "2024-01-16", "2024-01-16"),
+  `Region` = c("Berbera", "Berbera", "Mogadishu", "Mogadishu"),
+  `Vessels_Arrived` = c(12, 5, 18, 22),
+  `Total_Landings` = c(450, 280, 520, 680),
+  `Staff_Available` = c(3, 2, 4, 3),
+  `Sampling_Rate_%` = c(100, 50, 75, 50)
+) |>
+  gt() |>
+  tab_header(
+    title = "Daily Landing Site Effort Log",
+    subtitle = "Example from field monitoring"
+  ) |>
+  tab_options(
+    table.width = px(800),
+    table.font.size = '10px',
+    heading.title.font.size = '13px'
+  ) |>
+  opt_stylize(style = 6, color = 'gray')
+```
+
+---
+
+## Quality Control Procedures
+
+### Five-Step QC Protocol:
+
+::: {.columns}
+::: {.column width="50%"}
+**1. Training & Standardization**
+- Clear protocols
+- Hands-on training
+- Refresher sessions
+- Competency testing
+
+**2. Real-Time Checks**
+- Verify as collecting
+- Cross-checks with partners
+- Outlier flagging
+:::
+
+::: {.column width="50%"}
+**3. Data Entry Validation**
+- Range checks
+- Logical consistency
+- Missing value detection
+- Double-entry verification
+
+**4. Statistical Review**
+- Distribution analysis
+- Trend assessment
+- Comparison with history
+:::
+::::
+
+---
+
+## Quality Control (continued)
+
+### Step 5: Documentation
+
+::: {.callout-important}
+**Every data point needs metadata:**
+- Who collected it?
+- When and where?
+- Under what conditions?
+- Any uncertainties?
+- Contact for questions?
+:::
+
+---
+
+## Common Data Quality Issues
+
+### Watch for These Problems:
+
+::: {.columns}
+::: {.column width="50%"}
+**Measurement Errors**
+- Improper length measurement
+- Scale calibration issues
+- Rounding inconsistencies
+- Unit confusion (cm vs mm)
+
+**Procedural Errors**
+- Skipped fish
+- Incomplete recording
+- Wrong species ID
+- Timestamp mistakes
+:::
+
+::: {.column width="50%"}
+**Data Entry Errors**
+- Transcription mistakes
+- Transposed numbers
+- Missing data codes
+- Format inconsistencies
+
+**Sampling Bias**
+- Selective sampling
+- Non-random selection
+- Temporal gaps
+- Geographic avoidance
+:::
+::::
+
+---
+
+## Data Entry Best Practices
+
+### Digital Form Design:
+
+::: {.incremental}
+- **Dropdown menus** for categories (Region, Species)
+- **Numeric validation** (length > 0, weight > 0)
+- **Date pickers** for temporal data
+- **GPS integration** for location accuracy
+- **Offline capability** for field areas
+- **Sync protocols** for data backup
+:::
+
+### Recommended Tools:
+- ODK Collect (mobile)
+- Kobo Toolbox (cloud-based)
+- Excel with data validation
+- R/Shiny for real-time dashboards
+
+---
+
+## Catch/Effort Data Handling
+
+### Processing Workflow:
+
+```{r}
+#| echo: false
+#| fig-align: center
+
+tibble(
+  stage = c("Raw\nData", "Clean", "Validate", "Aggregate", "Analysis"),
+  complete = c(0, 25, 50, 75, 100)
+) |>
+  ggplot(aes(x = factor(stage, levels = stage), y = complete)) +
+  geom_col(fill = '#4CAF50', alpha = 0.8, width = 0.6) +
+  geom_text(aes(label = paste0(complete, "%")), vjust = -0.5, size = 4, fontface = 'bold') +
+  labs(
+    title = "Data Processing Pipeline",
+    x = "Processing Stage",
+    y = "Completion Status (%)"
+  ) +
+  ylim(0, 110) +
+  theme_minimal() +
+  theme(
+    axis.text.y = element_text(size = 10),
+    plot.title = element_text(face = 'bold', hjust = 0.5, size = 12)
+  )
+```
+
+---
+
+## Data Cleaning in R
+
+### Essential Steps:
+
+```r
+# 1. Remove duplicates
+data_clean <- data_raw |>
+  distinct()
+
+# 2. Validate ranges
+data_clean <- data_clean |>
+  filter(length_cm > 5 & length_cm < 200,
+         weight_kg > 0.1 & weight_kg < 500)
+
+# 3. Handle missing values
+data_clean <- data_clean |>
+  filter(!is.na(species), !is.na(length_cm))
+
+# 4. Standardize formats
+data_clean <- data_clean |>
+  mutate(
+    landing_date = as.Date(landing_date),
+    region = toupper(region)
+  )
+```
+
+---
+
+## Data Aggregation Examples
+
+### Catch by Species & Region:
+
+```r
+catch_summary <- data |>
+  filter(!is.na(species), !is.na(region)) |>
+  group_by(year, region, species) |>
+  summarise(
+    total_catch = n(),
+    mean_length = mean(length_cm, na.rm = TRUE),
+    .groups = 'drop'
+  )
+```
+
+### CPUE Calculation:
+
+```r
+cpue_data <- catch_effort |>
+  group_by(year, region) |>
+  summarise(
+    total_catch = sum(catch),
+    effort = sum(fishing_days),
+    cpue = total_catch / effort,
+    .groups = 'drop'
+  )
+```
+
+---
+
+## Practical Exercise
+
+### Scenario: You're Monitoring Berbera Region
+
+**Given:**
+- 10 vessels arrived on January 15, 2024
+- Total landings: 450 fish
+- You sample every 5th fish
+- Measure 32 fish from multiple species
+
+**Calculate:**
+- Sampling rate (%)
+- Estimated total catch
+- Average size from sample
+- Simple CPUE (landings per vessel)
+
+---
+
+## Documentation Requirements
+
+### Every Data Collection Needs:
+
+::: {.callout-note}
+**Collection Protocol Document** should include:
+- Purpose and objectives
+- Sampling design details
+- Variable definitions
+- Measurement procedures
+- Quality standards
+- Staff responsibilities
+- Error handling procedures
+- Data storage and backup
+- Troubleshooting guide
+:::
+
+---
+
+## Somali Implementation Strategy
+
+### Realistic Roadmap:
+
+**Phase 1 (Months 1-2):**
+- Train 2-3 coordinators per site
+- Develop standardized forms
+- Set up data entry system
+- Pilot testing at 2 sites
+
+**Phase 2 (Months 3-6):**
+- Roll out to all 6 regions
+- Monthly data reviews
+- Troubleshoot issues
+- Refine procedures
+
+**Phase 3 (Months 7+):**
+- Full implementation
+- Ongoing QC checks
+- Capacity building
+- Data analysis & reporting
+
+---
+
+## Common Challenges & Solutions
+
+### Challenge: Limited Resources
+
+**Solutions:**
+- Prioritize core variables
+- Use volunteers/assistants
+- Mobile phone apps
+- Digital sampling tools
+
+### Challenge: Geographic Dispersal
+
+**Solutions:**
+- Hub-and-spoke model
+- Regional coordinators
+- Periodic site visits
+- Remote monitoring support
+
+---
+
+## Common Challenges (continued)
+
+### Challenge: Staff Turnover
+
+**Solutions:**
+- Document all procedures
+- Regular training refreshers
+- Competency assessments
+- Mentorship programs
+
+### Challenge: Inconsistent Participation
+
+**Solutions:**
+- Financial incentives
+- Community engagement
+- Clear schedules
+- Regular feedback
+
+---
+
+## Data Management Best Practices
+
+### Storage & Security:
+
+::: {.columns}
+::: {.column width="50%"}
+**Local Storage**
+- Backup hard drives
+- Cloud backup (OneDrive)
+- Encrypted storage
+- Access controls
+:::
+
+::: {.column width="50%"}
+**Data Access**
+- Version control
+- Change logs
+- User permissions
+- Audit trails
+:::
+::::
+
+### Retention Policy:
+- Keep raw data forever
+- Archive processed data
+- Document metadata
+- Establish data governance
+
+---
+
+## Key Takeaways
+
+### Module 2 Summary:
+
+::: {.incremental}
+1. Sampling design must match objectives & resources
+2. Data quality requires protocols, training, and oversight
+3. Catch AND effort data essential for CPUE
+4. Quality control built in from collection through analysis
+5. Digital tools improve consistency and efficiency
+6. Documentation critical for sustainability
+7. Implementation must be realistic for Somalia context
+:::
+
+---
+
+## Transition to Module 3
+
+### You Now Have:
+
+- ✓ **Module 1**: Conceptual foundation
+- ✓ **Module 2**: Operational protocols
+- **Module 3**: Data-limited assessment methods (coming next)
+
+### Next Session:
+
+Using the data collected through Module 2 protocols to conduct stock assessments with R!
+
+---
+
+## Practical Homework
+
+### Before Module 3:
+
+::: {.callout-note}
+1. **Design** a sampling protocol for your region
+2. **Create** a data entry form
+3. **Plan** quality control checks
+4. **Identify** implementation challenges
+5. **Prepare** questions for Module 3
+:::
+
+### Deliverable:
+One-page sampling plan for your region
+
+---
+
+## References & Resources
+
+### Sampling Design:
+- FAO: Guidelines for data collection
+- IOTC Data collection procedures
+- Cochran (1977): Sampling techniques
+
+### Quality Control:
+- ISO 17025 standards
+- NOAA Data management guidelines
+- WHO Data quality framework
+
+### R Resources:
+- RMarkdown for documentation
+- Data validation packages
+- CPUE analysis functions
+
+---
+
+## Questions & Discussion
+
+### Let's Discuss:
+
+- What challenges do you foresee?
+- How would you adapt protocols locally?
+- What resources are available?
+- How often can you monitor?
+- Who will coordinate data?
+
+---
+
+## Thank You
+
+**Somali Fish Stock Training**
+
+Module 2: Data Collection Protocols & Sampling Design
+
+*Implementing practical, sustainable monitoring*
+
+Next: Module 3 - Data-Limited Assessment Methods
+
+Questions? Contact the training team.

@@ -1,0 +1,1113 @@
+---
+title: "Introduction to Length-Based Stock Assessment Models"
+subtitle: "A Practical Guide for Somali Fish Stock Management"
+date: today
+
+author: 
+    - name: "Masumbuko Semba"
+      affiliation: "Nelson Mandela African Institution of Science and Technology"
+      email: "lugosemba@gmail.com"
+    - name: "Rushingisha George"
+      affiliation: "Tanzania Fisheries Research Institute"
+      email: "george.rushingisha@tafiri.go.tz"
+    - name: "Mathew Silas"
+      affiliation: "Deep Sea Fishing Authority"
+      email: "mathewsilas28@gmail.com"
+format: revealjs
+theme: 'simple'
+transition: slide
+background-transition: fade
+highlight-style: github
+slide-number: true
+embed-resources: true
+execute:
+  eval: false
+  echo: true
+  warning: false
+code-fold: show
+---
+
+```{r}
+#| echo: false
+#| eval: true
+
+require(tidyverse)
+require(tidyplots)
+require(LBSPR)
+
+# Load data
+lw <- readxl::read_excel('../data_shared/ProjKalluun_master_data_entry.xlsx', 
+                         sheet = 'Section 3', skip = 4) |> 
+    janitor::clean_names() |> 
+    filter(!is.na(landing_site)) |> 
+    mutate(
+      year = year(date_dd_mm_yy),
+      length_cm = as.numeric(length_cm)
+    )
+```
+
+# Welcome {background-color="#447099"}
+
+## Course Overview {.scrollable}
+
+::::: columns
+::: {.column width="50%"}
+### Learning Objectives
+
+- **Understand** the fundamentals of length-based stock assessment
+- **Apply** the LBSPR model to real fishery data
+- **Interpret** stock status indicators (SPR and F/M)
+- **Communicate** results for management decisions
+
+### Prerequisites
+
+- Basic understanding of fisheries concepts
+- Familiarity with R (helpful but not required)
+- Interest in sustainable fisheries management
+:::
+
+::: {.column width="50%"}
+### Why This Training Matters
+
+**For Scientists:**
+- Robust analytical framework for data-limited fisheries
+- Peer-reviewed methodology with global applications
+- Quantitative evidence for fisheries management
+
+**For Managers:**
+- Cost-effective assessment tool
+- Clear indicators for policy decisions
+- Practical approach for resource-limited contexts
+:::
+:::::
+
+---
+
+# Understanding Fish Stocks {background-color="#447099"}
+
+## What is a Fish Stock? {.scrollable}
+
+Understanding the basic unit of assessment is critical to interpreting model results correctly.
+
+<div style="position: relative; max-width: 700px; margin: 2rem auto; padding: 2rem; font-family: Georgia, serif; line-height: 1.6; color: #333; text-align: center;">
+  <span style="font-family: 'Times New Roman', serif; font-size: 12rem; color: #17280b; position: absolute; top: -40px; left: 10px; line-height: 1; opacity: 0.6;">"</span>
+  <p style="font-style: italic; font-family: Poppins; font-size: 2rem; color:#3e880a; margin: 0; padding: 0 3rem;">A group of fish of the same species inhabiting a defined geographic area with sufficient interbreeding to maintain genetic cohesion</p>
+  <span style="font-family: 'Times New Roman', serif; font-size: 12rem; color: #17280b; position: absolute; bottom: -60px; right: 10px; line-height: 0; opacity: 0.6;">"</span>
+</div>
+
+::: {.callout-note}
+## Key Principle
+Model outputs apply only to the defined stock. Proper stock identification is essential for meaningful assessment results.
+:::
+
+---
+
+## Critical Assumptions {.scrollable}
+
+:::: {.columns}
+::: {.column width="50%"}
+### 1. Stock Boundaries
+
+**Scientific Basis:** The assessed population represents a self-sustaining unit with minimal immigration or emigration.
+
+**Practical Implication:** Fish movement between regions must be negligible relative to population size.
+
+### 2. Fishing as Primary Driver
+
+**Scientific Basis:** Population dynamics are driven by natural mortality and fishing mortality, not by migration patterns.
+
+**Practical Implication:** Changes in stock size reflect fishing pressure, not population shifts.
+:::
+
+::: {.column width="50%"}
+### 3. Representative Sampling
+
+**Scientific Basis:** Length distributions in catches accurately represent the population structure.
+
+**Practical Implication:** Sampling must be unbiased and cover the full spatial and temporal range of the fishery.
+
+::: {.callout-tip}
+## For This Training
+We will assess **yellowfin tuna** caught in Somali waters as a discrete stock, recognizing this is a simplification that may require refinement for formal assessments.
+:::
+:::
+::::
+
+---
+
+# Length-Based Assessment Methods {background-color="#447099"}
+
+## Why Use Length-Based Models? {.scrollable}
+
+### The Challenge of Data-Limited Fisheries
+
+Many developing-nation fisheries lack:
+- Age-reading laboratories and trained personnel
+- Long-term catch and effort time series
+- Comprehensive biological sampling programs
+- Resources for expensive aging techniques (otolith reading)
+
+### The Solution: Length-Based Analysis
+
+**Advantages:**
+- Length data is relatively easy and inexpensive to collect
+- Measurements can be taken dockside without specialized equipment
+- Large sample sizes are feasible with minimal resources
+- Well-established theoretical foundation
+
+::: {.callout-important}
+## Core Assumption
+The length distribution in your **catch sample** must reflect the length distribution in the **exploited population**. Biased sampling (e.g., only large fish, one gear type) will compromise results.
+:::
+
+---
+
+## The LBSPR Model Framework {.scrollable}
+
+### What is LBSPR?
+
+**Length-Based Spawning Potential Ratio** is a stock assessment model that estimates reproductive capacity under current fishing pressure.
+
+:::: {.columns}
+::: {.column width="50%"}
+### Scientific Foundation
+
+- Developed by Hordyk et al. (2015)
+- Based on equilibrium life history theory
+- Uses size-structured population dynamics
+- Validated across multiple species and fisheries
+
+### Model Outputs
+
+**Primary Metric: SPR (Spawning Potential Ratio)**
+- Proportion of unfished reproductive potential remaining
+- Values range from 0 (collapsed) to 1 (unfished)
+- Directly comparable to management reference points
+:::
+
+::: {.column width="50%"}
+### Interpreting SPR Values
+
+| SPR Range | Stock Status | Management Implication |
+|-----------|--------------|------------------------|
+| > 0.40 | Healthy | Current fishing sustainable |
+| 0.20 - 0.40 | Moderately exploited | Monitor closely, consider precautionary measures |
+| < 0.20 | Overfished | Urgent management action required |
+
+::: {.callout-note}
+## Reference Points
+- **Target:** SPR = 40% (widely used globally)
+- **Limit:** SPR = 20% (conservation threshold)
+- These values may be adjusted based on species-specific characteristics and management objectives
+:::
+:::
+::::
+
+---
+
+# Model Parameters {background-color="#447099"}
+
+## Required Inputs Overview {.scrollable}
+
+LBSPR requires two types of information:
+
+1. **Observed Data:** Length frequency measurements from catch samples
+2. **Life History Parameters:** Species-specific biological characteristics
+
+::: {.callout-tip}
+## Data Sources
+Life history parameters can often be obtained from:
+- [FishBase](https://www.fishbase.se/) - comprehensive global database
+- Published literature for your region
+- Studies on closely related species (if species-specific data unavailable)
+:::
+
+---
+
+## Biological Parameters {.scrollable}
+
+:::: {.columns}
+::: {.column width="50%"}
+### Growth Parameters
+
+**Linf (Asymptotic Length)**
+- Maximum theoretical length the species can attain
+- Units: cm or mm (must be consistent)
+- Represents the average size of very old fish
+
+**M/K Ratio**
+- M = Natural mortality rate
+- K = von Bertalanffy growth coefficient
+- Ratio provides information on life history strategy
+- Higher M/K = faster growth, higher natural mortality
+
+### Maturity Parameters
+
+**L50 (Length at 50% Maturity)**
+- Length at which 50% of fish are sexually mature
+- Critical for determining reproductive potential
+
+**L95 (Length at 95% Maturity)**
+- Length at which 95% of fish are mature
+- Defines the maturity ogive shape
+:::
+
+::: {.column width="50%"}
+### Example Code: Yellowfin Tuna
+
+```{r}
+#| echo: true
+#| eval: false
+
+# Create parameter object
+MyPars <- new("LB_pars")
+
+# Set biological parameters
+MyPars@Linf <- 175    # cm, from FishBase
+MyPars@L50 <- 100     # cm, maturity onset
+MyPars@L95 <- 110     # cm, full maturity
+MyPars@MK <- 1.5      # M/K ratio
+```
+
+::: {.callout-warning}
+## Parameter Uncertainty
+Biological parameters carry uncertainty. When available, use locally-derived values rather than global averages. Document your parameter sources for transparency.
+:::
+:::
+::::
+
+---
+
+## Selectivity Parameters {.scrollable}
+
+Selectivity describes which fish sizes are vulnerable to your fishing gear.
+
+:::: {.columns}
+::: {.column width="50%"}
+### Concept Explanation
+
+**Selectivity Curve:** Describes the probability that a fish of a given length will be caught if encountered by fishing gear.
+
+**SL50 (Length at 50% Selectivity)**
+- Length at which 50% of encountered fish are retained
+- Primarily determined by gear characteristics (mesh size, hook size)
+
+**SL95 (Length at 95% Selectivity)**
+- Length at which essentially all fish are fully vulnerable
+- Defines the steepness of the selectivity curve
+
+### Practical Implications
+
+- Gear modifications can change selectivity
+- Minimum size regulations affect selectivity
+- Multiple gear types require careful consideration
+:::
+
+::: {.column width="50%"}
+### Implementation
+
+```{r}
+#| echo: true
+#| eval: false
+
+# Selectivity parameters
+MyPars@SL50 <- 60     # cm, gear selectivity onset
+MyPars@SL95 <- 75     # cm, full selectivity
+
+# Optional: Set target SPR
+MyPars@SPR <- 0.4     # 40% target
+```
+
+::: {.callout-note}
+## Estimating Selectivity
+If you don't have external estimates:
+- Start with SL50 ≈ 0.5 × L50 (maturity)
+- The model can estimate these parameters
+- Compare model estimates with gear characteristics for validation
+:::
+:::
+::::
+
+---
+
+## Size Class Specification {.scrollable}
+
+Define how length data is organized for analysis.
+
+:::: {.columns}
+::: {.column width="50%"}
+### Parameters
+
+**BinWidth**
+- Width of each length class (cm or mm)
+- Balance: Too narrow = sparse data; Too wide = loss of information
+- Recommendation: 2-5 cm for most species
+
+**BinMin and BinMax**
+- Define the range of your analysis
+- Should encompass the full observed range
+- Extend slightly beyond smallest/largest observations
+
+**L_units**
+- Specify measurement units (cm or mm)
+- Must match all other length parameters
+:::
+
+::: {.column width="50%"}
+### Code Implementation
+
+```{r}
+#| echo: true
+#| eval: false
+
+# Size class parameters
+MyPars@BinWidth <- 5   # 5 cm bins
+MyPars@BinMax <- 180   # Maximum size class
+MyPars@BinMin <- 20    # Minimum size class
+MyPars@L_units <- "cm" # Unit specification
+```
+
+::: {.callout-tip}
+## Best Practices
+- Review your length frequency histogram before setting bins
+- Ensure adequate sample sizes in each bin
+- Document any fish excluded due to unusual sizes
+:::
+:::
+::::
+
+---
+
+# Practical Application {background-color="#447099"}
+
+## Workflow Overview {.scrollable}
+
+The analysis follows a systematic five-step process:
+
+```{mermaid}
+graph TD
+    A[Step 1: Prepare Length Data] --> B[Step 2: Create Parameter Object]
+    B --> C[Step 3: Populate Parameters]
+    C --> D[Step 4: Fit Model]
+    D --> E[Step 5: Interpret Results]
+    
+    style A fill:#e1f5ff
+    style B fill:#e1f5ff
+    style C fill:#fff4e1
+    style D fill:#fff4e1
+    style E fill:#e8f5e9
+```
+
+---
+
+## Step 1: Data Preparation {.scrollable}
+
+:::: {.columns}
+::: {.column width="50%"}
+### Data Quality Checks
+
+Before analysis, ensure your data meets these criteria:
+
+**✓ Completeness**
+- No missing length measurements
+- Adequate sample size (minimum 200 fish recommended)
+- Samples span fishing season
+
+**✓ Representativeness**
+- Random or systematic sampling
+- Coverage across fishing grounds
+- Multiple gear types if applicable
+
+**✓ Accuracy**
+- Consistent measurement protocol
+- Regular calibration of equipment
+- Quality control procedures
+:::
+
+::: {.column width="50%"}
+### Data Processing Code
+
+```{r}
+#| echo: true
+#| eval: false
+
+# Filter and extract length data
+tuna_lengths <- lw |> 
+  filter(
+    fish_group == "Tuna",
+    !is.na(length_cm),
+    length_cm > 0  # Remove invalid entries
+  ) |> 
+  pull(length_cm)
+
+# Sample size verification
+n_samples <- length(tuna_lengths)
+cat("Sample size:", n_samples, "\n")
+
+# Summary statistics
+summary(tuna_lengths)
+```
+
+::: {.callout-warning}
+## Minimum Sample Size
+While 200+ fish is ideal, the model can run with fewer samples. However, results will have wider confidence intervals. Always report your sample size alongside results.
+:::
+:::
+::::
+
+---
+
+## Step 1: Visual Inspection {.scrollable}
+
+Always visualize your data before modeling to identify potential issues.
+
+:::: {.columns}
+::: {.column width="50%"}
+### What to Look For
+
+**Normal Distribution Indicators:**
+- Single mode (peak) in distribution
+- Smooth, bell-shaped curve
+- Reasonable spread
+
+**Warning Signs:**
+- Multiple distinct peaks (mixed stocks?)
+- Extreme outliers
+- Heavy truncation (size-selective sampling?)
+- Gaps in size ranges
+:::
+
+::: {.column width="50%"}
+### Visualization Code
+
+```{r}
+#| echo: true
+#| eval: false
+
+# Create histogram
+hist(tuna_lengths, 
+     breaks = 30,
+     main = "Yellowfin Tuna Length Distribution",
+     xlab = "Fork Length (cm)",
+     ylab = "Frequency",
+     col = "lightblue",
+     border = "darkblue")
+
+# Add summary lines
+abline(v = mean(tuna_lengths), 
+       col = "red", lwd = 2, lty = 2)
+abline(v = median(tuna_lengths), 
+       col = "green", lwd = 2, lty = 2)
+
+legend("topright", 
+       legend = c("Mean", "Median"),
+       col = c("red", "green"),
+       lty = 2, lwd = 2)
+```
+:::
+::::
+
+---
+
+## Steps 2-3: Model Setup {.scrollable}
+
+### Complete Parameter Specification
+
+```{r}
+#| echo: true
+#| eval: false
+
+# Initialize parameter object
+MyPars <- new("LB_pars")
+
+# === Biological Parameters ===
+# Source: FishBase + Regional studies
+MyPars@Linf <- 175    # Asymptotic length (cm)
+MyPars@L50 <- 100     # Length at 50% maturity (cm)
+MyPars@L95 <- 110     # Length at 95% maturity (cm)
+MyPars@MK <- 1.5      # Natural mortality / Growth rate
+
+# === Selectivity Parameters ===
+# Based on gear characteristics
+MyPars@SL50 <- 60     # Length at 50% selectivity (cm)
+MyPars@SL95 <- 75     # Length at 95% selectivity (cm)
+
+# === Size Classes ===
+MyPars@BinWidth <- 5  # 5 cm bins
+MyPars@BinMax <- 180  # Upper limit
+MyPars@BinMin <- 20   # Lower limit
+MyPars@L_units <- "cm"
+
+# === Management Target (Optional) ===
+MyPars@SPR <- 0.4     # 40% SPR target
+```
+
+::: {.callout-note}
+## Parameter Documentation
+Maintain a separate document detailing the source and rationale for each parameter. This is essential for peer review and management presentations.
+:::
+
+---
+
+## Step 4: Model Fitting {.scrollable}
+
+:::: {.columns}
+::: {.column width="50%"}
+### Running the Analysis
+
+```{r}
+#| echo: true
+#| eval: false
+
+# Fit LBSPR model to length data
+lbspr_fit <- LBSPRfit(
+  MyPars,               # Parameters
+  tuna_lengths,         # Length data
+  Control = list(       # Optional controls
+    modtype = "GTG"     # Growth-type-group model
+  )
+)
+
+# View estimated parameters
+lbspr_fit@Ests
+```
+
+### Model Fitting Process
+
+The model performs maximum likelihood estimation to find parameter values that best explain your observed length distribution.
+
+**Estimated Parameters:**
+- F/M ratio (fishing/natural mortality)
+- SPR (spawning potential ratio)
+- Selectivity curves (if not fixed)
+:::
+
+::: {.column width="50%"}
+### Diagnostic Checks
+
+```{r}
+#| echo: true
+#| eval: false
+
+# Check model convergence
+if (lbspr_fit@SPR < 0 | lbspr_fit@SPR > 1) {
+  warning("SPR estimate outside valid range")
+}
+
+# Examine fit quality
+# Compare observed vs predicted length frequencies
+plotSize(lbspr_fit)
+```
+
+::: {.callout-tip}
+## Troubleshooting
+If the model fails to converge or produces unrealistic estimates:
+- Verify parameter values (especially M/K)
+- Check for adequate sample size
+- Ensure length data quality
+- Consider if equilibrium assumption is valid
+:::
+:::
+::::
+
+---
+
+## Step 5: Results Visualization {.scrollable}
+
+### Comprehensive Output Plot
+
+```{r}
+#| echo: true
+#| eval: false
+#| fig-width: 10
+#| fig-height: 6
+
+# Generate main results plot
+plotSim(lbspr_fit)
+```
+
+### Interpreting the Multi-Panel Output
+
+**Left Panel: Length Frequency Fit**
+- Grey bars: Your observed data
+- Red line: Model prediction
+- Good fit = line follows bar pattern closely
+- Poor fit may indicate model assumptions violated
+
+**Right Panel: Stock Status Indicators**
+- Black point: Estimated SPR value
+- Grey shading: Uncertainty (95% confidence interval)
+- Horizontal lines: Reference points (if specified)
+
+---
+
+## Interpreting Stock Status {.scrollable}
+
+### SPR-Based Assessment Framework
+
+:::: {.columns}
+::: {.column width="50%"}
+### Scientific Interpretation
+
+**SPR = 0.45 (Example)**
+
+This means the current fished stock retains 45% of the reproductive capacity it would have in an unfished state.
+
+**Supporting Evidence:**
+- Compare to established reference points
+- Consider confidence interval width
+- Evaluate model fit quality
+
+### Management Translation
+
+**For Policymakers:**
+"The stock is currently at a healthy level, above the 40% sustainability target, suggesting current fishing practices are within acceptable limits."
+:::
+
+::: {.column width="50%"}
+### F/M Ratio Interpretation
+
+**F/M = 0.8 (Example)**
+
+Fishing mortality is 80% of natural mortality.
+
+| F/M Value | Interpretation |
+|-----------|----------------|
+| < 1.0 | Fishing pressure below natural mortality |
+| ≈ 1.0 | Moderate exploitation |
+| > 1.5 | High fishing pressure, sustainability concerns |
+
+::: {.callout-important}
+## Decision Context
+Always interpret results within the context of:
+- Historical trends (if available)
+- Economic dependencies
+- Management capacity
+- Ecosystem considerations
+:::
+:::
+::::
+
+---
+
+# Best Practices & Limitations {background-color="#447099"}
+
+## Model Assumptions & Validity {.scrollable}
+
+### Critical Assumptions
+
+:::: {.columns}
+::: {.column width="50%"}
+**1. Equilibrium**
+- Stock is in equilibrium (stable size/age structure)
+- Fishing pressure has been relatively constant
+- Recruitment hasn't changed dramatically
+
+**2. Selectivity**
+- Selectivity pattern is dome-shaped or asymptotic
+- No cryptic mortality (e.g., ghost fishing)
+- Size-based selectivity (not age-based)
+
+**3. Growth**
+- von Bertalanffy growth is appropriate
+- Parameters apply to your stock
+- No significant growth changes over time
+:::
+
+::: {.column width="50%"}
+**4. Life History**
+- M/K ratio is correct for your species
+- Maturity schedules are accurate
+- No significant plasticity in life history traits
+
+**5. Sampling**
+- Catch samples represent population structure
+- No bias toward certain sizes
+- Adequate sample sizes across size ranges
+
+::: {.callout-warning}
+## When LBSPR May Not Apply
+- Highly variable recruitment
+- Recent major fishing pattern changes
+- Significant migration during sampling
+- Strong environmental drivers of growth
+:::
+:::
+::::
+
+---
+
+## Uncertainty & Sensitivity Analysis {.scrollable}
+
+### Sources of Uncertainty
+
+:::: {.columns}
+::: {.column width="50%"}
+**Parameter Uncertainty**
+- Life history parameters from literature
+- Variable growth across regions
+- Maturity schedules may shift
+
+**Sampling Uncertainty**
+- Limited sample sizes
+- Temporal/spatial coverage gaps
+- Gear selectivity variations
+
+**Model Uncertainty**
+- Equilibrium assumption
+- Simplified population dynamics
+- Single-stock assumption
+:::
+
+::: {.column width="50%"}
+### Addressing Uncertainty
+
+**1. Sensitivity Analysis**
+```{r}
+#| echo: true
+#| eval: false
+
+# Test different M/K values
+MK_values <- c(1.2, 1.5, 1.8)
+results <- list()
+
+for (i in seq_along(MK_values)) {
+  MyPars@MK <- MK_values[i]
+  results[[i]] <- LBSPRfit(MyPars, tuna_lengths)
+}
+
+# Compare SPR estimates
+sapply(results, function(x) x@SPR)
+```
+
+**2. Confidence Intervals**
+- Always report with uncertainty bounds
+- Wider intervals = more caution needed
+
+**3. Multiple Lines of Evidence**
+- Complement with other assessments
+- Consider ecological indicators
+- Validate with fishery-dependent data
+:::
+::::
+
+---
+
+## Reporting Results {.scrollable}
+
+### For Scientific Audiences
+
+**Essential Elements:**
+1. **Methods:** Model version, parameter sources, data collection protocol
+2. **Results:** Point estimates with confidence intervals, model diagnostics
+3. **Discussion:** Assumption validity, sensitivity analysis, limitations
+4. **Conclusions:** Stock status relative to reference points
+
+### For Management Audiences
+
+**Key Messages Framework:**
+
+::: {.callout-note appearance="simple"}
+## Example: Stock Status Report
+
+**Current Status:** The yellowfin tuna stock in Somali waters shows an estimated SPR of 42% (95% CI: 35-49%), indicating the stock retains approximately 42% of its unfished reproductive capacity.
+
+**Management Implication:** This places the stock slightly above the international sustainability target of 40%, suggesting current fishing levels are near maximum sustainable levels.
+
+**Recommendation:** Maintain current fishing pressure while implementing enhanced monitoring. Any increases in effort should trigger precautionary management measures.
+
+**Uncertainty:** Parameter estimates carry moderate uncertainty. We recommend annual reassessment to track trends and verify assumptions.
+:::
+
+---
+
+## Data Quality Recommendations {.scrollable}
+
+### Improving Future Assessments
+
+:::: {.columns}
+::: {.column width="50%"}
+**Sampling Design**
+- Implement stratified random sampling
+- Cover all landing sites proportionally
+- Include multiple seasons
+- Target minimum 500 fish/year
+
+**Measurement Protocols**
+- Standardize measurement techniques
+- Use consistent landmarks (fork length, total length)
+- Train and calibrate observers
+- Implement quality control checks
+
+**Data Management**
+- Digital data entry with validation
+- Maintain metadata (date, location, gear, observer)
+- Regular data audits
+- Secure backup systems
+:::
+
+::: {.column width="50%"}
+**Biological Sampling**
+- Collect age data when possible (validation)
+- Record maturity stages
+- Document gear characteristics
+- Note environmental conditions
+
+::: {.callout-tip}
+## Capacity Building
+Invest in:
+- Observer training programs
+- Standardized data collection forms
+- Digital data capture tools (apps)
+- Regular assessment workshops
+:::
+
+**Regional Collaboration**
+- Share data across jurisdictions
+- Harmonize assessment methods
+- Joint parameter estimation
+- Collaborative peer review
+:::
+::::
+
+---
+
+# Practical Exercises {background-color="#447099"}
+
+## Exercise 1: Run Your First Assessment {.scrollable}
+
+### Task
+Using the provided yellowfin tuna data, complete a full LBSPR analysis following the demonstrated workflow.
+
+**Steps:**
+1. Load and inspect the length data
+2. Create and populate the parameter object
+3. Fit the LBSPR model
+4. Generate and interpret output plots
+5. Write a one-paragraph management summary
+
+**Deliverable:** Completed R script with annotated code and brief written interpretation.
+
+---
+
+## Exercise 2: Sensitivity Analysis {.scrollable}
+
+### Task
+Investigate how uncertainty in the M/K ratio affects your stock status conclusion.
+
+**Protocol:**
+1. Run the base analysis with M/K = 1.5
+2. Re-run with M/K = 1.2 (slow growth/high mortality)
+3. Re-run with M/K = 1.8 (fast growth/low mortality)
+4. Compare SPR estimates across scenarios
+5. Discuss implications for management advice
+
+**Question to Address:** How confident can we be in our management recommendation given parameter uncertainty?
+
+---
+
+## Exercise 3: Critical Evaluation {.scrollable}
+
+### Task
+Review a case study assessment and identify potential issues.
+
+**Provided Materials:**
+- Length frequency histogram
+- Parameter table
+- Model output plots
+- Brief management recommendation
+
+**Your Analysis:**
+- Are model assumptions likely met?
+- Is the sample size adequate?
+- Are parameters appropriate for the species?
+- Do results make biological sense?
+- Is the management recommendation justified?
+
+**Deliverable:** Critical review document (2-3 pages) with recommendations for improvement.
+
+---
+
+# Additional Resources {background-color="#447099"}
+
+## Further Learning {.scrollable}
+
+### Key Publications
+
+**Foundational Papers:**
+- Hordyk et al. (2015). "A novel length-based empirical estimation method of spawning potential ratio (SPR), and tests of its performance, for small-scale, data-poor fisheries." *ICES Journal of Marine Science*, 72(1), 217-231.
+- Prince et al. (2015). "Length based SPR assessment of eleven Indo-Pacific coral reef fish populations in Palau." *Fisheries Research*, 171, 42-58.
+
+**Application Examples:**
+- Regional case studies from Indian Ocean, Pacific Islands, West Africa
+- Species-specific implementations
+
+### Online Resources
+
+- **LBSPR R Package Documentation:** [CRAN](https://cran.r-project.org/package=LBSPR)
+- **FishBase:** [www.fishbase.org](https://www.fishbase.org)
+- **FAO Fishery Resources:** Technical guidelines and databases
+- **GitHub Repository:** Example code and datasets
+
+---
+
+## Software & Tools {.scrollable}
+
+### R Packages for Fisheries Assessment
+
+```{r}
+#| echo: true
+#| eval: false
+
+# Essential packages
+install.packages(c(
+  "LBSPR",       # Length-based SPR
+  "TropFishR",   # Tropical fisheries analysis
+  "FSA",         # Fisheries stock assessment
+  "rfishbase",   # Access FishBase from R
+  "tidyverse"    # Data manipulation and visualization
+))
+```
+
+### Alternative Software
+
+- **LBSPR Online App:** Browser-based interface (no coding required)
+- **AMPLE:** Another Excel-based length frequency tool
+- **LBB (Length-Based Bayesian):** More advanced Bayesian framework
+
+---
+
+## Getting Help {.scrollable}
+
+### Support Resources
+
+**Technical Issues:**
+- LBSPR GitHub Issues page
+- R-sig-fisheries mailing list
+- Stack Overflow (tag: fisheries, r)
+
+**Methodological Questions:**
+- Consult primary literature
+- Regional fisheries management bodies
+- Academic collaborations
+
+**Training Opportunities:**
+- FAO workshops
+- Regional fisheries organizations
+- Online courses (e.g., FishR)
+
+::: {.callout-note}
+## Instructor Contact
+For questions specific to this training or Somali fisheries:
+- Email the instructors listed on title slide
+- Include "LBSPR Training" in subject line
+- Attach relevant data/code for technical questions
+:::
+
+---
+
+# Summary & Conclusions {background-color="#447099"}
+
+## Key Takeaways {.scrollable}
+
+### What We've Learned
+
+**Conceptual Understanding:**
+- Fish stocks as management units
+- Length-based assessment principles
+- SPR as a stock status indicator
+- F/M as a fishing pressure metric
+
+**Practical Skills:**
+- Data preparation and quality control
+- Parameter specification and sourcing
+- Model fitting and diagnostics
+- Results interpretation and communication
+
+**Critical Thinking:**
+- Model assumptions and their validity
+- Uncertainty quantification
+- Appropriate application contexts
+- Limitations and complementary approaches
+
+---
+
+## Implementation Roadmap {.scrollable}
+
+### Next Steps for Your Fishery
+
+:::: {.columns}
+::: {.column width="50%"}
+**Short Term (0-6 months)**
+1. Establish systematic length sampling
+2. Compile available biological parameters
+3. Train field staff on protocols
+4. Conduct pilot assessment
+5. Present preliminary results
+
+**Medium Term (6-12 months)**
+1. Refine sampling design based on pilot
+2. Seek regional parameter validation
+3. Implement regular assessment schedule
+4. Develop reporting templates
+5. Engage stakeholders with results
+:::
+
+::: {.column width="50%"}
+**Long Term (1-3 years)**
+1. Build time series for trend analysis
+2. Expand to additional species
+3. Integrate with ecosystem monitoring
+4. Develop management strategy evaluation
+5. Contribute to regional assessments
+
+::: {.callout-tip}
+## Success Factors
+- Sustained institutional support
+- Adequate field resources
+- Data quality commitment
+- Stakeholder engagement
+- Adaptive management mindset
+:::
+:::
+::::
+
+---
+
+## Final Thoughts {.scrollable}
+
+### The Value of Length-Based Assessment
+
+**For Data-Limited Contexts:**
+LBSPR and similar length-based methods represent a practical middle ground between no assessment and data-intensive age-structured models. While not perfect, they provide quantitative evidence for management decisions where alternatives are limited.
+
+**For Evidence-Based Management:**
+Regular application of these methods can:
+- Track stock trends over time
+- Trigger management responses
+- Evaluate regulation effectiveness
+- Support adaptive management cycles
+
+**For Sustainable Fisheries:**
+Ultimately, the goal is not perfect assessment but improved decision-making. Even approximate stock status information is vastly better than none, provided we understand and communicate limitations.
+
+---
+
+## Thank You {.scrollable}
+
+### Questions & Discussion
+
+<div style="text-align: center; margin-top: 3rem;">
+  <p style="font-size: 1.5rem; color: #447099; font-weight: bold;">
+    Your questions and experiences are valuable
+  </p>
+  <p style="font-size: 1.2rem; margin-top: 1rem;">
+    Let's discuss how to apply these methods in your specific context
+  </p>
+</div>
+
+---
+
+**Contact Information:**
+
+-

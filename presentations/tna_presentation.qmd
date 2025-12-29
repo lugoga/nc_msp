@@ -1,0 +1,451 @@
+---
+title: "Training Needs Assessment"
+subtitle: "Informing a Fisheries Stock Assessment Curriculum for Somalia"
+author: 
+  - name: "Masumbuko Semba"
+    affiliation: "NM-AIST"
+  - name: "George Rushingisha"
+    affiliation: "TAFIRI"
+format: 
+  revealjs:
+    theme: sky
+    slide-number: c/t
+    # chalkboard: true
+date: today
+execute: 
+  echo: false
+  warning: false
+  message: false
+  eval: false
+embed-resources: true
+---
+
+```{r setup, include=FALSE}
+require(tidyverse)
+require(tidyplots)
+
+# Load and clean data
+tna <- readxl::read_excel('TA/Training_Needs_Assessment_Questionnaire_Fisheries_Stock_Assessment_Capacity_Building_-_all_versions_-_labels_-_2025-12-06-00-41-31.xlsx') |> 
+    janitor::remove_empty(which = 'rows') |>
+    janitor::clean_names()
+
+# Define a consistent color palette for ratings
+my_colors <- c("Expert" = "#009e73",
+               "Good" = "#56b4e9",
+               "Moderate" = "#f5c710",
+               "Basic" = "#888888")
+
+
+```
+
+## Outline
+
+-   **Introduction:** Why this assessment was needed.
+-   **Participant Profile:** Who was assessed?
+-   **Self-Assessed Knowledge:** What are the current capacity gaps?
+-   **Training Priorities:** What do participants see as most essential?
+-   **Proposed Curriculum:** How the results shape the training modules.
+
+# Introduction
+
+## Purpose
+
+-   **Goal:** To design an effective stock assessment training program for Somali fisheries professionals.
+-   **Objective:** Identify current knowledge gaps and specific training priorities through a targeted needs assessment.
+-   **Rationale:** This data-driven approach ensures the curriculum is relevant, practical, and directly addresses the needs of the participants.
+
+## Our Approach
+
+-   A structured questionnaire was developed to capture participant backgrounds and self-assessed skill levels.
+-   The questionnaire was distributed for completion.
+-   The collected data was downloaded and analyzed to identify capacity gaps and training priorities.
+
+![](plots/qrcode_kobo.svg){ width="250px" height="250px" align="center"}
+
+## Our Approach ....
+
+![](plots/questionnaire.svg)
+
+## Submitted forms
+
+
+
+:::: {.columns}
+
+::: {.column width="40%"}
+
+-  Twelve completed questionnaires.
+- One incomplete form and was excluded from the analysis.
+-  The analysis is based on eleven complete responses.
+:::
+
+::: {.column width="60%"}
+![](plots/submitted_forms.png)
+
+
+:::
+
+::::
+
+
+
+# Participant Profile
+
+## Who are we training?
+
+:::: {.columns}
+
+::: {.column width="40%"}
+**Education & Expertise**
+
+-   Most participants hold Bachelor's or Master's degrees.
+-   Primary fields of expertise are in Fisheries Biology and Marine Science.
+<!-- -   This indicates a strong academic foundation to build upon with practical skills. -->
+:::
+
+::: {.column width="60%"}
+```{r}
+#| echo: false
+tna |> 
+  rename(edu = what_is_your_highest_academic_qualification, 
+         field = what_is_your_field_of_expert)|> 
+  webr::PieDonut(aes(pie = edu, donut = field), r0 = .5, r1 = .9, labelposition=1)
+```
+
+![](plots/education_field.svg)
+
+:::
+
+::::
+
+
+## Who are we training?
+
+:::: {.columns}
+
+::: {.column width="50%"}
+**Institutional Affiliation**
+
+-   Participants are drawn from both Federal and State-level ministries.
+-   Representation from key coastal states ensures broad geographic reach.
+
+
+
+:::
+
+::: {.column width="50%"}
+
+```{r}
+#| echo: false
+tna |> 
+    rename(Institute = your_current_ministry_or_institution)|>
+  webr::PieDonut(aes(Institute), r0 = 0.7, labelposition=1)
+```
+
+![](plots/affiliation.svg)
+:::
+
+::::
+
+
+
+
+# Self-Assessed Knowledge
+
+Where are the current capacity gaps?
+
+::: {.notes}
+The next slides show the results of the self-assessment across three key areas. Participants rated their knowledge from 'Basic' to 'Expert'. We see a clear pattern: foundational knowledge is stronger, while more advanced, applied skills are less developed.
+:::
+
+## Fundamental of Stock Assessment
+
+```{r}
+#| echo: false
+#| fig-height: 4
+#| fig-width: 8
+
+fundamentals_data <- tna |> 
+    select(understanding_of_basic_stock_assessment_concepts_principles_and_terminology:understanding_indirect_methods_of_data_collection_e_g_commercial_catches) |> 
+    rename(
+        `Basic Concepts & Principles` = 1, 
+        `Importance of Stock Assessment` = 2, 
+        `Application of Stock Information` = 3, 
+        `Fisheries-Independent Approach` = 4, 
+        `Fisheries-Dependent Approach` = 5,
+    ) |>
+    pivot_longer(cols = everything(), names_to = 'question', values_to = 'rating') 
+
+
+# fundamentals_data |> 
+#     group_by(question, rating) |> 
+#     count() |> 
+#     ungroup() |> 
+#     tidyplot(x = n, y = question, fill = rating) |> 
+#     add_barstack_relative() |> 
+#     adjust_font(fontsize = 10) |> 
+#     adjust_size(width = 5, height = 2.4, unit = 'in') |> 
+#     adjust_colors(my_colors) |>
+#     reorder_color_labels(names(my_colors)) |>
+#     adjust_legend_position(position = 'right') |>
+#     adjust_y_axis(labels = scales::label_wrap(40)) |> 
+#     adjust_x_axis(labels = scales::percent) |> 
+#     remove_legend_title() |> 
+#     remove_y_axis_title() |> 
+#     remove_x_axis_title() |> 
+#     reorder_color_labels(c('Basic', 'Moderate', 'Good', 'Expert') |> rev())
+
+fundamentals_data |> 
+    group_by(question, rating) |> 
+    count() |> 
+    ungroup() |> 
+  tidyplot(y = n, color = rating) |> 
+  add_donut() |> 
+  adjust_colors(my_colors) |>
+#   adjust_font(fontsize = 10) |>
+  reorder_color_labels(names(my_colors)) |> 
+  remove_legend_title() |> 
+#   adjust_size(width = 35, height = 35) |> 
+  split_plot(by = question, ncol = 3) &
+  patchwork::plot_annotation(
+    title = "Ratings on Fundamentals of Fish Stock Assessment",
+    # caption = "Data source: energy-charts.info",
+    theme = theme(plot.title = element_text(hjust = 0.5, size = 18),
+                  plot.caption = element_text(size = 6))
+  )
+
+```
+
+![](plots/rating_fundamentals.svg)
+
+## Data Collection & Analysis
+
+```{r}
+#| echo: false
+#| fig-height: 4
+#| fig-width: 8
+
+collection_data <- tna |> 
+    select(implementing_sampling_design_and_biological_sampling_protocols:accessing_and_utilizing_existing_regional_data_sources_and_available_tools) |> 
+    rename(
+        `Sampling Design & Protocols` = 1, 
+        `Biological Sampling` = 2, 
+        `Catch and Effort Data` = 3, 
+        `Data Quality Control` = 4
+    ) |>
+    pivot_longer(cols = everything(), names_to = 'question', values_to = 'rating')
+
+collection_data |> 
+    group_by(question, rating) |> 
+    count() |> 
+    ungroup() |> 
+  tidyplot(y = n, color = rating) |> 
+  add_donut() |> 
+  adjust_colors(my_colors) |>
+#   adjust_font(fontsize = 10) |>
+  reorder_color_labels(names(my_colors)) |> 
+  remove_legend_title() |> 
+#   adjust_size(width = 35, height = 35) |> 
+  split_plot(by = question, ncol = 3) &
+  patchwork::plot_annotation(
+    title = "Ratings on Data Collection Techniques",
+    # caption = "Data source: energy-charts.info",
+    theme = theme(plot.title = element_text(hjust = 0.5, size = 18),
+                  plot.caption = element_text(size = 6))
+    )
+```
+
+![](plots/ratings_data_collection.svg)
+
+## Modeling for Data-Poor Contexts
+
+```{r}
+#| echo: false
+#| fig-height: 4
+#| fig-width: 8
+
+modelling_data <- tna |> 
+    select(practical_use_of_analytical_software_e_g_r_spss_excel_based_models_for_fisheries_analysis:integrating_ecosystem_based_fisheries_management_ebfm_considerations_into_assessment_results) |> 
+    rename(
+        `Use of Analytical Software (R)` = 1, 
+        `Applying Stock Assessment Methods` = 2, 
+        `Length-Based & Empirical Models` = 3, 
+        `Integrate EBFM Considerations` = 4
+    ) |>
+    pivot_longer(cols = everything(), names_to = 'question', values_to = 'rating')
+
+
+modelling_data |> 
+    group_by(question, rating) |> 
+    count() |> 
+    ungroup() |> 
+  tidyplot(y = n, color = rating) |> 
+  add_donut() |> 
+  adjust_colors(my_colors) |>
+#   adjust_font(fontsize = 10) |>
+  reorder_color_labels(names(my_colors)) |> 
+  remove_legend_title() |> 
+#   adjust_size(width = 35, height = 35) |> 
+  split_plot(by = question, ncol = 3) &
+  patchwork::plot_annotation(
+    title = "Ratings on Modeling and Assessment",
+    # caption = "Data source: energy-charts.info",
+    theme = theme(plot.title = element_text(hjust = 0.5, size = 18),
+                  plot.caption = element_text(size = 6))
+    )
+```
+
+![](plots/rating_modelling.svg)
+
+# Training Priorities
+
+## Training Priorities?
+
+What is the most essential training component identified by participants?
+
+```{r}
+#| echo: false
+#| fig-align: center
+
+priorities_text <- tna |>
+  pull(c2_which_specific_training_component_do_you_believe_is_most_essential_for_ensuring_sustainable_management_and_responsible_utilization_of_marine_resources_in_somalia) 
+
+phrases_to_count <- c("Data-Limited Methods", "Data Collection Protocols", "Fundamentals/Concepts")
+pattern <- str_c(phrases_to_count, collapse = "|")
+
+word_counts <- tibble(text = priorities_text) |>
+  mutate(phrases = str_extract_all(text, pattern)) |>
+  unnest(phrases) |>
+  count(phrases, name = "n") |>
+  rename(word = phrases)
+
+word_counts |> 
+    webr::PieDonut(aes(word, count = n), r0 = .7, labelposition=1)  &
+  patchwork::plot_annotation(
+    title = "Most Essential Training Components",
+    # caption = "Data source: energy-charts.info",
+    theme = theme(plot.title = element_text(hjust = 0.5, size = 18),
+                  plot.caption = element_text(size = 6))
+  )
+```
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+- Fundamental concepts
+- Data collection protocols
+- Data-limited stock assessment methods
+
+
+:::
+
+::: {.column width="50%"}
+
+![](plots/essential_training_modules.svg)
+:::
+
+::::
+
+
+## Fish Stocks Priorities?
+
+What is the most essential fish stock which need immediate capacity building on assessment techniques?
+
+```{r}
+#| echo: false
+#| fig-align: center
+
+
+
+tna |> 
+    select(stock = please_list_any_specific_somali_fish_stocks_for_which_you_need_immediate_capacity_building_on_assessment_techniques) |> 
+    group_by(stock) |> 
+    tally()|> 
+    webr::PieDonut(aes(stock, count = n), r0 = .8, explode=0,start=pi/2,labelposition=1)&
+  patchwork::plot_annotation(
+    title = "Prioritized Somali fish stocks for capacity building",
+    # caption = "Data source: energy-charts.info",
+    theme = theme(plot.title = element_text(hjust = 0.5, size = 18),
+                  plot.caption = element_text(size = 6))
+    )
+
+```
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+-   Tuna and tuna-like species
+-   Sharks and rays
+-   Demersal fish (e.g., groupers, emperors)
+
+:::
+
+::: {.column width="50%"}
+
+![](plots/priority%20stock.svg)
+:::
+
+::::
+
+# Formulating the Training Modules
+
+Directly informed by the Training Needs Assessment
+
+## Proposed Training Module {.scrollable}
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| eval: true
+#| 
+require(gt)
+require(tidyverse)
+
+# Create a tibble with the module information
+module_plan <- tibble(
+  Module = c(
+    "Module 1: Fundamentals & Concepts",
+    "Module 2: Data Collection Protocols",
+    "Module 3: Data-Limited Methods"
+  ),
+  Rationale = c(
+    "Reinforce core knowledge, as many participants rate themselves as 'Basic' or 'Moderate'.",
+    "A high-priority area. Address gaps in sampling design, quality control, and catch/effort data handling.",
+    "The most requested component and the area with the lowest self-assessed expertise (modeling)."
+  ),
+  `Key Content` = c(
+    "Stock assessment principles, data types, and their application.",
+    "Practical exercises on designing sampling schemes and ensuring data quality.",
+    "Focus on length-based models, empirical methods, and practical application using R."
+  )
+)
+
+# Create the gt table
+module_plan |>
+  gt() |>
+  tab_header(
+    title = "Proposed Training Curriculum",
+    subtitle = "Directly informed by the Training Needs Assessment"
+  ) |>
+  cols_width(
+    Module ~ px(200)
+  ) |>
+  tab_options(
+    table.width = pct(100),
+    table.font.size = "28px"
+  )
+```
+
+
+## Thank You
+
+For questions or further information, please contact
+
+-   **George Rushingisha** (george.rushingisha@tafiri.go.tz)
+-   **Masumbuko Semba** (masumbuko.semba@nm-aist.ac.tz)
+
+<br>
+*Asante sana!*

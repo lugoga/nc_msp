@@ -1,0 +1,365 @@
+---
+title: "Marine Spatial Planning Project - Scope of Work and Deliverables"
+date: "2025-12-27"
+date-modified: today
+toc: true
+execute: 
+  echo: false
+  warning: false
+  message: false
+  comment: ""
+---
+
+
+
+```{r}
+require(tidyverse)
+require(echarts4r)
+```
+
+
+## Marine Spatial Planning 
+
+**Location**: Mkoani (Pemba) and Mkuranga (Pwani Region), Tanzania
+
+---
+
+## Project Overview
+
+This Marine Spatial Planning project aims to develop comprehensive spatial plans for sustainable coastal and marine resource management in Mkoani and Mkuranga districts. The initiative integrates scientific research, stakeholder engagement, and participatory planning to support evidence-based marine governance and blue economy development.
+
+
+::: {style="position: relative; display: inline-block; width: 100%; float: right; margin-left: 20px; margin-bottom: 15px;"}
+![](images/components/iga2.jpg){fig-alt="Stakeholder validation and engagement" .img-fluid style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); display: block; width: 100%;"}
+
+::: {style="position: absolute; bottom: 15px; left: 15px; right: 15px; background: rgba(0, 0, 0, 0.4); color: white; padding: 12px 15px; border-radius: 8px; font-size: 14px; font-weight: 500; backdrop-filter: blur(5px);"}
+**Collaborative Marine Spatial Planning:** Stakeholders and community leaders engage in participatory discussions to shape sustainable management strategies for coastal Tanzania
+:::
+:::
+
+---
+
+## Scope of Work and Deliverables
+
+### 1. Inception Report 
+**Target Completion Date**: 15 September 2025
+
+**Objectives**: Establish project foundations, clarify roles and responsibilities, and align stakeholders on project goals and implementation approach.
+
+
+
+::: {.columns}
+::: {.column width="50%"}
+**Deliverable**: A detailed inception report including:
+
+- Comprehensive project methodology and approach
+- Detailed activity schedule and timeline
+- Data requirements and collection protocols
+- Stakeholder engagement and consultation plan
+- Institutional coordination framework
+:::
+::: {.column width="50%"}
+
+```{r}
+echarts4r::e_chart() |> 
+  echarts4r::e_gauge(
+    value = 90, 
+    name = "PERCENT", 
+    max = 100
+    )
+```
+
+:::
+::: 
+
+
+
+---
+
+### 2. Biodiversity Assessment and Trend Analysis
+**Target Completion Date**: 25 January 2026
+
+**Lead**: Siajali Pamba under guidance of Masumbuko Semba
+
+**Objectives**: Establish baseline biodiversity conditions and identify temporal trends to inform conservation priorities.
+
+**Deliverable**: A report on data collection, detailed maps and ground truthing, showing:
+
+::: {.columns}
+::: {.column}
+- Decadal trends in biodiversity loss and gain across Tanzania (focusing on mangrove ecosystems)
+- Regional context and significance for marine conservation
+- Spatial distribution maps of key biodiversity indicators
+- Ground-truthed field observations and validation data
+- High-resolution geospatial mapping of mangrove loss/gain trends for coastal districts
+- Restoration priority areas for carbon offset schemes and climate mitigation
+:::
+::: {.column}
+
+```{r}
+echarts4r::e_chart() |> 
+  echarts4r::e_gauge(
+    value = 10, 
+    name = "PERCENT", 
+    max = 100
+    )
+```
+
+:::
+::: 
+
+---
+
+### 3. Field Data Collection and Mapping
+**Target Completion Date**: 25 January 2026
+
+**Lead**: Masumbuko Semba with guidance from Siajali Pamba
+
+**Objectives**: Collect primary data across multiple disciplines and develop spatial datasets to support planning decisions.
+
+**Deliverable**: Comprehensive field data collection and map layer development:
+
+::: {.columns}
+::: {.column}
+- **Physical data**: Bathymetry, coastal morphology, oceanographic parameters, seabed morphology, ocean currents, sea level trends, salinity, temperature, acidification, upwelling zones
+- **Biological data**: Fish populations, coral reef conditions, seagrass beds, biodiversity hotspots, mangroves, critical fish habitats, migratory corridors (turtles, sharks)
+- **Geomorphological data**: Habitat classifications, erosion zones, ecosystem boundaries
+- **Socioeconomic data**: Fisher demographics, livelihood patterns, resource use intensity, settlements, infrastructure, tourism hubs
+- **Marine resource use data**: Fishing effort distribution, gear types, seasonal patterns, aquaculture/mariculture zones, fish landing sites, CFMAs, CMAs, BMUs
+<!-- - **Developed map layers**: Integrated geospatial databases for Mkuranga and Mkoani districts covering physical features, ecological assets, health indicators, human activities, and resource conflicts -->
+<!-- - **Ground-truthing verification**: Field validation of remotely-sensed data and classification accuracy incorporating local knowledge -->
+:::
+::: {.column}
+
+```{r}
+echarts4r::e_chart() |> 
+  echarts4r::e_gauge(
+    value = 40, 
+    name = "PERCENT", 
+    max = 100
+    )
+```
+
+:::
+::: 
+
+**Data Sources**: ESA data (10m resolution), NAFORMA, TAN-Sea map, ECAS data, TPDC (oil and gas), open street maps, Frame survey data
+
+
+---
+
+### 4. Ecosystem Services Valuation
+**Target Completion Date**: 31 March 2026
+
+**Lead**: Gervas Maro with assistance from Julius Francis
+
+**Objectives**: Quantify the economic value of marine ecosystems to support conservation and sustainable use arguments.
+
+**Deliverable**: A comprehensive economic valuation report including:
+
+::: {.columns}
+::: {.column}
+- Baseline valuation of coastal and marine ecosystem goods and services in USD
+- Spatial mapping of classified ecosystem assets and service categories
+- Classification and cataloging of coastal and marine assets with focus on key habitats (mangroves, coral, seagrasses, beaches)
+- Ecosystem services analysis through comparative risk analysis:
+
+  - Provisioning services (food provisioning from marine fish catch, mariculture, agriculture, raw materials, fuelwood, timber)
+  - Regulating/supporting services (carbon sequestration, habitat maintenance, regulation of extreme events)
+  - Cultural services (tourism, recreation, ecotourism)
+
+
+:::
+::: {.column}
+
+<!-- - Baseline valuation quantifying revenue generated in USD for identified ecosystem services
+- Comparative risk analysis assessing threats to ecosystem service provision
+- Identification of critical data gaps
+- Collection of additional field data to address gaps
+- Stakeholder-validated recommendations for ecosystem management
+- Foundation data for bio-economic modeling and investment planning -->
+
+```{r}
+echarts4r::e_chart() |> 
+  echarts4r::e_gauge(
+    value = 5, 
+    name = "PERCENT", 
+    max = 100
+    )
+```
+
+:::
+::: 
+
+
+---
+
+### 5. Bio-Economic Cost-Benefit Analysis
+**Target Completion Date**: 31 March 2026
+
+**Lead**: Emmanuel Mpina with inputs from project team members
+
+**Objectives**: Demonstrate the economic case for sustainable marine management and identify financing pathways aligned with national priorities.
+
+**Deliverable**: A detailed cost-benefit analysis report evaluating proposed bioeconomic activities:
+
+
+::: {.columns}
+::: {.column}
+- Financial feasibility assessments for:
+
+  - New Marine Protected Areas (MPAs)
+  - Carbon offset co-managed sites
+  - Octopus closure sites
+  - Seaweed farming plots
+  - Pelagic anchovies (dagaa) initiatives
+  - Alternative livelihoods (e.g., seaweed farming, eco-tourism)
+
+- Proposed green and blue finance instruments for funding:
+
+  - Local tax mechanisms
+  - Private investor partnerships
+  - Climate finance instruments
+  - Conservation trust funds
+  - Payment for ecosystem services schemes
+:::
+::: {.column}
+- Policy guidance to support:
+
+  - Blue economy growth and diversification
+  - Biodiversity conservation and ecosystem restoration
+  - Ecosystem resilience and climate adaptation
+  - Alignment with national climate action plans and SDGs
+  - Upscaling of successful initiatives
+
+
+
+```{r}
+echarts4r::e_chart() |> 
+  echarts4r::e_gauge(
+    value = 15, 
+    name = "PERCENT", 
+    max = 100
+    )
+```
+
+:::
+:::
+
+---
+
+### 6. Interactive Digital Visualization Platform
+**Target Completion Date**: 1 December 2025 - 15 April 2026
+
+**Lead**: Masumbuko Semba and Emmanuel Mpina
+**Objectives**: Make complex spatial and economic data accessible and actionable for diverse stakeholders.
+**Deliverable**: An integrated digital visualization tool featuring:
+
+
+::: {.columns}
+::: {.column}
+- **Web Maps**: Geospatial visualizations displaying:
+
+  - Degraded hotspots in Tanzania requiring restoration
+  - Marine biodiversity loss and gain spatial trends
+  - State of Mkuranga and Mkoani districts showing physical features, ecological assets, and health indicators
+  - Ecosystem valuation data and economic analysis results
+  - Cost-benefit analysis for implementation of environmental and socioeconomic measures
+  - Blue economy initiatives and innovations
+
+- **District Focus**: Detailed visualizations and statistics for Mkuranga and Mkoani:
+
+  - Ecosystem status indicators
+  - Biodiversity patterns and trends
+  - Ecosystem service spatial distribution
+
+:::
+::: {.column}
+
+  - Socioeconomic context and livelihood dependencies
+  - Climate vulnerability assessments
+  - Areas of potential marine resource-use conflicts
+  - Community-priority conservation areas and fisheries closure areas
+  - Blue carbon opportunities
+
+```{r}
+echarts4r::e_chart() |> 
+  echarts4r::e_gauge(
+    value = 28, 
+    name = "PERCENT", 
+    max = 100
+    )
+```
+
+:::
+:::
+
+
+---
+
+## Timeline Summary
+
+| Deliverable | Due Date | Status |
+|-------------|----------|--------|
+| 1. Inception Report | 15 September 2025 | Completed |
+| 2. Biodiversity Assessment Report | 25 January 2026 | In Progress |
+| 3. Field Data Collection & Mapping | 25 January 2026 | Upcoming |
+| 4. Validation Meeting | 28 February 2026 | Upcoming |
+| 5. Ecosystem Services Valuation Report | 31 March 2026 | Upcoming |
+| 6. Bio-Economic Analysis Report | 31 March 2026 | Upcoming |
+| 7. Digital Visualization Platform | 1 December 2025 - 15 April 2026 | In Progress |
+
+---
+
+<!-- ## Project Team and Coordination
+
+**Project Leadership:**
+
+- Siajali Pamba (University of Dar es Salaam, SOAF) -  Overall Project Coordination Geospatial Mapping (GIS & Remote Sensing) Lead
+- Masumbuko Semba (NM-AIST) - Data Analysis & Visualization Lead
+- Julius Francis (University of Dar es Salaam, SOAF) - Economic Valuation Support
+- Emmanuel Mpina (The Nature Conservancy, Tanzania) - Stakeholder Engagement & Digital Visualization Lead
+- Maro - Ecosystem Services Valuation Lead
+
+**District Contact Persons:**
+- **Mkuranga District**: Ms. Lucia (District Fisheries Officer)
+- **Mkoani District (Pemba)**: Dr. Hamza
+
+---
+
+## Key Implementation Partners and Data Sources
+
+**Institutional Partners:**
+
+- Tanzania Fisheries Research Institute (TAFIRI)
+- University of Dar es Salaam, School of Aquatic Sciences and Fisheries Technology (SOAF)
+- The Nature Conservancy (TNC), Tanzania
+- Mangrove Network
+- TPDC (Oil and Gas)
+
+**Data Sources:**
+
+- ESA remote sensing data (10m resolution)
+- NAFORMA (land cover)
+- TAN-Sea map
+- ECAS data (Catch data and fish landing sites)
+- Frame survey data (Beach Management Units)
+- Heshimu Bahari (Fish pattern mapping)
+
+**Stakeholder Engagement:**
+
+- District authorities (TAMISEMI letter/VPO letter for introduction)
+- Fishing communities and Beach Management Units
+- District Fisheries Officers
+- Local conservation networks
+
+---
+
+## Key Principles
+
+- **Evidence-based planning**: All recommendations grounded in scientific data and analysis
+- **Stakeholder participation**: Inclusive engagement of fishing communities, government, and other users
+- **Sustainability**: Balancing conservation, economic development, and livelihood security
+- **Scalability**: Approaches applicable to other coastal regions in Tanzania and the Indian Ocean
+- **Adaptive management**: Built-in mechanisms for monitoring, evaluation, and plan refinement -->
+

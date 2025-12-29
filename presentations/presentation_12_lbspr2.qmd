@@ -1,0 +1,505 @@
+---
+title: "Introduction to Length-Based Models"
+subtitle: "Somali Fish Stock Training"
+date: today
+author: 
+    - name: "Masumbuko Semba"
+      affiliation: "Nelson Mandela African Institution of Science and Technology"
+      email: "lugosemba@gmail.com"
+    - name: "Rushingisha George"
+      affiliation: "Tanzania Fisheries Research Institute"
+      email: "george.rushingisha@tafiri.go.tz"
+    - name: "Mathew Silas"
+      affiliation: "Deep Sea Fishing Authority"
+      email: "mathewsilas28@gmail.com"
+format: revealjs
+theme: 'simple'
+transition: slide
+background-transition: fade
+highlight-style: github
+slide-number: true
+embed-resources: true
+execute:
+  eval: false
+  echo: true
+  warning: false
+code-fold: show
+---
+
+```{r}
+#| echo: false
+#| eval: true
+#| 
+require(tidyverse)
+require(tidyplots)
+require(LBSPR) # The package for LBSPR analysis
+
+# Load data
+lw <- readxl::read_excel('../data_shared/ProjKalluun_master_data_entry.xlsx', sheet = 'Section 3', skip = 4) |> 
+    janitor::clean_names() |> 
+    filter(!is.na(landing_site)) |> 
+    mutate(
+      year = year(date_dd_mm_yy),
+      length_cm = as.numeric(length_cm)
+    )
+```
+
+
+# Welcome to Length-Based Approach  {background-color="#447099"}
+Stock Assessment Models
+
+## Introduction to Length-Based Stock Assessment Models {.scrollable}
+
+::::: columns
+::: {.column width="50%"}
+### Learning Objectives
+
+-   <i class="fa-solid fa-lightbulb"></i> Understand why length-based models are used in data-limited fisheries.
+-   <i class="fa-solid fa-keyboard"></i> Learn the key inputs for the LBSPR model.
+-   <i class="fa-brands fa-r-project"></i> Run a basic LBSPR analysis in R.
+-   <i class="fa-solid fa-chart-line"></i> Interpret the main outputs: SPR and F/M.
+:::
+
+::: {.column width="50%"}
+### Why This Matters
+
+-   <i class="fa-solid fa-tools"></i> These are the most practical and powerful tools for your data.
+-   <i class="fa-solid fa-chart-bar"></i> Provides a quantitative estimate of stock status.
+-   <i class="fa-solid fa-bullhorn"></i> Directly informs management about fishing pressure.
+:::
+:::::
+
+------------------------------------------------------------------------
+
+
+## What is a "Fish Stock"?   {.scrollable}
+
+Before we model, we must understand what we are assessing.
+
+
+<div style="position: relative; max-width: 600px; margin: 2rem auto; padding: 2rem; font-family: Georgia, serif; font-size: 1.5rem; line-height: 1.6; color: #333; text-align: center;">
+  <span style="font-family: 'Times New Roman', serif; font-size: 14rem; color: #17280b; position: absolute; top: 0; left: 10px; line-height: 1; opacity: 0.7;">“</span>
+  <p style="font-style: italic; font-family: Poppins;font-size: 2.5rem; color:#3e880a; margin: 0; padding: 0 4rem;">A group of fish of the same species that live in a particular geographic area and mix enough to share a common gene pool</p>
+  <span style="font-family: 'Times New Roman', serif; font-size: 15rem; color: #17280b; position: absolute; bottom: -20px; right: 10px; line-height: 0; opacity: 0.7;">”</span>
+</div>
+
+- Understanding the stock is the first step. The model's results apply only to the stock we define.
+
+
+
+## Critical Assumptions {.scrollable}
+
+:::: {.columns}
+::: {.column width="50%"}
+### 1. Stock Boundaries
+
+**Scientific Basis:** The assessed population represents a self-sustaining unit with minimal immigration or emigration.
+
+**Practical Implication:** Fish movement between regions must be negligible relative to population size.
+
+### 2. Fishing as Primary Driver
+
+**Scientific Basis:** Population dynamics are driven by natural mortality and fishing mortality, not by migration patterns.
+
+**Practical Implication:** Changes in stock size reflect fishing pressure, not population shifts.
+:::
+
+::: {.column width="50%"}
+### 3. Representative Sampling
+
+**Scientific Basis:** Length distributions in catches accurately represent the population structure.
+
+**Practical Implication:** Sampling must be unbiased and cover the full spatial and temporal range of the fishery.
+
+::: {.callout-tip}
+## For This Training
+We will assess **yellowfin tuna** caught in Somali waters as a discrete stock, recognizing this is a simplification that may require refinement for formal assessments.
+:::
+:::
+::::
+
+
+# Length-Based Assessment Methods {background-color="#447099"}
+
+## Why Use Length-Based Models? {.scrollable}
+
+Many developing-nation fisheries lack:
+
+- Age-reading laboratories and trained personnel
+- Long-term catch and effort time series
+- Comprehensive biological sampling programs
+- Resources for expensive aging techniques (otolith reading)
+
+## Advantages Length-Based Analysis
+
+- Length data is relatively easy and inexpensive to collect
+- Measurements can be taken dockside without specialized equipment
+- Large sample sizes are feasible with minimal resources
+- Well-established theoretical foundation
+
+::: {.callout-important}
+## Core Assumption
+The length distribution in your **catch sample** must reflect the length distribution in the **exploited population**. Biased sampling (e.g., only large fish, one gear type) will compromise results.
+:::
+
+------------------------------------------------------------------------
+
+
+## What is LBSPR Model Framework {.scrollable}
+
+**Length-Based Spawning Potential Ratio** is a stock assessment model that estimates reproductive capacity under current fishing pressure.
+
+- Developed by Hordyk et al. (2015)
+- Based on equilibrium life history theory
+- Uses size-structured population dynamics
+- Validated across multiple species and fisheries
+
+## LBSPR Model Framework Model Outputs
+
+**Primary Metric: SPR (Spawning Potential Ratio)**
+
+- Proportion of unfished reproductive potential remaining
+- Values range from 0 (collapsed) to 1 (unfished)
+- Directly comparable to management reference points
+
+
+## Interpreting SPR Values
+
+| SPR Range | Stock Status | Management Implication |
+|-----------|--------------|------------------------|
+| > 0.40 | Healthy | Current fishing sustainable |
+| 0.20 - 0.40 | Moderately exploited | Monitor closely, consider precautionary measures |
+| < 0.20 | Overfished | Urgent management action required |
+
+
+## Reference Points
+
+- **Target:** SPR = 40% (widely used globally)
+- **Limit:** SPR = 20% (conservation threshold)
+- These values may be adjusted based on species-specific characteristics and management objectives
+
+------------------------------------------------------------------------
+
+## Key Inputs for LBSPR  {.scrollable}
+
+To run LBSPR, we need two main things:
+
+:::: {.columns}
+::: {.column width="50%"}
+1.  **📊 Length Frequency Data**: A representative sample of the lengths of fish caught from the stock.
+
+2.  **🧬 Life History Parameters**:
+
+    -   `Linf`: Asymptotic length (the theoretical maximum size).
+    -   `MK`: The ratio of natural mortality (M) to the growth rate (K).
+    -   `L50`: Length at 50% maturity.
+    -   `L95`: Length at 95% maturity.
+:::
+
+::: {.column width="50%"}
+These parameters can often be found on [**FishBase.org**](https://www.fishbase.se/search.php) for your species or a similar one.
+
+![](fishbase.png)
+:::
+::::
+
+
+
+
+
+
+## Parameters needed - 1  Biology
+
+:::: {.columns}
+::: {.column width="50%"}
+
+- von Bertalanffy asymptotic length (Linf)
+- M/K ratio (natural mortality divided by von Bertalanffy K coefficient) (MK)
+- Length at 50% maturity (L50)
+- Length at 95% maturity (L95)
+:::
+
+::: {.column width="50%"}
+
+```{r}
+#| echo: true
+#| eval: false
+#| 
+MyPars@Linf <- 100 
+MyPars@L50 <- 66 
+MyPars@L95 <- 70
+MyPars@MK <- 1.5 
+```
+
+:::
+::::
+
+
+
+## Parameters needed - 2  Exploitation
+
+:::: {.columns}
+::: {.column width="50%"}
+
+- Length at 50% selectivity (SL50) 
+- Length at 95% selectivity (SL95) 
+- F/M ratio (FM) or SPR (SPR). 
+
+> If you specify both, the F/M value will be ignored.
+:::
+
+::: {.column width="50%"}
+
+```{r}
+#| echo: true
+#| eval: false
+#| 
+MyPars@SL50 <- 50 
+MyPars@SL95 <- 65
+MyPars@SPR <- 0.4
+```
+
+:::
+::::
+
+
+## Parameters needed - 3 Size Classes
+
+:::: {.columns}
+::: {.column width="50%"}
+
+- Width of the length classes (BinWidth)
+- Maximum length of the sample (BinMax) 
+- Minimum length of sample (BinMin)
+- Units for the length parameters
+
+:::
+
+::: {.column width="50%"}
+
+```{r}
+#| echo: true
+#| eval: false
+#| 
+MyPars@BinWidth <- 5
+MyPars@BinMax <- 150
+MyPars@BinMin <- 0
+
+MyPars@L_units <- "mm"
+```
+
+:::
+::::
+
+## Interpreting LBSPR Output
+
+The model provides three key estimates:
+
+1.  **SPR (Spawning Potential Ratio)**:
+    -   The plot shows an estimated SPR.
+    -   It inform on the state of the stock.
+    -   A common target is 40% and a limit is 20%. 
+2.  **F/M (Fishing Mortality / Natural Mortality)**:
+    -   The estimated F/M ratio.
+    -   It tells us how intense fishing mortality is relative to natural death.
+    -   An F/M ratio \> 1.0 suggests that fishing is causing more deaths than natural causes, a sign of high fishing pressure.
+3.  **The fish state-stock**:
+
+------------------------------------------------------------------------
+
+## Key Takeaways
+
+-   Length-based models like **LBSPR** are powerful tools for assessing data-limited stocks.
+-   They require **length frequency data** and some basic **life history parameters**.
+-   The key outputs, **SPR** and **F/M**, provide a quantitative snapshot of stock status and fishing pressure.
+-   These results can directly inform management actions, such as deciding whether to increase, decrease, or maintain current fishing effort.
+
+------------------------------------------------------------------------
+
+## Questions & Discussion
+
+**Thank You**
+
+
+
+
+# Demonstration  {background-color="#447099"}
+
+We will use yellofin tuna as modal. Its information can be sourced from [fishbase page](https://www.fishbase.se/summary/thunnus-albacares.html)
+
+## Step 1: Prepare the Length Data {.scrollable}
+
+First, we need to process our raw data into the format LBSPR requires: a simple vector of fish lengths. We will filter for our target species group, "Tuna", and remove any invalid length measurements.
+
+:::: {.columns}
+::: {.column width="50%"}
+
+```{r}
+#| echo: true
+#| eval: false
+
+# Filter for Tuna and select the length column
+tuna_lengths <- lw |> 
+  filter(
+    fish_group == "Tuna",
+    !is.na(length_cm)
+  ) |> 
+  pull(length_cm)
+
+# How many fish do we have?
+
+tuna_lengths |> 
+length()
+
+# Let's look at the first few lengths
+tuna_lengths |> 
+head()
+
+tuna_lengths |> 
+  range()
+```
+
+:::
+::: {.column width="50%"}
+
+It's always a good idea to visualize your length data with a histogram before running the model. This helps you spot any potential issues with the data.
+
+```{r}
+#| echo: true
+#| eval: false
+
+hist(tuna_lengths, 
+     main = "Length Frequency of Tuna",
+     xlab = "Length (cm)",
+     breaks = 30)
+```
+
+:::
+::::
+
+
+## Step 1 : Create LBSPR Objects
+
+:::: {.columns}
+::: {.column width="50%"}
+
+```{r}
+#| echo: true
+#| eval: false
+#| 
+
+MyPars <- new("LB_pars")
+
+```
+
+
+:::
+
+::: {.column width="50%"}
+
+- The LB_pars object has 25 slots. 
+- Not all parameters need to be specified for the simulation model.
+
+```{r}
+#| echo: true
+#| eval: false
+#| 
+
+MyPars |> slotNames()
+```
+
+:::
+::::
+
+## Step 2: Populate
+
+Now, we populate the `LB_pars` object with key metric 
+
+```{r}
+#| echo: true
+#| eval: false
+
+# Biological
+# MyPars$Species = "Yellowfin"
+MyPars@Linf <- 100 
+MyPars@L50 <- 66 
+MyPars@L95 <- 70
+MyPars@MK <- 1.5 
+
+# Exploitation
+
+MyPars@SL50 <- 50 
+MyPars@SL95 <- 65
+MyPars@SPR <- 0.4
+
+# Size Classes
+
+MyPars@BinWidth <- 5
+MyPars@BinMax <- 150
+MyPars@BinMin <- 0
+MyPars@L_units <- "mm"
+```
+
+
+## Step 3: Run the LBSPR Model
+
+With our parameters and lengths objects ready, we can now run the `LBSPRfit` function. This is the core of the analysis, where the model fits the parameters to the length data to estimate the stock status.
+
+```{r}
+#| echo: true
+#| eval: false
+
+# Fit the LBSPR model
+lbspr_fit <- MyPars |> 
+  LBSPR::LBSPRsim()
+  
+
+
+```
+
+The `lbspr_fit` object now contains all the results of our analysis.
+
+
+## Step 4: View and Plot the Results
+
+The model provides estimates for selectivity (`SL50`, `SL95`), fishing pressure (`F/M`), and most importantly, the stock status (`SPR`).
+
+:::: {.columns}
+::: {.column width="50%"}
+
+You can view the key estimated parameters directly from the fitted object.
+
+```{r}
+#| echo: true
+#| eval: false
+lbspr_fit@Ests
+```
+
+:::
+::: {.column width="50%"}
+The `plotSim` function gives a comprehensive visual summary of the fit
+
+```{r, fig.align='center'}
+#| echo: true
+#| eval: false
+
+lbspr_fit |> 
+plotSim()
+```
+
+:::
+::::
+
+
+## Interpreting the Real Output
+
+Let's look at the plot from our `lbspr_fit` object.
+
+!{fig-align="center" width="80%"}
+
+1.  **Left Panel**: Shows the fit of the model (red line) to your observed length data (grey bars). A good fit means the line follows the general shape of the bars.
+2.  **Right Panel**: This is the key result. It shows the estimated **SPR** (Spawning Potential Ratio). The black dot is the estimate, and the grey area is the uncertainty. You can compare this value directly to your management targets (e.g., 40%) and limits (e.g., 20%).
+
+Based on this output, you can make a clear statement about the stock's status.
+
+---

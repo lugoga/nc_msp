@@ -1,0 +1,812 @@
+---
+title: "Data for Stock Assessment"
+subtitle: "Fundamentals of Fish Stock Assessment"
+date: "2025-12-05"
+date-modified: today
+author: 
+    - name: "Masumbuko Semba"
+      affiliation: "Nelson Mandela African Institution of Science and Technology"
+      email: "lugosemba@gmail.com"
+    - name: "Mathew Silas"
+      affiliation: "Deep Sea Fishing Authority"
+      email: "mathewsilas28@gmail.com "
+    - name: "Rushingisha George"
+      affiliation: "Tanzania Fisheries Research Institute"
+      email: "george.rushingisha@tafiri.go.tz"
+format: revealjs
+transition: slide
+background-transition: fade
+highlight-style: github
+slide-number: true
+execute: 
+  eval: true
+  echo: false
+  warning: false
+embed-resources: true
+code-fold: true
+theme: "simple"
+---
+
+
+```{r}
+require(sf)
+require(tidyverse)
+require(sizeMat)
+require(gt)
+require(tidyplots)
+require(patchwork)
+require(leaflet)
+require(plotly)
+require(crosstalk)
+```
+
+
+
+
+# Data: The Foundation of Assessment {background-color="#447099"}
+
+> "In God we trust. All others must bring data." - W. Edwards Deming
+
+
+
+
+```{r}
+#| echo: true
+lw = readxl::read_excel('../data_shared/ProjKalluun_master_data_entry.xlsx', sheet = 'Section 3', skip= 4) |> 
+    janitor::clean_names() |> 
+    filter(!is.na(landing_site))
+
+lw = lw |> 
+ mutate(
+    year = year(date_dd_mm_yy),
+    month = month(date_dd_mm_yy, label = TRUE),
+    day = day(date_dd_mm_yy), 
+    .after = date_dd_mm_yy
+ ) |> 
+    mutate(
+    weight_kg = as.numeric(weight_kg),
+    length_cm = as.numeric(length_cm)
+    )
+
+# lw |> write_csv('../data_shared/lw2.csv')
+```
+
+---
+
+## The Concept
+
+![](figures/fig21-01.png)
+
+## What Data Do We Need?
+
+We generally categorize fisheries data into four main types:
+
+1.  **Catch Data:** How much is being removed?
+2.  **Effort Data:** How hard are we fishing?
+3.  **Biological Data:** What are the characteristics of the fish?
+4.  **Abundance Indices:** How is the population size changing?
+5.  **Environmental Data:** What external factors influence the fish?
+
+
+
+---
+
+## 1. Catch Data
+
+**Total removals** from the stock over time (in weight or number).
+
+
+::: {.columns}
+::: {.column width="50%"}
+-   Essential for almost every assessment model.
+-   Sources:
+    -   Commercial logbooks
+    -   Port sampling / observers
+    -   Artisanal landing site surveys
+    -   Recreational surveys
+:::
+
+::: {.column width="50%"}
+
+
+```{r}
+#| eval: false
+#| echo: true
+lw |> 
+    mutate(
+        season = month(date_dd_mm_yy), 
+        season = if_else(season > 5 & season < 10, 'SEM', 'NEM')) |> 
+    webr::PieDonut(aes(pie = season, donut = region), r0 = .5, labelposition=1)
+
+```
+
+![](plots/lw_piedonut.svg){width=100%}
+
+:::
+:::
+
+---
+
+## Example: Annual Catch {.scrollable}
+
+A time series of catch is the most fundamental piece of information.
+
+:::: {.columns}
+::: {.column width="50%"}
+
+```{r}
+#| eval: true
+#| echo: false
+
+# catch_data = read_csv('presentations/landings_wio.csv') 
+catch_data = read_csv('../presentations/landings_wio.csv') 
+
+catch_data |> 
+    filter(!code %in% c('ZAF')) |> 
+    select(-code) |> 
+    pivot_wider(names_from = name, values_from = catch) |> 
+    gt()  |> 
+    fmt_number(columns = everything(), decimals = 0) |> 
+    tab_header(
+        title = "Catch Data by country in the Western Indian Ocean (1950-2018)",
+        subtitle = "Total Annual Landings (MT)"
+    ) |>
+    tab_options(
+        table.width = px(400), 
+        table.font.size = '11px', 
+        heading.title.font.size = '14px',
+        heading.subtitle.font.size = '12px',
+        heading.subtitle.font.weight = 'bold',
+        latex.use_longtable = TRUE, 
+        data_row.padding = px(5),
+        column_labels.padding = px(6)
+    ) |>
+    data_color(
+        columns = Kenya:Madagascar,
+        # rows = 1:8,
+        method = 'quantile',
+        quantiles = 8,
+        colors = scales::col_numeric(
+            palette = 'YlOrRd',
+            domain = NULL
+        )
+    ) |>
+    opt_stylize(style = 6, color = 'gray')
+
+
+```
+
+
+:::
+
+::: {.column width="50%"}
+
+
+
+```{r}
+#| label: display-catch-data
+#| code-fold: true
+#| fig-cap: "Example of annual catch data."
+#| eval: false
+#| echo: true
+
+annual_landings = rfisheries::of_landings()
+
+
+wio_countries = tibble(code = c("KEN", "TZA", "EAZ", "SYC", "ZAF", "MOZ", 
+                                "SOM", "MUS", "MYT", "MDG"),
+                       name = c("Kenya", "Tanzania", "Zanzibar", "Seychelles",
+                                "South Africa",   "Mozambique", "Somalia", 
+                                "Mauritius", "Mayotte", "Madagascar")
+                    )
+
+
+landings_wio_list = list()
+
+for (catches in 1:nrow(wio_countries)){
+  landings_wio_list[[catches]] = rfisheries::of_landings(country = wio_countries$code[catches]) %>% 
+    rename(code = country) %>% 
+    mutate(name = wio_countries$name[catches])
+}
+
+landings_wio_list_df = do.call(rbind, landings_wio_list)
+landings_wio_list_df |> write_csv('landings_wio.csv')
+
+catch_data = read_csv('presentations/landings_wio.csv') 
+
+catch_data |>
+    filter(!code %in% c('ZAF')) |>
+    tidyplot(x = year, y = catch, color = name) |> 
+    add_areastack_absolute() |> 
+    adjust_colors(new_colors = colors_discrete_friendly_long) |> 
+    adjust_size(width = 3.0, height = 3.5, unit = 'in') |> 
+    adjust_legend_title(title = "Country")  |> 
+    adjust_legend_position(position = c(.25,.8))|>
+    adjust_font(fontsize = 11) |> 
+    adjust_y_axis(title = "Quantity Landed (MT)", breaks = scales::pretty_breaks(n = 6), labels = scales::comma) |> 
+    adjust_x_axis(breaks = seq(1950, 2020, by = 10)) |>
+    remove_x_axis_title() |> 
+    save_plot('presentations/plots/annual_catch_wio.svg')
+
+
+```
+
+![](plots/annual_catch_wio.svg){width=100%}
+:::
+::::
+
+
+---
+
+
+## 2. Effort Data
+
+-   **Measure of the resources used to catch fish.**
+-   Crucial for understanding changes in fishing pressure.
+-   Examples:
+    -   Number of fishing days (`days-at-sea`)
+    -   Number of vessels
+    -   Number of hooks, nets, or traps
+    -   Engine horsepower
+
+
+## 2. Effort Data...
+
+Spatial variation of fishing effort for longline and purse seine fisheries {.scrollable}
+
+![](figures/density_ll_ps-01.png)
+
+---
+
+## 3. Biological Data {background-color="#447099"}
+
+-   Describes the life history of the stock.
+-   Collected through biological sampling programs.
+-   Key parameters:
+    -   **Length & Weight:** For growth models (L-W relationship).
+    -   **Age:** From otoliths, spines, or scales.
+    -   **Sex & Maturity:** To determine size/age at maturity.
+    -   **Fecundity:** Reproductive potential.
+
+---
+
+## Example: Length-Frequency Data  {.scrollable}
+
+
+```{r}
+#| label: display-length-data
+#| code-fold: true
+#| fig-cap: "Example histogram of sampled fish lengths."
+#| eval: true
+
+lw |> 
+    mutate(date = as.Date(date_dd_mm_yy)) |>
+    select(date, region, landing_site, fish_group, fishCode = fish_type_code, length_cm, weight_kg) |> 
+    # sample_n(200) |> 
+    gt() |> 
+    fmt_number(columns = c(length_cm, weight_kg), decimals = 1) |> 
+    tab_options(
+        table.width = px(1000), 
+        # table.font.size = '11px', 
+        # heading.title.font.size = '14px',
+        # heading.subtitle.font.size = '12px',
+        heading.subtitle.font.weight = 'bold',
+        latex.use_longtable = TRUE, 
+        data_row.padding = px(5),
+        column_labels.padding = px(6),
+        container.overflow.y = "scroll",
+        container.overflow.x = "auto"
+    ) |>
+    data_color(
+        columns = length_cm:weight_kg,
+        # rows = 1:8,
+        method = 'quantile',
+        quantiles = 8,
+        colors = scales::col_numeric(
+            palette = 'YlOrRd',
+            domain = NULL
+        )
+    ) |>  
+    gt::opt_interactive(
+    use_search = TRUE,
+    use_filters = TRUE,
+    use_resizers = TRUE,
+    use_highlight = TRUE,
+    use_compact_mode = TRUE,
+    use_text_wrapping = FALSE,
+    use_page_size_select = TRUE
+  )
+
+
+```
+
+---
+
+
+
+## Length Distributions
+
+```{r}
+#| eval: true
+
+lw |> 
+    filter(!fish_group == 'Rays and Skates') |> 
+    tidyplot(x = length_cm) |>
+    tidyplots::add_histogram(binwidth = 5, boundary = 0, fill = '#2196F3', alpha = 0.85) |> 
+    adjust_size(width = 2.5, height = 1.5, unit = 'in') |> 
+    adjust_x_axis(title = 'Length (cm)', limits = c(0, NA), breaks = scales::pretty_breaks(n = 5)) |> 
+    adjust_y_axis(title = 'Frequency', breaks = scales::pretty_breaks(n = 5)) |>
+    adjust_title('Length Distribution by Fish Group', fontsize = 12, fontweight = 'bold') |>
+    adjust_font(fontsize = 14) |> 
+    split_plot(by = fish_group)
+```
+
+
+
+## Summary Statistics - Length Distribution by Fish Group and Region {.scrollable}
+
+```{r}
+lw |> 
+    # filter(!fish_group == 'Rays and Skates') |> 
+    select(region, length_cm, fish_group) |>
+    group_by(region, fish_group) |>
+    rstatix::get_summary_stats() |> 
+    ungroup() |> 
+    select(fish_group, region, n, min, q1, median, mean, q3, max, sd) |> 
+    arrange(fish_group, region) |>
+    gt(groupname_col = 'fish_group')  |> 
+    tab_header(
+        title = "Length Distribution Summary Statistics by Fish Group and Region"
+        # subtitle = "Measurements in centimeters, excluding Rays and Skates"
+    ) |>
+    cols_label(
+        region = "Region",
+        n = "N",
+        min = "Min",
+        q1 = "Q1",
+        median = "Median",
+        mean = "Mean",
+        q3 = "Q3",
+        max = "Max",
+        sd = "SD"
+    ) |>
+    fmt_number(columns = c(min, q1, median, mean, q3, max, sd), decimals = 1) |>
+    tab_options(
+        table.width = px(1000), 
+        table.font.size = '16px', 
+        heading.title.font.size = '20px',
+        heading.subtitle.font.size = '18px', 
+        heading.subtitle.font.weight = 'bold',
+        latex.use_longtable = TRUE,
+        data_row.padding = px(5),
+        column_labels.padding = px(6)
+    ) |>
+    data_color(
+        columns = n:sd,
+        rows = everything(),
+        method = 'quantile',
+        quantiles = 8,
+        colors = scales::col_numeric(
+            palette = 'YlOrRd',
+            domain = NULL
+        )
+    ) |>
+    opt_stylize(style = 6, color = 'gray')
+```
+
+
+## Summary Statistics - Length Distribution by Fish Group and years {.scrollable}
+
+```{r}
+lw |> 
+    # filter(!fish_group == 'Rays and Skates') |> 
+    select(region, length_cm, fish_group, year) |>
+    group_by(fish_group, year) |>
+    rstatix::get_summary_stats() |> 
+    ungroup() |> 
+    select(year, fish_group, n, min, q1, median, mean, q3, max, sd) |> 
+    arrange(fish_group, year) |>
+    gt(groupname_col = 'fish_group')  |> 
+    tab_header(
+        title = "Length Distribution Summary Statistics by Fish Group and year"
+        # subtitle = "Measurements in centimeters, excluding Rays and Skates"
+    ) |>
+    cols_label(
+        year = "Year",
+        # region = "Region",
+        n = "N",
+        min = "Min",
+        q1 = "Q1",
+        median = "Median",
+        mean = "Mean",
+        q3 = "Q3",
+        max = "Max",
+        sd = "SD"
+    ) |>
+    fmt_number(columns = c(min, q1, median, mean, q3, max, sd), decimals = 1) |>
+    tab_options(
+        table.width = px(1000), 
+        table.font.size = '16px', 
+        heading.title.font.size = '20px',
+        heading.subtitle.font.size = '18px', 
+        heading.subtitle.font.weight = 'bold',
+        latex.use_longtable = TRUE,
+        data_row.padding = px(5),
+        column_labels.padding = px(6)
+    ) |>
+    data_color(
+        columns = n:sd,
+        rows = everything(),
+        method = 'quantile',
+        quantiles = 8,
+        colors = scales::col_numeric(
+            palette = 'YlOrRd',
+            domain = NULL
+        )
+    ) |>
+    opt_stylize(style = 6, color = 'gray')
+```
+
+
+## Weight Distributions
+
+```{r}
+#| eval: true
+
+lw |> 
+    filter(!fish_group == 'Rays and Skates') |> 
+    tidyplot(x = weight_kg) |>
+    tidyplots::add_histogram(boundary = 0, fill = '#2196F3', alpha = 0.85) |> 
+    adjust_size(width = 2.5, height = 1.5, unit = 'in') |> 
+    adjust_x_axis(title = 'Weight (kg)', limits = c(0, NA), breaks = scales::pretty_breaks(n = 5)) |> 
+    adjust_y_axis(title = 'Frequency', breaks = scales::pretty_breaks(n = 5)) |>
+    adjust_title('Weight Distribution by Fish Group', fontsize = 12, fontweight = 'bold') |>
+    adjust_font(fontsize = 14) |> 
+    split_plot(by = fish_group)
+
+
+```
+
+
+## Length-Weight Relationships
+
+
+```{r}
+lw |> 
+    filter(!fish_group == 'Rays and Skates') |> 
+    tidyplot(x = length_cm, y = weight_kg) |>
+    add_data_points(alpha = 0.6, size = 2) |> 
+    add_curve_fit(method = 'auto', color = '#D32F2F', linewidth = 1.2) |>
+    adjust_size(width = 2.5, height = 1.5, unit = 'in') |> 
+    adjust_font(fontsize = 14) |> 
+    adjust_x_axis(title = 'Length (cm)', limits = c(0, NA), breaks = scales::pretty_breaks(n = 4)) |> 
+    adjust_y_axis(title = 'Weight (kg)', limits = c(0, NA), breaks = scales::pretty_breaks(n = 4)) |>
+    adjust_title('Length-Weight Relationship by Fish Group', fontsize = 13, fontweight = 'bold') |>
+    split_plot(by = fish_group)
+```
+
+
+## 4. Abundance Indices
+
+-   A **relative measure** of stock size over time (not an absolute number).
+-   Used to "tune" assessment models.
+-   **Fishery-dependent:** Catch-Per-Unit-Effort (CPUE).
+-   **Fishery-independent:** Scientific surveys (trawls, acoustic, visual).
+
+
+## Abundance Indices...
+
+Yellowfin Tuna Catch Per Unit Effort (CPUE)
+
+![](figures/density_ll_ps-01.png)
+
+
+## Upwelling in TANGA-PEMBA
+
+Seasonal upwelling influenced by EACC and the monsoon winds. Key characteristics include:
+
+::: columns
+::: {.column width="40%"}
++ Seasonality
++ Nutrient enrichment
++ Ecological impact
++ Economic importance
+:::
+
+::: {.column width="60%"}
+
+![](figures/tanga_wete_map_upwelling_indices-01.png)
+
+:::
+:::
+
+
+---
+
+# Environmental Variables {background-color="#447099"}
+Fish populations are heavily influenced by their environment. Understanding these links is crucial for modern stock assessment.
+
+## 5. Environmental Data {background-color="#447099"}
+
+  Environmental factors affect fish:
+
+-   Distribution & Migration
+-   Growth rates
+-   Reproduction (spawning timing & success)
+-   Mortality (survival rates)
+
+---
+
+
+## Key Environmental Variables
+
+These variables help explain changes in fish populations that catch and effort data alone cannot.
+
+::: {.columns}
+::: {.column width="50%"}
+**Commonly Used Variables:**
+
+-   **Sea Surface Temperature (SST):** Influences metabolic rates, growth, and species distribution.
+
+-   **Chlorophyll-a (Chl-a):** A proxy for phytoplankton and primary productivity (i.e., food availability).
+
+-   **Salinity:** Affects species tolerance and distribution, especially in coastal and estuarine areas.
+
+:::
+::: {.column width="50%"}
+**Oceanographic Features:**
+
+-   **Ocean Currents:** Drive larval dispersal and create migration pathways (e.g., the Somali Current).
+
+-   **Upwelling:** Brings nutrient-rich deep water to the surface, boosting productivity.
+
+-   **Climate Indices:** Large-scale patterns like the Indian Ocean Dipole (IOD) or El Niño (ENSO) that impact regional conditions.
+:::
+:::
+
+
+## Seasonal Surface Ocean Circulation
+
+::: {.columns}
+::: {.column width="50%"}
+![](figures/fig14-01.png)
+
+:::
+::: {.column width="50%"}
+![](figures/fig13-01.png)
+:::
+:::
+
+## Seasonal Wind Circulation {.scrollable}
+
+![](figures/wind_season-01.png)
+
+
+## Seasonal Sea Surface Temperature {.scrollable}
+
+![](figures/sst_ne_se.png)
+
+
+
+
+---
+
+# Data Integration {background-color="#447099"}
+
+## Sources & Integration
+
+-   **Data Sources:** Primarily from satellite remote sensing (e.g., NASA, NOAA, Copernicus), oceanographic models, and research buoys.
+
+-   **Use in Assessments:**
+    -   Explain variability in abundance indices (e.g., why CPUE is high in some years).
+    -   Improve recruitment predictions by linking larval survival to environmental conditions.
+    -   Define stock boundaries based on habitat suitability.
+    -   This leads to **environmentally-explicit** or **ecosystem-based** stock assessment.
+
+---
+
+## Data Quality Considerations
+
+The "GIGO" principle: **Garbage In, Garbage Out**.
+
+-   **Accuracy & Precision:** Is the data correct and consistent?
+-   **Bias:** Does the data systematically over/underestimate the truth?
+-   **Completeness:** Are there gaps in the time series?
+-   **Standardization:** Are data collected the same way over time?
+
+---
+
+## Data Limitations in the Indian Ocean {.smaller}
+
+Common challenges faced across the region that impact stock assessment.
+
+::: {.columns}
+::: {.column width="25%"}
+#### Small-Scale Fisheries
+<br>
+<center><span style="font-size: 4em;">🛶</span></center>
+<br>
+Dispersed, artisanal fleets are difficult to monitor comprehensively.
+:::
+::: {.column width="25%"}
+#### Multi-Species Catches
+<br>
+<center><span style="font-size: 4em;">🐟🐠</span></center>
+<br>
+It is hard to separate catch data for individual species in mixed fisheries.
+:::
+::: {.column width="25%"}
+#### Limited Resources
+<br>
+<center><span style="font-size: 4em;">💰🚫</span></center>
+<br>
+Low financial and human capacity for consistent, long-term data collection.
+:::
+::: {.column width="25%"}
+#### Transboundary Stocks
+<br>
+<center><span style="font-size: 4em;">🗺️🐟</span></center>
+<br>
+Fish cross national borders, but data collection programs often do not.
+:::
+:::
+
+---
+
+## Challenges in Somali Fisheries {.smaller}
+
+
+::: {.columns}
+::: {.column width="33%"}
+#### Long & Dispersed Coastline
+<br>
+<center>
+<span style="font-size: 4em;">🗺️</span>
+</center>
+<br>
+Many remote landing sites make comprehensive data collection difficult.
+:::
+::: {.column width="33%"}
+#### Historical Data Gaps
+<br>
+<center>
+<span style="font-size: 4em;">🗓️➡️❓</span>
+</center>
+<br>
+Inconsistent records from past decades complicate trend analysis.
+:::
+::: {.column width="34%"}
+#### Logistical & Security Hurdles
+<br>
+<center>
+<span style="font-size: 4em;">🚧</span>
+</center>
+<br>
+Accessing some areas for monitoring can be challenging and unsafe.
+:::
+:::
+
+---
+
+## Opportunities in Somali Fisheries {.smaller}
+
+Visualizing the key opportunities for enhancing data collection.
+
+::: {.columns}
+::: {.column width="33%"}
+#### Community-Based Data
+<br>
+<center>
+<span style="font-size: 4em;">👥</span>
+</center>
+<br>
+Engaging local fishers and communities to gather valuable, on-the-ground data.
+:::
+::: {.column width="33%"}
+#### Modern Technology
+<br>
+<center>
+<span style="font-size: 4em;">📱</span>
+</center>
+<br>
+Using mobile apps and vessel tracking to improve data accuracy and coverage.
+:::
+::: {.column width="34%"}
+#### Regional Collaboration
+<br>
+<center>
+<span style="font-size: 4em;">🤝</span>
+</center>
+<br>
+Partnering with neighboring countries and organizations to share knowledge.
+:::
+:::
+
+---
+
+## Working with Incomplete Data {background-color="#447099"}
+
+We don't need perfect data to start! **Data-limited methods** are designed for these situations.
+
+---
+
+## Strategies for Data-Limited Situations {.smaller}
+
+When data is scarce, we adapt our methods to focus on what we *can* learn.
+
+::: {.columns}
+::: {.column width="25%"}
+#### Use Proxies
+<br>
+<center>
+<span style="font-size: 4em;">📏➡️🗓️</span>
+</center>
+<br>
+Use easily collected data (like length) to infer harder-to-get data (like age).
+:::
+::: {.column width="25%"}
+#### Borrow Information
+<br>
+<center>
+<span style="font-size: 4em;">📚</span>
+</center>
+<br>
+Apply known biological parameters from similar, well-studied species or regions.
+:::
+::: {.column width="25%"}
+#### Focus on Trends
+<br>
+<center>
+<span style="font-size: 4em;">📈</span>
+</center>
+<br>
+Analyze the direction of change (e.g., in CPUE or average size) over time.
+:::
+::: {.column width="25%"}
+#### Employ Simpler Models
+<br>
+<center>
+<span style="font-size: 4em;">🧰</span>
+</center>
+<br>
+Use robust methods like Catch-MSY or length-based indicators that require less data.
+:::
+:::
+
+---
+
+# Summary {background-color="#447099"}
+
+-   Good data is the cornerstone of reliable stock assessment.
+-   We need catch, effort, biological, and abundance index data.
+-   Data quality is as important as data quantity.
+-   Even with limitations, robust science is possible using data-limited approaches.
+
+---
+
+# TOOLS FOR INNOVATIONS
+
+
+## Coding with Programming languages (Python & R) {transition="slide"}
+
+![](figures/positron.png)
+
+
+# Exercise {background-color="#447099"}
+
+## Somali Landing Site Data
+
+Using the provided `lw` dataset from Somali landing sites:
+
+1.  **Review the Data:** Explore the length, weight, and catch data available for your assigned region. What are the main species? What are the temporal and spatial trends?
+
+2.  **Identify Data Gaps:** What information is missing? Are there gaps in time? Are certain species or gear types underrepresented?
+
+3.  **Assess Data Quality:** Look for potential issues like outliers, missing values, or inconsistent entries. How might these affect an assessment?
+
+4.  **Propose Improvements:** Based on your review, suggest 2-3 practical steps to improve data collection for stock assessment in your region.
+
+
+---
+
+

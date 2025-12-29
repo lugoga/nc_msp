@@ -1,0 +1,255 @@
+---
+title: "Module 1 Exercise: Exploring Somali Landing Site Data"
+format: html
+editor: visual
+execute:
+  eval: true
+  echo: true
+  warning: false
+---
+
+## Introduction
+
+This exercise uses the Somali landing site dataset (`lw`) to practice data exploration, identify data gaps and quality issues, and propose improvements. This is a crucial first step in any stock assessment.
+
+## Setup
+
+First, we need to load the necessary libraries and the dataset.
+
+```{r setup}
+# Load required libraries
+library(tidyverse)
+library(lubridate)
+library(readxl)
+library(gt)
+```
+
+## Load Data
+
+The following code loads the length-weight dataset from the Excel file and performs some initial cleaning.
+
+```{r load-data}
+# Load the dataset
+lw_raw <- read_excel(
+  '../data_shared/ProjKalluun_master_data_entry.xlsx', 
+  sheet = 'Section 3', 
+  skip = 4
+)
+
+# Clean and prepare the data
+lw <- lw_raw |> 
+  janitor::clean_names() |> 
+  filter(!is.na(landing_site)) |> 
+  mutate(
+    year = year(date_dd_mm_yy),
+    month = month(date_dd_mm_yy, label = TRUE),
+    day = day(date_dd_mm_yy), 
+    .after = date_dd_mm_yy
+  ) |> 
+  mutate(
+    weight_kg = as.numeric(weight_kg),
+    length_cm = as.numeric(length_cm)
+  )
+```
+
+## 1. Review the Data
+
+Now that the data is loaded into the `lw` object, let's start exploring it.
+
+#### Starter Code
+
+Here are a few commands to get you started.
+
+```{r}
+# Get a glimpse of the data structure and column types
+glimpse(lw)
+```
+
+```{r}
+# Get a summary of the main numeric and categorical variables
+summary(lw)
+```
+
+```{r}
+# How many records per region?
+lw |> 
+  count(region, sort = TRUE)
+```
+
+```{r explore-data}
+
+# What are the most common species groups?
+lw |> 
+  count(fish_group, sort = TRUE)
+```
+
+```{r}
+lw |> 
+  count(fish_group, region, sort = TRUE)
+```
+
+**Task:** Explore the length, weight, and catch data available for your assigned region. What are the main species? What are the temporal and spatial trends?
+
+## 2. Identify Data Gaps
+
+**Task:** What information is missing from the dataset?
+
+-   Are there gaps in time (years, months)?
+-   Are certain species, gear types, or landing sites underrepresented?
+-   What other data types discussed in the presentation are not here?
+
+#### Visualize Data Gaps
+
+A tile plot is a great way to visualize the number of samples over time and quickly spot gaps.
+
+```{r visualize-gaps}
+lw |>
+  count(region, year, month) |>
+  ggplot(aes(x = year, y = month, fill = n)) +
+  geom_tile(color = "white") +
+  scale_fill_viridis_c(option = "mako", direction = -1, na.value = "grey90") +
+  facet_wrap(~region, ncol = 1) +
+  labs(
+    title = "Data Availability by Region, Year, and Month",
+    x = "Year",
+    y = "Month",
+    fill = "Number of\nRecords"
+  ) +
+  theme_minimal() +
+  theme(strip.text = element_text(face = "bold"))
+```
+
+## 3. Assess Data Quality
+
+**Task:** Look for potential data quality issues.
+
+-   Are there outliers in `length_cm` or `weight_kg`? (Hint: A scatter plot can be helpful here).
+-   Are there missing values (`NA`)? In which columns?
+-   Are there inconsistent entries (e.g., typos in species names or sites)?
+-   How might these issues affect a stock assessment?
+
+#### Visualize Outliers
+
+A scatter plot of weight vs. length is a powerful tool for identifying outliers. We expect a non-linear, exponential relationship ($W = aL^b$). Plotting on a log-log scale can make this relationship linear ($\log(W) = \log(a) + b\log(L)$) and outliers easier to spot.
+
+```{r visualize-outliers}
+lw |>
+  filter(!is.na(length_cm), !is.na(weight_kg), weight_kg > 0, length_cm > 0) |> 
+  ggplot(aes(x = length_cm, y = weight_kg)) +
+  geom_point(alpha = 0.4, aes(color = fish_group)) +
+  geom_smooth(method = "lm", se = FALSE, color = "black", linetype = "dashed") +
+  scale_x_log10(labels = scales::label_number()) +
+  scale_y_log10(labels = scales::label_number()) +
+  facet_wrap(~region) +
+  labs(
+    title = "Length-Weight Relationship by Region",
+    subtitle = "Log-log scale used to identify potential outliers",
+    x = "Length (cm, log scale)",
+    y = "Weight (kg, log scale)",
+    color = "Fish Group"
+  ) +
+  theme_minimal() +
+  theme(legend.position = "bottom")
+```
+
+## 4. Propose Improvements
+
+**Task:** Based on your review, suggest 2-3 practical steps to improve data collection for stock assessment in your region. Think about what is feasible in the Somali context.
+
+------------------------------------------------------------------------
+
+## Solution Guide
+
+This section provides guidance and example solutions for the tasks in this exercise.
+
+### 1. Review the Data: Solution
+
+To review the data for a specific region (e.g., "Berbera"), you can filter the dataset and then summarize it.
+
+**Code Example:**
+
+```{r}
+# Filter for a specific region
+berbera_data <- lw |> 
+  filter(region == "Berbera")
+
+# What are the main species groups in Berbera?
+berbera_data |> 
+  count(fish_group, sort = TRUE) |> 
+  gt() |> 
+  tab_header(title = "Most Common Fish Groups in Berbera")
+
+# What is the temporal trend of data collection in Berbera?
+berbera_data |> 
+  count(year) |> 
+  ggplot(aes(x = year, y = n)) +
+  geom_line(group = 1) +
+  geom_point() +
+  labs(
+    title = "Number of Records Over Time in Berbera",
+    x = "Year",
+    y = "Number of Records"
+  ) +
+  theme_minimal()
+```
+
+**Interpretation:**
+
+-   **Main Species:** For the Berbera region, "Tuna" is the most frequently recorded fish group, followed by "Other" and "Shark".
+-   **Temporal Trends:** Data collection in Berbera appears to have peaked around 2020-2021 and has since declined. There is very little data before 2019. This short time series makes it difficult to assess long-term trends.
+
+### 2. Identify Data Gaps: Solution
+
+The visualization of data availability is key here.
+
+**Interpretation of the Tile Plot:**
+
+-   **Temporal Gaps:** The plot clearly shows that data collection is not consistent. For example, in Kismayo and Mogadishu, there are many months with no data (`grey` tiles), especially in 2019 and 2020. Even in Berbera, which has the most data, there are months with no records (e.g., late 2019).
+-   **Underrepresented Regions/Sites:** The `count(region)` command showed that Kismayo and Bosaso have significantly fewer records than Berbera and Mogadishu. We would need to investigate if this reflects lower fishing activity or just less data collection effort.
+-   **Missing Data Types:** The presentation mentioned four key data types.
+    -   **Catch Data:** We have counts of individual fish, but not total landings in weight for the entire fishery.
+    -   **Effort Data:** This is a major gap. We don't have data on the number of vessels, fishing days, or gear types used. This makes it impossible to calculate a reliable Catch Per Unit Effort (CPUE).
+    -   **Biological Data:** We have length and weight, but we are missing age, sex, and maturity data, which are crucial for more advanced assessments.
+    -   **Abundance Indices:** We can calculate a very basic index (records per site), but a proper index would require standardized effort data.
+
+### 3. Assess Data Quality: Solution
+
+The log-log plot of weight vs. length is the primary tool for this task.
+
+**Interpretation of the Outlier Plot:**
+
+-   **Outliers:** The plot shows several points that fall far from the main cluster of data for each region. For example, in Berbera, there are fish with high lengths but surprisingly low weights, and vice-versa. These could be data entry errors (e.g., a decimal in the wrong place) or issues with measurement.
+
+-   **Missing Values:** Running `summary(lw)` shows `NA`s in `length_cm` and `weight_kg`. We need to understand why these are missing. Were they not measured, or was the data lost?
+
+    ```{r}
+    # Count missing values for key columns
+    lw |> 
+      summarise(
+        missing_length = sum(is.na(length_cm)),
+        missing_weight = sum(is.na(weight_kg))
+      )
+    ```
+
+-   **Inconsistent Entries:** Looking at `lw |> count(landing_site)` would likely reveal inconsistencies like "Lido", "Lido Beach", and "lido beach". These need to be standardized.
+
+**Impact on Assessment:**
+
+-   Outliers can heavily skew statistical estimates like mean length or the parameters of a length-weight relationship (`a` and `b`), leading to incorrect conclusions about stock health.
+-   Missing data reduces the amount of information available and can introduce bias if the missingness is not random. For example, if only large fish were weighed, our average weight would be overestimated.
+
+### 4. Propose Improvements: Solution
+
+Based on the review, here are three practical and feasible proposals.
+
+1.  **Standardize Data Entry with Digital Tools:**
+    -   **Problem:** Inconsistent names for landing sites and potential for typos.
+    -   **Solution:** Instead of paper forms, use a simple mobile data collection app (like KoboToolbox or ODK). This allows for dropdown menus for `region`, `landing_site`, and `fish_group`, which eliminates spelling errors. It also allows for setting validation rules (e.g., `weight_kg` cannot be negative) to prevent impossible values at the point of entry.
+2.  **Introduce Basic Effort Data Collection:**
+    -   **Problem:** We have no measure of fishing effort.
+    -   **Solution:** Add a simple field to the data collection form for enumerators to record the **"number of active fishing vessels"** at the landing site each day they collect data. This is a simple, low-cost proxy for effort. While not perfect, it allows for a much better CPUE calculation (e.g., catch per vessel-day) than what is currently possible.
+3.  **Implement a Two-Stage Quality Check:**
+    -   **Problem:** Outliers and errors are present in the dataset.
+    -   **Solution:**
+        1.  **Field-Level Check:** The data enumerator should review their own data at the end of each day for obvious mistakes.
+        2.  **Central-Level Check:** A data manager should run a script (like the outlier plot in this exercise) on a weekly or monthly basis to automatically flag suspicious data points. These can then be sent back to the enumerator for verification. This creates a feedback loop that improves data quality over time.

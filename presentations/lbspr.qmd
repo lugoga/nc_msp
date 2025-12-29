@@ -1,0 +1,635 @@
+---
+title: "Data for Stock Assessment"
+subtitle: "Fundamentals of Fish Stock Assessment"
+date: "2025-12-05"
+date-modified: today
+author: 
+    - name: "Masumbuko Semba"
+      affiliation: "Nelson Mandela African Institution of Science and Technology"
+      email: "lugosemba@gmail.com"
+    - name: "Mathew Silas"
+      affiliation: "Deep Sea Fishing Authority"
+      email: "mathewsilas28@gmail.com "
+    - name: "Rushingisha George"
+      affiliation: "Tanzania Fisheries Research Institute"
+      email: "george.rushingisha@tafiri.go.tz"
+format: revealjs
+transition: slide
+background-transition: fade
+highlight-style: github
+slide-number: true
+execute: 
+  eval: false
+  echo: false
+  warning: false
+embed-resources: true
+code-fold: true
+theme: "simple"
+---
+
+
+```{r}
+require(sf)
+require(tidyverse)
+require(sizeMat)
+require(TropFishR)
+require(ggpmisc)
+require(LBSPR)
+require(gt)
+require(tidyplots)
+require(patchwork)
+```
+
+
+
+
+# Data: The Foundation of Assessment {background-color="#447099"}
+
+> "In God we trust. All others must bring data." - W. Edwards Deming
+
+
+
+
+```{r}
+#| echo: true
+lw = readxl::read_excel('../data_shared/ProjKalluun_master_data_entry.xlsx', sheet = 'Section 3', skip= 4) |> 
+    janitor::clean_names() |> 
+    filter(!is.na(landing_site))
+
+lw = lw |> 
+ mutate(
+    year = year(date_dd_mm_yy),
+    month = month(date_dd_mm_yy, label = TRUE),
+    day = day(date_dd_mm_yy), 
+    .after = date_dd_mm_yy
+ ) |> 
+    mutate(
+    weight_kg = as.numeric(weight_kg),
+    length_cm = as.numeric(length_cm)
+    )
+
+# lw |> write_csv('../data_shared/lw2.csv')
+```
+
+
+## Length Distributions
+
+:::: {.columns}
+
+::: {.column width="50%"}
+```{r}
+#| echo: true
+#| eval: false
+#| code-line-numbers: true
+#| 
+lw |> 
+    filter(fish_group == 'Tuna') |> 
+    tidyplot(x = length_cm, y = weight_kg) |>
+    add_data_points(alpha = 0.6, size = 2) |> 
+    add_curve_fit(method = 'auto', color = '#D32F2F', linewidth = 1.2) |>
+    adjust_size(width = 2.5, height = 2.5, unit = 'in') |> 
+    adjust_font(fontsize = 14) |> 
+    adjust_x_axis(title = 'Length (cm)', limits = c(0, NA), breaks = scales::pretty_breaks(n = 4)) |> 
+    adjust_y_axis(title = 'Weight (kg)', limits = c(0, NA), breaks = scales::pretty_breaks(n = 4))
+```
+
+:::
+
+::: {.column width="50%"}
+```{r}
+#| layout-align: center
+lw |> 
+    filter(fish_group == 'Tuna') |> 
+    tidyplot(x = length_cm, y = weight_kg) |>
+    add_data_points(alpha = 0.6, size = 2) |> 
+    add_curve_fit(method = 'auto', color = '#D32F2F', linewidth = 1.2) |>
+    adjust_size(width = 2.5, height = 2.5, unit = 'in') |> 
+    adjust_font(fontsize = 14) |> 
+    adjust_x_axis(title = 'Length (cm)', limits = c(0, NA), breaks = scales::pretty_breaks(n = 4)) |> 
+    adjust_y_axis(title = 'Weight (kg)', limits = c(0, NA), breaks = scales::pretty_breaks(n = 4))
+```
+
+
+:::
+
+::::
+
+
+## Length-Weight relationship {background-color="#447099"}
+
+
+```{r}
+lw |> 
+    filter(!fish_group == 'Rays and Skates') |> 
+    tidyplot(x = length_cm, y = weight_kg) |>
+    add_data_points(alpha = 0.6, size = 2) |> 
+    add_curve_fit(method = 'auto', color = '#D32F2F', linewidth = 1.2) |>
+    adjust_size(width = 2.5, height = 1.5, unit = 'in') |> 
+    adjust_font(fontsize = 14) |> 
+    adjust_x_axis(title = 'Length (cm)', limits = c(0, NA), breaks = scales::pretty_breaks(n = 4)) |> 
+    adjust_y_axis(title = 'Weight (kg)', limits = c(0, NA), breaks = scales::pretty_breaks(n = 4)) |>
+    adjust_title('Length-Weight Relationship by Fish Group', fontsize = 13, fontweight = 'bold') |>
+    split_plot(by = fish_group)
+```
+
+
+## Tuna
+
+
+```{r}
+lw |> 
+    filter(fish_group == 'Tuna') |> 
+    tidyplot(x = length_cm, y = weight_kg) |>
+    add_data_points(alpha = 0.6, size = 2) |> 
+    add_curve_fit(method = 'auto', color = '#D32F2F', linewidth = 1.2) |>
+    adjust_size(width = 2.5, height = 2.5, unit = 'in') |> 
+    adjust_font(fontsize = 14) |> 
+    adjust_x_axis(title = 'Length (cm)', limits = c(0, NA), breaks = scales::pretty_breaks(n = 4)) |> 
+    adjust_y_axis(title = 'Weight (kg)', limits = c(0, NA), breaks = scales::pretty_breaks(n = 4))
+```
+
+
+
+
+## Appproach I: Remove 5% extreme weights {background-color="#447099"}
+
+```{r}
+lw_tuna = lw |> 
+    filter(fish_group == 'Tuna')     
+
+kikatio = lw_tuna |>pull(weight_kg) |> quantile(c(.05, .95), na.rm=TRUE) 
+
+```
+
+
+
+
+```{r}
+lw_tuna|> 
+  filter(weight_kg >= kikatio[1], weight_kg <= kikatio[2]) |> 
+    tidyplot(x = length_cm, y = weight_kg) |>
+    add_data_points(alpha = 0.6, size = 2) |> 
+    add_curve_fit(method = 'auto', color = '#D32F2F', linewidth = 1.2) |>
+    adjust_size(width = 2.5, height = 2.5, unit = 'in') |> 
+    adjust_font(fontsize = 14) |> 
+    adjust_x_axis(title = 'Length (cm)',  breaks = scales::pretty_breaks(n = 4)) |> 
+    adjust_y_axis(title = 'Weight (kg)', breaks = scales::pretty_breaks(n = 4))
+```
+
+
+
+
+```{r}
+lw_tuna|> 
+  filter(weight_kg >= kikatio[1], weight_kg <= kikatio[2] & length_cm >= 40) |> 
+    tidyplot(x = length_cm, y = weight_kg) |>
+    add_data_points(alpha = 0.6, size = 2) |> 
+    add_curve_fit(method = 'auto', color = '#D32F2F', linewidth = 1.2) |>
+    adjust_size(width = 2.5, height = 2.5, unit = 'in') |> 
+    adjust_font(fontsize = 14) |> 
+    adjust_x_axis(title = 'Length (cm)',  breaks = scales::pretty_breaks(n = 4), transform = scales::log2_trans()) |> 
+    adjust_y_axis(title = 'Weight (kg)', breaks = scales::pretty_breaks(n = 4), transform = scales::log2_trans())
+```
+
+
+```{r}
+lw_tuna|> 
+  filter(weight_kg >= kikatio[1], weight_kg <= kikatio[2]) |>
+    tidyplot(x = length_cm, y = region)  |> 
+    # add_data_points_beeswarm(alpha = 0.1, size = 2) |>
+    tidyplots::add_boxplot() |>
+    adjust_size(width = 2.5, height = 3.5, unit = 'in') |> 
+    adjust_font(fontsize = 14) |> 
+    adjust_x_axis(title = 'Length (cm)', limits = c(0, NA), breaks = scales::pretty_breaks(n = 4), transform = scales::transform_modulus(.8))
+```
+
+
+
+```{r}
+lw_tuna|> 
+  filter(weight_kg >= kikatio[1], weight_kg <= kikatio[2]) |> 
+    filter(fish_group == 'Tuna') |> 
+    tidyplot(x = weight_kg, y = region)  |> 
+    # add_data_points_beeswarm(alpha = 0.1, size = 2) |>
+    tidyplots::add_boxplot() |>
+    adjust_size(width = 2.5, height = 3.5, unit = 'in') |> 
+    adjust_font(fontsize = 14) |> 
+    adjust_x_axis(title = 'Weight (kg)', limits = c(0, NA), breaks = scales::pretty_breaks(n = 4), transform = scales::transform_modulus(.3))
+```
+
+## Approach II: Using length-weight parameters {background-color="#447099"}
+
+
+
+# Size at maturity
+
+### Classify individuals as mature or immature based on length-weight data
+
+```{r}
+lw_tuna_clean = lw_tuna|> 
+  filter(weight_kg >= kikatio[1], weight_kg <= kikatio[2]) 
+```
+
+
+
+```{r}
+#For all the individuals
+
+classify_data = lw_tuna_clean |> 
+    classify_mature(
+        varNames = c('length_cm', "weight_kg"), 
+        varSex = NULL ,
+        selectSex = NULL, 
+        method = 'ld'
+        )
+
+
+```
+
+
+```{r}
+# par(mfrow = c(2,2))
+# plot(classify_data)
+
+
+plot(classify_data, xlab = "Total length (cm)", ylab = "Weight (gram)", 
+     col = c(2, 3), pch = c(5, 6), legendPlot = TRUE)
+
+# plot(classify_data, xlab = "Total length (cm)", ylab = "Weight (gram)", 
+#      col = c(2, 3), pch = c(5, 6), lty_lines = c(1, 2), lwd_lines = c(1, 3), 
+#      cex = c(1, 3), main = "Classification")
+```
+
+
+## Estimate size at morphometric maturity
+
+```{r}
+#Frequentist regression 
+my_ogive_fq = morph_mature(
+    data = classify_data, 
+    method = "fq", 
+    niter = 1000
+    )
+
+my_ogive_fq |> print() |> 
+    as.data.frame() |> 
+    as_tibble() |> 
+    mutate(Freq = as.numeric(Freq)) |> 
+    pivot_wider(names_from = Var1 , values_from  = Freq) |> 
+    gt() |> 
+    fmt_number(columns = everything(), decimals = 2) |> 
+    cols_label(
+        L50 ~ md('L~50~'),
+        R2  ~ md('R^2^')
+    ) |> 
+    tab_options(data_row.padding = px(5), table.font.size = '10pt')
+```
+
+
+
+```{r}
+#| eval: false
+#| 
+#Bayesian regression
+my_ogive_bayes = morph_mature(
+    data = classify_data, 
+    method = "bayes", 
+    niter = 1000
+    )
+
+my_ogive_bayes |> print()
+```
+
+## Plot maturity ogive
+
+```{r}
+# par(mfrow = c(2,2))
+plot(my_ogive_fq, xlab = "Total length (cm)", ylab = "Proportion mature", col = c("blue", "red"))
+```
+
+
+# Revised
+
+## Yellowfin
+
+```{r}
+
+yellwofin = lw_tuna_clean |>
+  filter(fish_type_code == 'YFT' & region == 'Mogadishu') |>
+  mutate(
+  fishing_month = month(date_dd_mm_yy),
+    date = make_date(year = 2024, month = fishing_month, day = 15)) |> 
+  dplyr::select(region, date, length_cm, weight_kg) |> 
+  drop_na()
+
+
+```
+
+
+
+```{r}
+yellwofin |> 
+    tidyplot(x = length_cm, y = weight_kg) |>
+    add_data_points(alpha = 0.6, size = 2) |> 
+    add_curve_fit(method = 'auto', color = '#D32F2F', linewidth = 1.2) |>
+    adjust_size(width = 2.5, height = 1.5, unit = 'in') |> 
+    adjust_font(fontsize = 14) |> 
+    adjust_x_axis(title = 'Length (cm)', limits = c(0, NA), breaks = scales::pretty_breaks(n = 4)) |> 
+    adjust_y_axis(title = 'Weight (kg)', limits = c(0, NA), breaks = scales::pretty_breaks(n = 4)) |>
+    adjust_title('Length-Weight Relationship by Fish Group', fontsize = 13, fontweight = 'bold') |>
+    split_plot(by = region)
+```
+
+
+
+
+```{r}
+      
+  
+## partitioning
+
+classify_data = yellwofin |> 
+    classify_mature(
+        varNames = c('length_cm', "weight_kg"), 
+        varSex = NULL ,
+        selectSex = NULL, 
+        method = 'ld'
+        ) 
+
+  classify_data |> plot()
+  
+# Frequentist regression 
+my_ogive_fq = morph_mature(
+    data = classify_data, 
+    method = "fq", 
+    niter = 1000
+    )
+
+
+my_ogive_tb = my_ogive_fq |> 
+    print() |> 
+    as.data.frame() |> 
+    as_tibble() |> 
+    mutate(Freq = as.numeric(Freq)) |> 
+    pivot_wider(names_from = Var1 , values_from  = Freq)
+
+  # my_ogive_tb |> write_csv('outputs_results/bigeye_ogive_parameters.csv')
+
+```
+
+
+@tbl-pars-yft summarizes the parameters for the logistic model used to estimate the size at maturity for Yellowfin Tuna. The L~50~ value of 91.8 indicates that, on average, Yellowfin Tuna reach 50% sexual maturity at a fork length of 91.8 cm. This is a key biological reference point used to assess the reproductive capacity of the stock and can inform management measures such as minimum size limits. The parameters A (-22.1 to -22.2) and B (0.2) define the intercept and slope of the logistic curve, respectively, which describes the S-shaped relationship between fish length and the probability of being mature (@fig-juvenile-adults-l50-yft). A negative 'A' and a positive 'B' (@tbl-pars-yft) are characteristic of maturity ogives, signifying that the likelihood of a fish being mature increases as its length increases. The R^2^ value of 0.8 signifies a strong goodness-of-fit for the logistic model. This means that approximately 80% of the variation in maturity status (juvenile vs. adult, *See* @fig-juvenile-adults-l50-yft) can be explained by the fork length of the Yellowfin Tuna. This high correlation coefficient value lends confidence to the estimated L~50~ value of 91.50.
+
+```{r}
+#| label: tbl-pars-beg
+#| tbl-cap: Bigeye tuna parameters derived from the logistic model
+#| warning: false
+#| message: false
+#| comment: ''
+#| 
+    
+my_ogive_tb |> 
+    gt() |> 
+    fmt_number(columns = everything(), decimals = 2) |> 
+    fmt_missing(columns = everything(), missing_text = '-') |> 
+    cols_label(
+        Var2 ~ 'Variables',
+        # A ~ 'A-Intercept',
+        # B ~ 'B-Slope',
+        L50 ~ md('L~50~'),
+        R2  ~ md('R^2^')
+    ) |>
+    tab_spanner(columns = c('A', 'B'), label = 'Ogive Parameters') |> 
+    tab_options(data_row.padding = px(5), table.font.size = '12pt') |> 
+    cols_width(
+        Var2 ~ px(200),
+        A ~ px(120),
+        B ~ px(70),
+        L50 ~ px(70),
+        R2 ~ px(70)
+    ) |> 
+    tab_footnote(footnote = 'A for Intercept of the logistic curve.', locations = cells_column_labels(columns = 'A'))|> 
+    tab_footnote(footnote = 'B for slope of the logistic curve.', locations = cells_column_labels(columns = 'B'))
+
+```
+
+
+![Juvenile and adults (left panel) and Maturity ogive (right panel) for Bigeye Tuna, derived from corrected length-weight data. ](graphics_plots/bigeye_corrected_juvenile_adults_maturity.png){#fig-juvenile-adults-l50-beg}
+
+
+
+
+```{r}
+#| eval: true
+#| 
+
+
+
+
+# yellwofin |> pull(length_cm) |> summary()
+
+kawa.lfq =  yellwofin |> 
+  TropFishR::lfqCreate(
+    Lname = "length_cm", Dname = "date", 
+    bin_size = 2, species = "Yellowfin", 
+    length_unit = "cm", aggregate_dates = TRUE
+    )
+
+
+kaw.mod = kawa.lfq |> 
+  TropFishR::lfqModify(
+    bin_size = 4, aggregate = "month", vectorise_catch = FALSE
+    )|> 
+  TropFishR::lfqRestructure(MA = 11, addl.sqrt = TRUE)
+
+```
+
+```{r}
+#| eval: true
+#| 
+par(mfrow = c(1,1))
+kaw.mod %>% 
+  plot(Fname = "catch", las = 1, ylim = c(40,120))
+
+
+kaw.mod %>% 
+  plot(Fname = "rcounts", las = 1, ylim = c(40,120))
+
+```
+
+## Length Frequency
+
+{{< lipsum 1 >}}
+
+@fig-lfq-yft shows the length frequency of yellowfin aggregated in three months period
+
+![Length frequency of yellowfin tuna](graphics_plots/yft_catches.pdf){#fig-lfq-yft}
+
+
+
+## Powell-Wetherall method
+
+A method to estimate the instantaneous total mortality rate (Z) and the infinite length of the von Bertalanffy growth equation [@powell; @Wetherall].
+
+```{r}
+par(mfrow = c(1,1))
+res_PW <- powell_wetherall(param = kaw.mod,
+                           catch_columns = 1:ncol(kaw.mod$catch),
+                           reg_int = c(2,18))
+
+# show results
+paste0("Linf =",round(res_PW$Linf_est,2), "±", round(res_PW$se_Linf))
+```
+
+
+## ELEFAN
+
+Electronic LEngth Frequency ANalysis for estimating growth parameter.
+This functions allows to perform the K-Scan and Response surface analysis to estimate growth parameters. It combines the step of restructuring length-frequency data (lfqRestructure) followed by the fitting of VBGF curves through the restructured data (lfqFitCurves). K-Scan is a method used to search for the K parameter with the best fit while keeping the Linf fixed. In contrast, with response surface analysis both parameters are estimated and the fits are displayed in a heatmap.
+
+```{r}
+# ELEFAN with K-Scan
+res_KScan <- ELEFAN(kaw.mod, Linf_fix = res_PW$Linf_est,
+                    MA=5, addl.sqrt = TRUE, hide.progressbar = TRUE)
+
+# show results
+res_KScan$par; res_KScan$Rn_max
+
+res_KScan$par$Linf
+```
+
+
+
+
+## catch-converted
+
+```{r}
+par(mfrow = c(2,1))
+ab = kaw.mod |> 
+  TropFishR::lfqModify(vectorise_catch = TRUE, 
+                       # plus_group = 67,
+                       bin_size =6,
+                       # minDate = as.Date("2020-06-30"),
+                       # maxDate = as.Date("2020-12-31"),
+                       year = 2024) 
+
+ab$Linf = res_KScan$par$Linf
+ab$K = res_KScan$par$K
+
+catch.converted = ab |> 
+  TropFishR::catchCurve( 
+                        calc_ogive = TRUE,
+                        # cumulative = TRUE,
+                        auto = TRUE, 
+                        plot = TRUE)
+
+
+catch.converted$F
+```
+
+
+
+## Length-based spawning potential ratio (LBSPR)
+
+
+```{r}
+
+# estimation of M
+Ms <- TropFishR::M_empirical(Linf = res_KScan$par$Linf, 
+                             K_l = res_KScan$par$K, 
+                             method = "Then_growth")
+
+kaw.mod$M <- as.numeric(Ms)
+
+
+
+```
+
+
+```{r}
+kaw.pars = new("LB_pars")
+
+```
+
+
+```{r}
+yellwofin |> pull(length_cm) |> min()
+
+## biological parameters
+kaw.pars@Species = "Yellowfin"
+kaw.pars@L_units = "cm"
+kaw.pars@L50 = my_ogive_fq$out |> filter(between(fitted, 0.49,0.60)) |> slice(1) |> pull(x)
+kaw.pars@L95 = my_ogive_fq$out |> filter(between(fitted, 0.94,0.96)) |> slice(1) |> pull(x)
+kaw.pars@MK = kaw.mod$M/res_KScan$par$K
+kaw.pars@Linf = res_KScan$par$Linf
+
+## Exploitation parameters
+kaw.pars@SL50 = catch.converted$L50
+kaw.pars@SL95 = catch.converted$L95
+kaw.pars@FM = 0.8 #catch.converted$FM %>% as.numeric() %>% abs()
+kaw.pars@BinWidth = 2
+
+# slotsize = selected_species |> 
+#   filter(between(fork_legnth_cm, kikatio[1],kikatio[2])) |>
+#   pull(fork_legnth_cm) |> range()
+
+kaw.pars@BinMin = yellwofin |> pull(length_cm) |> min()
+kaw.pars@BinMax = 170
+
+# kaw.pars
+
+
+```
+
+```{r}
+kaw.sim = kaw.pars %>% 
+  LBSPRsim()
+```
+
+
+```{r}
+#| label: fig-stock
+#| fig-cap: Estimated a) the expected (equilibrium) size structure of the catch and the expected unfished size structure of the vulnerable population, b) the maturity and selectivity-at-length curves, c) the von Bertalanffy growth curve with relative age, and d) the SPR and relative yield curves as a function of relative fishing mortality (see note above on the F/M ratio).
+
+kaw.sim %>% plotSim()
+
+
+```
+
+
+
+```{r}
+#| label: fig-stock-b0
+#| fig-cap: Estimated a) the expected (equilibrium) size structure of the catch and the expected unfished size structure of the vulnerable population, b) the maturity and selectivity-at-length curves, c) the von Bertalanffy growth curve with relative age, and d) the SPR and relative yield curves as a function of relative fishing mortality (see note above on the F/M ratio).
+#| 
+kaw.sim %>% 
+  plotSim(lf.type = "pop")
+```
+
+```{r, fig.width=3, fig.height=3.5}
+
+kaw.sim %>% plotSim(type = "growth")
+kaw.sim %>% plotSim(type = "len.freq")
+kaw.sim %>% plotSim(type = "yield.curve")
+
+```
+
+```{r}
+tibble(Z = catch.converted$Z, K = catch.converted$K,MK = kaw.sim@MK,FM = kaw.sim@FM, t50 = catch.converted$t50, t95 = catch.converted$t95,   L50 = kaw.sim@L50, L95 = kaw.sim@L95, SL50 = kaw.sim@SL50, SL95 = kaw.sim@SL95,Linf = kaw.sim@Linf, SPR = kaw.sim@SPR, yield = kaw.sim@Yield, YPR = kaw.sim@YPR, SSB = kaw.sim@SSB, SSB0 = kaw.sim@SSB0) %>% 
+  mutate(across(is.numeric, round, 2)) |> 
+  pivot_longer(cols =1:16 ) |> 
+  gt() |> 
+  fmt_missing(columns = everything(), missing_text = '-') |> 
+  fmt_number(columns = everything(), decimals = 2) |> 
+  cols_label(
+    name ~ 'Reference Points',
+    value ~ 'Value'
+  ) |> 
+    tab_header(title = "Bigeye")
+
+#%>%  write_csv("plots/biological_referene_points_kawakawa_update.csv")
+
+```
+
+
+

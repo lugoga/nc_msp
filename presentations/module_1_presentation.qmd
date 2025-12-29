@@ -1,0 +1,413 @@
+---
+title: "Module 1: Stock Assessment Fundamentals & Concepts"
+subtitle: "Somali Fish Stock Training"
+date: "2025-12-05"
+date-modified: today
+author: 
+    - name: "Dr. Masumbuko Semba"
+      affiliation: "Nelson Mandela African Institution of Science and Technology"
+      email: "lugosemba@gmail.com"
+    - name: "Dr. Rushingisha George"
+      affiliation: "Tangania Fisheries Research Institute"
+      email: "george.rushingisha@tafiri.go.tz"
+    - name: "Dr. Mary Kishe"
+      affiliation: "Tanzania Fisheries Research Institute"
+      email: "mary.kishe@tafiri.go.tz"
+    - name: "Dr. Ismael Kimirei"
+      affiliation: "Tanzania Fisheries Research Institute"
+      email: "ismael.kimirei@tafiri.go.tz"
+format: revealjs
+theme: default
+transition: slide
+background-transition: fade
+highlight-style: github
+embed-resources: true
+---
+
+
+
+```{r}
+require(sf)
+require(tidyverse)
+require(sizeMat)
+require(gt)
+require(tidyplots)
+require(patchwork)
+require(leaflet)
+```
+
+## Welcome to Module 1
+
+**Stock Assessment Fundamentals & Concepts**
+
+:::: {.columns}
+::: {.column width="50%"}
+### Learning Objectives
+- Understand core stock assessment principles
+- Identify different data types used in assessments
+- Apply concepts to real Somali fisheries data
+- Build foundation for advanced methods
+:::
+
+::: {.column width="50%"}
+### Why This Matters
+- Essential for evidence-based management
+- Reinforces foundational knowledge
+- Prepares for data-limited methods
+- Supports sustainable fisheries
+:::
+::::
+
+---
+
+## What is Stock Assessment?
+
+Stock assessment is the **scientific process** of estimating the status and productivity of fish populations to inform management decisions.
+
+### Key Components:
+
+::: {.incremental}
+- **Population Dynamics**: How fish populations change over time
+- **Catch Data**: What we remove from the stock
+- **Biological Data**: Growth, reproduction, mortality
+- **Environmental Context**: Habitat and external factors
+:::
+
+---
+
+## The Assessment Cycle
+
+```{r}
+#| echo: false
+#| fig-align: center
+
+tibble(
+  step = c("1. Data\nCollection", "2. Analysis", "3. Stock\nStatus", "4. Advice", "5. Management"),
+  x = c(1, 2, 3, 4, 5),
+  y = c(1, 1.5, 1, 0.5, 1)
+) |>
+  ggplot(aes(x = x, y = y)) +
+  geom_point(size = 8, color = '#1976D2', alpha = 0.8) +
+  geom_path(color = '#666666', size = 1.2, arrow = arrow(type = 'closed', length = unit(0.3, 'cm'))) +
+  geom_text(aes(label = step), nudge_y = 0.25, size = 3.5, fontface = 'bold') +
+  ylim(0, 2) +
+  xlim(0.5, 5.5) +
+  theme_minimal() +
+  theme(
+    axis.text = element_blank(),
+    axis.title = element_blank(),
+    panel.grid = element_blank()
+  )
+```
+
+---
+
+## Types of Data in Stock Assessment
+
+### Primary Data Categories:
+
+::: {.columns}
+::: {.column width="50%"}
+**Catch Data**
+- Total landings (numbers or weight)
+- Species composition
+- Temporal patterns
+- Geographic distribution
+:::
+
+::: {.column width="50%"}
+**Biological Data**
+- Size distributions
+- Age/length structure
+- Growth rates
+- Maturity information
+:::
+:::
+
+---
+
+## Types of Data (continued)
+
+::: {.columns}
+::: {.column width="50%"}
+**Effort Data**
+- Number of vessels/fishers
+- Fishing days
+- Landing site activity
+- Spatial distribution
+:::
+
+::: {.column width="50%"}
+**Environmental Data**
+- Oceanographic conditions
+- Habitat quality
+- Seasonal patterns
+- Climate factors
+:::
+:::
+
+---
+
+## Case Study: Somali Fisheries Data
+
+### What We Have in Our Dataset:
+
+::: {.incremental}
+- **Landing records**: 3,571 specimens across 6 regions
+- **Species groups**: Tuna, Mackerel, Shark, Jacks, Billfish, Rays & Skates
+- **Time series**: 2017-2023 (7 years of data)
+- **Biological measurements**: Length (cm) and Weight (kg)
+- **Geographic coverage**: Berbera, Borama, Mogadishu, Kismayo, Baidoa, Galkacyo
+:::
+
+---
+
+## Key Indicators from Our Data
+
+### CPUE (Catch Per Unit Effort)
+
+Specimens caught per landing site per year
+
+:::: {.columns}
+::: {.column width="50%"}
+**What it tells us:**
+- Stock abundance trends
+- Fishing pressure changes
+- Sustainability signals
+:::
+
+::: {.column width="50%"}
+**Warning signs:**
+- ⚠️ Declining CPUE = potential overfishing
+- ✓ Stable CPUE = sustainable harvest
+:::
+::::
+
+---
+
+## Key Indicators: Size Structure
+
+### Average Fish Size Trends
+
+::: {.incremental}
+- **Healthy stocks**: Stable or increasing average size
+- **Overfished stocks**: Declining average size over time
+- **Young populations**: Smaller specimens dominate
+- **Mature populations**: Mix of sizes present
+:::
+
+### Why Size Matters:
+Smaller fish = fewer breeding adults = recruitment problems
+
+---
+
+## Key Indicators: Species Diversity
+
+### Shannon Diversity Index
+
+Measures ecosystem stability:
+
+::: {.columns}
+::: {.column width="50%"}
+**High Diversity**
+- Many species equally represented
+- Ecosystem resilience
+- Lower collapse risk
+- Adaptable to changes
+:::
+
+::: {.column width="50%"}
+**Low Diversity**
+- Few dominant species
+- Ecosystem vulnerability
+- High collapse risk
+- Susceptible to shifts
+:::
+::::
+
+---
+
+## Key Indicators: Seasonal Patterns
+
+### Why Seasonality Matters:
+
+::: {.incremental}
+- **Peak seasons**: When stocks are most vulnerable
+- **Off-season monitoring**: Essential for baseline data
+- **Breeding seasons**: Critical conservation periods
+- **Nomadic patterns**: Species movement and migration
+:::
+
+### Somalia's Monsoon Seasons:
+- **NEM (Nov-May)**: Northeast Monsoon
+- **SEM (Jun-Sep)**: Southwest Monsoon
+
+---
+
+## Stock Status Assessment Framework
+
+### Traffic Light System:
+
+::: {.columns}
+::: {.column width="33%"}
+**Green** ✓
+- CPUE stable
+- Size structure healthy
+- High diversity
+- Sustainable
+:::
+
+::: {.column width="33%"}
+**Yellow** ⚠️
+- CPUE declining
+- Size shrinking
+- Diversity moderate
+- Caution needed
+:::
+
+::: {.column width="33%"}
+**Red** ✗
+- CPUE low
+- Size very small
+- Low diversity
+- Urgent action
+:::
+::::
+
+---
+
+## Applying This to Somali Data
+
+### Our Findings Show:
+
+::: {.incremental}
+1. **Regional differences**: Some areas more productive than others
+2. **Temporal trends**: Changes over 2017-2023 period
+3. **Species-specific patterns**: Different groups show different trends
+4. **Seasonal variability**: Predictable patterns across years
+:::
+
+---
+
+## Data Quality Matters
+
+### Good Data Requires:
+
+::: {.columns}
+::: {.column width="50%"}
+**Collection Standards**
+- Consistent methods
+- Regular sampling
+- Complete records
+- Training & protocols
+:::
+
+::: {.column width="50%"}
+**Quality Control**
+- Data verification
+- Error detection
+- Outlier assessment
+- Metadata documentation
+:::
+::::
+
+---
+
+## Decision-Making Framework
+
+### From Data to Decisions:
+
+```{r}
+#| echo: false
+#| fig-align: center
+
+tibble(
+  stage = c("Data\nCollection", "Analysis", "Indicators", "Assessment", "Advice"),
+  uncertainty = c(20, 35, 25, 40, 50)
+) |>
+  ggplot(aes(x = factor(stage, levels = stage), y = uncertainty)) +
+  geom_col(fill = '#FF6F00', alpha = 0.8) +
+  geom_text(aes(label = paste0(uncertainty, "%")), vjust = -0.5, size = 4, fontface = 'bold') +
+  labs(
+    title = "Uncertainty Increases Through Assessment Chain",
+    x = "Assessment Stage",
+    y = "Uncertainty Level"
+  ) +
+  theme_minimal() +
+  theme(
+    axis.text.y = element_text(size = 10),
+    axis.title = element_text(size = 11, face = 'bold'),
+    plot.title = element_text(size = 12, face = 'bold', hjust = 0.5)
+  )
+```
+
+---
+
+## Key Takeaways
+
+### Module 1 Summary:
+
+::: {.incremental}
+1. Stock assessment is systematic, cyclical process
+2. Multiple data types needed for robust conclusions
+3. Simple indicators reveal important patterns
+4. Somali data shows clear regional & temporal trends
+5. Quality data essential for confident decisions
+6. Uncertainty increases through analysis chain
+:::
+
+---
+
+## Next Steps
+
+### Transition to Module 2:
+
+- **Module 1**: ✓ Concepts established
+- **Module 2**: Data collection protocols & sampling design
+- **Module 3**: Data-limited assessment methods
+
+### Homework:
+
+::: {.callout-note}
+Review the landing data summaries from Module 1 analysis. Come prepared to discuss:
+- What regional patterns stand out?
+- Which species show concerning trends?
+- What questions would you ask about the data?
+:::
+
+---
+
+## Questions & Discussion
+
+### Let's Explore:
+
+- What surprises you about the data?
+- Which indicators seem most important?
+- How would you communicate these findings?
+- What additional data would help?
+
+---
+
+## References & Resources
+
+### Key Concepts:
+- FAO Stock Assessment: https://www.fao.org/fishery/
+- R for Fisheries: https://www.afsc.noaa.gov/
+- Data-limited Methods: Costello et al., 2012
+
+### Somali Context:
+- Somalia Fisheries Profile
+- Indian Ocean Tuna Commission (IOTC)
+- Regional fisheries management bodies
+
+---
+
+## Thank You
+
+**Somali Fish Stock Training**
+
+Module 1: Fundamentals & Concepts
+
+*Building capacity for evidence-based fisheries management*
+
+Questions? Contact the training team.

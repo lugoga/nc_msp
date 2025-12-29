@@ -1,0 +1,442 @@
+---
+title: ""
+toc: true
+---
+
+```{=html}
+<style>
+.gallery-container {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 20px;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  margin-bottom: 50px;
+}
+
+.gallery-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 15px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.gallery-item:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+}
+
+.gallery-image {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.gallery-item:hover .gallery-image {
+  transform: scale(1.08);
+}
+
+.gallery-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.3));
+  color: white;
+  padding: 25px 15px 15px;
+  transform: translateY(100%);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  min-height: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.gallery-item:hover .gallery-caption {
+  transform: translateY(0);
+}
+
+.gallery-caption h3 {
+  margin: 0 0 8px 0;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.gallery-caption p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.4;
+  opacity: 0.95;
+}
+
+/* Modal Styles */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 2000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.95);
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal.active {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  position: relative;
+  max-width: 90%;
+  max-height: 90vh;
+  animation: slideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.modal-image {
+  max-width: 100%;
+  max-height: 70vh;
+  object-fit: contain;
+  border-radius: 10px;
+}
+
+.modal-info {
+  background: rgba(255, 255, 255, 0.95);
+  color: #333;
+  padding: 25px;
+  border-radius: 0 0 10px 10px;
+  text-align: center;
+}
+
+.modal-info h2 {
+  margin: 0 0 10px 0;
+  font-size: 24px;
+  color: #667eea;
+}
+
+.modal-info p {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.close-modal {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  color: white;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.2s;
+  z-index: 2001;
+}
+
+.close-modal:hover {
+  color: #667eea;
+}
+
+.modal-nav {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.nav-btn {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: none;
+  font-size: 40px;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background 0.3s;
+  pointer-events: all;
+}
+
+.nav-btn:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.gallery-title {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.gallery-title h1 {
+  font-size: 42px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.gallery-title p {
+  font-size: 16px;
+  color: #666;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.category-section {
+  margin-bottom: 60px;
+}
+
+.category-title {
+  font-size: 28px;
+  color: #667eea;
+  margin-bottom: 30px;
+  padding-bottom: 15px;
+  border-bottom: 3px solid #667eea;
+  font-weight: 700;
+}
+
+@media (max-width: 768px) {
+  .gallery-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .modal-content {
+    max-width: 95%;
+  }
+
+  .gallery-image {
+    height: 200px;
+  }
+}
+</style>
+
+<div class="gallery-container">
+  <div class="gallery-title">
+    <h1>🌊 Project Photo Gallery</h1>
+    <p>Documenting Marine Spatial Planning initiatives, stakeholder engagement, and coastal field operations in Mkoani-Pemba and Mkuranga</p>
+  </div>
+
+  <!-- Field Operations Category -->
+  <div class="category-section">
+    <h2 class="category-title">🗺️ Field Operations & Data Collection</h2>
+    <div class="gallery-grid">
+      <div class="gallery-item" onclick="openModal(this)">
+        <img src="images/components/iga.jpg" alt="Field Survey" class="gallery-image">
+        <div class="gallery-caption">
+          <h3>Biodiversity Field Survey</h3>
+          <p>Team conducting ecosystem assessment and biodiversity monitoring</p>
+        </div>
+      </div>
+
+      <div class="gallery-item" onclick="openModal(this)">
+        <img src="images/gallery/_JAY1618.jpg" alt="Data Collection" class="gallery-image">
+        <div class="gallery-caption">
+          <h3>Geospatial Data Collection</h3>
+          <p>Multi-disciplinary field teams gathering marine resource data</p>
+        </div>
+      </div>
+
+      <div class="gallery-item" onclick="openModal(this)">
+        <img src="images/gallery/_JAY1679.jpg" alt="Habitat Mapping" class="gallery-image">
+        <div class="gallery-caption">
+          <h3>Coastal Habitat Assessment</h3>
+          <p>Ground-truthing ecosystem classifications and habitat boundaries</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stakeholder Engagement Category -->
+  <div class="category-section">
+    <h2 class="category-title">🤝 Stakeholder Engagement & Validation</h2>
+    <div class="gallery-grid">
+      <div class="gallery-item" onclick="openModal(this)">
+        <img src="images/gallery/_JAY1755.jpg" alt="Community Meeting" class="gallery-image">
+        <div class="gallery-caption">
+          <h3>Community Stakeholder Meeting</h3>
+          <p>District authorities and fishing community representatives discuss spatial planning outcomes</p>
+        </div>
+      </div>
+
+      <div class="gallery-item" onclick="openModal(this)">
+        <img src="images/gallery/DSC_7671.JPG" alt="Coastal Engagement" class="gallery-image">
+        <div class="gallery-caption">
+          <h3>Collaborative Planning Workshop</h3>
+          <p>Stakeholders and community leaders shaping sustainable management strategies</p>
+        </div>
+      </div>
+
+      <div class="gallery-item" onclick="openModal(this)">
+        <img src="images/components/moja.jpg" alt="Team Discussion" class="gallery-image">
+        <div class="gallery-caption">
+          <h3>Project Team Coordination</h3>
+          <p>Multi-institutional partnership meeting for project oversight and coordination</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Analysis & Visualization Category -->
+  <div class="category-section">
+    <h2 class="category-title">📊 Analysis, Valuation & Visualization</h2>
+    <div class="gallery-grid">
+      <div class="gallery-item" onclick="openModal(this)">
+        <img src="images/components/tano.jpg" alt="Economic Valuation" class="gallery-image">
+        <div class="gallery-caption">
+          <h3>Ecosystem Services Valuation</h3>
+          <p>Economic analysis of coastal and marine resource values</p>
+        </div>
+      </div>
+
+      <div class="gallery-item" onclick="openModal(this)">
+        <img src="images/components/sita.jpg" alt="Bio-Economic Analysis" class="gallery-image">
+        <div class="gallery-caption">
+          <h3>Bio-Economic Modeling</h3>
+          <p>Cost-benefit analysis supporting sustainable blue economy development</p>
+        </div>
+      </div>
+
+      <div class="gallery-item" onclick="openModal(this)">
+        <img src="images/components/tatu.jpg" alt="Digital Platform" class="gallery-image">
+        <div class="gallery-caption">
+          <h3>Digital Visualization Platform</h3>
+          <p>Interactive dashboards and web maps for stakeholder decision-making</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Deliverables Category -->
+  <div class="category-section">
+    <h2 class="category-title">📋 Project Deliverables & Reports</h2>
+    <div class="gallery-grid">
+      <div class="gallery-item" onclick="openModal(this)">
+        <img src="images/components/nne.jpg" alt="Project Timeline" class="gallery-image">
+        <div class="gallery-caption">
+          <h3>Project Timeline & Deliverables</h3>
+          <p>Scope of work tracking across six major work packages</p>
+        </div>
+      </div>
+
+      <div class="gallery-item" onclick="openModal(this)">
+        <img src="images/components/deep_thinking_pemba.jpg" alt="Project Logo" class="gallery-image">
+        <div class="gallery-caption">
+          <h3>Marine Spatial Planning Initiative</h3>
+          <p>Official project branding and institutional framework</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Modal -->
+<div id="imageModal" class="modal" onclick="closeModal(event)">
+  <div class="modal-nav">
+    <button class="nav-btn" onclick="previousImage(event)">❮</button>
+    <button class="nav-btn" onclick="nextImage(event)">❯</button>
+  </div>
+  <span class="close-modal" onclick="closeModal(event)">&times;</span>
+  <div class="modal-content">
+    <img id="modalImage" src="" alt="" class="modal-image">
+    <div class="modal-info">
+      <h2 id="modalTitle"></h2>
+      <p id="modalCaption"></p>
+    </div>
+  </div>
+</div>
+
+<script>
+let currentImageIndex = 0;
+const allImages = [];
+
+// Initialize all gallery images
+function initGallery() {
+  const items = document.querySelectorAll('.gallery-item');
+  items.forEach((item, index) => {
+    const img = item.querySelector('.gallery-image');
+    const caption = item.querySelector('.gallery-caption');
+    allImages.push({
+      src: img.src,
+      title: caption.querySelector('h3').textContent,
+      description: caption.querySelector('p').textContent
+    });
+  });
+}
+
+function openModal(element) {
+  const img = element.querySelector('.gallery-image');
+  const caption = element.querySelector('.gallery-caption');
+  currentImageIndex = allImages.findIndex(img_obj => img_obj.src === img.src);
+  
+  document.getElementById('modalImage').src = img.src;
+  document.getElementById('modalTitle').textContent = caption.querySelector('h3').textContent;
+  document.getElementById('modalCaption').textContent = caption.querySelector('p').textContent;
+  document.getElementById('imageModal').classList.add('active');
+}
+
+function closeModal(event) {
+  if (event.target.id === 'imageModal' || event.target.classList.contains('close-modal')) {
+    document.getElementById('imageModal').classList.remove('active');
+  }
+}
+
+function nextImage(event) {
+  event.stopPropagation();
+  currentImageIndex = (currentImageIndex + 1) % allImages.length;
+  const image = allImages[currentImageIndex];
+  document.getElementById('modalImage').src = image.src;
+  document.getElementById('modalTitle').textContent = image.title;
+  document.getElementById('modalCaption').textContent = image.description;
+}
+
+function previousImage(event) {
+  event.stopPropagation();
+  currentImageIndex = (currentImageIndex - 1 + allImages.length) % allImages.length;
+  const image = allImages[currentImageIndex];
+  document.getElementById('modalImage').src = image.src;
+  document.getElementById('modalTitle').textContent = image.title;
+  document.getElementById('modalCaption').textContent = image.description;
+}
+
+// Keyboard navigation
+document.addEventListener('keydown', (e) => {
+  const modal = document.getElementById('imageModal');
+  if (modal.classList.contains('active')) {
+    if (e.key === 'ArrowRight') nextImage({stopPropagation: () => {}});
+    if (e.key === 'ArrowLeft') previousImage({stopPropagation: () => {}});
+    if (e.key === 'Escape') closeModal({target: modal});
+  }
+});
+
+// Initialize gallery on page load
+initGallery();
+</script>
+```

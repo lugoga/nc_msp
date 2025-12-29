@@ -1,0 +1,792 @@
+---
+title: "Somali Fish Stock Training: Landing Data Analysis"
+format: html
+execute: 
+  eval: false
+  
+---
+
+# Fish Landing Data Analysis
+
+This document presents a comprehensive analysis of fish landing data from Somali coastal regions. The data includes information on landing sites, temporal patterns, fish species composition, and morphometric measurements (length and weight) across different fish groups and regions.
+
+## Setup and Data Loading
+
+```{r}
+require(sf)
+require(tidyverse)
+require(sizeMat)
+require(gt)
+require(tidyplots)
+require(patchwork)
+require(leaflet)
+require(plotly)
+require(crosstalk)
+```
+
+```{r}
+lw = readxl::read_excel('../data_shared/ProjKalluun_master_data_entry.xlsx', sheet = 'Section 3', skip= 4) |> 
+    janitor::clean_names() |> 
+    filter(!is.na(landing_site))
+
+lw = lw |> 
+ mutate(
+    year = year(date_dd_mm_yy),
+    month = month(date_dd_mm_yy, label = TRUE),
+    day = day(date_dd_mm_yy), 
+    .after = date_dd_mm_yy
+ ) |> 
+    mutate(
+    weight_kg = as.numeric(weight_kg),
+    length_cm = as.numeric(length_cm)
+    )
+```
+
+## Landing Sites Overview
+
+This section provides an overview of the landing sites by region.
+
+```{r}
+lw |> 
+    distinct(landing_site, .keep_all = T) |> 
+    filter(!is.na(region)) |> 
+    group_by(region) |> 
+    summarise(N = n(), ls = paste(landing_site, collapse = ', ')) |> 
+    gt() |>
+    tab_header(
+        title = "Landing Sites by Region",
+        subtitle = "Number of sites and listing of sites per region"
+    ) |>
+    cols_label(
+        region = "Region",
+        N = "Site Count",
+        ls = "Landing Sites"
+    ) |>
+    tab_options(
+        table.width = px(300), 
+        table.font.size = '11px', 
+        heading.title.font.size = '14px',
+        heading.subtitle.font.size = '12px',
+        heading.subtitle.font.weight = 'bold',
+        latex.use_longtable = TRUE,
+        data_row.padding = px(8),
+        column_labels.padding = px(8)
+    ) |>
+    opt_stylize(style = 6, color = 'gray')
+```
+
+## Temporal Patterns
+
+### Monthly Landing Trends by Region
+
+The following tables show fish landings across months and regions, providing insight into seasonal landing patterns.
+
+```{r}
+lw |> 
+    group_by(region, month) |> 
+    tally() |> 
+    ungroup() |> 
+    pivot_wider(names_from = c(region), values_from = n, values_fill = 0) |>
+    # Replace 0 with NA in all columns except for year and month
+    mutate(across(-c(month), ~ na_if(., 0))) |>
+    arrange(month) |>
+    gt() |> 
+    tab_header(
+        title = "Fish Landings by Month and Region",
+        subtitle = "Monthly landing counts across regions"
+    ) |>
+    tab_options(
+        table.width = px(500), 
+        table.font.size = '11px', 
+        heading.title.font.size = '14px',
+        heading.subtitle.font.size = '12px',
+        heading.subtitle.font.weight = 'bold',
+        latex.use_longtable = TRUE,
+        data_row.padding = px(6),
+        column_labels.padding = px(8)
+    ) |>
+    data_color(
+        columns = Berbera:Mogadishu,
+        method = 'quantile',
+        quantiles = 8,
+        colors = scales::col_numeric(
+            palette = 'YlOrRd',
+            domain = NULL
+        )
+    ) |>
+    opt_stylize(style = 6, color = 'gray')
+
+lw |> 
+    janitor::tabyl(month, region) |> 
+    janitor::adorn_totals(where = c('col',"row")) |> 
+    as_tibble()  |>
+    gt() |> 
+    tab_header(
+        title = "Fish Landings by Month and Region (Summary)",
+        subtitle = "Crosstab with row and column totals"
+    ) |>
+    tab_options(
+        table.width = px(500), 
+        table.font.size = '11px', 
+        heading.title.font.size = '14px',
+        heading.subtitle.font.size = '12px',
+        heading.subtitle.font.weight = 'bold',
+        latex.use_longtable = TRUE, 
+        data_row.padding = px(6),
+        column_labels.padding = px(8)
+    ) |>
+    data_color(
+        columns = Berbera:Mogadishu,
+        rows = 1:12,
+        method = 'quantile',
+        quantiles = 8,
+        colors = scales::col_numeric(
+            palette = 'YlOrRd',
+            domain = NULL
+        )
+    ) |>
+    opt_stylize(style = 6, color = 'gray')
+```
+
+## Seasonal Analysis
+
+```{r}
+lw |> 
+    mutate(
+        season = month(date_dd_mm_yy), 
+        season = if_else(season > 5 & season < 10, 'SEM', 'NEM')) |> 
+    webr::PieDonut(aes(pie = season, donut = region), r0 = .5, labelposition=1)
+
+```
+
+## Fish Group Composition
+
+### Landing Distribution by Fish Group and Region
+
+```{r}
+lw |> 
+    janitor::tabyl(fish_group, region) |> 
+    janitor::adorn_totals(where = c('col',"row")) |> 
+    as_tibble()  |>
+    gt() |> 
+    tab_header(
+        title = "Fish Landings by Group and Region",
+        subtitle = "Count of specimens landed at each region"
+    ) |>
+    tab_options(
+        table.width = px(400), 
+        table.font.size = '11px', 
+        heading.title.font.size = '14px',
+        heading.subtitle.font.size = '12px',
+        heading.subtitle.font.weight = 'bold',
+        latex.use_longtable = TRUE, 
+        data_row.padding = px(5),
+        column_labels.padding = px(6)
+    ) |>
+    data_color(
+        columns = Berbera:Mogadishu,
+        rows = 1:8,
+        method = 'quantile',
+        quantiles = 8,
+        colors = scales::col_numeric(
+            palette = 'YlOrRd',
+            domain = NULL
+        )
+    ) |>
+    opt_stylize(style = 6, color = 'gray')
+
+
+lw  |> 
+    # janitor::tabyl(region, fish_group )|> 
+    webr::PieDonut(aes(pie = fish_group, donut = region), r0 = .5, labelposition = 1) 
+```
+
+## Landing Trends Over Time
+
+### Absolute and Relative Trends (2017-2023)
+
+The stacked area charts below illustrate both absolute quantities and relative proportions of fish landings by group from 2017 to 2023.
+
+```{r}
+lw |> 
+    group_by(year, fish_group) |> 
+    tally() |> 
+    ungroup() |> 
+    tidyplot(x = year, y = n, color = fish_group) |> 
+    add_areastack_absolute() |> 
+    adjust_colors(new_colors = colors_discrete_friendly_long) |> 
+    adjust_size(width = 4.0, height = 2.5, unit = 'in') |> 
+    adjust_font(fontsize = 11) |> 
+    adjust_y_axis(title = "Quantity Landed (n)", breaks = scales::pretty_breaks(n = 6)) |> 
+    adjust_x_axis(title = "Year", breaks = seq(2017, 2023, by = 1)) |> 
+    adjust_title('Fish Landings by Group (Absolute)', fontsize = 13, fontweight = 'bold') |>
+    adjust_legend_title('Fish Group') |> 
+    reorder_color_labels(c('Tuna', 'Other', 'Shark', 'Jacks', 'Mackerel', 'Billfish', 'Rays and Skates') |> rev())
+
+
+lw |> 
+    group_by(year, fish_group) |> 
+    tally() |> 
+    ungroup() |> 
+    tidyplot(x = year, y = n, color = fish_group) |> 
+    add_areastack_relative() |> 
+    adjust_colors(new_colors = colors_discrete_friendly_long) |> 
+    adjust_size(width = 4.0, height = 2.5, unit = 'in') |> 
+    adjust_font(fontsize = 11) |> 
+    adjust_y_axis(title = "Percentage Landed (%)", labels = scales::percent, breaks = scales::pretty_breaks(n = 6)) |> 
+    adjust_x_axis(title = "Year", breaks = seq(2017, 2023, by = 1)) |> 
+    adjust_title('Fish Landings by Group (Relative)', fontsize = 13, fontweight = 'bold') |>
+    adjust_legend_title('Fish Group') |> 
+    reorder_color_labels(c('Tuna', 'Other', 'Shark', 'Jacks', 'Mackerel', 'Billfish', 'Rays and Skates') |> rev())
+```
+
+## Morphometric Analysis-Length Distributions
+
+```{r}
+lw |> 
+    filter(!fish_group == 'Rays and Skates') |> 
+    tidyplot(x = length_cm) |>
+    tidyplots::add_histogram(binwidth = 5, boundary = 0, fill = '#2196F3', alpha = 0.85) |> 
+    adjust_size(width = 1.5, height = 1.5, unit = 'in') |> 
+    adjust_x_axis(title = 'Length (cm)', limits = c(0, NA), breaks = scales::pretty_breaks(n = 5)) |> 
+    adjust_y_axis(title = 'Frequency', breaks = scales::pretty_breaks(n = 5)) |>
+    adjust_title('Length Distribution by Fish Group', fontsize = 12, fontweight = 'bold') |>
+    adjust_font(fontsize = 10) |> 
+    split_plot(by = fish_group)
+```
+
+
+## Morphometric Analysis-Weight Distributions
+
+```{r}
+lw |> 
+    filter(!fish_group == 'Rays and Skates') |> 
+    tidyplot(x = weight_kg) |>
+    tidyplots::add_histogram(boundary = 0, fill = '#2196F3', alpha = 0.85) |> 
+    adjust_size(width = 1.5, height = 1.5, unit = 'in') |> 
+    adjust_x_axis(title = 'Weight (kg)', limits = c(0, NA), breaks = scales::pretty_breaks(n = 5)) |> 
+    adjust_y_axis(title = 'Frequency', breaks = scales::pretty_breaks(n = 5)) |>
+    adjust_title('Weight Distribution by Fish Group', fontsize = 12, fontweight = 'bold') |>
+    adjust_font(fontsize = 10) |> 
+    split_plot(by = fish_group)
+
+```
+
+### Length-Weight Relationships
+
+The scatter plot below shows the relationship between fish length and weight by group, with fitted curves indicating allometric growth patterns.
+
+```{r}
+lw |> 
+    filter(!fish_group == 'Rays and Skates') |> 
+    tidyplot(x = length_cm, y = weight_kg) |>
+    add_data_points(alpha = 0.6, size = 2) |> 
+    add_curve_fit(method = 'auto', color = '#D32F2F', linewidth = 1.2) |>
+    adjust_size(width = 1.5, height = 1.5, unit = 'in') |> 
+    adjust_font(fontsize = 11) |> 
+    adjust_x_axis(title = 'Length (cm)', limits = c(0, NA), breaks = scales::pretty_breaks(n = 4)) |> 
+    adjust_y_axis(title = 'Weight (kg)', limits = c(0, NA), breaks = scales::pretty_breaks(n = 4)) |>
+    adjust_title('Length-Weight Relationship by Fish Group', fontsize = 13, fontweight = 'bold') |>
+    split_plot(by = fish_group)
+```
+
+## Summary Statistics
+
+### Length Distribution by Fish Group and Region
+
+```{r}
+lw |> 
+    filter(!fish_group == 'Rays and Skates') |> 
+    select(region, length_cm, fish_group) |>
+    group_by(region, fish_group) |>
+    rstatix::get_summary_stats() |> 
+    ungroup() |> 
+    select(fish_group, region, n, min, q1, median, mean, q3, max, sd) |> 
+    arrange(fish_group, region) |>
+    gt(groupname_col = 'fish_group')  |> 
+    tab_header(
+        title = "Length Distribution Summary Statistics by Fish Group and Region",
+        subtitle = "Measurements in centimeters, excluding Rays and Skates"
+    ) |>
+    cols_label(
+        region = "Region",
+        n = "N",
+        min = "Min",
+        q1 = "Q1",
+        median = "Median",
+        mean = "Mean",
+        q3 = "Q3",
+        max = "Max",
+        sd = "SD"
+    ) |>
+    fmt_number(columns = c(min, q1, median, mean, q3, max, sd), decimals = 1) |>
+    tab_options(
+        table.width = px(700), 
+        table.font.size = '11px', 
+        heading.title.font.size = '14px',
+        heading.subtitle.font.size = '12px', 
+        heading.subtitle.font.weight = 'bold',
+        latex.use_longtable = TRUE,
+        data_row.padding = px(5),
+        column_labels.padding = px(6)
+    ) |>
+    data_color(
+        columns = n:sd,
+        rows = everything(),
+        method = 'quantile',
+        quantiles = 8,
+        colors = scales::col_numeric(
+            palette = 'YlOrRd',
+            domain = NULL
+        )
+    ) |>
+    opt_stylize(style = 6, color = 'gray')
+```
+
+## Geographic Distribution
+
+### Landing Regions Map
+
+The interactive map below shows the geographic locations of the landing regions where fish were recorded.
+
+```{r}
+# Define approximate coordinates for Somali coastal regions
+region_coords <- tibble(
+    region = c('Berbera', 'Borama', 'Mogadishu', 'Kismayo', 'Baidoa', 'Galkacyo'),
+    latitude = c(10.4145, 9.5283, 2.0469, -0.3604, 3.4314, 6.7719),
+    longitude = c(45.3682, 43.6333, 46.1996, 42.5521, 43.6635, 46.9250),
+    landings = c(NA, NA, NA, NA, NA, NA)
+)
+
+# Get landing counts by region
+landing_counts <- lw |> 
+    filter(!is.na(region)) |> 
+    group_by(region) |> 
+    tally() |> 
+    rename(landings = n)
+
+# Merge coordinates with landing counts
+region_map_data <- region_coords |> 
+    left_join(landing_counts, by = 'region') |> 
+    mutate(landings = coalesce(landings.y, landings.x),
+           landings = coalesce(landings, 0)) |> 
+    select(region, latitude, longitude, landings)
+
+# Create color palette based on landing counts
+pal <- leaflet::colorNumeric(palette = 'YlOrRd', domain = region_map_data$landings)
+
+# Create leaflet map
+leaflet(region_map_data) |> 
+    addTiles() |> 
+    addCircleMarkers(
+        lng = ~longitude, 
+        lat = ~latitude,
+        radius = ~sqrt(landings) / 2,
+        popup = ~paste0('<b>', region, '</b><br/>Landings: ', landings),
+        color = ~pal(landings),
+        fillColor = ~pal(landings),
+        fillOpacity = 0.7,
+        weight = 2,
+        opacity = 0.8
+    ) |> 
+    addLegend(
+        pal = pal, 
+        values = ~landings,
+        title = 'Number of Landings',
+        position = 'bottomright'
+    ) |>
+    setView(lng = 46, lat = 5, zoom = 6)
+```
+
+## Stock Health & Sustainability Indicators
+
+### Catch Per Unit Effort (CPUE) Trends
+
+CPUE is a key indicator of stock abundance. Declining CPUE suggests increasing fishing pressure relative to available stock.
+
+```{r}
+lw |> 
+    filter(!is.na(region), !is.na(fish_group)) |>
+    group_by(year, region, fish_group, landing_site) |>
+    summarise(catch = n(), .groups = 'drop') |>
+    group_by(year, region, fish_group) |>
+    summarise(
+        total_catch = sum(catch),
+        num_sites = n_distinct(landing_site),
+        cpue = total_catch / num_sites,
+        .groups = 'drop'
+    ) |>
+    tidyplot(x = year, y = cpue, color = fish_group) |>
+    add_data_points(size = 2) |>
+    add_curve_fit(method = 'loess', color = 'gray30', linewidth = 0.8) |>
+    adjust_size(width = 1.5, height = 1.5, unit = 'in') |>
+    adjust_font(fontsize = 11) |>
+    adjust_y_axis(title = 'CPUE (specimens per site)', breaks = scales::pretty_breaks(n = 6)) |>
+    adjust_x_axis(title = 'Year', breaks = seq(2017, 2023, by = 1)) |>
+    adjust_title('Catch Per Unit Effort Trends by Fish Group', fontsize = 13, fontweight = 'bold') |>
+    adjust_legend_title('Fish Group') |>
+    split_plot(by = region)
+```
+
+### Average Size Trends (Overfishing Indicator)
+
+Declining average fish size over time is a strong indicator of overfishing pressure.
+
+```{r}
+lw |>
+    filter(!is.na(length_cm), !fish_group == 'Rays and Skates') |>
+    group_by(year, fish_group) |>
+    summarise(
+        mean_length = mean(length_cm, na.rm = TRUE),
+        sd_length = sd(length_cm, na.rm = TRUE),
+        n = n(),
+        .groups = 'drop'
+    ) |>
+    tidyplot(x = year, y = mean_length, color = fish_group) |>
+    add_data_points(size = 2.5) |>
+    add_curve_fit(method = 'loess', linewidth = 1.2) |>
+    adjust_size(width = 4.5, height = 2.8, unit = 'in') |>
+    adjust_font(fontsize = 11) |>
+    adjust_y_axis(title = 'Mean Length (cm)', breaks = scales::pretty_breaks(n = 6)) |>
+    adjust_x_axis(title = 'Year', breaks = seq(2017, 2023, by = 1)) |>
+    adjust_title('Average Fish Size Trends Over Time', fontsize = 13, fontweight = 'bold') |>
+    adjust_legend_title('Fish Group')
+```
+
+## Regional Performance & Equity Analysis
+
+### Landing Efficiency by Region
+
+Which regions are most productive per landing site?
+
+```{r}
+regional_efficiency <- lw |>
+    filter(!is.na(region)) |>
+    group_by(region) |>
+    summarise(
+        total_landings = n(),
+        num_sites = n_distinct(landing_site),
+        landings_per_site = total_landings / num_sites,
+        avg_weight_kg = mean(weight_kg, na.rm = TRUE),
+        .groups = 'drop'
+    ) |>
+    arrange(desc(landings_per_site))
+
+regional_efficiency |>
+    gt() |>
+    tab_header(
+        title = "Regional Landing Efficiency Analysis",
+        subtitle = "Productivity metrics by region"
+    ) |>
+    cols_label(
+        region = "Region",
+        total_landings = "Total Landings",
+        num_sites = "Number of Sites",
+        landings_per_site = "Landings per Site",
+        avg_weight_kg = "Avg Weight (kg)"
+    ) |>
+    fmt_number(columns = c(landings_per_site, avg_weight_kg), decimals = 2) |>
+    data_color(
+        columns = landings_per_site,
+        method = 'quantile',
+        quantiles = 8,
+        colors = scales::col_numeric(palette = 'RdYlGn', domain = NULL)
+    ) |>
+    tab_options(
+        table.width = px(350),
+        table.font.size = '11px',
+        heading.title.font.size = '14px',
+        heading.subtitle.font.size = '12px',
+        heading.subtitle.font.weight = 'bold',
+        data_row.padding = px(6),
+        column_labels.padding = px(8)
+    ) |>
+    opt_stylize(style = 6, color = 'gray')
+```
+
+### Species Diversity by Region (Ecosystem Health)
+
+Higher diversity indicates more balanced and resilient fisheries.
+
+```{r}
+lw |>
+    filter(!is.na(region), !is.na(fish_group)) |>
+    group_by(region, fish_group) |>
+    summarise(count = n(), .groups = 'drop') |>
+    group_by(region) |>
+    mutate(
+        total = sum(count),
+        proportion = count / total,
+        diversity_shannon = -sum(proportion * log(proportion), na.rm = TRUE),
+        num_species = n_distinct(fish_group),
+        .groups = 'drop'
+    ) |>
+    distinct(region, diversity_shannon, num_species) |>
+    arrange(desc(diversity_shannon)) |>
+    tidyplot(x = reorder(region, diversity_shannon), y = diversity_shannon) |>
+    add_data_points(fill = '#1976D2', alpha = 0.8) |>
+    adjust_size(width = 3.5, height = 2.5, unit = 'in') |>
+    adjust_font(fontsize = 11) |>
+    adjust_x_axis(title = 'Region') |>
+    adjust_y_axis(title = 'Shannon Diversity Index', breaks = scales::pretty_breaks(n = 5)) |>
+    adjust_title('Species Diversity by Region (Higher = More Resilient)', fontsize = 12, fontweight = 'bold')
+```
+
+### Regional Market Share Trends
+
+Identify which regions contribute most to total catch over time.
+
+```{r}
+lw |>
+    filter(!is.na(region)) |>
+    group_by(year, region) |>
+    summarise(landings = n(), .groups = 'drop') |>
+    group_by(year) |>
+    mutate(total = sum(landings), market_share = landings / total * 100) |>
+    tidyplot(x = year, y = market_share, color = region) |>
+    add_areastack_absolute() |>
+    adjust_colors(new_colors = colors_discrete_friendly_long) |>
+    adjust_size(width = 4.5, height = 2.8, unit = 'in') |>
+    adjust_font(fontsize = 11) |>
+    adjust_y_axis(title = 'Market Share (%)', breaks = scales::pretty_breaks(n = 6)) |>
+    adjust_x_axis(title = 'Year', breaks = seq(2017, 2023, by = 1)) |>
+    adjust_title('Regional Market Share Trends', fontsize = 13, fontweight = 'bold') |>
+    adjust_legend_title('Region')
+```
+
+## Seasonal Vulnerability Assessment
+
+### Peak Landing Periods vs. Seasonal Patterns
+
+Identify critical fishing seasons and potential conservation needs.
+
+```{r}
+#| eval: false
+#| warning: false
+#| 
+seasonal_summary <- lw |>
+    filter(!is.na(month)) |>
+    mutate(
+        season = if_else(month(date_dd_mm_yy) > 5 & month(date_dd_mm_yy) < 10, 'SEM', 'NEM')
+    ) |>
+    group_by(month, season) |>
+    summarise(
+        landings = n(),
+        avg_length = mean(length_cm, na.rm = TRUE),
+        avg_weight = mean(weight_kg, na.rm = TRUE),
+        .groups = 'drop'
+    )
+
+seasonal_summary |>
+    tidyplot(x = factor(month, levels = month.abb), y = landings, fill = season) |>
+    add_data_bars(alpha = 0.85) |>
+    adjust_size(width = 5.0, height = 2.8, unit = 'in') |>
+    adjust_font(fontsize = 11) |>
+    adjust_x_axis(title = 'Month') |>
+    adjust_y_axis(title = 'Number of Landings') |>
+    adjust_title('Seasonal Landing Patterns (SEM vs NEM)', fontsize = 13, fontweight = 'bold')
+```
+
+### Seasonal Catch Variability (Vulnerability Metric)
+
+High variability indicates less stable fisheries.
+
+```{r}
+#| eval: false
+#| warning: false
+#| 
+lw |>
+    filter(!is.na(region), !is.na(month)) |>
+    group_by(region, month) |>
+    summarise(landings = n(), .groups = 'drop') |>
+    group_by(region) |>
+    summarise(
+        mean_landings = mean(landings),
+        sd_landings = sd(landings),
+        cv = sd_landings / mean_landings,  # Coefficient of variation
+        .groups = 'drop'
+    ) |>
+    arrange(desc(cv)) |>
+    gt() |>
+    tab_header(
+        title = "Seasonal Catch Variability by Region",
+        subtitle = "Higher CV indicates less stable fisheries"
+    ) |>
+    cols_label(
+        region = "Region",
+        mean_landings = "Mean Monthly Landings",
+        sd_landings = "Std Dev",
+        cv = "Coefficient of Variation"
+    ) |>
+    fmt_number(columns = c(mean_landings, sd_landings, cv), decimals = 2) |>
+    data_color(
+        columns = cv,
+        method = 'quantile',
+        quantiles = 8,
+        colors = scales::col_numeric(palette = 'RdYlGn_r', domain = NULL)
+    ) |>
+    tab_options(
+        table.width = px(700),
+        table.font.size = '11px',
+        heading.title.font.size = '14px',
+        heading.subtitle.font.size = '12px',
+        heading.subtitle.font.weight = 'bold',
+        data_row.padding = px(6),
+        column_labels.padding = px(8)
+    ) |>
+    opt_stylize(style = 6, color = 'gray')
+```
+
+## Species-Specific Risk Assessment
+
+### Dominance Analysis (Ecosystem Concentration Risk)
+
+Over-reliance on few species increases vulnerability to stock collapse.
+
+```{r}
+#| eval: false
+#| warning: false
+#| 
+lw |>
+    filter(!is.na(fish_group)) |>
+    group_by(fish_group) |>
+    summarise(count = n(), .groups = 'drop') |>
+    mutate(
+        total = sum(count),
+        proportion = count / total,
+        percentage = proportion * 100
+    ) |>
+    arrange(desc(percentage)) |>
+    tidyplot(x = reorder(fish_group, percentage), y = percentage) |>
+    add_data_bars(fill = '#FF6F00', alpha = 0.85) |>
+    adjust_size(width = 4.0, height = 2.8, unit = 'in') |>
+    adjust_font(fontsize = 11) |>
+    adjust_x_axis(title = 'Fish Group') |>
+    adjust_y_axis(title = 'Percentage of Total Landings (%)', breaks = scales::pretty_breaks(n = 5)) |>
+    adjust_title('Catch Dominance: Ecosystem Concentration Risk', fontsize = 12, fontweight = 'bold')
+```
+
+### Growth Rate Estimates from Allometric Relationships
+
+Steeper slopes indicate faster growth; deviations may signal stress.
+
+```{r}
+#| eval: false
+#| warning: false
+#| 
+growth_analysis <- lw |>
+    filter(!is.na(length_cm), !is.na(weight_kg), !fish_group == 'Rays and Skates') |>
+    group_by(fish_group) |>
+    summarise(
+        n_obs = n(),
+        r_squared = cor(log(length_cm), log(weight_kg), use = 'complete.obs')^2,
+        min_length = min(length_cm, na.rm = TRUE),
+        max_length = max(length_cm, na.rm = TRUE),
+        mean_weight = mean(weight_kg, na.rm = TRUE),
+        .groups = 'drop'
+    )
+
+growth_analysis |>
+    gt() |>
+    tab_header(
+        title = "Growth Pattern Analysis by Fish Group",
+        subtitle = "Length-weight relationships indicate population health"
+    ) |>
+    cols_label(
+        fish_group = "Fish Group",
+        n_obs = "Observations",
+        r_squared = "R² (Fit Quality)",
+        min_length = "Min Length (cm)",
+        max_length = "Max Length (cm)",
+        mean_weight = "Mean Weight (kg)"
+    ) |>
+    fmt_number(columns = c(r_squared, mean_weight), decimals = 3) |>
+    tab_options(
+        table.width = px(450),
+        table.font.size = '11px',
+        heading.title.font.size = '14px',
+        heading.subtitle.font.size = '12px',
+        heading.subtitle.font.weight = 'bold',
+        data_row.padding = px(6),
+        column_labels.padding = px(8)
+    ) |>
+    opt_stylize(style = 6, color = 'gray')
+```
+
+## Effort Dynamics & Spatial Concentration
+
+### Landing Site Productivity Trends
+
+Identify if fishing activity is centralizing or dispersing.
+
+```{r}
+#| eval: false
+#| warning: false
+#| 
+lw |>
+    filter(!is.na(landing_site), !is.na(region)) |>
+    group_by(year, region, landing_site) |>
+    summarise(landings = n(), .groups = 'drop') |>
+    group_by(year, region) |>
+    summarise(
+        total_landings = sum(landings),
+        num_active_sites = n_distinct(landing_site),
+        avg_site_productivity = total_landings / num_active_sites,
+        .groups = 'drop'
+    ) |>
+    tidyplot(x = year, y = num_active_sites, color = region) |>
+    add_data_points(size = 2.5) |>
+    add_curve_fit(method = 'loess', linewidth = 1) |>
+    adjust_size(width = 4.5, height = 2.8, unit = 'in') |>
+    adjust_font(fontsize = 11) |>
+    adjust_y_axis(title = 'Number of Active Landing Sites') |>
+    adjust_x_axis(title = 'Year', breaks = seq(2017, 2023, by = 1)) |>
+    adjust_title('Landing Site Activity Trends', fontsize = 13, fontweight = 'bold') |>
+    adjust_legend_title('Region')
+```
+
+## Catch Composition Shifts (Early Warning System)
+
+### Year-over-Year Composition Changes
+
+Detect ecosystem shifts and unusual species patterns.
+
+```{r}
+#| eval: false
+#| warning: false
+#| 
+composition_shifts <- lw |>
+    filter(!is.na(fish_group), !is.na(year)) |>
+    group_by(year, fish_group) |>
+    summarise(count = n(), .groups = 'drop') |>
+    group_by(year) |>
+    mutate(
+        total = sum(count),
+        proportion = count / total * 100
+    ) |>
+    pivot_wider(names_from = fish_group, values_from = proportion, values_fill = 0)
+
+composition_shifts |>
+    gt() |>
+    tab_header(
+        title = "Catch Composition Changes Over Time",
+        subtitle = "Year-over-year shifts in species proportions (%)"
+    ) |>
+    fmt_number(columns = -year, decimals = 1) |>
+    data_color(
+        columns = -year,
+        method = 'quantile',
+        quantiles = 8,
+        colors = scales::col_numeric(palette = 'YlOrRd', domain = NULL)
+    ) |>
+    tab_options(
+        table.width = px(500),
+        table.font.size = '10px',
+        heading.title.font.size = '14px',
+        heading.subtitle.font.size = '12px',
+        heading.subtitle.font.weight = 'bold',
+        data_row.padding = px(5),
+        column_labels.padding = px(6)
+    ) |>
+    opt_stylize(style = 6, color = 'gray')
+```

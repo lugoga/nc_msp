@@ -1,0 +1,384 @@
+---
+title: "Comparing Continuous Ecosystem Health Metrics: Temporal Changes in Mkoani and Mkuranga"
+description: "Methods for comparing continuous raster data between baseline (2020) and current (2023) ecosystem health indices"
+author: 
+  - name: Masumbuko Semba
+    affiliation: "NM-AIST"
+  - name: Siajali Pamba
+    affiliation: "NM-AIST"
+date: "2025-12-27"
+categories: ["Spatial Analysis", "Ecosystem Monitoring", "Raster Comparison", "Temporal Change"]
+image: "workflows.png"
+execute: 
+  eval: false
+---
+
+## Introduction
+
+Monitoring ecosystem health across time requires robust methods for comparing continuous raster data—such as productivity indices, chlorophyll concentrations, or habitat quality scores—between different time periods. This article presents practical approaches for comparing continuous ecosystem health metrics between our baseline assessment (2020) and current monitoring (2023) in Mkoani and Mkuranga.
+
+The methods shown here move beyond simple visual inspection to quantify how ecosystem health has changed across both spatial and temporal dimensions. Understanding these changes enables evidence-based adaptive management decisions for marine spatial planning.
+
+### Data Types
+
+This tutorial uses continuous ecosystem health indices for Mkoani and Mkuranga:
+- **Baseline data (2020)**: NDVI-derived productivity index from ESA remote sensing
+- **Current data (2023)**: Ecosystem health index from latest field surveys and satellite data
+- **Temporal comparison**: Detecting areas of improvement vs. degradation
+- **Spatial patterns**: Understanding spatial autocorrelation of changes
+
+## Non-Spatial Methods
+
+Non-spatial approaches treat each cell independently, without considering surrounding values.
+
+### Single Cell Differences
+
+The simplest approach is to calculate the difference between two rasters for each cell:
+
+```{r}
+library(terra)
+
+# Load ecosystem health indices for Mkoani and Mkuranga
+mkoani_2020 = rast("ecosystem_health_mkoani_2020.tif")  # Baseline
+mkoani_2023 = rast("ecosystem_health_mkoani_2023.tif")  # Current
+
+# Calculate the difference
+mkoani_diff = mkoani_2023 - mkoani_2020
+
+# Positive values = improvement, negative values = degradation
+plot(mkoani_diff, main = "Ecosystem Health Change in Mkoani (2020-2023)")
+```
+
+For better visualization with diverging colors (where zero = no change):
+
+```{r}
+plot_div = function(r, ...){
+  r_range = range(values(r), na.rm = TRUE, finite = TRUE)
+  max_abs = max(abs(r_range))
+  new_range = c(-max_abs, max_abs)
+  plot(r, col = hcl.colors(100, palette = "prgn"), range = new_range, ...)
+}
+
+plot_div(mkoani_diff, main = "Ecosystem Health Change: Green = Improvement")
+```
+
+**Interpretation**: 
+- **Positive values (green)**: Areas where ecosystem health has improved from 2020 to 2023
+- **Negative values (magenta)**: Areas where ecosystem health has degraded
+- **Near-zero values (yellow)**: Areas with stable ecosystem health
+
+### Distribution of Changes
+
+Understanding the distribution of changes across the landscape helps identify systematic trends:
+
+```{r}
+hist(mkoani_diff, main = "Distribution of Ecosystem Health Changes in Mkoani",
+     xlab = "Change Index (2023 - 2020)", ylab = "Number of Cells")
+
+# Calculate summary statistics
+summary(mkoani_diff)
+```
+
+### Error Metrics: Quantifying Overall Difference
+
+Beyond individual cell changes, we calculate metrics that summarize the overall difference between baseline and current ecosystem states.
+
+**Root Mean Square Error (RMSE)** quantifies average difference:
+
+```{r}
+library(yardstick)
+
+# RMSE calculation
+mkoani_rmse = rmse_vec(values(mkoani_2023)[, 1], values(mkoani_2020)[, 1])
+mkoani_rmse
+```
+
+**Mean Absolute Difference (MAD)** is less sensitive to outliers:
+
+```{r}
+library(diffeR)
+
+mkoani_mad = MAD(mkoani_2023, mkoani_2020)
+mkoani_mad$Total
+```
+
+**Interpretation Example**:
+- RMSE = 0.15: Average ecosystem health change is 0.15 units
+- MAD = 0.12: Median change magnitude is 0.12 units (more robust to outliers)
+
+These metrics help compare different regions or time periods quantitatively.
+
+## Spatial Methods
+
+Spatial approaches incorporate neighborhood relationships—the idea that ecosystem changes in one location are influenced by surrounding areas.
+
+### Focal Correlation: Local Pattern Similarity
+
+The `focalPairs()` function calculates correlation between moving windows of two rasters, revealing how similar local ecosystem patterns are:
+
+```{r}
+# Compare local ecosystem patterns between 2020 and 2023
+# 5x5 window (50m × 50m with 10m resolution data)
+mkoani_cor = terra::focalPairs(c(mkoani_2023, mkoani_2020), 
+                               w = 5,
+                               fun = "pearson", 
+                               na.rm = TRUE)
+
+plot_div(mkoani_cor, main = "Local Ecosystem Pattern Similarity (r)")
+```
+
+**Interpretation**:
+- **Values near +1** (green): Local ecosystem patterns are highly similar—changes are gradual
+- **Values near 0** (yellow): No relationship between 2020 and 2023 local patterns—potential abrupt shifts
+- **Values near -1** (magenta): Inverse relationship—significant pattern transformation
+
+### Surface Roughness Change
+
+Surface roughness measures spatial heterogeneity—how much ecosystem health varies within local neighborhoods:
+
+```{r}
+library(geodiv)
+
+window = matrix(1, nrow = 5, ncol = 5)
+
+# Calculate surface roughness for both years
+mkoani_2020_sa = geodiv::focal_metrics(mkoani_2020, 
+                                       window = window,
+                                       metric = "sa", 
+                                       progress = FALSE)
+
+mkoani_2023_sa = geodiv::focal_metrics(mkoani_2023, 
+                                       window = window,
+                                       metric = "sa", 
+                                       progress = FALSE)
+
+# Difference in roughness
+mkoani_sa_diff = mkoani_2023_sa$sa - mkoani_2020_sa$sa
+
+plot_div(mkoani_sa_diff, 
+         main = "Change in Ecosystem Heterogeneity\n(Positive = More Variable Health)")
+```
+
+**Interpretation**:
+- **Positive values (green)**: Ecosystem health is becoming more variable—potential patchiness increasing
+- **Negative values (magenta)**: Ecosystem becoming more homogeneous—potentially homogenizing pressures
+- Management implication: High variability in small areas may require targeted interventions
+
+### Texture Homogeneity
+
+GLCM (Gray-Level Co-occurrence Matrix) texture homogeneity characterizes spatial structure:
+
+```{r}
+library(GLCMTextures)
+
+# Calculate texture homogeneity (smoothness of transitions)
+mkoani_2020_hom = GLCMTextures::glcmTexture(mkoani_2020, 
+                                            window = 5, 
+                                            metrics = "homogeneity")
+
+mkoani_2023_hom = GLCMTextures::glcmTexture(mkoani_2023, 
+                                            window = 5, 
+                                            metrics = "homogeneity")
+
+mkoani_hom_diff = mkoani_2023_hom - mkoani_2020_hom
+
+plot_div(mkoani_hom_diff, 
+         main = "Change in Ecosystem Texture Smoothness\n(Positive = Smoother Transitions)")
+```
+
+### Rao's Quadratic Entropy
+
+Rao's Q measures diversity while accounting for dissimilarity between ecosystem states:
+
+```{r}
+library(rasterdiv)
+
+# Convert to integer scale (multiply by 100)
+mkoani_2020_int = as.int(mkoani_2020 * 100)
+mkoani_2023_int = as.int(mkoani_2023 * 100)
+
+# Calculate Rao's Q (computational intensity: ~5-10 minutes)
+mkoani_2020_rao = rasterdiv::paRao(mkoani_2020_int, window = 5, progBar = FALSE)
+mkoani_2023_rao = rasterdiv::paRao(mkoani_2023_int, window = 5, progBar = FALSE)
+
+# Extract difference
+mkoani_rao_diff = mkoani_2023_rao[[1]][[1]] - mkoani_2020_rao[[1]][[1]]
+
+plot_div(mkoani_rao_diff, 
+         main = "Change in Ecosystem Diversity\n(Positive = More Diverse Health Patterns)")
+```
+
+**Interpretation**: Higher Rao's Q values indicate greater ecosystem diversity within local areas—potentially reflecting multiple habitat types or species communities.
+
+### Spatial Autocorrelation of Changes
+
+Spatial autocorrelation shows whether ecosystem changes are clustered or random:
+
+```{r}
+# Calculate Moran's I for the change raster
+mkoani_diff_autocor = terra::autocor(mkoani_diff, method = "moran", global = FALSE)
+
+# Compare original difference and its spatial autocorrelation
+par(mfrow = c(1, 2))
+plot_div(mkoani_diff, main = "Ecosystem Health Change")
+plot_div(mkoani_diff_autocor, main = "Spatial Autocorrelation of Changes")
+par(mfrow = c(1, 1))
+```
+
+**Interpretation**:
+- **High positive Moran's I (green)**: Changes cluster spatially—improvements cluster with improvements, degradation with degradation (suggests shared drivers)
+- **Near-zero Moran's I (yellow)**: Random change patterns—no spatial clustering
+- **Negative Moran's I (magenta)**: Dispersed patterns—improvements surrounded by degradation
+
+### Structural Similarity Index (SSIM)
+
+SSIM combines luminance, contrast, and structure comparisons mimicking human perception of similarity:
+
+```{r}
+library(SSIMmap)
+
+mkoani_ssim = ssim_raster(mkoani_2020, mkoani_2023, global = FALSE, w = 5)
+
+plot_div(mkoani_ssim[[1]], 
+         main = "Local Structural Similarity\n(1 = Identical, 0 = Completely Different)")
+
+# Also get global SSIM
+ssim_raster(mkoani_2020, mkoani_2023, global = TRUE)
+```
+
+**Interpretation**:
+- **SSIM = 0.85**: Overall ecosystem structure is very similar between years (2023 shows minor changes to 2020 baseline)
+- **SSIM = 0.50**: Moderate structural change (noticeable ecosystem transformation)
+- **SSIM < 0.30**: Substantial structural change (major ecosystem shifts)
+
+## Multi-Scale Analysis
+
+Real-world ecosystem processes operate across multiple spatial scales. Analyzing changes at multiple resolutions reveals scale-dependent patterns.
+
+### RMSE at Multiple Scales
+
+Compare ecosystem health at aggregated scales (50m, 100m, 150m windows):
+
+```{r}
+library(waywiser)
+
+# Define scale progression
+cell_sizes = seq(50, 300, by = 50)
+
+# Calculate RMSE at multiple scales
+mkoani_multi_scale = waywiser::ww_multi_scale(
+  truth = mkoani_2020, 
+  estimate = mkoani_2023,
+  metrics = list(yardstick::rmse), 
+  cellsize = cell_sizes,
+  progress = FALSE
+)
+
+# View results
+mkoani_multi_scale
+```
+
+**Interpretation**:
+If RMSE decreases from 0.20 (50m) to 0.15 (300m):
+- Fine-scale differences are greater (local heterogeneity)
+- Coarse-scale differences are smaller (regional homogeneity)
+- Management implication: Local-level interventions may be needed alongside regional strategies
+
+### MAD at Multiple Resolutions
+
+The `MAD()` function from diffeR calculates Mean Absolute Difference at scales doubling each step:
+
+```{r}
+library(diffeR)
+
+mkoani_mad_multi = MAD(mkoani_2023, mkoani_2020, eval = "multiple")
+
+# Extract results
+mkoani_mad_results = mkoani_mad_multi$Total
+print(mkoani_mad_results)
+```
+
+## Comparative Analysis: Mkoani vs Mkuranga
+
+Compare ecosystem health trajectories between the two districts:
+
+```{r}
+mkuranga_2020 = rast("ecosystem_health_mkuranga_2020.tif")
+mkuranga_2023 = rast("ecosystem_health_mkuranga_2023.tif")
+
+# Calculate metrics for both regions
+mkoani_mad = MAD(mkoani_2023, mkoani_2020)$Total
+mkuranga_mad = MAD(mkuranga_2023, mkuranga_2020)$Total
+
+comparison_table = data.frame(
+  Region = c("Mkoani", "Mkuranga"),
+  MAD_2020_2023 = c(mkoani_mad, mkuranga_mad),
+  Direction = c(
+    if(mean(values(mkoani_2023), na.rm = TRUE) > mean(values(mkoani_2020), na.rm = TRUE)) "Improving" else "Declining",
+    if(mean(values(mkuranga_2023), na.rm = TRUE) > mean(values(mkuranga_2020), na.rm = TRUE)) "Improving" else "Declining"
+  )
+)
+
+comparison_table
+```
+
+## Decision Framework: From Analysis to Action
+
+```{r}
+#| eval: false
+#| echo: true
+
+# Example interpretation matrix for management decisions
+decision_matrix = data.frame(
+  Pattern = c("Clustered improvements", "Clustered degradation", "Random changes", "Isolated hotspots"),
+  Spatial_Autocor = c("High positive", "High positive", "Near zero", "Negative"),
+  Management_Priority = c("Expand successful practices", "Urgent intervention zones", "Site-specific assessments", "Targeted restoration"),
+  Timeframe = c("Medium-term", "Immediate", "Short-term", "Long-term")
+)
+
+decision_matrix
+```
+
+## Implementation Timeline for MSP
+
+**January 2026**: Final field validation surveys in Mkoani and Mkuranga
+- Collect ecosystem health observations at validation points (n=50 per site)
+- Correlate with raster-derived indices
+
+**February 2026**: Baseline-current comparison analysis
+- Calculate all difference metrics at both sites
+- Identify priority areas for intervention or conservation
+
+**March 2026**: Multi-scale spatial analysis
+- Evaluate changes at management-relevant scales (coastal zone, district, sub-district)
+- Develop scale-appropriate monitoring protocols
+
+**April 2026**: Integration with bio-economic analysis
+- Link spatial change patterns to economic implications
+- Develop evidence-based management recommendations
+
+## References
+
+Cliff, Andrew D. 1970. "Computing the Spatial Correspondence Between Geographical Patterns." *Transactions of the Institute of British Geographers*, no. 50: 143. https://doi.org/10.2307/621351
+
+Ha, Hui Jeong, and Jed Long. 2023. "SSIMmap: The Structural Similarity Index Measure for Maps." R Package Manual.
+
+Haralick, Robert M., Karthikeyan Shanmugam, and Itsak Dinstein. 1973. "Textural Features for Image Classification." *IEEE Transactions on Systems, Man, and Cybernetics*, no. 6: 610–21.
+
+Hijmans, Robert J. 2024. "Terra: Spatial Data Analysis." R Package Manual.
+
+Ilich, Alexander R. 2020. "GLCMTextures." R Package. https://doi.org/10.5281/zenodo.3813252
+
+Mahoney, Michael J. 2023. "Waywiser: Ergonomic Methods for Assessing Spatial Models." R Package. https://github.com/mikemahoney218/waywiser
+
+Nowosad, Jakub. 2024. "Comparison of Spatial Patterns in Continuous Raster Data for Overlapping Regions Using R." *Thinking in Spatial Patterns* (blog), October 20, 2024. https://jakubnowosad.com/posts/2024-10-20-spatcomp-bp2/
+
+Pontius Jr., Robert Gilmore, and Alberto Santacruz. 2023. "diffeR: Quantifying Differences Between Maps." R Package.
+
+Rao, C. Radhakrishnan. 1982. "Diversity and Dissimilarity Coefficients: A Unified Approach." *Theoretical Population Biology*, 21(1): 24–43.
+
+Rocchini, Duccio, et al. 2021. "Rasterdiv: Information Theory Tailored R Package for Measuring Ecosystem Heterogeneity from Space." *Methods in Ecology and Evolution*, 12(6): 2195. https://doi.org/10.1111/2041-210X.13583
+
+Smith, Annie C., Phoebe Zarnetske, Kyla Dahlin, Adam Wilson, and Andrew Latimer. 2023. "Geodiv: Methods for Calculating Gradient Surface Metrics." R Package Manual.
+
+Wang, Zhaoqian, Alan C. Bovik, Hamid R. Sheikh, and Eero P. Simoncelli. 2004. "Image Quality Assessment: From Error Visibility to Structural Similarity." *IEEE Transactions on Image Processing*, 13(4): 600–612. https://doi.org/10.1109/TIP.2003.819861

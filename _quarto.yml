@@ -1,0 +1,142 @@
+project:
+  type: website
+  resources:
+    - data_shared/*.csv
+  output-dir: docs
+  render:
+    - "*.qmd"
+    # - "modules/*.qmd"
+    - "!presentations/lbspr.qmd" # Exclude this specific file
+    - "!presentations/*.qmd"  
+    - "!reports/*.qmd"      # Exclude all files in the reports folder
+    - "!modules/*.qmd"      # Exclude all files in the modules folder
+    - "!exercises/*.qmd"      # Exclude all files in the modules folder
+
+website:
+  # title: "Fishery Stock-SOMALIA"
+  navbar:
+    logo: images/coat_OG_web.png
+    background: secondary
+    left:
+      - text: "Home"
+        href: index.qmd
+      - text: "About"
+        href: about.qmd
+      - text: "Scope"
+        href: schedule.qmd
+      - text: "Posts"
+        href: blog.qmd
+      - text: "Reports"
+        menu:
+          - text: "Deliverable One: Inception Report"
+            href: reports/UN_Inception report_14092025_SM.pdf
+            target: "_blank"
+      - text: "Resources"
+        menu:
+          - text: "Resources1: TOR"
+            href: TOR_259658.pdf
+            target: "_blank"
+      - text: "WebApp"
+        # href: Visualize.qmd
+      - text: "Team"
+        href: team.qmd
+      - text: "Gallery"
+        href: gallery.qmd
+
+
+    right:
+      - icon: github
+        href: https://github.com/lugoga/stock_training_somalia
+
+  sidebar:
+    style: "floating"
+    search: true
+    contents:
+      # - section: "Getting Started"
+      #   contents:
+      #     - index.qmd
+      - section: "Project Info"
+        contents:
+          - about.qmd
+          - team.qmd
+          - news.qmd
+      - section: "Weather Updates"
+        contents:
+          - weather.qmd
+          - text: "Seasonal Calendar"
+            href: "news.qmd#current-conditions--field-operations"
+          - text: "NOAA Marine Forecast"
+            href: "https://www.ncei.noaa.gov/products/ocean-weather-forecast"
+            target: "_blank"
+          - text: "Ocean Current Maps"
+            href: "https://oceancurrents.rsmas.miami.edu/"
+            target: "_blank"
+          - text: "Sea Level Information"
+            href: "https://www.tides.noaa.gov/"
+            target: "_blank"
+          - text: "Tropical Storm Tracking"
+            href: "https://www.nhc.noaa.gov/"
+            target: "_blank"
+  
+      # - section: "MSP Resources & Networks"
+      #   contents:
+      #     - text: "Nairobi Convention"
+      #       href: "https://www.nairobiconvention.org/"
+      #       target: "_blank"
+      #     - text: "Nairobi Convention - Marine Spatial Planning"
+      #       href: "https://www.nairobiconvention.org/programs/integrated-management-marine-coastal-areas"
+      #       target: "_blank"
+      #     - text: "World Bank - Marine Spatial Planning"
+      #       href: "https://www.worldbank.org/en/topic/oceaneconomy"
+      #       target: "_blank"
+      #     - text: "UNESCO - Coastal Management"
+      #       href: "https://en.unesco.org/maritime"
+      #       target: "_blank"
+      #     - text: "IOC/UNESCO - Ocean Best Practices"
+      #       href: "https://www.oceanbestpractices.org/"
+      #       target: "_blank"
+      #     - text: "Western Indian Ocean - WIOMSA"
+      #       href: "https://www.wiomsa.org/"
+      #       target: "_blank"
+      #     - text: "FAO - Marine Spatial Planning"
+      #       href: "https://www.fao.org/about/what-we-do/fisheries-aquaculture"
+      #       target: "_blank"
+      #     - text: "IUCN - Oceans Initiative"
+      #       href: "https://www.iucn.org/our-work/topic/oceans"
+      #       target: "_blank"
+      #     - text: "Coastal Zone Management Centre"
+      #       href: "https://www.czmc.nl/"
+      #       target: "_blank"
+      #     - text: "UNEP - Coastal Management"
+      #       href: "https://www.unep.org/explore-topics/oceans-seas"
+      #       target: "_blank"
+    
+      # - section: "Course Modules"
+        # contents:
+        #   - modules/module1.qmd
+        #   - modules/module2.qmd
+        #   - modules/module3.qmd
+        #   - modules/module4.qmd
+        #   - modules/module5.qmd
+        #   - modules/module6.qmd
+
+  page-footer:
+    background: secondary
+    # left: |
+    #   © 2025 Semba      
+    center: |
+      © 2025 Semba | Marine Spatial Planning | Led by [SOAF-UDSM](https://www.udsm.ac.tz) | [Contact Us](mailto:msp.coastal.tz@udsm.ac.tz)
+    # right: |
+    #   [Contact Us](mailto:info@tafiri.go.tz) | [GitHub]({{< var website.navbar.right.1.href >}})
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+    toc-depth: 3
+    code-fold: true
+    code-tools: false
+bibliography: references.bib
+execute: 
+  freeze: auto

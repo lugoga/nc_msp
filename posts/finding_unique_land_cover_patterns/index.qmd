@@ -1,0 +1,161 @@
+---
+title: "Land Cover Patterns in Mkoani and Mkuranga Districts"
+description: "Analyzing and comparing spatial patterns of land cover in Mkoani and Mkuranga Districts"
+author: "Masumbuko Semba"
+date: 2025-12-28
+categories: [spatial-analysis, land-cover]
+image: "lc_mkuranga.png"
+execute: 
+  eval: false
+
+---
+
+## Understanding Spatial Patterns in Land Cover
+
+Spatial patterns in land cover are the local arrangements and configurations of different land use types across a landscape. Rather than simply knowing what proportion of an area is forest or cropland, understanding the *pattern* of these land covers reveals much more about ecosystem function and human land use practices. For example, fragmented forests interspersed with agriculture indicate different management histories and conservation challenges than consolidated forest blocks.
+
+Spatial signatures provide a quantitative framework for capturing these patterns. They encode information about how land cover types are spatially organized—whether they form large contiguous patches, are highly fragmented, or follow specific spatial arrangements. In this post, I'll demonstrate how to compare spatial signatures between two coastal Tanzanian districts and use visual analysis to identify their characteristic land cover patterns.
+
+## Loading and Preparing the Data
+
+Working with spatial raster data requires careful data loading and preprocessing to ensure consistent and accurate analysis. We begin by loading specialized R packages designed for spatial analysis: `terra` for raster operations, `sf` for vector geometries, and `tidyterra` to bridge spatial data with tidyverse workflows. These packages provide efficient tools for reading, manipulating, and visualizing large spatial datasets.
+
+We source ESA WorldCover 10m resolution land cover data for our study areas. The Mkoani district data covers the Pemba region, while Mkuranga district is defined by a specific geographic extent. Converting these rasters to factors (categorical data) is essential—it tells R that the numeric values represent discrete land cover categories rather than continuous measurements, which enables proper labeling and visualization.
+
+```{r}
+library(sf)
+library(terra)
+library(tidyterra)
+library(tidyverse)
+library(webr)
+```
+
+We'll work with ESA WorldCover 10m resolution land cover data for two districts in Tanzania. The data represent land cover types in a part of Tanzania in 2020 at 10 m resolution. We also load the boundaries of protected areas in the region.
+
+
+```{r}
+pemba_lulc = terra::rast('../data/mkoani_lulc_2021.tif') |> 
+    as.factor()
+
+mkuranga_lulc = terra::rast('../data/mkuranga_lulc_2021.tif') |> 
+    terra::crop(terra::ext(39.2, 39.48, -7.55, -7.1), mask = TRUE) |> 
+    as.factor()
+```
+
+## Creating a Standardized Color Scheme
+
+Consistent color representation across all visualizations is crucial for effective communication and reproducibility in scientific analyses. We create a reference dataframe (`worldcover_df`) that maps each ESA WorldCover land cover category to a standardized hex color code based on official ESA specifications. This single reference ensures that forest always appears as dark green (#006400), water as blue (#0064c8), and so forth across all figures.
+
+
+```{r}
+# Based on official ESA WorldCover specifications
+worldcover_df = data.frame(
+  value = c(10, 20, 30, 40, 50, 60, 70, 80, 90, 95, 100),
+  label = c("Tree cover", "Shrubland", "Grassland", "Cropland", 
+            "Built-up", "Bare/sparse vegetation", "Snow and ice",
+            "Water bodies", "Herbaceous wetland", 
+            "Mangroves", "Moss and lichen"),
+  color = c("#006400", "#ffbb22", "#ffff4c", "#f096ff", "#fa0000", 
+            "#b4b4b4", "#f0f0f0", "#0064c8", "#0096a0", "#00cf75", "#fae6a0")
+)
+
+
+```
+
+Beyond colors, we embed this metadata directly into our raster objects using the `levels()` and `coltab()` functions. This embeds both the categorical labels and color palette into the raster structure itself, making the visualizations self-contained and reproducible. Any downstream analysis or visualization automatically uses these definitions, eliminating inconsistencies and the need to repeatedly specify colors and labels.
+
+```{r}
+# Set levels with labels
+levels(pemba_lulc) = worldcover_df |> select(value, label)
+levels(mkuranga_lulc) = worldcover_df |> select(value, label)
+
+# Embed color palette into rasters
+coltab(pemba_lulc) = worldcover_df |> select(value, color)
+coltab(mkuranga_lulc) = worldcover_df |> select(value, color)
+```
+
+## Visualizing Land Cover Maps
+
+Raster maps provide an intuitive visual representation of land cover distribution across space. By mapping pixel values to colors using our standardized scheme, we can immediately identify dominant land cover types and their spatial arrangement. The maps below use a minimal theme with subtle axes to keep focus on the spatial patterns themselves rather than chart elements.
+
+The composition pie charts complement the maps by quantifying the areal proportion of each land cover type. Rather than showing all categories, we exclude water bodies (which often dominate coastal areas due to ocean coverage) to better visualize terrestrial land cover proportions. The start angle adjustment ensures labels are positioned for readability.
+
+### Mkoani District
+
+The Mkoani district, located on Pemba Island, displays a landscape heavily influenced by its island geography and historical land use patterns. @fig-mkoani-map reveals extensive forest cover interspersed with agricultural areas and coastal features, reflecting a balance between conservation and subsistence livelihoods common in coastal communities.
+
+```{r}
+#| label: fig-mkoani-map
+#| fig-cap: "Land Cover Map of Mkoani District (2021). Source: ESA WorldCover 10m"
+#| 
+ggplot() +
+  geom_spatraster(data = pemba_lulc) +
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 4)) +
+  theme_minimal(base_size = 12)
+```
+
+
+![Land Cover Map of Mkoani District (2021). The map displays ESA WorldCover 10m resolution classification showing the distribution of forest (dark green), agricultural areas (magenta), grasslands (yellow), and other land cover types across Pemba Island. Forest patches interspersed with agricultural clearing and coastal development characterize this island ecosystem. Source: ESA WorldCover 10m.](lc_mkoani.svg){#fig-mkoani-map}
+
+```{r}
+#| label: fig-mkoani-composition
+#| fig-cap: "Land Cover Composition of Mkoani District"
+
+pemba_lulc |> 
+    terra::freq() |> 
+    as.data.frame() |> 
+    rename(label = value) |> 
+    left_join(worldcover_df, by = c("label")) |>
+    filter(!label == 'Permanent water bodies') |>
+    webr::PieDonut(aes(label, count = count, fill = color), labelposition = 1, r0 = .7, r1 = 1,start=3*pi/8) 
+```
+
+The composition analysis quantifies these visual observations, showing the relative proportions of each land cover type (@fig-mkoani-composition). Forest dominates, but the presence of significant grassland and cropland areas indicates active land use management and potential agricultural expansion in recent years.
+
+![Land Cover Composition of Mkoani District. The donut chart quantifies the areal proportion of each land cover category (excluding water bodies). Forest dominates at approximately 60-70% of terrestrial area, with significant proportions of cropland and grassland indicating active agricultural land use. The inner ring shows the absolute pixel counts while the outer ring displays proportions, revealing both the extent and relative importance of each category for landscape management planning.](lc_mkoani_compostion.svg){#fig-mkoani-composition}
+
+### Mkuranga District
+
+Mkuranga district, located on mainland Tanzania, exhibits land cover patterns shaped by different historical and socioeconomic drivers than Mkoani. @fig-mkuranga-map substantial forest coverage with more fragmented patterns of agriculture and grasslands scattered throughout. The landscape mosaic suggests a history of selective land clearing and agricultural development within forested terrain.
+
+```{r}
+#| label: fig-mkuranga-map
+#| fig-cap: "Land Cover Map of Mkuranga District (2021). Source: ESA WorldCover 10m"
+#| 
+ggplot() +
+  geom_spatraster(data = mkuranga_lulc) +
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 4)) +
+  theme_minimal(base_size = 12)
+```
+
+
+![Land Cover Map of Mkuranga District (2021). This map shows the mainland Pwani region's land cover at 10m resolution, revealing a complex mosaic of forest (dark green), grasslands (yellow), and agricultural areas (magenta) typical of coastal Tanzania. The fragmented pattern of land cover suggests a history of selective clearing within forested terrain, with agriculture and settlement distributed throughout rather than consolidated into larger blocks. Source: ESA WorldCover 10m.](lc_mkuranga.svg){#fig-mkuranga-map}
+
+Comparing the composition pie charts between Mkoani and Mkuranga reveals that while both regions are forest-dominated, the proportion of agricultural land differs, with Mkuranga (@fig-mkuranga-composition) showing a somewhat higher proportion of grassland. These subtle differences in composition may reflect different population densities, market access, and management priorities across the two regions.
+
+```{r}
+#| label: fig-mkuranga-composition
+#| fig-cap: "Land Cover Composition of Mkuranga District"
+
+mkuranga_lulc |> 
+    terra::freq() |> 
+    as.data.frame() |> 
+    rename(label = value) |>
+    left_join(worldcover_df, by = c("label")) |>
+    filter(!label == 'Permanent water bodies') |>
+    webr::PieDonut(aes(label, count = count, fill = color), labelposition = 1, r0 = .6, r1 = 1, ,start=3*pi/8) 
+```
+
+![Land Cover Composition of Mkuranga District. Compared to Mkoani, Mkuranga shows higher proportions of grassland and a slightly lower forest percentage, suggesting different land use pressures or natural vegetation patterns on the mainland. The composition analysis demonstrates that while forest remains the dominant land cover in both districts, the relative proportions of agricultural and grassland areas differ—information crucial for tailoring district-specific conservation and livelihood strategies within the marine spatial planning framework.](lc_mkuranga_compostion.svg){#fig-mkuranga-composition}
+
+## Key Observations
+
+The land cover analysis reveals that both Mkoani and Mkuranga districts maintain forest as their dominant ecosystem type, providing critical ecosystem services including carbon sequestration, watershed protection, and biodiversity habitat. However, the spatial arrangement and composition of other land cover types differ between regions, reflecting distinct management histories and development trajectories. The presence of significant agricultural lands alongside forests suggests these areas support mixed subsistence and commercial activities.
+
+These foundational observations establish the baseline for deeper spatial pattern analysis. Understanding composition alone is insufficient—the *configuration* of these land covers (their fragmentation, connectivity, and spatial arrangement) determines ecosystem resilience and management effectiveness. The next phase of analysis will quantify these spatial patterns using advanced techniques to identify areas of unique land cover organization.
+
+## Next Steps
+
+With these baseline land cover maps and compositions established, we are now positioned to explore more sophisticated spatial analysis techniques. The motif R package provides powerful methods to calculate spatial signatures—quantitative summaries of the local spatial arrangement of land covers. These signatures enable us to compare regions not just by *what* land covers they contain, but by *how* those covers are spatially organized.
+
+Future analyses will employ spatial signature matching to identify areas with similar land cover patterns, detect changes in spatial organization between time periods, and pinpoint regions with unique or anomalous spatial configurations. These advanced methods reveal landscape-level changes that simple composition analysis cannot capture, enabling more targeted conservation and land management strategies tailored to regional characteristics.

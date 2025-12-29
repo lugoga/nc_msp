@@ -1,0 +1,404 @@
+---
+title: "Monitoring Ecosystem Changes in Mkoani and Mkuranga: From Baseline to Trend Analysis"
+author: 
+    - name: "Masumbuko Semba"
+      affiliation: "Nelson Mandela African Institution of Science and Technology"
+    - name: "Siajali Pamba"
+      affiliation: "University of Dar es Salaam, School of Aquatic Sciences and Fisheries Technology"
+date: "2025-12-27"
+categories: [monitoring, change detection, ecosystem assessment, temporal analysis]
+description: "Methods for tracking marine ecosystem changes over time in Mkoani-Pemba and Mkuranga-Pwani, using spatial raster analysis and categorical data comparison to inform adaptive management."
+---
+
+## Detecting Change: The Foundation of Adaptive Management
+
+Effective marine spatial planning requires more than a single snapshot in time—it demands understanding how ecosystems change, where changes occur most rapidly, and what these changes mean for conservation and sustainable use. This article explores quantitative methods for monitoring ecosystem changes in Mkoani and Mkuranga by comparing baseline (2020) and current (2025) ecosystem maps.
+
+```{mermaid}
+graph TD
+    A["<b>BASELINE ECOSYSTEM MAP</b><br/>2020 Survey"]
+    B["<b>CURRENT ECOSYSTEM MAP</b><br/>2025 Survey"]
+    
+    C["<b>CHANGE DETECTION ANALYSIS</b><br/>Binary Difference | Confusion Matrix"]
+    D["<b>CHANGE QUANTIFICATION</b><br/>Proportion Changed | Overall Similarity"]
+    E["<b>SPATIAL CHANGE PATTERNS</b><br/>Focal Metrics | Cross-Entropy"]
+    F["<b>MULTI-SCALE ANALYSIS</b><br/>Local vs Regional Trends"]
+    G["<b>MANAGEMENT RESPONSE</b><br/>Adaptive Strategies | Intervention Priority"]
+    
+    A -->|Compare| C
+    B -->|Compare| C
+    C -->|Quantify| D
+    C -->|Spatially Map| E
+    D -->|Multiple Scales| F
+    E -->|Multiple Scales| F
+    F -->|Interpret| G
+    G -->|Inform| A
+    
+    style A fill:#c8e6c9
+    style B fill:#81c784
+    style C fill:#4caf50
+    style D fill:#388e3c
+    style E fill:#2e7d32
+    style F fill:#1b5e20
+    style G fill:#558b2f
+```
+
+Change detection transforms static maps into a dynamic understanding of ecosystem evolution, revealing where conservation efforts succeed and where new interventions are needed.
+
+---
+
+## Simple Change Detection: The Binary Difference
+
+The most straightforward approach to comparing two ecosystem maps is creating a **binary difference raster** that shows where the two maps agree and where they differ.
+
+```r
+library(terra)
+
+# Load baseline and current ecosystem maps for Mkoani
+eco_2020_mkoani = rast("data/ecosystem_2020_mkoani.tif")
+eco_2025_mkoani = rast("data/ecosystem_2025_mkoani.tif")
+
+# Create binary difference: TRUE where different, FALSE where same
+change_mkoani = eco_2020_mkoani != eco_2025_mkoani
+
+# Visualize changes (areas of change highlighted)
+plot(change_mkoani, main = "Ecosystem Change in Mkoani (2020-2025)")
+```
+
+In this visualization:
+- **Red areas** = Where ecosystem types have changed
+- **Blue areas** = Where ecosystem types remain stable
+
+This simple binary map immediately reveals which regions have experienced the most dynamic ecosystem shifts, highlighting areas requiring urgent investigation and management attention.
+
+### Quantifying Change Proportions
+
+Beyond visualization, we can calculate what proportion of the landscape has changed:
+
+```r
+# Calculate proportion of changed pixels
+change_freq = freq(change_mkoani)
+changed_pixels = change_freq$count[2]  # Count of TRUE values
+total_pixels = sum(change_freq$count)  # Total valid pixels
+
+proportion_changed = changed_pixels / total_pixels
+proportion_changed  # Example: 0.082 (8.2% of pixels changed)
+```
+
+**Interpretation:**
+- 8.2% pixel change may seem small, but it can represent substantial ecosystem loss
+- For mangroves: ~8% change could mean hundreds of hectares lost to coastal development
+- For seagrass: same proportion could represent significant degradation from fishing pressure
+- Management response should scale with the ecosystem type affected
+
+---
+
+## Detailed Analysis: Confusion Matrices and Transitions
+
+A **confusion matrix** (or contingency table) reveals not just that change occurred, but *what changed into what*—critical information for understanding ecosystem dynamics.
+
+```r
+# Create confusion matrix
+confusion_matrix = table(
+  values(eco_2020_mkoani), 
+  values(eco_2025_mkoani)
+)
+
+# Example output:
+#           Mangrove  Seagrass  Coral  Beach  Urban
+# Mangrove    8450     1245      12     0      89
+# Seagrass    1120    12340      456   34     0
+# Coral         8      342     2890   156     0
+# Beach        0       28       145   1560     12
+# Urban        0       0        0      8     2340
+```
+
+This matrix reveals specific ecosystem transitions:
+
+| Transition | Pixels | Implication |
+|-----------|--------|-------------|
+| Mangrove → Seagrass | 1,245 | Mangrove conversion, possibly to aquaculture |
+| Mangrove → Urban | 89 | Coastal development pressure |
+| Seagrass → Coral | 456 | Possible coral expansion or reclassification |
+| Seagrass → Beach | 34 | Erosion or coastal disturbance |
+
+### Overall Ecosystem Similarity
+
+Calculate the overall similarity between baseline and current conditions:
+
+```r
+# Overall similarity: proportion of pixels with same class both years
+similarity = sum(diag(confusion_matrix)) / sum(confusion_matrix)
+similarity  # Example: 0.918 (91.8% of pixels unchanged)
+
+# Overall difference
+difference = 1 - similarity  # 8.2% changed
+```
+
+**For Mkoani and Mkuranga context:**
+- 91.8% stability suggests the core ecosystem structure has been maintained
+- 8.2% change requires investigation—is this degradation or natural variability?
+- Rapid change (>15%) would signal urgent management intervention needs
+
+### Advanced Transition Statistics
+
+The **diffeR** package provides detailed breakdowns of where change occurs:
+
+```r
+library(diffeR)
+
+# Create confusion table in diffeR format
+confusion_table = crosstabm(eco_2020_mkoani, eco_2025_mkoani)
+
+# Calculate multiple change statistics
+change_stats = data.frame(
+  allocation_disagreement = overallAllocD(confusion_table),
+  total_difference = overallDiff(confusion_table),
+  exchange_disagreement = overallExchangeD(confusion_table),
+  quantity_disagreement = overallQtyD(confusion_table),
+  shift_disagreement = overallShiftD(confusion_table)
+)
+```
+
+**Interpretation of statistics:**
+
+| Metric | Meaning |
+|--------|---------|
+| **Allocation Disagreement** | Pixels changing from one class to another (most concerning) |
+| **Quantity Disagreement** | Overall change in class proportions (can indicate systematic loss) |
+| **Exchange Disagreement** | Changes that "cancel out" (less concerning for management) |
+| **Shift Disagreement** | Spatial shifts without category changes |
+
+---
+
+## Spatial Context: Where is Change Happening?
+
+Binary differences and confusion matrices tell us *what* changed, but not *where* or *why*. Spatial methods reveal geographic patterns of change.
+
+### Focal Change Analysis
+
+Using a moving window approach, we can identify where ecosystem clumpiness or structure has changed most dramatically:
+
+```r
+library(landscapemetrics)
+
+# Calculate relative mutual information (landscape clumpiness) in 5x5 window
+window = matrix(1, nrow = 5, ncol = 5)
+
+relmutinf_2020 = window_lsm(
+  eco_2020_mkoani, 
+  window = window,
+  what = "lsm_l_relmutinf"
+)
+
+relmutinf_2025 = window_lsm(
+  eco_2025_mkoani,
+  window = window,
+  what = "lsm_l_relmutinf"
+)
+
+# Calculate absolute difference
+clumpiness_change = abs(
+  relmutinf_2025[[1]][[1]] - relmutinf_2020[[1]][[1]]
+)
+
+plot(clumpiness_change, 
+     main = "Magnitude of Ecosystem Structure Change in Mkoani")
+```
+
+**High values (red areas) indicate:**
+- Zones where ecosystem patches have become more fragmented
+- Possible habitat loss or degradation
+- Areas needing connectivity restoration
+- Priority zones for conservation intervention
+
+**Directional Change Analysis:**
+
+```r
+# Directional difference (positive = increase in clumpiness, negative = decrease)
+clumpiness_trend = relmutinf_2025[[1]][[1]] - relmutinf_2020[[1]][[1]]
+
+# Plot with diverging color scheme
+plot(clumpiness_trend,
+     col = hcl.colors(100, palette = "RdYlGn"),
+     main = "Ecosystem Fragmentation Trends")
+```
+
+**Red (negative) areas** = Increasing fragmentation (concerning)
+**Green (positive) areas** = Increasing clumpiness (potentially good)
+
+### Cross-Entropy Analysis
+
+The **cross-entropy loss function** quantifies how different two maps are locally:
+
+```r
+library(spatialEco)
+
+# Calculate cross-entropy for 5x5 moving window
+cross_entropy = raster.change(
+  eco_2020_mkoani, 
+  eco_2025_mkoani,
+  s = 5,
+  stat = "cross-entropy"
+)
+
+plot(cross_entropy,
+     main = "Ecosystem Dissimilarity (Cross-Entropy)")
+```
+
+Higher values indicate greater dissimilarity—zones where ecosystems have fundamentally changed character, not just shifted patch boundaries.
+
+---
+
+## Multi-Scale Analysis: Local vs. Regional Change
+
+Ecosystem changes look different at different scales. A method might show 85% accuracy at local 500m resolution but only 25% at regional 3000m resolution.
+
+```r
+library(waywiser)
+
+# Calculate accuracy at multiple scales
+cell_sizes = seq(500, 3000, by = 500)  # 500m to 3000m by 500m increments
+
+accuracy_multiscale = ww_multi_scale(
+  truth = as.factor(eco_2020_mkoani),
+  estimate = as.factor(eco_2025_mkoani),
+  metrics = list(yardstick::accuracy),
+  cellsize = cell_sizes,
+  progress = FALSE
+)
+```
+
+**Expected output:**
+```
+Scale (m)  Accuracy
+500        0.92     (Local: high agreement)
+1000       0.78     
+1500       0.54     
+2000       0.38     
+2500       0.29     
+3000       0.18     (Regional: low agreement)
+```
+
+**What this tells managers:**
+
+- **High local accuracy (500m)**: Ecosystem patches are changing gradually—opportunities for localized intervention
+- **Declining accuracy at larger scales**: Regional ecosystem patterns are shifting—may require district-level strategy adaptation
+- **Low regional accuracy (3000m)**: Fundamental ecosystem reorganization—requires comprehensive planning revision
+
+---
+
+## Spatial Association: Understanding Ecosystem Reorganization
+
+The **V-measure** from the SABRE package evaluates how well two maps agree in terms of spatial organization, not just pixel-by-pixel comparison.
+
+```r
+library(sabre)
+
+# Calculate spatial association between maps
+spatial_agreement = vmeasure_calc(eco_2020_mkoani, eco_2025_mkoani)
+
+# Output includes:
+# V-measure: overall spatial agreement (0-1, where 1 = perfect agreement)
+# Homogeneity: how well 2020 regions fit within 2025 regions
+# Completeness: how well 2025 regions fit within 2020 regions
+```
+
+**Example interpretation:**
+```
+V-measure: 0.82
+Homogeneity: 0.85  (Old regions mostly stayed intact)
+Completeness: 0.79 (New regions don't completely match old ones)
+```
+
+This suggests:
+- Ecosystem boundaries have shifted somewhat
+- Existing protected areas largely remain valid
+- Some management zones need redrawing
+- Overall ecosystem organization has been reasonably maintained
+
+---
+
+## Integrating Change Analysis into Management: Mkoani and Mkuranga
+
+### Monitoring Timeline
+
+**Quarterly monitoring cycle:**
+
+1. **Field surveys** (January, April, July, October): Verify ecosystem boundaries
+2. **Remote sensing analysis** (Monthly): Track changes using satellite data
+3. **Change analysis** (Quarterly): Run binary difference and focal metrics
+4. **Stakeholder briefing** (Validation meeting): Present findings to district authorities
+5. **Management adaptation** (As needed): Adjust strategies based on change patterns
+
+### Priority Intervention Zones
+
+Use change analysis outputs to identify three priority categories:
+
+| Priority | Criteria | Action |
+|----------|----------|--------|
+| **Urgent** | Mangrove loss >5%/year, fragmentation increasing | Emergency restoration funding |
+| **High** | Coral/seagrass degradation, fishery pressure zones changing | Seasonal closure adjustment |
+| **Routine** | <2% change, stable boundaries | Continue standard monitoring |
+
+### Adaptive Management Loop
+
+```
+Baseline Map (2020)
+    ↓
+Annual Monitoring
+    ↓
+Change Detection Analysis
+    ↓
+Interpret Patterns + Causes
+    ↓
+Adjust Management Strategy
+    ↓
+Next Monitoring Cycle
+```
+
+---
+
+## Data Requirements and Implementation
+
+**For Mkoani and Mkuranga:**
+
+- **Baseline map (2020)**: Ecosystem classification from initial surveys
+- **Current map (2025)**: Updated field surveys + satellite classification
+- **Update frequency**: Annual or bi-annual to detect trends
+- **Resolution**: 10m minimum (Sentinel data) for useful management decisions
+- **Classes**: Mangrove, seagrass, coral, sandy beach, rocky shore, urban/developed
+
+**R packages needed:**
+```r
+install.packages(c("terra", "landscapemetrics", "diffeR", 
+                   "spatialEco", "waywiser", "sabre", "yardstick"))
+```
+
+---
+
+## Conclusion: From Data to Decisions
+
+Change detection transforms ecosystem maps from static descriptions into dynamic tools for adaptive management. By quantifying what has changed, where it has changed, and how rapidly change is occurring, managers gain objective basis for:
+
+- **Allocating limited conservation resources** to high-priority zones
+- **Evaluating past management effectiveness** by measuring ecosystem outcomes
+- **Adjusting strategies** as conditions change
+- **Communicating progress** to stakeholders and funders
+
+For Mkoani and Mkuranga, these methods will ensure that marine spatial plans remain relevant and responsive to ecosystem dynamics, supporting both conservation and sustainable livelihood goals.
+
+---
+
+**References:**
+
+- Evans, J. S., & Murphy, M. A. (2023). spatialEco: Spatial analysis and modeling utilities. Manual.
+- Hesselbarth, M. H., Sciaini, M., With, K. A., Wiegand, K., & Nowosad, J. (2019). Landscapemetrics: An open-source R tool to calculate landscape metrics. Ecography, 42(10), 1648–1657.
+- Mahoney, M. J. (2023). Waywiser: Ergonomic methods for assessing spatial models. arXiv preprint arXiv:2303.11312.
+- Nowosad, J. (2024). Comparison of spatial patterns in categorical raster data for overlapping regions using R. https://jakubnowosad.com/posts/2024-11-03-spatcomp-bp4/
+- Nowosad, J., & Stepinski, T. F. (2018). Spatial association between regionalizations using the information-theoretical V-measure. International Journal of Geographical Information Science, 32(12), 2386–2401.
+- Pontius Jr., R. G., & Santacruz, A. (2023). diffeR: Quantify differences among categorical maps. R package.
+
+**Citation:**
+
+Semba, M., & Pamba, S. (2025). Monitoring ecosystem changes in Mkoani and Mkuranga: From baseline to trend analysis. Marine Spatial Planning Initiative, December 27, 2025.

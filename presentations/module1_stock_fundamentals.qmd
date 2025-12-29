@@ -1,0 +1,326 @@
+---
+title: "Fisheries Stock Assessment"
+subtitle: "Capacity-Building Training for Somalia's Ministry of Fisheries and Blue Economy Staff"
+author: 
+    - name: "Catherine Mwakosya"
+      affiliation: "<i class='fa-solid fa-building'></i> Tanzania Fisheries Research Institute"
+      email: "<i class='fa-solid fa-envelope'></i> mwakosyacathy@gmail.com"
+    - name: "Mathew Silas"
+      affiliation: "<i class='fa-solid fa-building'></i> Deep Sea Fishing Authority"
+      email: "<i class='fa-solid fa-envelope'></i> mathewsilas28@gmail.com"
+format: revealjs
+transition: slide
+background-transition: fade
+highlight-style: github
+slide-number: true
+execute: 
+  eval: true
+  echo: false
+  warning: false
+embed-resources: true
+code-fold: true
+theme: "simple"
+---
+
+## MODULE I {.center}
+
+### Fundamentals and Concepts
+
+---
+
+## Key Guiding Questions
+
+::: {.incremental}
+- What is sustainable fisheries management?
+- What is fish stock assessment, and why is it crucial?
+- Why is fish stock assessment important in sustainable fisheries?
+- Which fisheries to focus on for stock assessment?
+- How do assessment results inform policy, regulations, and conservation?
+- What are key requirements, challenges, and limitations?
+:::
+
+---
+
+## Key Guiding Questions (cont.)
+
+::: {.incremental}
+- Understanding inherent uncertainties in assessing wild fish populations
+- **Ecosystem-Based Fisheries Management (EBFM)**: Managing beyond single species catch data
+- Integrating ecological, social, and economic considerations
+- Linking stock assessment to ecosystem management
+:::
+
+---
+
+## What is Fish Stock Assessment?
+
+:::: {.columns}
+::: {.column width="50%"}
+A fishery stock assessment is the **scientific process** of:
+
+- Collecting data
+- Analyzing information
+- Reporting on fish stock condition
+- Estimating sustainable yield
+:::
+
+::: {.column width="50%"}
+
+{{< placeholder >}}
+
+**Stock assessments are the backbone of sustainable fisheries management**
+:::
+::::
+
+---
+
+## Data Sources for Stock Assessment
+
+:::: {.columns}
+::: {.column width="50%"}
+### (1) Fishery-Dependent Data
+
+Information collected from:
+
+- Fishermen
+- Dealers
+- Catch records
+- Landings data
+- Effort metrics
+:::
+
+::: {.column width="50%"}
+{{< placeholder >}}
+:::
+::::
+
+:::: {.columns}
+::: {.column width="50%"}
+{{< placeholder >}}
+:::
+
+
+::: {.column width="50%"}
+### (2) Fishery-Independent Data
+
+Information collected by scientists via:
+
+- Long-term research surveys
+- Scientific studies
+- Direct observation
+:::
+::::
+
+
+---
+
+## Why Assess Fish Stocks?
+
+::: {.incremental}
+1. **Determine Status**: Evaluate current population conditions
+
+2. **Evaluate Management Actions**: Assess potential impacts of regulations
+
+3. **Forecast Future Conditions**: Predict stock trajectory
+
+4. **Define Benchmarks**: Establish desirable conditions using abundance or biomass references
+:::
+
+---
+
+## Concepts: Life History
+
+:::: {.columns}
+::: {.column width="50%"}
+**Age & Growth**
+
+- Rate of approaching maximum size
+
+**Feeding**
+
+- Trophic levels and strategies
+
+**Reproduction**
+
+- Fecundity
+- Reproductive peaks
+- Life cycle patterns
+:::
+
+::: {.column width="50%"}
+**Habitat**
+
+- Habitat loss impacts
+- Water quality effects
+- Critical for management plans
+
+**Natural Mortality (M)**
+
+- Critical parameter
+- Incorporated in population dynamics models
+:::
+::::
+
+---
+
+## Concepts: Population Dynamics
+
+**Recruitment**
+
+- Number of fish surviving to juvenile stage within a given time period
+
+**Growth**
+
+- How fish size and weight change over time
+
+**Mortality**
+
+- Number of fish dying within a given time period
+
+---
+
+## Types of Mortality
+
+:::: {.columns}
+::: {.column width="33%"}
+**Natural Mortality (M)**
+
+Deaths from natural causes
+:::
+
+::: {.column width="33%"}
+**Fishing Mortality (F)**
+
+Deaths from fishing activity
+:::
+
+::: {.column width="33%"}
+**Total Mortality (Z)**
+
+Z = M + F
+
+Sum of natural and fishing mortality
+:::
+::::
+
+---
+
+## Concepts: Reference Points
+
+### Two Main Categories
+
+:::: {.columns}
+::: {.column width="50%"}
+**Biological Reference Points**
+
+Based on biological characteristics of the stock
+:::
+
+::: {.column width="50%"}
+**Exploitation Reference Points**
+
+Based on fishing pressure and harvest levels
+:::
+::::
+
+---
+
+## Exploitation: Yield Per Recruit
+
+**Understanding fishing pressure effects on cohort catch**
+
+::: {.incremental}
+- Analyzes the catch obtained from a single cohort over its lifetime
+- Helps determine optimal fishing mortality rate
+- Considers growth, natural mortality, and fishing mortality
+- Key tool for evaluating fishing strategies
+:::
+
+<br>
+
+{{< placeholder >}}
+
+---
+
+## Stock-Recruitment Relationship
+
+**How spawning stock size influences future recruitment**
+
+::: {.incremental}
+- Links parent population to offspring survival
+- Critical for understanding population resilience
+- Helps predict future stock abundance
+- Informs spawning stock biomass targets
+:::
+
+<br>
+
+{{< placeholder >}}
+
+---
+
+## Maximum Sustainable Yield (MSY)
+
+> The theoretical maximum catch that can be taken from a fish stock indefinitely without impairing its ability to replenish
+
+::: {.incremental}
+- Primary management target for many fisheries
+- Balances harvest and stock productivity
+- Requires careful monitoring and adjustment
+- May not account for ecosystem effects
+:::
+
+<br>
+
+{{< placeholder >}}
+---
+
+## Overfishing: Growth Overfishing
+
+**Catching fish before they reach optimal size**
+
+::: {.fragment}
+### Consequences:
+
+- Reduced total yield
+- Lost growth potential
+- Economic inefficiency
+- Smaller average fish size
+:::
+
+---
+
+## Overfishing: Recruitment Overfishing
+
+**Reducing spawning stock below sustainable levels**
+
+::: {.fragment}
+### Consequences:
+
+- Insufficient recruits to sustain population
+- Population decline
+- Potential stock collapse
+- Long recovery times
+:::
+
+---
+
+## Summary
+
+::: {.incremental}
+- Stock assessment combines fishery-dependent and independent data
+- Population dynamics driven by recruitment, growth, and mortality
+- Reference points guide management decisions
+- Understanding life history is essential
+- Overfishing threatens sustainability
+- Ecosystem-based approaches integrate broader considerations
+:::
+
+---
+
+## Questions? {.center}
+
+### Thank You
+
+
+---

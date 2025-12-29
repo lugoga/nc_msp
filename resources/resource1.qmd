@@ -1,0 +1,52 @@
+---
+title: "Resource 1: Fish Stock Assessments Reports"
+date: "2025-12-05"
+date-modified: today
+author: 
+    - name: "Masumbuko Semba"
+      affiliation: "Nelson Mandela African Institution of Science and Technology"
+      email: "lugosemba@gmail.com"
+    - name: "Dr. Rushingisha George"
+      affiliation: "Tanzania Fisheries Research Institute"
+      email: "george.rushingisha@tafiri.go.tz"
+    - name: "Dr. Mary Kishe"
+      affiliation: "Tanzania Fisheries Research Institute"
+      email: "mary.kishe@tafiri.go.tz"
+    - name: "Dr. Ismael Kimirei"
+      affiliation: "Tanzania Fisheries Research Institute"
+      email: "ismael.kimirei@tafiri.go.tz"
+---
+
+## Overview
+
+This resource provides comprehensive data and methodologies for conducting tuna stock assessments in the Indian Ocean region, with a focus on Somali fisheries. It is designed to support fisheries scientists and managers in applying effective stock assessment techniques.
+
+## Tuna Stock Status Report 2025
+
+The revised tuna stock status report for the year 2025, including catch data, biomass estimates, and management recommendations, can be accessed below [@iotc2025tuna].
+
+
+{{< pdf tuna_stock25_revised_numbered.pdf width=700 height=400 >}}
+
+## Tuna Stock Status Report 2024
+The stock status report for tuna species in the Indian Ocean for the year 2024, including catch data, biomass estimates, and management recommendations, can be accessed [@iotc2024tuna].
+
+{{< pdf tuna_stocks_report_kim.pdf width=700 height=400 >}}
+
+
+## Lake Tanganyika Hydroacoustick Report 2023
+The stock status report for fish species in Lake Tanganyika based on hydroacoustic surveys, including abundance estimates and population dynamics, can be accessed [@tafiri2023hydroacoustic].
+
+{{< pdf report_hydroacoustic_final2.pdf width=700 height=400 >}}
+
+
+## Lake Victoria 2022
+
+The stock status report for fish species in Lake Victoria for the year 2022, including catch data, biomass estimates, and management recommendations, can be accessed [@lvfo2022report].
+
+{{< pdf lv_report2022.pdf width=700 height=400 >}}
+
+## References
+
+::: {#refs}
+:::
