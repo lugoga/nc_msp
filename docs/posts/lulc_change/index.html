@@ -7,6 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Masumbuko Semba">
+<meta name="dcterms.date" content="2025-12-30">
+<meta name="keywords" content="Mkuranga, Pwani, land cover change, ESA WorldCover, coastal analysis, spatial patterns">
 <meta name="description" content="Analyzing and comparing temporal land cover patterns in Mkuranga District for marine spatial planning">
 
 <title>Land Cover Change in Mkuranga District</title>
@@ -510,20 +512,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
    
-  <ul>
+  <ul class="collapse">
   <li><a href="#understanding-spatial-patterns-in-land-cover" id="toc-understanding-spatial-patterns-in-land-cover" class="nav-link active" data-scroll-target="#understanding-spatial-patterns-in-land-cover">Understanding Spatial Patterns in Land Cover</a></li>
   <li><a href="#loading-and-preparing-the-data" id="toc-loading-and-preparing-the-data" class="nav-link" data-scroll-target="#loading-and-preparing-the-data">Loading and Preparing the Data</a></li>
   <li><a href="#creating-a-standardized-color-scheme" id="toc-creating-a-standardized-color-scheme" class="nav-link" data-scroll-target="#creating-a-standardized-color-scheme">Creating a Standardized Color Scheme</a></li>
   <li><a href="#land-cover-distribution-in-mkuranga-district" id="toc-land-cover-distribution-in-mkuranga-district" class="nav-link" data-scroll-target="#land-cover-distribution-in-mkuranga-district">Land Cover Distribution in Mkuranga District</a></li>
   <li><a href="#visualizing-land-cover-maps" id="toc-visualizing-land-cover-maps" class="nav-link" data-scroll-target="#visualizing-land-cover-maps">Visualizing Land Cover Maps</a></li>
   <li><a href="#understanding-land-cover-transitions" id="toc-understanding-land-cover-transitions" class="nav-link" data-scroll-target="#understanding-land-cover-transitions">Understanding Land Cover Transitions</a></li>
-  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a>
-  <ul class="collapse">
-  <li><a href="#spatial-analysis-and-raster-processing" id="toc-spatial-analysis-and-raster-processing" class="nav-link" data-scroll-target="#spatial-analysis-and-raster-processing">Spatial Analysis and Raster Processing</a></li>
-  <li><a href="#data-visualization" id="toc-data-visualization" class="nav-link" data-scroll-target="#data-visualization">Data Visualization</a></li>
-  <li><a href="#data-manipulation-and-analysis" id="toc-data-manipulation-and-analysis" class="nav-link" data-scroll-target="#data-manipulation-and-analysis">Data Manipulation and Analysis</a></li>
-  <li><a href="#data-sources" id="toc-data-sources" class="nav-link" data-scroll-target="#data-sources">Data Sources</a></li>
-  </ul></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
 </nav>
     </div>
@@ -555,11 +551,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           </div>
   </div>
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">December 30, 2025</p>
+    </div>
+  </div>
   
     
   </div>
   
 
+<div>
+  <div class="keywords">
+    <div class="block-title">Keywords</div>
+    <p>Mkuranga, Pwani, land cover change, ESA WorldCover, coastal analysis, spatial patterns</p>
+  </div>
+</div>
 
 </header>
 
@@ -569,8 +577,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Spatial patterns in land cover are the local arrangements and configurations of different land use types across a landscape. Rather than simply knowing what proportion of an area is forest or cropland, understanding the <em>pattern</em> of these land covers reveals much more about ecosystem function and human land use practices. For example, fragmented forests interspersed with agriculture indicate different management histories and conservation challenges than consolidated forest blocks.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div class="echarts4r html-widget html-fill-item" id="htmlwidget-9b6a35e758b559753b8a" style="width:100%;height:500px;"></div>
-<script type="application/json" data-for="htmlwidget-9b6a35e758b559753b8a">{"x":{"theme":"","tl":false,"draw":true,"renderer":"canvas","events":[],"buttons":[],"opts":{"series":[{"type":"liquidFill","data":[0.7,0.5,0.4]}]},"dispose":true},"evals":[],"jsHooks":[]}</script>
+<div class="echarts4r html-widget html-fill-item" id="htmlwidget-d64420136166b32b089c" style="width:100%;height:500px;"></div>
+<script type="application/json" data-for="htmlwidget-d64420136166b32b089c">{"x":{"theme":"","tl":false,"draw":true,"renderer":"canvas","events":[],"buttons":[],"opts":{"series":[{"type":"liquidFill","data":[0.7,0.5,0.4]}]},"dispose":true},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <p>Spatial signatures provide a quantitative framework for capturing these patterns. They encode information about how land cover types are spatially organized—whether they form large contiguous patches, are highly fragmented, or follow specific spatial arrangements. In this post, I’ll demonstrate how to analyze and track temporal changes in land cover patterns across Mkuranga District and use visual analysis to identify drivers of landscape transformation in this critical coastal region.</p>
@@ -676,8 +684,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="fig-mkuranga-composition" class="cell-output-display quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-mkuranga-composition-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="echarts4r html-widget html-fill-item" id="htmlwidget-e5a5d21f9083eeb4a3a9" style="width:100%;height:500px;"></div>
-<script type="application/json" data-for="htmlwidget-e5a5d21f9083eeb4a3a9">{"x":{"theme":"","tl":false,"draw":true,"renderer":"canvas","events":[],"buttons":[],"opts":{"legend":{"data":["Tree cover","Shrubland","Grassland","Cropland","Built-up","Bare/sparse vegetation","Water bodies","Herbaceous wetland","Mangroves"]},"series":[{"name":"count","type":"pie","radius":["30%","70%"],"data":[{"value":4680039,"name":"Tree cover"},{"value":1409568,"name":"Shrubland"},{"value":4486680,"name":"Grassland"},{"value":56820,"name":"Cropland"},{"value":17310,"name":"Built-up"},{"value":126669,"name":"Bare/sparse vegetation"},{"value":6530466,"name":"Water bodies"},{"value":166640,"name":"Herbaceous wetland"},{"value":669808,"name":"Mangroves"}]}]},"dispose":true},"evals":[],"jsHooks":[]}</script>
+<div class="echarts4r html-widget html-fill-item" id="htmlwidget-f4c79d68a4251526bfb4" style="width:100%;height:500px;"></div>
+<script type="application/json" data-for="htmlwidget-f4c79d68a4251526bfb4">{"x":{"theme":"","tl":false,"draw":true,"renderer":"canvas","events":[],"buttons":[],"opts":{"legend":{"data":["Tree cover","Shrubland","Grassland","Cropland","Built-up","Bare/sparse vegetation","Water bodies","Herbaceous wetland","Mangroves"]},"series":[{"name":"count","type":"pie","radius":["30%","70%"],"data":[{"value":4680039,"name":"Tree cover"},{"value":1409568,"name":"Shrubland"},{"value":4486680,"name":"Grassland"},{"value":56820,"name":"Cropland"},{"value":17310,"name":"Built-up"},{"value":126669,"name":"Bare/sparse vegetation"},{"value":6530466,"name":"Water bodies"},{"value":166640,"name":"Herbaceous wetland"},{"value":669808,"name":"Mangroves"}]}]},"dispose":true},"evals":[],"jsHooks":[]}</script>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mkuranga-composition-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1: Land Cover Composition of Mkuranga District
@@ -752,8 +760,8 @@ Figure&nbsp;2: Temporal Land Cover Comparison for Mkuranga District (2020-2021).
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    echarts4r<span class="sc">::</span><span class="fu">e_pie</span>(area_ha, <span class="at">radius =</span> <span class="fu">c</span>(<span class="st">"50%"</span>, <span class="st">"70%"</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div class="echarts4r html-widget html-fill-item" id="htmlwidget-4e744ba3d22d2c101570" style="width:100%;height:500px;"></div>
-<script type="application/json" data-for="htmlwidget-4e744ba3d22d2c101570">{"x":{"theme":"","tl":false,"draw":true,"renderer":"canvas","events":[],"buttons":[],"opts":{"legend":{"data":["Tree cover","Shrubland","Grassland","Cropland","Built-up","Bare/sparse vegetation","Herbaceous wetland","Mangroves"]},"series":[{"name":"area_ha","type":"pie","radius":["50%","70%"],"data":[{"value":115181.1134081512,"name":"Tree cover"},{"value":34691.08092144123,"name":"Shrubland"},{"value":110422.3272297696,"name":"Grassland"},{"value":1398.405197873597,"name":"Cropland"},{"value":426.0189013585352,"name":"Built-up"},{"value":3117.468989958653,"name":"Bare/sparse vegetation"},{"value":4101.201023823587,"name":"Herbaceous wetland"},{"value":16484.7410907659,"name":"Mangroves"}]}]},"dispose":true},"evals":[],"jsHooks":[]}</script>
+<div class="echarts4r html-widget html-fill-item" id="htmlwidget-4fdce0c5315c6dc21617" style="width:100%;height:500px;"></div>
+<script type="application/json" data-for="htmlwidget-4fdce0c5315c6dc21617">{"x":{"theme":"","tl":false,"draw":true,"renderer":"canvas","events":[],"buttons":[],"opts":{"legend":{"data":["Tree cover","Shrubland","Grassland","Cropland","Built-up","Bare/sparse vegetation","Herbaceous wetland","Mangroves"]},"series":[{"name":"area_ha","type":"pie","radius":["50%","70%"],"data":[{"value":115181.1134081512,"name":"Tree cover"},{"value":34691.08092144123,"name":"Shrubland"},{"value":110422.3272297696,"name":"Grassland"},{"value":1398.405197873597,"name":"Cropland"},{"value":426.0189013585352,"name":"Built-up"},{"value":3117.468989958653,"name":"Bare/sparse vegetation"},{"value":4101.201023823587,"name":"Herbaceous wetland"},{"value":16484.7410907659,"name":"Mangroves"}]}]},"dispose":true},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </div><div class="column">
@@ -768,8 +776,8 @@ Figure&nbsp;2: Temporal Land Cover Comparison for Mkuranga District (2020-2021).
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    echarts4r<span class="sc">::</span><span class="fu">e_pie</span>(area_ha, <span class="at">radius =</span> <span class="fu">c</span>(<span class="st">"50%"</span>, <span class="st">"70%"</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div class="echarts4r html-widget html-fill-item" id="htmlwidget-1321d690bc081bfe6052" style="width:100%;height:500px;"></div>
-<script type="application/json" data-for="htmlwidget-1321d690bc081bfe6052">{"x":{"theme":"","tl":false,"draw":true,"renderer":"canvas","events":[],"buttons":[],"opts":{"legend":{"data":["Tree cover","Shrubland","Grassland","Cropland","Built-up","Bare/sparse vegetation","Herbaceous wetland","Mangroves"]},"series":[{"name":"area_ha","type":"pie","radius":["50%","70%"],"data":[{"value":130263.8806851743,"name":"Tree cover"},{"value":9769.393581413664,"name":"Shrubland"},{"value":123652.2199251821,"name":"Grassland"},{"value":375.861390037409,"name":"Cropland"},{"value":684.6328017326246,"name":"Built-up"},{"value":2452.672770230361,"name":"Bare/sparse vegetation"},{"value":3247.588107895255,"name":"Herbaceous wetland"},{"value":14974.45363260484,"name":"Mangroves"}]}]},"dispose":true},"evals":[],"jsHooks":[]}</script>
+<div class="echarts4r html-widget html-fill-item" id="htmlwidget-24d6d616e89983bb8ed4" style="width:100%;height:500px;"></div>
+<script type="application/json" data-for="htmlwidget-24d6d616e89983bb8ed4">{"x":{"theme":"","tl":false,"draw":true,"renderer":"canvas","events":[],"buttons":[],"opts":{"legend":{"data":["Tree cover","Shrubland","Grassland","Cropland","Built-up","Bare/sparse vegetation","Herbaceous wetland","Mangroves"]},"series":[{"name":"area_ha","type":"pie","radius":["50%","70%"],"data":[{"value":130263.8806851743,"name":"Tree cover"},{"value":9769.393581413664,"name":"Shrubland"},{"value":123652.2199251821,"name":"Grassland"},{"value":375.861390037409,"name":"Cropland"},{"value":684.6328017326246,"name":"Built-up"},{"value":2452.672770230361,"name":"Bare/sparse vegetation"},{"value":3247.588107895255,"name":"Herbaceous wetland"},{"value":14974.45363260484,"name":"Mangroves"}]}]},"dispose":true},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </div>
@@ -786,8 +794,8 @@ Figure&nbsp;2: Temporal Land Cover Comparison for Mkuranga District (2020-2021).
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    echarts4r<span class="sc">::</span><span class="fu">e_pie</span>(area_ha, <span class="at">radius =</span> <span class="fu">c</span>(<span class="st">"50%"</span>, <span class="st">"70%"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div class="echarts4r html-widget html-fill-item" id="htmlwidget-6f1adf84ff0a695854cf" style="width:100%;height:500px;"></div>
-<script type="application/json" data-for="htmlwidget-6f1adf84ff0a695854cf">{"x":{"theme":"","tl":true,"draw":true,"renderer":"canvas","events":[],"buttons":[],"opts":{"baseOption":{"timeline":{"data":["2020","2021"],"axisType":"category"},"series":[{"name":null,"type":"pie","radius":["50%","70%"]}]},"options":[{"series":[{"data":[{"value":115181.1134081512,"name":"Tree cover"},{"value":34691.08092144123,"name":"Shrubland"},{"value":110422.3272297696,"name":"Grassland"},{"value":1398.405197873597,"name":"Cropland"},{"value":426.0189013585352,"name":"Built-up"},{"value":3117.468989958653,"name":"Bare/sparse vegetation"},{"value":4101.201023823587,"name":"Herbaceous wetland"},{"value":16484.7410907659,"name":"Mangroves"}]}]},{"series":[{"data":[{"value":130263.8806851743,"name":"Tree cover"},{"value":9769.393581413664,"name":"Shrubland"},{"value":123652.2199251821,"name":"Grassland"},{"value":375.861390037409,"name":"Cropland"},{"value":684.6328017326246,"name":"Built-up"},{"value":2452.672770230361,"name":"Bare/sparse vegetation"},{"value":3247.588107895255,"name":"Herbaceous wetland"},{"value":14974.45363260484,"name":"Mangroves"}]}]}]},"dispose":true},"evals":[],"jsHooks":[]}</script>
+<div class="echarts4r html-widget html-fill-item" id="htmlwidget-7f7bf1653c8636645496" style="width:100%;height:500px;"></div>
+<script type="application/json" data-for="htmlwidget-7f7bf1653c8636645496">{"x":{"theme":"","tl":true,"draw":true,"renderer":"canvas","events":[],"buttons":[],"opts":{"baseOption":{"timeline":{"data":["2020","2021"],"axisType":"category"},"series":[{"name":null,"type":"pie","radius":["50%","70%"]}]},"options":[{"series":[{"data":[{"value":115181.1134081512,"name":"Tree cover"},{"value":34691.08092144123,"name":"Shrubland"},{"value":110422.3272297696,"name":"Grassland"},{"value":1398.405197873597,"name":"Cropland"},{"value":426.0189013585352,"name":"Built-up"},{"value":3117.468989958653,"name":"Bare/sparse vegetation"},{"value":4101.201023823587,"name":"Herbaceous wetland"},{"value":16484.7410907659,"name":"Mangroves"}]}]},{"series":[{"data":[{"value":130263.8806851743,"name":"Tree cover"},{"value":9769.393581413664,"name":"Shrubland"},{"value":123652.2199251821,"name":"Grassland"},{"value":375.861390037409,"name":"Cropland"},{"value":684.6328017326246,"name":"Built-up"},{"value":2452.672770230361,"name":"Bare/sparse vegetation"},{"value":3247.588107895255,"name":"Herbaceous wetland"},{"value":14974.45363260484,"name":"Mangroves"}]}]}]},"dispose":true},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </section>
@@ -831,23 +839,23 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkuranga District (2020-2021). Va
 </figcaption>
 <div aria-describedby="tbl-transition-matrix-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="kvhyvzvkff" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#kvhyvzvkff table {
+<div id="weatbgtliu" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#weatbgtliu table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#kvhyvzvkff thead, #kvhyvzvkff tbody, #kvhyvzvkff tfoot, #kvhyvzvkff tr, #kvhyvzvkff td, #kvhyvzvkff th {
+#weatbgtliu thead, #weatbgtliu tbody, #weatbgtliu tfoot, #weatbgtliu tr, #weatbgtliu td, #weatbgtliu th {
   border-style: none;
 }
 
-#kvhyvzvkff p {
+#weatbgtliu p {
   margin: 0;
   padding: 0;
 }
 
-#kvhyvzvkff .gt_table {
+#weatbgtliu .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -873,12 +881,12 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkuranga District (2020-2021). Va
   border-left-color: #D3D3D3;
 }
 
-#kvhyvzvkff .gt_caption {
+#weatbgtliu .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#kvhyvzvkff .gt_title {
+#weatbgtliu .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -890,7 +898,7 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkuranga District (2020-2021). Va
   border-bottom-width: 0;
 }
 
-#kvhyvzvkff .gt_subtitle {
+#weatbgtliu .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -902,7 +910,7 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkuranga District (2020-2021). Va
   border-top-width: 0;
 }
 
-#kvhyvzvkff .gt_heading {
+#weatbgtliu .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -914,13 +922,13 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkuranga District (2020-2021). Va
   border-right-color: #D3D3D3;
 }
 
-#kvhyvzvkff .gt_bottom_border {
+#weatbgtliu .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #0076BA;
 }
 
-#kvhyvzvkff .gt_col_headings {
+#weatbgtliu .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #0076BA;
@@ -935,7 +943,7 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkuranga District (2020-2021). Va
   border-right-color: #D3D3D3;
 }
 
-#kvhyvzvkff .gt_col_heading {
+#weatbgtliu .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -955,7 +963,7 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkuranga District (2020-2021). Va
   overflow-x: hidden;
 }
 
-#kvhyvzvkff .gt_column_spanner_outer {
+#weatbgtliu .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -967,15 +975,15 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkuranga District (2020-2021). Va
   padding-right: 4px;
 }
 
-#kvhyvzvkff .gt_column_spanner_outer:first-child {
+#weatbgtliu .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#kvhyvzvkff .gt_column_spanner_outer:last-child {
+#weatbgtliu .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#kvhyvzvkff .gt_column_spanner {
+#weatbgtliu .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #0076BA;
@@ -987,11 +995,11 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkuranga District (2020-2021). Va
   width: 100%;
 }
 
-#kvhyvzvkff .gt_spanner_row {
+#weatbgtliu .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#kvhyvzvkff .gt_group_heading {
+#weatbgtliu .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1017,7 +1025,7 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkuranga District (2020-2021). Va
   text-align: left;
 }
 
-#kvhyvzvkff .gt_empty_group_heading {
+#weatbgtliu .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1032,15 +1040,15 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkuranga District (2020-2021). Va
   vertical-align: middle;
 }
 
-#kvhyvzvkff .gt_from_md > :first-child {
+#weatbgtliu .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#kvhyvzvkff .gt_from_md > :last-child {
+#weatbgtliu .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#kvhyvzvkff .gt_row {
+#weatbgtliu .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1059,7 +1067,7 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkuranga District (2020-2021). Va
   overflow-x: hidden;
 }
 
-#kvhyvzvkff .gt_stub {
+#weatbgtliu .gt_stub {
   color: #FFFFFF;
   background-color: #0076BA;
   font-size: 100%;
@@ -1072,7 +1080,7 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkuranga District (2020-2021). Va
   padding-right: 5px;
 }
 
-#kvhyvzvkff .gt_stub_row_group {
+#weatbgtliu .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1086,15 +1094,15 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkuranga District (2020-2021). Va
   vertical-align: top;
 }
 
-#kvhyvzvkff .gt_row_group_first td {
+#weatbgtliu .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#kvhyvzvkff .gt_row_group_first th {
+#weatbgtliu .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#kvhyvzvkff .gt_summary_row {
+#weatbgtliu .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1104,16 +1112,16 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkuranga District (2020-2021). Va
   padding-right: 5px;
 }
 
-#kvhyvzvkff .gt_first_summary_row {
+#weatbgtliu .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #0076BA;
 }
 
-#kvhyvzvkff .gt_first_summary_row.thick {
+#weatbgtliu .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#kvhyvzvkff .gt_last_summary_row {
+#weatbgtliu .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1123,7 +1131,7 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkuranga District (2020-2021). Va
   border-bottom-color: #0076BA;
 }
 
-#kvhyvzvkff .gt_grand_summary_row {
+#weatbgtliu .gt_grand_summary_row {
   color: #333333;
   background-color: #89D3FE;
   text-transform: inherit;
@@ -1133,7 +1141,7 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkuranga District (2020-2021). Va
   padding-right: 5px;
 }
 
-#kvhyvzvkff .gt_first_grand_summary_row {
+#weatbgtliu .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1143,7 +1151,7 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkuranga District (2020-2021). Va
   border-top-color: #0076BA;
 }
 
-#kvhyvzvkff .gt_last_grand_summary_row_top {
+#weatbgtliu .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1153,11 +1161,11 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkuranga District (2020-2021). Va
   border-bottom-color: #0076BA;
 }
 
-#kvhyvzvkff .gt_striped {
+#weatbgtliu .gt_striped {
   background-color: #F4F4F4;
 }
 
-#kvhyvzvkff .gt_table_body {
+#weatbgtliu .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #0076BA;
@@ -1166,7 +1174,7 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkuranga District (2020-2021). Va
   border-bottom-color: #0076BA;
 }
 
-#kvhyvzvkff .gt_footnotes {
+#weatbgtliu .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1180,7 +1188,7 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkuranga District (2020-2021). Va
   border-right-color: #D3D3D3;
 }
 
-#kvhyvzvkff .gt_footnote {
+#weatbgtliu .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1189,7 +1197,7 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkuranga District (2020-2021). Va
   padding-right: 5px;
 }
 
-#kvhyvzvkff .gt_sourcenotes {
+#weatbgtliu .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1203,7 +1211,7 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkuranga District (2020-2021). Va
   border-right-color: #D3D3D3;
 }
 
-#kvhyvzvkff .gt_sourcenote {
+#weatbgtliu .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1211,72 +1219,72 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkuranga District (2020-2021). Va
   padding-right: 5px;
 }
 
-#kvhyvzvkff .gt_left {
+#weatbgtliu .gt_left {
   text-align: left;
 }
 
-#kvhyvzvkff .gt_center {
+#weatbgtliu .gt_center {
   text-align: center;
 }
 
-#kvhyvzvkff .gt_right {
+#weatbgtliu .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#kvhyvzvkff .gt_font_normal {
+#weatbgtliu .gt_font_normal {
   font-weight: normal;
 }
 
-#kvhyvzvkff .gt_font_bold {
+#weatbgtliu .gt_font_bold {
   font-weight: bold;
 }
 
-#kvhyvzvkff .gt_font_italic {
+#weatbgtliu .gt_font_italic {
   font-style: italic;
 }
 
-#kvhyvzvkff .gt_super {
+#weatbgtliu .gt_super {
   font-size: 65%;
 }
 
-#kvhyvzvkff .gt_footnote_marks {
+#weatbgtliu .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#kvhyvzvkff .gt_asterisk {
+#weatbgtliu .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#kvhyvzvkff .gt_indent_1 {
+#weatbgtliu .gt_indent_1 {
   text-indent: 5px;
 }
 
-#kvhyvzvkff .gt_indent_2 {
+#weatbgtliu .gt_indent_2 {
   text-indent: 10px;
 }
 
-#kvhyvzvkff .gt_indent_3 {
+#weatbgtliu .gt_indent_3 {
   text-indent: 15px;
 }
 
-#kvhyvzvkff .gt_indent_4 {
+#weatbgtliu .gt_indent_4 {
   text-indent: 20px;
 }
 
-#kvhyvzvkff .gt_indent_5 {
+#weatbgtliu .gt_indent_5 {
   text-indent: 25px;
 }
 
-#kvhyvzvkff .katex-display {
+#weatbgtliu .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#kvhyvzvkff div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#weatbgtliu div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1447,23 +1455,23 @@ Table&nbsp;2: Detailed Land Cover Transitions for Mkuranga District (2020-2021).
 </figcaption>
 <div aria-describedby="tbl-transition-matrix-long-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="sqdoudjoul" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#sqdoudjoul table {
+<div id="hiefvgupaf" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#hiefvgupaf table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#sqdoudjoul thead, #sqdoudjoul tbody, #sqdoudjoul tfoot, #sqdoudjoul tr, #sqdoudjoul td, #sqdoudjoul th {
+#hiefvgupaf thead, #hiefvgupaf tbody, #hiefvgupaf tfoot, #hiefvgupaf tr, #hiefvgupaf td, #hiefvgupaf th {
   border-style: none;
 }
 
-#sqdoudjoul p {
+#hiefvgupaf p {
   margin: 0;
   padding: 0;
 }
 
-#sqdoudjoul .gt_table {
+#hiefvgupaf .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1489,12 +1497,12 @@ Table&nbsp;2: Detailed Land Cover Transitions for Mkuranga District (2020-2021).
   border-left-color: #D3D3D3;
 }
 
-#sqdoudjoul .gt_caption {
+#hiefvgupaf .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#sqdoudjoul .gt_title {
+#hiefvgupaf .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1506,7 +1514,7 @@ Table&nbsp;2: Detailed Land Cover Transitions for Mkuranga District (2020-2021).
   border-bottom-width: 0;
 }
 
-#sqdoudjoul .gt_subtitle {
+#hiefvgupaf .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1518,7 +1526,7 @@ Table&nbsp;2: Detailed Land Cover Transitions for Mkuranga District (2020-2021).
   border-top-width: 0;
 }
 
-#sqdoudjoul .gt_heading {
+#hiefvgupaf .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1530,13 +1538,13 @@ Table&nbsp;2: Detailed Land Cover Transitions for Mkuranga District (2020-2021).
   border-right-color: #D3D3D3;
 }
 
-#sqdoudjoul .gt_bottom_border {
+#hiefvgupaf .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #0076BA;
 }
 
-#sqdoudjoul .gt_col_headings {
+#hiefvgupaf .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #0076BA;
@@ -1551,7 +1559,7 @@ Table&nbsp;2: Detailed Land Cover Transitions for Mkuranga District (2020-2021).
   border-right-color: #D3D3D3;
 }
 
-#sqdoudjoul .gt_col_heading {
+#hiefvgupaf .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1571,7 +1579,7 @@ Table&nbsp;2: Detailed Land Cover Transitions for Mkuranga District (2020-2021).
   overflow-x: hidden;
 }
 
-#sqdoudjoul .gt_column_spanner_outer {
+#hiefvgupaf .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1583,15 +1591,15 @@ Table&nbsp;2: Detailed Land Cover Transitions for Mkuranga District (2020-2021).
   padding-right: 4px;
 }
 
-#sqdoudjoul .gt_column_spanner_outer:first-child {
+#hiefvgupaf .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#sqdoudjoul .gt_column_spanner_outer:last-child {
+#hiefvgupaf .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#sqdoudjoul .gt_column_spanner {
+#hiefvgupaf .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #0076BA;
@@ -1603,11 +1611,11 @@ Table&nbsp;2: Detailed Land Cover Transitions for Mkuranga District (2020-2021).
   width: 100%;
 }
 
-#sqdoudjoul .gt_spanner_row {
+#hiefvgupaf .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#sqdoudjoul .gt_group_heading {
+#hiefvgupaf .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1633,7 +1641,7 @@ Table&nbsp;2: Detailed Land Cover Transitions for Mkuranga District (2020-2021).
   text-align: left;
 }
 
-#sqdoudjoul .gt_empty_group_heading {
+#hiefvgupaf .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1648,15 +1656,15 @@ Table&nbsp;2: Detailed Land Cover Transitions for Mkuranga District (2020-2021).
   vertical-align: middle;
 }
 
-#sqdoudjoul .gt_from_md > :first-child {
+#hiefvgupaf .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#sqdoudjoul .gt_from_md > :last-child {
+#hiefvgupaf .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#sqdoudjoul .gt_row {
+#hiefvgupaf .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1675,7 +1683,7 @@ Table&nbsp;2: Detailed Land Cover Transitions for Mkuranga District (2020-2021).
   overflow-x: hidden;
 }
 
-#sqdoudjoul .gt_stub {
+#hiefvgupaf .gt_stub {
   color: #FFFFFF;
   background-color: #0076BA;
   font-size: 100%;
@@ -1688,7 +1696,7 @@ Table&nbsp;2: Detailed Land Cover Transitions for Mkuranga District (2020-2021).
   padding-right: 5px;
 }
 
-#sqdoudjoul .gt_stub_row_group {
+#hiefvgupaf .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1702,15 +1710,15 @@ Table&nbsp;2: Detailed Land Cover Transitions for Mkuranga District (2020-2021).
   vertical-align: top;
 }
 
-#sqdoudjoul .gt_row_group_first td {
+#hiefvgupaf .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#sqdoudjoul .gt_row_group_first th {
+#hiefvgupaf .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#sqdoudjoul .gt_summary_row {
+#hiefvgupaf .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1720,16 +1728,16 @@ Table&nbsp;2: Detailed Land Cover Transitions for Mkuranga District (2020-2021).
   padding-right: 5px;
 }
 
-#sqdoudjoul .gt_first_summary_row {
+#hiefvgupaf .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #0076BA;
 }
 
-#sqdoudjoul .gt_first_summary_row.thick {
+#hiefvgupaf .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#sqdoudjoul .gt_last_summary_row {
+#hiefvgupaf .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1739,7 +1747,7 @@ Table&nbsp;2: Detailed Land Cover Transitions for Mkuranga District (2020-2021).
   border-bottom-color: #0076BA;
 }
 
-#sqdoudjoul .gt_grand_summary_row {
+#hiefvgupaf .gt_grand_summary_row {
   color: #333333;
   background-color: #89D3FE;
   text-transform: inherit;
@@ -1749,7 +1757,7 @@ Table&nbsp;2: Detailed Land Cover Transitions for Mkuranga District (2020-2021).
   padding-right: 5px;
 }
 
-#sqdoudjoul .gt_first_grand_summary_row {
+#hiefvgupaf .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1759,7 +1767,7 @@ Table&nbsp;2: Detailed Land Cover Transitions for Mkuranga District (2020-2021).
   border-top-color: #0076BA;
 }
 
-#sqdoudjoul .gt_last_grand_summary_row_top {
+#hiefvgupaf .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1769,11 +1777,11 @@ Table&nbsp;2: Detailed Land Cover Transitions for Mkuranga District (2020-2021).
   border-bottom-color: #0076BA;
 }
 
-#sqdoudjoul .gt_striped {
+#hiefvgupaf .gt_striped {
   background-color: #F4F4F4;
 }
 
-#sqdoudjoul .gt_table_body {
+#hiefvgupaf .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #0076BA;
@@ -1782,7 +1790,7 @@ Table&nbsp;2: Detailed Land Cover Transitions for Mkuranga District (2020-2021).
   border-bottom-color: #0076BA;
 }
 
-#sqdoudjoul .gt_footnotes {
+#hiefvgupaf .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1796,7 +1804,7 @@ Table&nbsp;2: Detailed Land Cover Transitions for Mkuranga District (2020-2021).
   border-right-color: #D3D3D3;
 }
 
-#sqdoudjoul .gt_footnote {
+#hiefvgupaf .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1805,7 +1813,7 @@ Table&nbsp;2: Detailed Land Cover Transitions for Mkuranga District (2020-2021).
   padding-right: 5px;
 }
 
-#sqdoudjoul .gt_sourcenotes {
+#hiefvgupaf .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1819,7 +1827,7 @@ Table&nbsp;2: Detailed Land Cover Transitions for Mkuranga District (2020-2021).
   border-right-color: #D3D3D3;
 }
 
-#sqdoudjoul .gt_sourcenote {
+#hiefvgupaf .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1827,72 +1835,72 @@ Table&nbsp;2: Detailed Land Cover Transitions for Mkuranga District (2020-2021).
   padding-right: 5px;
 }
 
-#sqdoudjoul .gt_left {
+#hiefvgupaf .gt_left {
   text-align: left;
 }
 
-#sqdoudjoul .gt_center {
+#hiefvgupaf .gt_center {
   text-align: center;
 }
 
-#sqdoudjoul .gt_right {
+#hiefvgupaf .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#sqdoudjoul .gt_font_normal {
+#hiefvgupaf .gt_font_normal {
   font-weight: normal;
 }
 
-#sqdoudjoul .gt_font_bold {
+#hiefvgupaf .gt_font_bold {
   font-weight: bold;
 }
 
-#sqdoudjoul .gt_font_italic {
+#hiefvgupaf .gt_font_italic {
   font-style: italic;
 }
 
-#sqdoudjoul .gt_super {
+#hiefvgupaf .gt_super {
   font-size: 65%;
 }
 
-#sqdoudjoul .gt_footnote_marks {
+#hiefvgupaf .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#sqdoudjoul .gt_asterisk {
+#hiefvgupaf .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#sqdoudjoul .gt_indent_1 {
+#hiefvgupaf .gt_indent_1 {
   text-indent: 5px;
 }
 
-#sqdoudjoul .gt_indent_2 {
+#hiefvgupaf .gt_indent_2 {
   text-indent: 10px;
 }
 
-#sqdoudjoul .gt_indent_3 {
+#hiefvgupaf .gt_indent_3 {
   text-indent: 15px;
 }
 
-#sqdoudjoul .gt_indent_4 {
+#hiefvgupaf .gt_indent_4 {
   text-indent: 20px;
 }
 
-#sqdoudjoul .gt_indent_5 {
+#hiefvgupaf .gt_indent_5 {
   text-indent: 25px;
 }
 
-#sqdoudjoul .katex-display {
+#hiefvgupaf .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#sqdoudjoul div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#hiefvgupaf div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>

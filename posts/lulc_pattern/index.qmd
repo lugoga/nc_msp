@@ -2,9 +2,24 @@
 title: "Land Cover Patterns in Mkoani District"
 description: "Analyzing and comparing temporal land cover patterns in Mkoani District for marine spatial planning"
 author: "Masumbuko Semba"
-date: 2025-12-29
+contributors:
+  - name: "Siajali Pamba"
+    affiliation: "University of Dar es Salaam, School of Aquatic Sciences and Fisheries Technology (SOAF)"
+  - name: "Julius Francis"
+    affiliation: "University of Dar es Salaam, School of Aquatic Sciences and Fisheries Technology (SOAF)"
+  - name: "Emmanuel Mpina"  
+    affiliation: "The Nature Conservancy (TNC), Tanzania"
+date: "2025-12-29"
 categories: [spatial-analysis, land-cover]
+keywords: [Mkoani, Pemba, land cover change, ESA WorldCover, spatial analysis, ecosystem]
 image: "lulc_mkoani_relative_area.png"
+reading-time: true
+draft: false
+citation: true
+doi: "10.5281/zenodo.18091497"
+abstract: "This analysis examines temporal land cover patterns in Mkoani District (Pemba Island) using ESA WorldCover 10m satellite data for 2020-2021. We employ spatial signatures and transition matrices to quantify changes in ecosystem composition and configuration across this critical coastal zone. Key findings reveal the composition of major land cover types (forests, croplands, herbaceous vegetation, urban areas) and document temporal transitions indicative of landscape transformation drivers. The methodology provides a replicable framework for monitoring coastal ecosystem changes relevant to marine spatial planning and conservation priorities."
+toc: true
+toc-depth: 2
 execute: 
   eval: true
   warning: false

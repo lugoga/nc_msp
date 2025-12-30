@@ -4,7 +4,11 @@ description: "Analyzing and comparing spatial patterns of land cover in Mkoani a
 author: "Masumbuko Semba"
 date: 2025-12-28
 categories: [spatial-analysis, land-cover]
+keywords: [Mkoani, Mkuranga, land cover comparison, spatial patterns, coastal Tanzania, ecosystem]
 image: "lc_mkuranga.png"
+reading-time: true
+toc: true
+toc-depth: 2
 execute: 
   eval: false
 

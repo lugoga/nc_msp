@@ -8,6 +8,7 @@
 
 <meta name="author" content="Masumbuko Semba">
 <meta name="dcterms.date" content="2025-12-29">
+<meta name="keywords" content="Mkoani, Pemba, land cover change, ESA WorldCover, spatial analysis, ecosystem">
 <meta name="description" content="Analyzing and comparing temporal land cover patterns in Mkoani District for marine spatial planning">
 
 <title>Land Cover Patterns in Mkoani District</title>
@@ -497,19 +498,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
    
-  <ul>
+  <ul class="collapse">
   <li><a href="#understanding-spatial-patterns-in-land-cover" id="toc-understanding-spatial-patterns-in-land-cover" class="nav-link active" data-scroll-target="#understanding-spatial-patterns-in-land-cover">Understanding Spatial Patterns in Land Cover</a></li>
   <li><a href="#loading-and-preparing-the-data" id="toc-loading-and-preparing-the-data" class="nav-link" data-scroll-target="#loading-and-preparing-the-data">Loading and Preparing the Data</a></li>
   <li><a href="#creating-a-standardized-color-scheme" id="toc-creating-a-standardized-color-scheme" class="nav-link" data-scroll-target="#creating-a-standardized-color-scheme">Creating a Standardized Color Scheme</a></li>
   <li><a href="#visualizing-land-cover-maps" id="toc-visualizing-land-cover-maps" class="nav-link" data-scroll-target="#visualizing-land-cover-maps">Visualizing Land Cover Maps</a></li>
   <li><a href="#understanding-land-cover-transitions" id="toc-understanding-land-cover-transitions" class="nav-link" data-scroll-target="#understanding-land-cover-transitions">Understanding Land Cover Transitions</a></li>
-  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a>
-  <ul class="collapse">
-  <li><a href="#spatial-analysis-and-raster-processing" id="toc-spatial-analysis-and-raster-processing" class="nav-link" data-scroll-target="#spatial-analysis-and-raster-processing">Spatial Analysis and Raster Processing</a></li>
-  <li><a href="#data-visualization" id="toc-data-visualization" class="nav-link" data-scroll-target="#data-visualization">Data Visualization</a></li>
-  <li><a href="#data-manipulation-and-analysis" id="toc-data-manipulation-and-analysis" class="nav-link" data-scroll-target="#data-manipulation-and-analysis">Data Manipulation and Analysis</a></li>
-  <li><a href="#data-sources" id="toc-data-sources" class="nav-link" data-scroll-target="#data-sources">Data Sources</a></li>
-  </ul></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
 </nav>
     </div>
@@ -549,9 +544,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
   
     
+    <div>
+    <div class="quarto-title-meta-heading">Doi</div>
+    <div class="quarto-title-meta-contents">
+      <p class="doi">
+        <a href="https://doi.org/10.5281/zenodo.18091497">10.5281/zenodo.18091497</a>
+      </p>
+    </div>
+  </div>
   </div>
   
+<div>
+  <div class="abstract">
+    <div class="block-title">Abstract</div>
+    This analysis examines temporal land cover patterns in Mkoani District (Pemba Island) using ESA WorldCover 10m satellite data for 2020-2021. We employ spatial signatures and transition matrices to quantify changes in ecosystem composition and configuration across this critical coastal zone. Key findings reveal the composition of major land cover types (forests, croplands, herbaceous vegetation, urban areas) and document temporal transitions indicative of landscape transformation drivers. The methodology provides a replicable framework for monitoring coastal ecosystem changes relevant to marine spatial planning and conservation priorities.
+  </div>
+</div>
 
+<div>
+  <div class="keywords">
+    <div class="block-title">Keywords</div>
+    <p>Mkoani, Pemba, land cover change, ESA WorldCover, spatial analysis, ecosystem</p>
+  </div>
+</div>
 
 </header>
 
@@ -782,23 +797,23 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkoani District (2020-2021). Valu
 </figcaption>
 <div aria-describedby="tbl-transition-matrix-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="fvhhryohub" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#fvhhryohub table {
+<div id="ssfjplakif" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#ssfjplakif table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#fvhhryohub thead, #fvhhryohub tbody, #fvhhryohub tfoot, #fvhhryohub tr, #fvhhryohub td, #fvhhryohub th {
+#ssfjplakif thead, #ssfjplakif tbody, #ssfjplakif tfoot, #ssfjplakif tr, #ssfjplakif td, #ssfjplakif th {
   border-style: none;
 }
 
-#fvhhryohub p {
+#ssfjplakif p {
   margin: 0;
   padding: 0;
 }
 
-#fvhhryohub .gt_table {
+#ssfjplakif .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -824,12 +839,12 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkoani District (2020-2021). Valu
   border-left-color: #D3D3D3;
 }
 
-#fvhhryohub .gt_caption {
+#ssfjplakif .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#fvhhryohub .gt_title {
+#ssfjplakif .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -841,7 +856,7 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkoani District (2020-2021). Valu
   border-bottom-width: 0;
 }
 
-#fvhhryohub .gt_subtitle {
+#ssfjplakif .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -853,7 +868,7 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkoani District (2020-2021). Valu
   border-top-width: 0;
 }
 
-#fvhhryohub .gt_heading {
+#ssfjplakif .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -865,13 +880,13 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkoani District (2020-2021). Valu
   border-right-color: #D3D3D3;
 }
 
-#fvhhryohub .gt_bottom_border {
+#ssfjplakif .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #0076BA;
 }
 
-#fvhhryohub .gt_col_headings {
+#ssfjplakif .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #0076BA;
@@ -886,7 +901,7 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkoani District (2020-2021). Valu
   border-right-color: #D3D3D3;
 }
 
-#fvhhryohub .gt_col_heading {
+#ssfjplakif .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -906,7 +921,7 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkoani District (2020-2021). Valu
   overflow-x: hidden;
 }
 
-#fvhhryohub .gt_column_spanner_outer {
+#ssfjplakif .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -918,15 +933,15 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkoani District (2020-2021). Valu
   padding-right: 4px;
 }
 
-#fvhhryohub .gt_column_spanner_outer:first-child {
+#ssfjplakif .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#fvhhryohub .gt_column_spanner_outer:last-child {
+#ssfjplakif .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#fvhhryohub .gt_column_spanner {
+#ssfjplakif .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #0076BA;
@@ -938,11 +953,11 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkoani District (2020-2021). Valu
   width: 100%;
 }
 
-#fvhhryohub .gt_spanner_row {
+#ssfjplakif .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#fvhhryohub .gt_group_heading {
+#ssfjplakif .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -968,7 +983,7 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkoani District (2020-2021). Valu
   text-align: left;
 }
 
-#fvhhryohub .gt_empty_group_heading {
+#ssfjplakif .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -983,15 +998,15 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkoani District (2020-2021). Valu
   vertical-align: middle;
 }
 
-#fvhhryohub .gt_from_md > :first-child {
+#ssfjplakif .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#fvhhryohub .gt_from_md > :last-child {
+#ssfjplakif .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#fvhhryohub .gt_row {
+#ssfjplakif .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1010,7 +1025,7 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkoani District (2020-2021). Valu
   overflow-x: hidden;
 }
 
-#fvhhryohub .gt_stub {
+#ssfjplakif .gt_stub {
   color: #FFFFFF;
   background-color: #0076BA;
   font-size: 100%;
@@ -1023,7 +1038,7 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkoani District (2020-2021). Valu
   padding-right: 5px;
 }
 
-#fvhhryohub .gt_stub_row_group {
+#ssfjplakif .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1037,15 +1052,15 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkoani District (2020-2021). Valu
   vertical-align: top;
 }
 
-#fvhhryohub .gt_row_group_first td {
+#ssfjplakif .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#fvhhryohub .gt_row_group_first th {
+#ssfjplakif .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#fvhhryohub .gt_summary_row {
+#ssfjplakif .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1055,16 +1070,16 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkoani District (2020-2021). Valu
   padding-right: 5px;
 }
 
-#fvhhryohub .gt_first_summary_row {
+#ssfjplakif .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #0076BA;
 }
 
-#fvhhryohub .gt_first_summary_row.thick {
+#ssfjplakif .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#fvhhryohub .gt_last_summary_row {
+#ssfjplakif .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1074,7 +1089,7 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkoani District (2020-2021). Valu
   border-bottom-color: #0076BA;
 }
 
-#fvhhryohub .gt_grand_summary_row {
+#ssfjplakif .gt_grand_summary_row {
   color: #333333;
   background-color: #89D3FE;
   text-transform: inherit;
@@ -1084,7 +1099,7 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkoani District (2020-2021). Valu
   padding-right: 5px;
 }
 
-#fvhhryohub .gt_first_grand_summary_row {
+#ssfjplakif .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1094,7 +1109,7 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkoani District (2020-2021). Valu
   border-top-color: #0076BA;
 }
 
-#fvhhryohub .gt_last_grand_summary_row_top {
+#ssfjplakif .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1104,11 +1119,11 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkoani District (2020-2021). Valu
   border-bottom-color: #0076BA;
 }
 
-#fvhhryohub .gt_striped {
+#ssfjplakif .gt_striped {
   background-color: #F4F4F4;
 }
 
-#fvhhryohub .gt_table_body {
+#ssfjplakif .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #0076BA;
@@ -1117,7 +1132,7 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkoani District (2020-2021). Valu
   border-bottom-color: #0076BA;
 }
 
-#fvhhryohub .gt_footnotes {
+#ssfjplakif .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1131,7 +1146,7 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkoani District (2020-2021). Valu
   border-right-color: #D3D3D3;
 }
 
-#fvhhryohub .gt_footnote {
+#ssfjplakif .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1140,7 +1155,7 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkoani District (2020-2021). Valu
   padding-right: 5px;
 }
 
-#fvhhryohub .gt_sourcenotes {
+#ssfjplakif .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1154,7 +1169,7 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkoani District (2020-2021). Valu
   border-right-color: #D3D3D3;
 }
 
-#fvhhryohub .gt_sourcenote {
+#ssfjplakif .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1162,72 +1177,72 @@ Table&nbsp;1: Land Cover Transition Matrix for Mkoani District (2020-2021). Valu
   padding-right: 5px;
 }
 
-#fvhhryohub .gt_left {
+#ssfjplakif .gt_left {
   text-align: left;
 }
 
-#fvhhryohub .gt_center {
+#ssfjplakif .gt_center {
   text-align: center;
 }
 
-#fvhhryohub .gt_right {
+#ssfjplakif .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#fvhhryohub .gt_font_normal {
+#ssfjplakif .gt_font_normal {
   font-weight: normal;
 }
 
-#fvhhryohub .gt_font_bold {
+#ssfjplakif .gt_font_bold {
   font-weight: bold;
 }
 
-#fvhhryohub .gt_font_italic {
+#ssfjplakif .gt_font_italic {
   font-style: italic;
 }
 
-#fvhhryohub .gt_super {
+#ssfjplakif .gt_super {
   font-size: 65%;
 }
 
-#fvhhryohub .gt_footnote_marks {
+#ssfjplakif .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#fvhhryohub .gt_asterisk {
+#ssfjplakif .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#fvhhryohub .gt_indent_1 {
+#ssfjplakif .gt_indent_1 {
   text-indent: 5px;
 }
 
-#fvhhryohub .gt_indent_2 {
+#ssfjplakif .gt_indent_2 {
   text-indent: 10px;
 }
 
-#fvhhryohub .gt_indent_3 {
+#ssfjplakif .gt_indent_3 {
   text-indent: 15px;
 }
 
-#fvhhryohub .gt_indent_4 {
+#ssfjplakif .gt_indent_4 {
   text-indent: 20px;
 }
 
-#fvhhryohub .gt_indent_5 {
+#ssfjplakif .gt_indent_5 {
   text-indent: 25px;
 }
 
-#fvhhryohub .katex-display {
+#ssfjplakif .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#fvhhryohub div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#ssfjplakif div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1392,23 +1407,23 @@ Table&nbsp;2: Long-Format Land Cover Transition Matrix for Mkoani District (2020
 </figcaption>
 <div aria-describedby="tbl-transition-matrix-long-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="zzxitdhxqw" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#zzxitdhxqw table {
+<div id="fcizwxwcga" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#fcizwxwcga table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#zzxitdhxqw thead, #zzxitdhxqw tbody, #zzxitdhxqw tfoot, #zzxitdhxqw tr, #zzxitdhxqw td, #zzxitdhxqw th {
+#fcizwxwcga thead, #fcizwxwcga tbody, #fcizwxwcga tfoot, #fcizwxwcga tr, #fcizwxwcga td, #fcizwxwcga th {
   border-style: none;
 }
 
-#zzxitdhxqw p {
+#fcizwxwcga p {
   margin: 0;
   padding: 0;
 }
 
-#zzxitdhxqw .gt_table {
+#fcizwxwcga .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1434,12 +1449,12 @@ Table&nbsp;2: Long-Format Land Cover Transition Matrix for Mkoani District (2020
   border-left-color: #D3D3D3;
 }
 
-#zzxitdhxqw .gt_caption {
+#fcizwxwcga .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#zzxitdhxqw .gt_title {
+#fcizwxwcga .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1451,7 +1466,7 @@ Table&nbsp;2: Long-Format Land Cover Transition Matrix for Mkoani District (2020
   border-bottom-width: 0;
 }
 
-#zzxitdhxqw .gt_subtitle {
+#fcizwxwcga .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1463,7 +1478,7 @@ Table&nbsp;2: Long-Format Land Cover Transition Matrix for Mkoani District (2020
   border-top-width: 0;
 }
 
-#zzxitdhxqw .gt_heading {
+#fcizwxwcga .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1475,13 +1490,13 @@ Table&nbsp;2: Long-Format Land Cover Transition Matrix for Mkoani District (2020
   border-right-color: #D3D3D3;
 }
 
-#zzxitdhxqw .gt_bottom_border {
+#fcizwxwcga .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #0076BA;
 }
 
-#zzxitdhxqw .gt_col_headings {
+#fcizwxwcga .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #0076BA;
@@ -1496,7 +1511,7 @@ Table&nbsp;2: Long-Format Land Cover Transition Matrix for Mkoani District (2020
   border-right-color: #D3D3D3;
 }
 
-#zzxitdhxqw .gt_col_heading {
+#fcizwxwcga .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1516,7 +1531,7 @@ Table&nbsp;2: Long-Format Land Cover Transition Matrix for Mkoani District (2020
   overflow-x: hidden;
 }
 
-#zzxitdhxqw .gt_column_spanner_outer {
+#fcizwxwcga .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1528,15 +1543,15 @@ Table&nbsp;2: Long-Format Land Cover Transition Matrix for Mkoani District (2020
   padding-right: 4px;
 }
 
-#zzxitdhxqw .gt_column_spanner_outer:first-child {
+#fcizwxwcga .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#zzxitdhxqw .gt_column_spanner_outer:last-child {
+#fcizwxwcga .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#zzxitdhxqw .gt_column_spanner {
+#fcizwxwcga .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #0076BA;
@@ -1548,11 +1563,11 @@ Table&nbsp;2: Long-Format Land Cover Transition Matrix for Mkoani District (2020
   width: 100%;
 }
 
-#zzxitdhxqw .gt_spanner_row {
+#fcizwxwcga .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#zzxitdhxqw .gt_group_heading {
+#fcizwxwcga .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1578,7 +1593,7 @@ Table&nbsp;2: Long-Format Land Cover Transition Matrix for Mkoani District (2020
   text-align: left;
 }
 
-#zzxitdhxqw .gt_empty_group_heading {
+#fcizwxwcga .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1593,15 +1608,15 @@ Table&nbsp;2: Long-Format Land Cover Transition Matrix for Mkoani District (2020
   vertical-align: middle;
 }
 
-#zzxitdhxqw .gt_from_md > :first-child {
+#fcizwxwcga .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#zzxitdhxqw .gt_from_md > :last-child {
+#fcizwxwcga .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#zzxitdhxqw .gt_row {
+#fcizwxwcga .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1620,7 +1635,7 @@ Table&nbsp;2: Long-Format Land Cover Transition Matrix for Mkoani District (2020
   overflow-x: hidden;
 }
 
-#zzxitdhxqw .gt_stub {
+#fcizwxwcga .gt_stub {
   color: #FFFFFF;
   background-color: #0076BA;
   font-size: 100%;
@@ -1633,7 +1648,7 @@ Table&nbsp;2: Long-Format Land Cover Transition Matrix for Mkoani District (2020
   padding-right: 5px;
 }
 
-#zzxitdhxqw .gt_stub_row_group {
+#fcizwxwcga .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1647,15 +1662,15 @@ Table&nbsp;2: Long-Format Land Cover Transition Matrix for Mkoani District (2020
   vertical-align: top;
 }
 
-#zzxitdhxqw .gt_row_group_first td {
+#fcizwxwcga .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#zzxitdhxqw .gt_row_group_first th {
+#fcizwxwcga .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#zzxitdhxqw .gt_summary_row {
+#fcizwxwcga .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1665,16 +1680,16 @@ Table&nbsp;2: Long-Format Land Cover Transition Matrix for Mkoani District (2020
   padding-right: 5px;
 }
 
-#zzxitdhxqw .gt_first_summary_row {
+#fcizwxwcga .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #0076BA;
 }
 
-#zzxitdhxqw .gt_first_summary_row.thick {
+#fcizwxwcga .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#zzxitdhxqw .gt_last_summary_row {
+#fcizwxwcga .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1684,7 +1699,7 @@ Table&nbsp;2: Long-Format Land Cover Transition Matrix for Mkoani District (2020
   border-bottom-color: #0076BA;
 }
 
-#zzxitdhxqw .gt_grand_summary_row {
+#fcizwxwcga .gt_grand_summary_row {
   color: #333333;
   background-color: #89D3FE;
   text-transform: inherit;
@@ -1694,7 +1709,7 @@ Table&nbsp;2: Long-Format Land Cover Transition Matrix for Mkoani District (2020
   padding-right: 5px;
 }
 
-#zzxitdhxqw .gt_first_grand_summary_row {
+#fcizwxwcga .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1704,7 +1719,7 @@ Table&nbsp;2: Long-Format Land Cover Transition Matrix for Mkoani District (2020
   border-top-color: #0076BA;
 }
 
-#zzxitdhxqw .gt_last_grand_summary_row_top {
+#fcizwxwcga .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1714,11 +1729,11 @@ Table&nbsp;2: Long-Format Land Cover Transition Matrix for Mkoani District (2020
   border-bottom-color: #0076BA;
 }
 
-#zzxitdhxqw .gt_striped {
+#fcizwxwcga .gt_striped {
   background-color: #F4F4F4;
 }
 
-#zzxitdhxqw .gt_table_body {
+#fcizwxwcga .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #0076BA;
@@ -1727,7 +1742,7 @@ Table&nbsp;2: Long-Format Land Cover Transition Matrix for Mkoani District (2020
   border-bottom-color: #0076BA;
 }
 
-#zzxitdhxqw .gt_footnotes {
+#fcizwxwcga .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1741,7 +1756,7 @@ Table&nbsp;2: Long-Format Land Cover Transition Matrix for Mkoani District (2020
   border-right-color: #D3D3D3;
 }
 
-#zzxitdhxqw .gt_footnote {
+#fcizwxwcga .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1750,7 +1765,7 @@ Table&nbsp;2: Long-Format Land Cover Transition Matrix for Mkoani District (2020
   padding-right: 5px;
 }
 
-#zzxitdhxqw .gt_sourcenotes {
+#fcizwxwcga .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1764,7 +1779,7 @@ Table&nbsp;2: Long-Format Land Cover Transition Matrix for Mkoani District (2020
   border-right-color: #D3D3D3;
 }
 
-#zzxitdhxqw .gt_sourcenote {
+#fcizwxwcga .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1772,72 +1787,72 @@ Table&nbsp;2: Long-Format Land Cover Transition Matrix for Mkoani District (2020
   padding-right: 5px;
 }
 
-#zzxitdhxqw .gt_left {
+#fcizwxwcga .gt_left {
   text-align: left;
 }
 
-#zzxitdhxqw .gt_center {
+#fcizwxwcga .gt_center {
   text-align: center;
 }
 
-#zzxitdhxqw .gt_right {
+#fcizwxwcga .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#zzxitdhxqw .gt_font_normal {
+#fcizwxwcga .gt_font_normal {
   font-weight: normal;
 }
 
-#zzxitdhxqw .gt_font_bold {
+#fcizwxwcga .gt_font_bold {
   font-weight: bold;
 }
 
-#zzxitdhxqw .gt_font_italic {
+#fcizwxwcga .gt_font_italic {
   font-style: italic;
 }
 
-#zzxitdhxqw .gt_super {
+#fcizwxwcga .gt_super {
   font-size: 65%;
 }
 
-#zzxitdhxqw .gt_footnote_marks {
+#fcizwxwcga .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#zzxitdhxqw .gt_asterisk {
+#fcizwxwcga .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#zzxitdhxqw .gt_indent_1 {
+#fcizwxwcga .gt_indent_1 {
   text-indent: 5px;
 }
 
-#zzxitdhxqw .gt_indent_2 {
+#fcizwxwcga .gt_indent_2 {
   text-indent: 10px;
 }
 
-#zzxitdhxqw .gt_indent_3 {
+#fcizwxwcga .gt_indent_3 {
   text-indent: 15px;
 }
 
-#zzxitdhxqw .gt_indent_4 {
+#fcizwxwcga .gt_indent_4 {
   text-indent: 20px;
 }
 
-#zzxitdhxqw .gt_indent_5 {
+#fcizwxwcga .gt_indent_5 {
   text-indent: 25px;
 }
 
-#zzxitdhxqw .katex-display {
+#fcizwxwcga .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#zzxitdhxqw div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#fcizwxwcga div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -2309,7 +2324,28 @@ Land Cover
 </section>
 </section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{semba2025,
+  author = {Semba, Masumbuko},
+  title = {Land {Cover} {Patterns} in {Mkoani} {District}},
+  date = {2025-12-29},
+  doi = {10.5281/zenodo.18091497},
+  langid = {en},
+  abstract = {This analysis examines temporal land cover patterns in
+    Mkoani District (Pemba Island) using ESA WorldCover 10m satellite
+    data for 2020-2021. We employ spatial signatures and transition
+    matrices to quantify changes in ecosystem composition and
+    configuration across this critical coastal zone. Key findings reveal
+    the composition of major land cover types (forests, croplands,
+    herbaceous vegetation, urban areas) and document temporal
+    transitions indicative of landscape transformation drivers. The
+    methodology provides a replicable framework for monitoring coastal
+    ecosystem changes relevant to marine spatial planning and
+    conservation priorities.}
+}
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-semba2025" class="csl-entry quarto-appendix-citeas" role="listitem">
+Semba, Masumbuko. 2025. <span>“Land Cover Patterns in Mkoani
+District.”</span> December 29, 2025. <a href="https://doi.org/10.5281/zenodo.18091497">https://doi.org/10.5281/zenodo.18091497</a>.
+</div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
