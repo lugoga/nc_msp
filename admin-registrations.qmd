@@ -1,0 +1,212 @@
+---
+title: "Event Registrations (Admin)"
+description: "View all workshop registrations"
+toc: false
+---
+
+```{=html}
+<div id="loginDiv" style="max-width: 400px; margin: 50px auto; padding: 30px; border: 1px solid #ddd; border-radius: 8px; background-color: #f9f9f9;">
+  <h2 style="text-align: center; margin-bottom: 30px;">Admin Login</h2>
+  
+  <div style="margin-bottom: 15px;">
+    <label for="username" style="display: block; margin-bottom: 5px; font-weight: bold;">Username:</label>
+    <input type="text" id="username" placeholder="Enter username" style="width: 100%; padding: 10px; border: 1px solid #bbb; border-radius: 4px; box-sizing: border-box; font-size: 14px;">
+  </div>
+  
+  <div style="margin-bottom: 20px;">
+    <label for="password" style="display: block; margin-bottom: 5px; font-weight: bold;">Password:</label>
+    <input type="password" id="password" placeholder="Enter password" style="width: 100%; padding: 10px; border: 1px solid #bbb; border-radius: 4px; box-sizing: border-box; font-size: 14px;">
+  </div>
+  
+  <button id="loginBtn" style="width: 100%; background-color: #3498db; color: white; padding: 12px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; font-weight: bold;">
+    Login
+  </button>
+  
+  <p id="loginError" style="color: #e74c3c; margin-top: 10px; text-align: center; display: none;"></p>
+</div>
+
+<div id="contentDiv" style="display: none; max-width: 1000px; margin: 20px 0;">
+  <div style="text-align: right; margin-bottom: 15px;">
+    <button id="logoutBtn" style="background-color: #95a5a6; color: white; padding: 8px 15px; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;">
+      🚪 Logout
+    </button>
+  </div>
+  
+  <h2>Workshop Registrations</h2>
+  
+  <div style="margin-bottom: 20px;">
+    <button id="exportBtn" style="background-color: #27ae60; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-size: 14px; margin-right: 10px;">
+      📥 Export to CSV
+    </button>
+    <button id="clearBtn" style="background-color: #e74c3c; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;">
+      🗑️ Clear All Data
+    </button>
+  </div>
+
+  <div id="statsDiv" style="background-color: #ecf0f1; padding: 15px; border-radius: 4px; margin-bottom: 20px;">
+    <p><strong>Total Registrations:</strong> <span id="totalCount">0</span></p>
+  </div>
+
+  <div id="registrationsTable" style="overflow-x: auto;">
+    <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+      <thead>
+        <tr style="background-color: #3498db; color: white;">
+          <th style="padding: 10px; text-align: left; border: 1px solid #ddd;">#</th>
+          <th style="padding: 10px; text-align: left; border: 1px solid #ddd;">Name</th>
+          <th style="padding: 10px; text-align: left; border: 1px solid #ddd;">Email</th>
+          <th style="padding: 10px; text-align: left; border: 1px solid #ddd;">Phone</th>
+          <th style="padding: 10px; text-align: left; border: 1px solid #ddd;">Organization</th>
+          <th style="padding: 10px; text-align: left; border: 1px solid #ddd;">Workshop</th>
+          <th style="padding: 10px; text-align: left; border: 1px solid #ddd;">Timestamp</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody">
+        <tr><td colspan="7" style="text-align: center; padding: 20px; color: #999;">No registrations yet</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+// Admin credentials (change these to your desired username and password)
+const ADMIN_USERNAME = 'admin';
+const ADMIN_PASSWORD = 'msp2025';
+
+// Check if user is already logged in
+function checkLogin() {
+  const isLoggedIn = sessionStorage.getItem('adminLoggedIn') === 'true';
+  if (isLoggedIn) {
+    showContent();
+  }
+}
+
+// Show login form
+function showLogin() {
+  document.getElementById('loginDiv').style.display = 'block';
+  document.getElementById('contentDiv').style.display = 'none';
+  sessionStorage.removeItem('adminLoggedIn');
+}
+
+// Show content after login
+function showContent() {
+  document.getElementById('loginDiv').style.display = 'none';
+  document.getElementById('contentDiv').style.display = 'block';
+  loadAndDisplayRegistrations();
+}
+
+// Handle login
+document.getElementById('loginBtn')?.addEventListener('click', function() {
+  const username = document.getElementById('username').value;
+  const password = document.getElementById('password').value;
+  const errorDiv = document.getElementById('loginError');
+  
+  if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
+    sessionStorage.setItem('adminLoggedIn', 'true');
+    showContent();
+    errorDiv.style.display = 'none';
+  } else {
+    errorDiv.textContent = 'Invalid username or password';
+    errorDiv.style.display = 'block';
+  }
+});
+
+// Handle Enter key in password field
+document.getElementById('password')?.addEventListener('keypress', function(event) {
+  if (event.key === 'Enter') {
+    document.getElementById('loginBtn').click();
+  }
+});
+
+// Handle logout
+document.getElementById('logoutBtn')?.addEventListener('click', function() {
+  if (confirm('Are you sure you want to logout?')) {
+    showLogin();
+  }
+});
+
+function loadAndDisplayRegistrations() {
+  const registrations = JSON.parse(localStorage.getItem('msp_registrations') || '[]');
+  const tableBody = document.getElementById('tableBody');
+  const totalCount = document.getElementById('totalCount');
+  
+  totalCount.textContent = registrations.length;
+  
+  if (registrations.length === 0) {
+    tableBody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 20px; color: #999;">No registrations yet</td></tr>';
+    return;
+  }
+  
+  tableBody.innerHTML = registrations.map((reg, index) => `
+    <tr style="background-color: ${index % 2 === 0 ? '#fff' : '#f9f9f9'}; border-bottom: 1px solid #ddd;">
+      <td style="padding: 10px; border: 1px solid #ddd;">${index + 1}</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">${reg.name || '-'}</td>
+      <td style="padding: 10px; border: 1px solid #ddd;"><a href="mailto:${reg.email}" style="color: #3498db; text-decoration: none;">${reg.email || '-'}</a></td>
+      <td style="padding: 10px; border: 1px solid #ddd;">${reg.phone || '-'}</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">${reg.organization || '-'}</td>
+      <td style="padding: 10px; border: 1px solid #ddd;"><strong>${reg.workshop || '-'}</strong></td>
+      <td style="padding: 10px; border: 1px solid #ddd; font-size: 12px;">${reg.timestamp || '-'}</td>
+    </tr>
+  `).join('');
+}
+
+// Export to CSV
+document.getElementById('exportBtn').addEventListener('click', function() {
+  const registrations = JSON.parse(localStorage.getItem('msp_registrations') || '[]');
+  
+  if (registrations.length === 0) {
+    alert('No registrations to export');
+    return;
+  }
+  
+  // Create CSV header
+  const headers = ['Name', 'Email', 'Phone', 'Organization', 'Workshop', 'Timestamp'];
+  const csvContent = [
+    headers.join(','),
+    ...registrations.map(reg => [
+      `"${reg.name || ''}"`,
+      `"${reg.email || ''}"`,
+      `"${reg.phone || ''}"`,
+      `"${reg.organization || ''}"`,
+      `"${reg.workshop || ''}"`,
+      `"${reg.timestamp || ''}"`
+    ].join(','))
+  ].join('\n');
+  
+  // Create and download file
+  const blob = new Blob([csvContent], { type: 'text/csv' });
+  const url = window.URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `registrations_${new Date().toISOString().split('T')[0]}.csv`;
+  document.body.appendChild(a);
+  a.click();
+  window.URL.revokeObjectURL(url);
+  document.body.removeChild(a);
+});
+
+// Clear all data
+document.getElementById('clearBtn').addEventListener('click', function() {
+  if (confirm('Are you sure you want to delete ALL registrations? This cannot be undone.')) {
+    localStorage.removeItem('msp_registrations');
+    loadAndDisplayRegistrations();
+    alert('All registrations have been deleted');
+  }
+});
+
+// Load registrations on page load
+window.addEventListener('load', loadAndDisplayRegistrations);
+});
+
+// Check login status on page load
+window.addEventListener('load', checkLogin);
+</script>
+```
+
+---
+
+<!-- Default Credentials:
+
+Username: admin
+Password: msp2025 -->
+
+

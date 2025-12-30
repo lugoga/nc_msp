@@ -12,73 +12,42 @@ Stay tuned for upcoming workshops and training sessions on marine spatial planni
 
 ## Workshop Registration
 
-Register for our upcoming events using the form below. We'll send you event details, location, and timing information via email.
-
-::: {.panel-tabset}
-
-### Register
+Register for our upcoming events using the form below.
 
 ```{=html}
-<form id="eventRegistrationForm" method="POST" style="max-width: 500px; margin: 20px 0;">
+<form id="eventRegistrationForm" style="max-width: 500px; margin: 20px 0;">
   
   <div style="margin-bottom: 15px;">
     <label for="fullName" style="display: block; margin-bottom: 5px; font-weight: bold;">Full Name *</label>
-    <input type="text" id="fullName" name="Full Name" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;">
+    <input type="text" id="fullName" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;">
   </div>
 
   <div style="margin-bottom: 15px;">
     <label for="email" style="display: block; margin-bottom: 5px; font-weight: bold;">Email Address *</label>
-    <input type="email" id="email" name="email" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;">
+    <input type="email" id="email" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;">
   </div>
 
   <div style="margin-bottom: 15px;">
     <label for="phone" style="display: block; margin-bottom: 5px; font-weight: bold;">Phone Number</label>
-    <input type="tel" id="phone" name="Phone" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;">
+    <input type="tel" id="phone" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;">
   </div>
 
   <div style="margin-bottom: 15px;">
-    <label for="organization" style="display: block; margin-bottom: 5px; font-weight: bold;">Organization/Institution</label>
-    <input type="text" id="organization" name="Organization" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;">
+    <label for="organization" style="display: block; margin-bottom: 5px; font-weight: bold;">Organization</label>
+    <input type="text" id="organization" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;">
   </div>
 
   <div style="margin-bottom: 15px;">
-    <label for="position" style="display: block; margin-bottom: 5px; font-weight: bold;">Position/Role</label>
-    <input type="text" id="position" name="Position" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;">
-  </div>
-
-  <div style="margin-bottom: 15px;">
-    <label for="eventInterest" style="display: block; margin-bottom: 5px; font-weight: bold;">Workshop of Interest *</label>
-    <select id="eventInterest" name="Workshop" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;">
+    <label for="workshop" style="display: block; margin-bottom: 5px; font-weight: bold;">Workshop of Interest *</label>
+    <select id="workshop" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;">
       <option value="">-- Select a workshop --</option>
-      <option value="spatial-analysis">Spatial Analysis Fundamentals</option>
-      <option value="land-cover">Land Cover Mapping & Change Detection</option>
-      <option value="coastal-management">Coastal Ecosystem Management</option>
-      <option value="msp-planning">Marine Spatial Planning Basics</option>
-      <option value="data-visualization">Data Visualization for Decision Making</option>
-      <option value="other">Other/General Interest</option>
+      <option value="Spatial Analysis">Spatial Analysis Fundamentals</option>
+      <option value="Land Cover">Land Cover Mapping & Change Detection</option>
+      <option value="Coastal Management">Coastal Ecosystem Management</option>
+      <option value="Marine Spatial Planning">Marine Spatial Planning Basics</option>
+      <option value="Data Visualization">Data Visualization for Decision Making</option>
+      <option value="Other">Other/General Interest</option>
     </select>
-  </div>
-
-  <div style="margin-bottom: 15px;">
-    <label for="experience" style="display: block; margin-bottom: 5px; font-weight: bold;">Experience Level *</label>
-    <select id="experience" name="Experience Level" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;">
-      <option value="">-- Select level --</option>
-      <option value="beginner">Beginner</option>
-      <option value="intermediate">Intermediate</option>
-      <option value="advanced">Advanced</option>
-    </select>
-  </div>
-
-  <div style="margin-bottom: 15px;">
-    <label for="questions" style="display: block; margin-bottom: 5px; font-weight: bold;">Questions or Special Requests</label>
-    <textarea id="questions" name="Questions" rows="4" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; font-family: Arial, sans-serif;"></textarea>
-  </div>
-
-  <div style="margin-bottom: 20px;">
-    <label style="display: flex; align-items: center; cursor: pointer;">
-      <input type="checkbox" id="consent" name="consent" required style="margin-right: 8px;">
-      <span>I consent to receive event updates and workshop information via email *</span>
-    </label>
   </div>
 
   <button type="submit" style="background-color: #3498db; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; font-weight: bold; width: 100%;">
@@ -86,116 +55,63 @@ Register for our upcoming events using the form below. We'll send you event deta
   </button>
 
   <div id="successMessage" style="display: none; margin-top: 20px; padding: 15px; background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; border-radius: 4px;">
-    ✓ Thank you for registering! We'll contact you soon with event details.
-  </div>
-
-  <div id="errorMessage" style="display: none; margin-top: 20px; padding: 15px; background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; border-radius: 4px;">
-    Please fill in all required fields.
+    ✓ Thank you for registering! Your information has been saved. We'll contact you with event details.
   </div>
 </form>
 
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 <script>
-// Initialize EmailJS
-emailjs.init('YOUR_PUBLIC_KEY'); // We'll use a direct approach instead
-
 document.getElementById('eventRegistrationForm').addEventListener('submit', function(e) {
   e.preventDefault();
   
-  // Get form data
   const fullName = document.getElementById('fullName').value;
   const email = document.getElementById('email').value;
-  const phone = document.getElementById('phone').value;
-  const organization = document.getElementById('organization').value;
-  const position = document.getElementById('position').value;
-  const eventInterest = document.getElementById('eventInterest').value;
-  const experience = document.getElementById('experience').value;
-  const questions = document.getElementById('questions').value;
+  const workshop = document.getElementById('workshop').value;
   
-  // Validate required fields
-  if (!fullName || !email || !eventInterest || !experience) {
-    document.getElementById('errorMessage').style.display = 'block';
-    document.getElementById('errorMessage').innerHTML = 'Please fill in all required fields (marked with *)';
-    document.getElementById('successMessage').style.display = 'none';
+  if (!fullName || !email || !workshop) {
+    alert('Please fill in all required fields (marked with *)');
     return;
   }
   
-  // Create email body
-  const emailBody = `
-New Event Registration
-======================
-
-Full Name: ${fullName}
-Email: ${email}
-Phone: ${phone}
-Organization: ${organization}
-Position: ${position}
-Workshop Interest: ${eventInterest}
-Experience Level: ${experience}
-Questions: ${questions}
-
-Timestamp: ${new Date().toISOString()}
-  `;
-  
-  // Send via mailto (fallback method - opens user's email client)
-  // This ensures it works without any external service
-  const mailtoLink = `mailto:lugosemba@gmail.com?subject=Event Registration - ${fullName}&body=${encodeURIComponent(emailBody)}`;
-  window.location.href = mailtoLink;
+  // Save to browser storage
+  const registrations = JSON.parse(localStorage.getItem('msp_registrations') || '[]');
+  registrations.push({
+    name: fullName,
+    email: email,
+    phone: document.getElementById('phone').value || 'Not provided',
+    organization: document.getElementById('organization').value || 'Not provided',
+    workshop: workshop,
+    timestamp: new Date().toLocaleString()
+  });
+  localStorage.setItem('msp_registrations', JSON.stringify(registrations));
   
   // Show success message
   document.getElementById('successMessage').style.display = 'block';
-  document.getElementById('errorMessage').style.display = 'none';
+  document.getElementById('eventRegistrationForm').reset();
   
-  // Reset form after 2 seconds
-  setTimeout(() => {
-    document.getElementById('eventRegistrationForm').reset();
-  }, 2000);
+  console.log('Registration saved:', { fullName, email, workshop });
 });
 </script>
 ```
 
-### Past Events
+---
 
-Coming soon - archives of past workshops and training sessions.
-
-### FAQ
+## Frequently Asked Questions
 
 **Q: What should I bring to a workshop?**
-A: Please bring a laptop with R or Python installed. We'll provide all necessary datasets and materials.
+A: Please bring a laptop with R or Python installed. We'll provide all datasets and materials.
 
 **Q: Is there a registration fee?**
-A: Most workshops are free for participants from partner institutions. Contact us for details.
+A: Most workshops are free for participants from partner institutions.
 
 **Q: How long are workshops?**
-A: Workshops typically run from 2-4 hours, depending on the topic.
+A: Workshops typically run 2-4 hours depending on the topic.
 
 **Q: Do you provide certificates?**
 A: Yes, completion certificates are provided for all workshops.
 
 **Q: Can I attend remotely?**
-A: Some workshops are held in person at SOAF-UDSM, while others are conducted online. Details will be provided upon registration.
-
-:::
+A: Some workshops are held in person at SOAF-UDSM, while others are online. Details provided upon registration.
 
 ---
 
-**Questions?** Contact us at [lugosemba@gmail.com](mailto:lugosemba@gmail.com) or call +255 717 603 703
-
-
-<!-- Features:
-
-Registration Form - Collects name, email, organization, experience level, workshop interest
-Form Validation - Checks required fields before submission
-Success Message - Confirms registration submission
-Tabbed Layout:
-Register tab (form)
-Past Events tab (for archival)
-FAQ tab (common questions)
-How it works:
-
-How it works:
-Form submissions are sent to msp.coastal.tz@udsm.ac.tz via FormSubmit.co (free service)
-No backend required - emails sent directly
-Form resets on successful submission
-Responsive design works on mobile/desktop
-The Events link is now in the navbar. When you render, the form will be fully functional! -->
+**Questions?** Contact us at [lugosemba@gmail.com](mailto:lugosemba@gmail.com)
