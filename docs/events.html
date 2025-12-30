@@ -502,34 +502,39 @@ ul.task-list li input[type="checkbox"] {
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
 <form id="eventRegistrationForm" style="max-width: 500px; margin: 20px 0;">
+  <input type="hidden" name="access_key" value="2b8e3c4f-8f9a-4e2d-a1b2-c3d4e5f6a7b8">
+  <input type="hidden" name="subject" value="New Event Registration - MSP Initiative">
+  <input type="hidden" name="from_name" value="Marine Spatial Planning Events">
+  <input type="hidden" name="redirect" value="https://lugoga.github.io/nc_msp/events.html">
+  
   <div style="margin-bottom: 15px;">
     <label for="fullName" style="display: block; margin-bottom: 5px; font-weight: bold;">Full Name *</label>
-    <input type="text" id="fullName" name="fullName" required="" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;">
+    <input type="text" id="fullName" name="Full Name" required="" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;">
   </div>
 
   <div style="margin-bottom: 15px;">
     <label for="email" style="display: block; margin-bottom: 5px; font-weight: bold;">Email Address *</label>
-    <input type="email" id="email" name="email" required="" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;">
+    <input type="email" id="email" name="Email" required="" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;">
   </div>
 
   <div style="margin-bottom: 15px;">
     <label for="phone" style="display: block; margin-bottom: 5px; font-weight: bold;">Phone Number</label>
-    <input type="tel" id="phone" name="phone" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;">
+    <input type="tel" id="phone" name="Phone" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;">
   </div>
 
   <div style="margin-bottom: 15px;">
     <label for="organization" style="display: block; margin-bottom: 5px; font-weight: bold;">Organization/Institution</label>
-    <input type="text" id="organization" name="organization" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;">
+    <input type="text" id="organization" name="Organization" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;">
   </div>
 
   <div style="margin-bottom: 15px;">
     <label for="position" style="display: block; margin-bottom: 5px; font-weight: bold;">Position/Role</label>
-    <input type="text" id="position" name="position" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;">
+    <input type="text" id="position" name="Position" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;">
   </div>
 
   <div style="margin-bottom: 15px;">
     <label for="eventInterest" style="display: block; margin-bottom: 5px; font-weight: bold;">Workshop of Interest *</label>
-    <select id="eventInterest" name="eventInterest" required="" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;">
+    <select id="eventInterest" name="Workshop" required="" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;">
       <option value="">-- Select a workshop --</option>
       <option value="spatial-analysis">Spatial Analysis Fundamentals</option>
       <option value="land-cover">Land Cover Mapping &amp; Change Detection</option>
@@ -542,7 +547,7 @@ ul.task-list li input[type="checkbox"] {
 
   <div style="margin-bottom: 15px;">
     <label for="experience" style="display: block; margin-bottom: 5px; font-weight: bold;">Experience Level *</label>
-    <select id="experience" name="experience" required="" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;">
+    <select id="experience" name="Experience Level" required="" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;">
       <option value="">-- Select level --</option>
       <option value="beginner">Beginner</option>
       <option value="intermediate">Intermediate</option>
@@ -552,7 +557,7 @@ ul.task-list li input[type="checkbox"] {
 
   <div style="margin-bottom: 15px;">
     <label for="questions" style="display: block; margin-bottom: 5px; font-weight: bold;">Questions or Special Requests</label>
-    <textarea id="questions" name="questions" rows="4" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; font-family: Arial, sans-serif;"></textarea>
+    <textarea id="questions" name="Questions" rows="4" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; font-family: Arial, sans-serif;"></textarea>
   </div>
 
   <div style="margin-bottom: 20px;">
@@ -580,46 +585,46 @@ document.getElementById('eventRegistrationForm').addEventListener('submit', func
   e.preventDefault();
   
   // Get form data
-  const formData = {
-    fullName: document.getElementById('fullName').value,
-    email: document.getElementById('email').value,
-    phone: document.getElementById('phone').value,
-    organization: document.getElementById('organization').value,
-    position: document.getElementById('position').value,
-    eventInterest: document.getElementById('eventInterest').value,
-    experience: document.getElementById('experience').value,
-    questions: document.getElementById('questions').value,
-    timestamp: new Date().toISOString()
-  };
+  const formData = new FormData();
+  formData.append('fullName', document.getElementById('fullName').value);
+  formData.append('email', document.getElementById('email').value);
+  formData.append('phone', document.getElementById('phone').value);
+  formData.append('organization', document.getElementById('organization').value);
+  formData.append('position', document.getElementById('position').value);
+  formData.append('eventInterest', document.getElementById('eventInterest').value);
+  formData.append('experience', document.getElementById('experience').value);
+  formData.append('questions', document.getElementById('questions').value);
+  formData.append('timestamp', new Date().toISOString());
   
   // Validate required fields
-  if (!formData.fullName || !formData.email || !formData.eventInterest || !formData.experience) {
+  if (!document.getElementById('fullName').value || !document.getElementById('email').value || 
+      !document.getElementById('eventInterest').value || !document.getElementById('experience').value) {
     document.getElementById('errorMessage').style.display = 'block';
     document.getElementById('successMessage').style.display = 'none';
     return;
   }
   
-  // Send to FormSubmit.co (free form backend)
-  fetch('https://formsubmit.co/ajax/lugosemba@gmail.com', {
+  // Send to Web3Forms (reliable, no verification needed)
+  fetch('https://api.web3forms.com/submit', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(formData)
+    body: new FormData(document.getElementById('eventRegistrationForm'))
   })
-  .then(response => {
-    if (response.ok) {
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
       document.getElementById('successMessage').style.display = 'block';
       document.getElementById('errorMessage').style.display = 'none';
       document.getElementById('eventRegistrationForm').reset();
     } else {
       document.getElementById('errorMessage').style.display = 'block';
+      document.getElementById('errorMessage').innerHTML = 'Error submitting form. Please try again.';
       document.getElementById('successMessage').style.display = 'none';
     }
   })
   .catch(error => {
     console.error('Error:', error);
     document.getElementById('errorMessage').style.display = 'block';
+    document.getElementById('errorMessage').innerHTML = 'Network error. Please check your connection.';
     document.getElementById('successMessage').style.display = 'none';
   });
 });
