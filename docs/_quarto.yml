@@ -32,6 +32,8 @@ website:
         href: schedule.qmd
       - text: "Posts"
         href: blog.qmd
+      - text: "Events"
+        href: events.qmd
       - text: "Reports"
         menu:
           - text: "Deliverable One: Inception Report"

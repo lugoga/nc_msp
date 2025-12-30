@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="description" content="Marine Spatial Planning events, workshops, and training sessions">
 
-<title>gallery</title>
+<title>Events &amp; Workshops</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -70,13 +71,13 @@ ul.task-list li input[type="checkbox"] {
 <meta name="keywords" content="marine spatial planning, coastal management, Tanzania, land cover analysis, ecosystem monitoring, Mkoani, Mkuranga, Pemba, Pwani">
 <meta name="author" content="Masumbuko Semba, SOAF-UDSM">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta property="og:title" content="">
-<meta property="og:description" content="Marine Spatial Planning consultancy for coastal Tanzania districts - Mkoani (Pemba) and Mkuranga (Pwani). Spatial analysis, coastal management, and ecosystem monitoring.">
+<meta property="og:title" content="Events &amp; Workshops">
+<meta property="og:description" content="Marine Spatial Planning events, workshops, and training sessions">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://lugoga.github.io/nc_msp/">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="">
-<meta name="twitter:description" content="Marine Spatial Planning consultancy for coastal Tanzania districts - Mkoani (Pemba) and Mkuranga (Pwani). Spatial analysis, coastal management, and ecosystem monitoring.">
+<meta name="twitter:title" content="Events &amp; Workshops">
+<meta name="twitter:description" content="Marine Spatial Planning events, workshops, and training sessions">
 <style>
   body {
     -webkit-user-select: none;
@@ -247,7 +248,7 @@ ul.task-list li input[type="checkbox"] {
 <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="nav-sidebar floating nav-fixed">
+<body class="nav-sidebar floating nav-fixed fullcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -367,7 +368,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">🌊 Project Photo Gallery</li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Events &amp; Workshops</li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -460,452 +461,204 @@ ul.task-list li input[type="checkbox"] {
 </div></div></nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
-    </div>
-<!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><h1 class="title display-7">🌊 Project Photo Gallery</h1></header>
-
-
-
-
-<style>
-.gallery-container {
-  max-width: 1200px;
-  margin: 40px auto;
-  padding: 20px;
-}
-
-.gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 30px;
-  margin-bottom: 50px;
-}
-
-.gallery-item {
-  position: relative;
-  overflow: hidden;
-  border-radius: 15px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-  cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.gallery-item:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
-}
-
-.gallery-image {
-  width: 100%;
-  height: 280px;
-  object-fit: cover;
-  display: block;
-  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.gallery-item:hover .gallery-image {
-  transform: scale(1.08);
-}
-
-.gallery-caption {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.3));
-  color: white;
-  padding: 25px 15px 15px;
-  transform: translateY(100%);
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  min-height: 80px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-}
-
-.gallery-item:hover .gallery-caption {
-  transform: translateY(0);
-}
-
-.gallery-caption h3 {
-  margin: 0 0 8px 0;
-  font-size: 18px;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-}
-
-.gallery-caption p {
-  margin: 0;
-  font-size: 13px;
-  line-height: 1.4;
-  opacity: 0.95;
-}
-
-/* Modal Styles */
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 2000;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.95);
-  animation: fadeIn 0.3s ease;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-.modal.active {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.modal-content {
-  position: relative;
-  max-width: 90%;
-  max-height: 90vh;
-  animation: slideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-.modal-image {
-  max-width: 100%;
-  max-height: 70vh;
-  object-fit: contain;
-  border-radius: 10px;
-}
-
-.modal-info {
-  background: rgba(255, 255, 255, 0.95);
-  color: #333;
-  padding: 25px;
-  border-radius: 0 0 10px 10px;
-  text-align: center;
-}
-
-.modal-info h2 {
-  margin: 0 0 10px 0;
-  font-size: 24px;
-  color: #667eea;
-}
-
-.modal-info p {
-  margin: 0;
-  font-size: 15px;
-  line-height: 1.6;
-}
-
-.close-modal {
-  position: absolute;
-  top: 20px;
-  right: 30px;
-  color: white;
-  font-size: 40px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: color 0.2s;
-  z-index: 2001;
-}
-
-.close-modal:hover {
-  color: #667eea;
-}
-
-.modal-nav {
-  position: absolute;
-  top: 50%;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  padding: 0 20px;
-  transform: translateY(-50%);
-  pointer-events: none;
-}
-
-.nav-btn {
-  background: rgba(255, 255, 255, 0.2);
-  color: white;
-  border: none;
-  font-size: 40px;
-  padding: 10px 20px;
-  cursor: pointer;
-  border-radius: 5px;
-  transition: background 0.3s;
-  pointer-events: all;
-}
-
-.nav-btn:hover {
-  background: rgba(255, 255, 255, 0.4);
-}
-
-.gallery-title {
-  text-align: center;
-  margin-bottom: 50px;
-}
-
-.gallery-title h1 {
-  font-size: 42px;
-  color: #333;
-  margin-bottom: 10px;
-}
-
-.gallery-title p {
-  font-size: 16px;
-  color: #666;
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-.category-section {
-  margin-bottom: 60px;
-}
-
-.category-title {
-  font-size: 28px;
-  color: #667eea;
-  margin-bottom: 30px;
-  padding-bottom: 15px;
-  border-bottom: 3px solid #667eea;
-  font-weight: 700;
-}
-
-@media (max-width: 768px) {
-  .gallery-grid {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-
-  .modal-content {
-    max-width: 95%;
-  }
-
-  .gallery-image {
-    height: 200px;
-  }
-}
-</style>
-
-<div class="gallery-container">
-  <div class="gallery-title">
     
-    <p>Documenting Marine Spatial Planning initiatives, stakeholder engagement, and coastal field operations in Mkoani-Pemba and Mkuranga</p>
-  </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
 
-  <!-- Field Operations Category -->
-  <div class="category-section">
-    <h2 class="category-title anchored">🗺️ Field Operations &amp; Data Collection</h2>
-    <div class="gallery-grid">
-      <div class="gallery-item" onclick="openModal(this)">
-        <img src="images/components/iga.jpg" alt="Field Survey" class="gallery-image">
-        <div class="gallery-caption">
-          <h3 class="anchored">Biodiversity Field Survey</h3>
-          <p>Team conducting ecosystem assessment and biodiversity monitoring</p>
-        </div>
-      </div>
-
-      <div class="gallery-item" onclick="openModal(this)">
-        <img src="images/gallery/JAY1618.jpg" alt="Data Collection" class="gallery-image">
-        <div class="gallery-caption">
-          <h3 class="anchored">Geospatial Data Collection</h3>
-          <p>Multi-disciplinary field teams gathering marine resource data</p>
-        </div>
-      </div>
-
-      <div class="gallery-item" onclick="openModal(this)">
-        <img src="images/gallery/JAY1679.jpg" alt="Habitat Mapping" class="gallery-image">
-        <div class="gallery-caption">
-          <h3 class="anchored">Coastal Habitat Assessment</h3>
-          <p>Ground-truthing ecosystem classifications and habitat boundaries</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Stakeholder Engagement Category -->
-  <div class="category-section">
-    <h2 class="category-title anchored">🤝 Stakeholder Engagement &amp; Validation</h2>
-    <div class="gallery-grid">
-      <div class="gallery-item" onclick="openModal(this)">
-        <img src="images/gallery/JAY1755.jpg" alt="Community Meeting" class="gallery-image">
-        <div class="gallery-caption">
-          <h3 class="anchored">Community Stakeholder Meeting</h3>
-          <p>District authorities and fishing community representatives discuss spatial planning outcomes</p>
-        </div>
-      </div>
-
-      <div class="gallery-item" onclick="openModal(this)">
-        <img src="images/components/saba.jpg" alt="Coastal Engagement" class="gallery-image">
-        <div class="gallery-caption">
-          <h3 class="anchored">Collaborative Planning Workshop</h3>
-          <p>Stakeholders and community leaders shaping sustainable management strategies</p>
-        </div>
-      </div>
-
-      <div class="gallery-item" onclick="openModal(this)">
-        <img src="images/components/moja.jpg" alt="Team Discussion" class="gallery-image">
-        <div class="gallery-caption">
-          <h3 class="anchored">Project Team Coordination</h3>
-          <p>Multi-institutional partnership meeting for project oversight and coordination</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Analysis & Visualization Category -->
-  <div class="category-section">
-    <h2 class="category-title anchored">📊 Analysis, Valuation &amp; Visualization</h2>
-    <div class="gallery-grid">
-      <div class="gallery-item" onclick="openModal(this)">
-        <img src="images/components/tano.jpg" alt="Economic Valuation" class="gallery-image">
-        <div class="gallery-caption">
-          <h3 class="anchored">Ecosystem Services Valuation</h3>
-          <p>Economic analysis of coastal and marine resource values</p>
-        </div>
-      </div>
-
-      <div class="gallery-item" onclick="openModal(this)">
-        <img src="images/components/sita.jpg" alt="Bio-Economic Analysis" class="gallery-image">
-        <div class="gallery-caption">
-          <h3 class="anchored">Bio-Economic Modeling</h3>
-          <p>Cost-benefit analysis supporting sustainable blue economy development</p>
-        </div>
-      </div>
-
-      <div class="gallery-item" onclick="openModal(this)">
-        <img src="images/components/tatu.jpg" alt="Digital Platform" class="gallery-image">
-        <div class="gallery-caption">
-          <h3 class="anchored">Digital Visualization Platform</h3>
-          <p>Interactive dashboards and web maps for stakeholder decision-making</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Deliverables Category -->
-  <div class="category-section">
-    <h2 class="category-title anchored">📋 Project Deliverables &amp; Reports</h2>
-    <div class="gallery-grid">
-      <div class="gallery-item" onclick="openModal(this)">
-        <img src="images/components/nne.jpg" alt="Project Timeline" class="gallery-image">
-        <div class="gallery-caption">
-          <h3 class="anchored">Project Timeline &amp; Deliverables</h3>
-          <p>Scope of work tracking across six major work packages</p>
-        </div>
-      </div>
-
-      <div class="gallery-item" onclick="openModal(this)">
-        <img src="images/components/deep_thinking_pemba.jpg" alt="Project Logo" class="gallery-image">
-        <div class="gallery-caption">
-          <h3 class="anchored">Marine Spatial Planning Initiative</h3>
-          <p>Official project branding and institutional framework</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Events &amp; Workshops</h1>
 </div>
 
-<!-- Modal -->
-<div id="imageModal" class="modal" onclick="closeModal(event)">
-  <div class="modal-nav">
-    <button class="nav-btn" onclick="previousImage(event)">❮</button>
-    <button class="nav-btn" onclick="nextImage(event)">❯</button>
-  </div>
-  <span class="close-modal" onclick="closeModal(event)">×</span>
-  <div class="modal-content">
-    <img id="modalImage" src="" alt="" class="modal-image">
-    <div class="modal-info">
-      <h2 id="modalTitle" class="anchored"></h2>
-      <p id="modalCaption"></p>
-    </div>
+<div>
+  <div class="description">
+    Marine Spatial Planning events, workshops, and training sessions
   </div>
 </div>
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="upcoming-events" class="level2">
+<h2 class="anchored" data-anchor-id="upcoming-events">Upcoming Events</h2>
+<p>Stay tuned for upcoming workshops and training sessions on marine spatial planning, coastal management, and ecosystem monitoring.</p>
+<hr>
+</section>
+<section id="workshop-registration" class="level2">
+<h2 class="anchored" data-anchor-id="workshop-registration">Workshop Registration</h2>
+<p>Register for our upcoming events using the form below. We’ll send you event details, location, and timing information via email.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">Register</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Past Events</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false">FAQ</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<form id="eventRegistrationForm" style="max-width: 500px; margin: 20px 0;">
+  <div style="margin-bottom: 15px;">
+    <label for="fullName" style="display: block; margin-bottom: 5px; font-weight: bold;">Full Name *</label>
+    <input type="text" id="fullName" name="fullName" required="" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;">
+  </div>
+
+  <div style="margin-bottom: 15px;">
+    <label for="email" style="display: block; margin-bottom: 5px; font-weight: bold;">Email Address *</label>
+    <input type="email" id="email" name="email" required="" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;">
+  </div>
+
+  <div style="margin-bottom: 15px;">
+    <label for="phone" style="display: block; margin-bottom: 5px; font-weight: bold;">Phone Number</label>
+    <input type="tel" id="phone" name="phone" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;">
+  </div>
+
+  <div style="margin-bottom: 15px;">
+    <label for="organization" style="display: block; margin-bottom: 5px; font-weight: bold;">Organization/Institution</label>
+    <input type="text" id="organization" name="organization" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;">
+  </div>
+
+  <div style="margin-bottom: 15px;">
+    <label for="position" style="display: block; margin-bottom: 5px; font-weight: bold;">Position/Role</label>
+    <input type="text" id="position" name="position" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;">
+  </div>
+
+  <div style="margin-bottom: 15px;">
+    <label for="eventInterest" style="display: block; margin-bottom: 5px; font-weight: bold;">Workshop of Interest *</label>
+    <select id="eventInterest" name="eventInterest" required="" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;">
+      <option value="">-- Select a workshop --</option>
+      <option value="spatial-analysis">Spatial Analysis Fundamentals</option>
+      <option value="land-cover">Land Cover Mapping &amp; Change Detection</option>
+      <option value="coastal-management">Coastal Ecosystem Management</option>
+      <option value="msp-planning">Marine Spatial Planning Basics</option>
+      <option value="data-visualization">Data Visualization for Decision Making</option>
+      <option value="other">Other/General Interest</option>
+    </select>
+  </div>
+
+  <div style="margin-bottom: 15px;">
+    <label for="experience" style="display: block; margin-bottom: 5px; font-weight: bold;">Experience Level *</label>
+    <select id="experience" name="experience" required="" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;">
+      <option value="">-- Select level --</option>
+      <option value="beginner">Beginner</option>
+      <option value="intermediate">Intermediate</option>
+      <option value="advanced">Advanced</option>
+    </select>
+  </div>
+
+  <div style="margin-bottom: 15px;">
+    <label for="questions" style="display: block; margin-bottom: 5px; font-weight: bold;">Questions or Special Requests</label>
+    <textarea id="questions" name="questions" rows="4" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; font-family: Arial, sans-serif;"></textarea>
+  </div>
+
+  <div style="margin-bottom: 20px;">
+    <label style="display: flex; align-items: center; cursor: pointer;">
+      <input type="checkbox" id="consent" name="consent" required="" style="margin-right: 8px;">
+      <span>I consent to receive event updates and workshop information via email *</span>
+    </label>
+  </div>
+
+  <button type="submit" style="background-color: #3498db; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; font-weight: bold; width: 100%;">
+    Register Now
+  </button>
+
+  <div id="successMessage" style="display: none; margin-top: 20px; padding: 15px; background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; border-radius: 4px;">
+    ✓ Thank you for registering! We'll contact you soon with event details.
+  </div>
+
+  <div id="errorMessage" style="display: none; margin-top: 20px; padding: 15px; background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; border-radius: 4px;">
+    Please fill in all required fields.
+  </div>
+</form>
 
 <script>
-let currentImageIndex = 0;
-const allImages = [];
-
-// Initialize all gallery images
-function initGallery() {
-  const items = document.querySelectorAll('.gallery-item');
-  items.forEach((item, index) => {
-    const img = item.querySelector('.gallery-image');
-    const caption = item.querySelector('.gallery-caption');
-    allImages.push({
-      src: img.src,
-      title: caption.querySelector('h3').textContent,
-      description: caption.querySelector('p').textContent
-    });
-  });
-}
-
-function openModal(element) {
-  const img = element.querySelector('.gallery-image');
-  const caption = element.querySelector('.gallery-caption');
-  currentImageIndex = allImages.findIndex(img_obj => img_obj.src === img.src);
+document.getElementById('eventRegistrationForm').addEventListener('submit', function(e) {
+  e.preventDefault();
   
-  document.getElementById('modalImage').src = img.src;
-  document.getElementById('modalTitle').textContent = caption.querySelector('h3').textContent;
-  document.getElementById('modalCaption').textContent = caption.querySelector('p').textContent;
-  document.getElementById('imageModal').classList.add('active');
-}
-
-function closeModal(event) {
-  if (event.target.id === 'imageModal' || event.target.classList.contains('close-modal')) {
-    document.getElementById('imageModal').classList.remove('active');
+  // Get form data
+  const formData = {
+    fullName: document.getElementById('fullName').value,
+    email: document.getElementById('email').value,
+    phone: document.getElementById('phone').value,
+    organization: document.getElementById('organization').value,
+    position: document.getElementById('position').value,
+    eventInterest: document.getElementById('eventInterest').value,
+    experience: document.getElementById('experience').value,
+    questions: document.getElementById('questions').value,
+    timestamp: new Date().toISOString()
+  };
+  
+  // Validate required fields
+  if (!formData.fullName || !formData.email || !formData.eventInterest || !formData.experience) {
+    document.getElementById('errorMessage').style.display = 'block';
+    document.getElementById('successMessage').style.display = 'none';
+    return;
   }
-}
-
-function nextImage(event) {
-  event.stopPropagation();
-  currentImageIndex = (currentImageIndex + 1) % allImages.length;
-  const image = allImages[currentImageIndex];
-  document.getElementById('modalImage').src = image.src;
-  document.getElementById('modalTitle').textContent = image.title;
-  document.getElementById('modalCaption').textContent = image.description;
-}
-
-function previousImage(event) {
-  event.stopPropagation();
-  currentImageIndex = (currentImageIndex - 1 + allImages.length) % allImages.length;
-  const image = allImages[currentImageIndex];
-  document.getElementById('modalImage').src = image.src;
-  document.getElementById('modalTitle').textContent = image.title;
-  document.getElementById('modalCaption').textContent = image.description;
-}
-
-// Keyboard navigation
-document.addEventListener('keydown', (e) => {
-  const modal = document.getElementById('imageModal');
-  if (modal.classList.contains('active')) {
-    if (e.key === 'ArrowRight') nextImage({stopPropagation: () => {}});
-    if (e.key === 'ArrowLeft') previousImage({stopPropagation: () => {}});
-    if (e.key === 'Escape') closeModal({target: modal});
-  }
+  
+  // Send to FormSubmit.co (free form backend)
+  fetch('https://formsubmit.co/ajax/lugosemba@gmail.com', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(formData)
+  })
+  .then(response => {
+    if (response.ok) {
+      document.getElementById('successMessage').style.display = 'block';
+      document.getElementById('errorMessage').style.display = 'none';
+      document.getElementById('eventRegistrationForm').reset();
+    } else {
+      document.getElementById('errorMessage').style.display = 'block';
+      document.getElementById('successMessage').style.display = 'none';
+    }
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    document.getElementById('errorMessage').style.display = 'block';
+    document.getElementById('successMessage').style.display = 'none';
+  });
 });
-
-// Initialize gallery on page load
-initGallery();
 </script>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<p>Coming soon - archives of past workshops and training sessions.</p>
+</div>
+<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
+<p><strong>Q: What should I bring to a workshop?</strong> A: Please bring a laptop with R or Python installed. We’ll provide all necessary datasets and materials.</p>
+<p><strong>Q: Is there a registration fee?</strong> A: Most workshops are free for participants from partner institutions. Contact us for details.</p>
+<p><strong>Q: How long are workshops?</strong> A: Workshops typically run from 2-4 hours, depending on the topic.</p>
+<p><strong>Q: Do you provide certificates?</strong> A: Yes, completion certificates are provided for all workshops.</p>
+<p><strong>Q: Can I attend remotely?</strong> A: Some workshops are held in person at SOAF-UDSM, while others are conducted online. Details will be provided upon registration.</p>
+</div>
+</div>
+</div>
+<hr>
+<p><strong>Questions?</strong> Contact us at <a href="mailto:lugosemba@gmail.com">lugosemba@gmail.com</a> or call +255 717 603 703</p>
+<!-- Features:
+
+Registration Form - Collects name, email, organization, experience level, workshop interest
+Form Validation - Checks required fields before submission
+Success Message - Confirms registration submission
+Tabbed Layout:
+Register tab (form)
+Past Events tab (for archival)
+FAQ tab (common questions)
+How it works:
+
+How it works:
+Form submissions are sent to msp.coastal.tz@udsm.ac.tz via FormSubmit.co (free service)
+No backend required - emails sent directly
+Form resets on successful submission
+Responsive design works on mobile/desktop
+The Events link is now in the navbar. When you render, the form will be fully functional! -->
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
