@@ -55,7 +55,11 @@ website:
 
     right:
       - text: "Admin"
-        href: admin-registrations.qmd
+        menu:
+          - text: "Setup Registration Sync"
+            href: admin-setup.qmd
+          - text: "View Registrations"
+            href: admin-registrations.qmd
       - icon: github
         href: https://github.com/lugoga/nc_msp/
         target: "_blank"

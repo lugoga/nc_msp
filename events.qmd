@@ -42,7 +42,7 @@ Please provide your information below to register for the MSP Data Collection & 
 
 ```{=html}
 <div id="successMessage" style="display: none; background-color: #27ae60; color: white; padding: 15px; border-radius: 4px; margin-bottom: 20px; text-align: center; font-weight: bold;">
-  ✓ Thank you for registering! Your information has been saved. We'll contact you with workshop details.
+  ✓ Thank you for registering! Your information has been saved.
 </div>
 
 <form id="eventRegistrationForm" style="max-width: 600px; margin: 20px auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px; background-color: #f9f9f9;">
@@ -116,6 +116,7 @@ Please provide your information below to register for the MSP Data Collection & 
   </button>
 </form>
 
+<script src="supabase-config.js"></script>
 <script>
 document.getElementById('eventRegistrationForm').addEventListener('submit', function(e) {
   e.preventDefault();
@@ -140,7 +141,7 @@ document.getElementById('eventRegistrationForm').addEventListener('submit', func
   const registrations = JSON.parse(localStorage.getItem('msp_registrations') || '[]');
   
   // Create new registration
-  registrations.push({
+  const newRegistration = {
     name: fullName,
     email: email,
     phone: phone,
@@ -151,7 +152,9 @@ document.getElementById('eventRegistrationForm').addEventListener('submit', func
     experience: experience,
     interests: interests,
     timestamp: new Date().toLocaleString()
-  });
+  };
+  
+  registrations.push(newRegistration);
   
   // Save to localStorage
   localStorage.setItem('msp_registrations', JSON.stringify(registrations));
@@ -161,6 +164,11 @@ document.getElementById('eventRegistrationForm').addEventListener('submit', func
   
   // Reset form
   document.getElementById('eventRegistrationForm').reset();
+  
+  // Save to Supabase if configured
+  if (typeof saveRegistrationToSupabase === 'function') {
+    saveRegistrationToSupabase(newRegistration);
+  }
   
   // Log for debugging
   console.log('Registration saved:', { fullName, email, organization, gender, origin, experience, interests });

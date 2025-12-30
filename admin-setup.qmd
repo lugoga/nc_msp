@@ -1,0 +1,291 @@
+---
+title: "Admin Setup - Supabase Configuration"
+description: "Configure Supabase Cloud for collecting workshop registrations"
+toc: false
+---
+
+::: {style="background-color: #fff3cd; padding: 15px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #ff9800;"}
+⚙️ **Admin Configuration Page** - Set up Supabase to collect all workshop registrations
+:::
+
+```{=html}
+<div style="max-width: 900px; margin: 20px auto;">
+
+<div id="setupDiv">
+  <h2>Enable Supabase Registration Collection</h2>
+  
+  <p>Supabase is a free, serverless PostgreSQL database in the cloud. All workshop registrations will be automatically collected in your Supabase project.</p>
+
+  <div style="background-color: #e8f4f8; padding: 15px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #3498db;">
+    <strong>Benefits:</strong>
+    <ul>
+      <li>✓ Real-time database (see registrations instantly)</li>
+      <li>✓ Free tier (up to 500 MB storage)</li>
+      <li>✓ Built-in authentication & security</li>
+      <li>✓ Access from anywhere</li>
+      <li>✓ Easy data export & reporting</li>
+    </ul>
+  </div>
+
+  <h3>Step 1: Create Supabase Project</h3>
+  <ol>
+    <li>Go to <a href="https://supabase.com" target="_blank">supabase.com</a> and sign up (free)</li>
+    <li>Create a new project (choose a region closest to you)</li>
+    <li>Wait for project to be ready (takes ~1 minute)</li>
+  </ol>
+
+  <h3>Step 2: Create Table for Registrations</h3>
+  <ol>
+    <li>Go to your Supabase project dashboard</li>
+    <li>Click "SQL Editor" in the left menu</li>
+    <li>Copy and paste this SQL command to create the table:</li>
+  </ol>
+
+  <textarea readonly style="width: 100%; padding: 10px; background-color: #f5f5f5; border: 1px solid #ccc; border-radius: 4px; margin: 10px 0; font-family: monospace; height: 250px; color: #333;">
+CREATE TABLE msp_registrations (
+  id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+  name TEXT NOT NULL,
+  email TEXT NOT NULL,
+  phone TEXT,
+  organization TEXT NOT NULL,
+  role TEXT NOT NULL,
+  gender TEXT NOT NULL,
+  origin TEXT NOT NULL,
+  experience TEXT NOT NULL,
+  interests TEXT NOT NULL,
+  timestamp TEXT NOT NULL,
+  synced_at TIMESTAMP DEFAULT NOW(),
+  UNIQUE(email, timestamp)
+);
+
+-- Enable RLS (Row Level Security)
+ALTER TABLE msp_registrations ENABLE ROW LEVEL SECURITY;
+
+-- Allow public insert (for visitors to submit)
+CREATE POLICY "Allow public insert" ON msp_registrations
+  FOR INSERT
+  WITH CHECK (TRUE);
+
+-- Allow authenticated users to read
+CREATE POLICY "Allow authenticated read" ON msp_registrations
+  FOR SELECT
+  USING (auth.role() = 'authenticated');</textarea>
+
+  <button id="copySqlBtn" style="background-color: #3498db; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;">
+    📋 Copy SQL to Clipboard
+  </button>
+
+  <h3 style="margin-top: 20px;">Step 3: Get Your Credentials</h3>
+  <ol>
+    <li>In your Supabase project, click "Settings" → "API"</li>
+    <li>Copy your <strong>Project URL</strong> and <strong>anon public key</strong></li>
+    <li>Paste them below</li>
+  </ol>
+
+  <div style="margin-bottom: 15px;">
+    <label for="supabaseUrl" style="display: block; margin-bottom: 5px; font-weight: bold;">Supabase Project URL:</label>
+    <input type="url" id="supabaseUrl" placeholder="https://your-project.supabase.co" style="width: 100%; padding: 10px; border: 1px solid #bbb; border-radius: 4px; box-sizing: border-box; font-family: monospace;">
+  </div>
+
+  <div style="margin-bottom: 20px;">
+    <label for="supabaseKey" style="display: block; margin-bottom: 5px; font-weight: bold;">Supabase Anon Public Key:</label>
+    <textarea id="supabaseKey" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." style="width: 100%; padding: 10px; border: 1px solid #bbb; border-radius: 4px; box-sizing: border-box; font-family: monospace; height: 80px;"></textarea>
+  </div>
+
+  <button id="saveConfigBtn" style="background-color: #27ae60; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; font-weight: bold; margin-right: 10px;">
+    ✓ Save Configuration
+  </button>
+  
+  <button id="testConfigBtn" style="background-color: #3498db; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; font-weight: bold;">
+    🧪 Test Connection
+  </button>
+
+  <div id="statusMessage" style="margin-top: 20px; padding: 15px; border-radius: 4px; display: none;"></div>
+</div>
+
+<div id="statusDiv" style="margin-top: 30px; padding: 20px; border: 1px solid #ddd; border-radius: 8px; background-color: #f0f8ff; display: none;">
+  <h3>✓ Supabase Connected!</h3>
+  <p style="color: #666; font-size: 14px;">
+    Your Supabase project is now connected and collecting registrations.
+  </p>
+  
+  <div style="margin: 15px 0; padding: 15px; background-color: white; border: 1px solid #ddd; border-radius: 4px;">
+    <p style="margin: 0;"><strong>View Registrations:</strong></p>
+    <ul style="margin: 10px 0; padding-left: 20px;">
+      <li><a href="#" id="supabaseLink" target="_blank" style="color: #3498db; text-decoration: none;">Open Supabase Dashboard →</a></li>
+      <li>Go to "Table Editor" → "msp_registrations"</li>
+      <li>See all registrations in real-time</li>
+    </ul>
+  </div>
+
+  <button id="resetConfigBtn" style="background-color: #e74c3c; color: white; padding: 8px 15px; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;">
+    🗑️ Reset Configuration
+  </button>
+</div>
+
+</div>
+
+<script src="supabase-config.js"></script>
+<script>
+// Load saved config from localStorage
+function loadConfig() {
+  const url = localStorage.getItem('supabase_url');
+  const key = localStorage.getItem('supabase_key');
+  
+  if (url && key) {
+    document.getElementById('supabaseUrl').value = url;
+    document.getElementById('supabaseKey').value = key;
+    showStatus(url);
+  }
+}
+
+// Save configuration
+document.getElementById('saveConfigBtn').addEventListener('click', function() {
+  const url = document.getElementById('supabaseUrl').value.trim();
+  const key = document.getElementById('supabaseKey').value.trim();
+  
+  if (!url || !key) {
+    showMessage('Please enter both URL and key', 'error');
+    return;
+  }
+  
+  if (!url.includes('supabase.co')) {
+    showMessage('Invalid Supabase URL. Should include "supabase.co"', 'error');
+    return;
+  }
+  
+  // Save to localStorage
+  localStorage.setItem('supabase_url', url);
+  localStorage.setItem('supabase_key', key);
+  
+  // Update SUPABASE_CONFIG
+  SUPABASE_CONFIG.SUPABASE_URL = url;
+  SUPABASE_CONFIG.SUPABASE_ANON_KEY = key;
+  
+  showMessage('✓ Configuration saved! Testing connection...', 'success');
+  
+  // Test connection
+  setTimeout(() => testConnection(url, key), 1000);
+});
+
+// Test connection
+async function testConnection(url, key) {
+  try {
+    const response = await fetch(`${url}/rest/v1/msp_registrations?limit=1`, {
+      headers: {
+        'apikey': key,
+        'Authorization': `Bearer ${key}`
+      }
+    });
+    
+    if (response.ok) {
+      showMessage('✓ Successfully connected to Supabase!', 'success');
+      setTimeout(() => showStatus(url), 1500);
+    } else if (response.status === 401) {
+      showMessage('✗ Invalid API key. Check your credentials.', 'error');
+    } else if (response.status === 404) {
+      showMessage('✗ Table not found. Did you create the table with SQL?', 'error');
+    } else {
+      showMessage(`✗ Connection failed: ${response.statusText}`, 'error');
+    }
+  } catch (error) {
+    showMessage(`✗ Error: ${error.message}`, 'error');
+  }
+}
+
+// Test button
+document.getElementById('testConfigBtn').addEventListener('click', function() {
+  const url = document.getElementById('supabaseUrl').value.trim();
+  const key = document.getElementById('supabaseKey').value.trim();
+  
+  if (!url || !key) {
+    showMessage('Please enter URL and key first', 'error');
+    return;
+  }
+  
+  showMessage('🧪 Testing connection...', 'info');
+  testConnection(url, key);
+});
+
+// Reset configuration
+document.getElementById('resetConfigBtn')?.addEventListener('click', function() {
+  if (confirm('Remove Supabase configuration? Registrations will only save locally.')) {
+    localStorage.removeItem('supabase_url');
+    localStorage.removeItem('supabase_key');
+    document.getElementById('supabaseUrl').value = '';
+    document.getElementById('supabaseKey').value = '';
+    SUPABASE_CONFIG.SUPABASE_URL = '';
+    SUPABASE_CONFIG.SUPABASE_ANON_KEY = '';
+    showMessage('✓ Configuration reset.', 'success');
+    document.getElementById('statusDiv').style.display = 'none';
+  }
+});
+
+// Show message
+function showMessage(text, type) {
+  const msgDiv = document.getElementById('statusMessage');
+  msgDiv.textContent = text;
+  
+  if (type === 'success') {
+    msgDiv.style.backgroundColor = '#d4edda';
+    msgDiv.style.color = '#155724';
+    msgDiv.style.borderLeft = '4px solid #28a745';
+  } else if (type === 'error') {
+    msgDiv.style.backgroundColor = '#f8d7da';
+    msgDiv.style.color = '#721c24';
+    msgDiv.style.borderLeft = '4px solid #dc3545';
+  } else {
+    msgDiv.style.backgroundColor = '#d1ecf1';
+    msgDiv.style.color = '#0c5460';
+    msgDiv.style.borderLeft = '4px solid #17a2b8';
+  }
+  
+  msgDiv.style.display = 'block';
+}
+
+// Show status when configured
+function showStatus(url) {
+  document.getElementById('setupDiv').style.display = 'none';
+  document.getElementById('statusDiv').style.display = 'block';
+  
+  // Update link
+  const projectName = url.split('.')[0].replace('https://', '');
+  document.getElementById('supabaseLink').href = `https://supabase.com/dashboard/project/${projectName}`;
+}
+
+// Copy SQL to clipboard
+document.getElementById('copySqlBtn').addEventListener('click', function() {
+  const sql = document.querySelector('textarea[readonly]').value;
+  navigator.clipboard.writeText(sql).then(() => {
+    this.textContent = '✓ Copied!';
+    setTimeout(() => {
+      this.textContent = '📋 Copy SQL to Clipboard';
+    }, 2000);
+  });
+});
+
+// Load on page load
+window.addEventListener('load', loadConfig);
+</script>
+```
+
+---
+
+## Features
+
+- **Real-time Updates:** See registrations appear instantly
+- **Automatic Backup:** All data backed up in Supabase cloud
+- **Free Tier:** 500 MB storage, plenty for thousands of registrations
+- **Secure:** Only accepts registrations through proper API
+- **Accessible:** Log in from anywhere to view data
+- **Easy Export:** Download data as CSV from Supabase dashboard
+
+---
+
+## Next Steps
+
+1. Complete setup above
+2. Visit `/events` and test registration
+3. Check your Supabase dashboard to see the data
+4. Share `/events` link with participants
+
