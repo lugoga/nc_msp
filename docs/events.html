@@ -501,11 +501,7 @@ ul.task-list li input[type="checkbox"] {
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">Register</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Past Events</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false">FAQ</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
-<form id="eventRegistrationForm" style="max-width: 500px; margin: 20px 0;">
-  <input type="hidden" name="access_key" value="2b8e3c4f-8f9a-4e2d-a1b2-c3d4e5f6a7b8">
-  <input type="hidden" name="subject" value="New Event Registration - MSP Initiative">
-  <input type="hidden" name="from_name" value="Marine Spatial Planning Events">
-  <input type="hidden" name="redirect" value="https://lugoga.github.io/nc_msp/events.html">
+<form id="eventRegistrationForm" action="https://formspree.io/f/xyzgwbkp" method="POST" style="max-width: 500px; margin: 20px 0;">
   
   <div style="margin-bottom: 15px;">
     <label for="fullName" style="display: block; margin-bottom: 5px; font-weight: bold;">Full Name *</label>
@@ -514,7 +510,7 @@ ul.task-list li input[type="checkbox"] {
 
   <div style="margin-bottom: 15px;">
     <label for="email" style="display: block; margin-bottom: 5px; font-weight: bold;">Email Address *</label>
-    <input type="email" id="email" name="Email" required="" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;">
+    <input type="email" id="email" name="email" required="" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;">
   </div>
 
   <div style="margin-bottom: 15px;">
@@ -582,51 +578,30 @@ ul.task-list li input[type="checkbox"] {
 
 <script>
 document.getElementById('eventRegistrationForm').addEventListener('submit', function(e) {
-  e.preventDefault();
+  // Validate required fields before submission
+  const fullName = document.getElementById('fullName').value;
+  const email = document.getElementById('email').value;
+  const eventInterest = document.getElementById('eventInterest').value;
+  const experience = document.getElementById('experience').value;
   
-  // Get form data
-  const formData = new FormData();
-  formData.append('fullName', document.getElementById('fullName').value);
-  formData.append('email', document.getElementById('email').value);
-  formData.append('phone', document.getElementById('phone').value);
-  formData.append('organization', document.getElementById('organization').value);
-  formData.append('position', document.getElementById('position').value);
-  formData.append('eventInterest', document.getElementById('eventInterest').value);
-  formData.append('experience', document.getElementById('experience').value);
-  formData.append('questions', document.getElementById('questions').value);
-  formData.append('timestamp', new Date().toISOString());
-  
-  // Validate required fields
-  if (!document.getElementById('fullName').value || !document.getElementById('email').value || 
-      !document.getElementById('eventInterest').value || !document.getElementById('experience').value) {
+  if (!fullName || !email || !eventInterest || !experience) {
+    e.preventDefault();
     document.getElementById('errorMessage').style.display = 'block';
     document.getElementById('successMessage').style.display = 'none';
     return;
   }
   
-  // Send to Web3Forms (reliable, no verification needed)
-  fetch('https://api.web3forms.com/submit', {
-    method: 'POST',
-    body: new FormData(document.getElementById('eventRegistrationForm'))
-  })
-  .then(response => response.json())
-  .then(data => {
-    if (data.success) {
-      document.getElementById('successMessage').style.display = 'block';
-      document.getElementById('errorMessage').style.display = 'none';
-      document.getElementById('eventRegistrationForm').reset();
-    } else {
-      document.getElementById('errorMessage').style.display = 'block';
-      document.getElementById('errorMessage').innerHTML = 'Error submitting form. Please try again.';
-      document.getElementById('successMessage').style.display = 'none';
-    }
-  })
-  .catch(error => {
-    console.error('Error:', error);
-    document.getElementById('errorMessage').style.display = 'block';
-    document.getElementById('errorMessage').innerHTML = 'Network error. Please check your connection.';
-    document.getElementById('successMessage').style.display = 'none';
-  });
+  // Let Formspree handle the submission naturally
+  // Form will redirect after successful submission
+});
+
+// Show success message on page load if redirected back
+window.addEventListener('load', function() {
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('success') === 'true') {
+    document.getElementById('successMessage').style.display = 'block';
+    document.getElementById('errorMessage').style.display = 'none';
+  }
 });
 </script>
 </div>
