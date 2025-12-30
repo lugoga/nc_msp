@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="Configure Supabase Cloud for collecting workshop registrations">
+<meta name="description" content="Complete visual guide to set up Supabase for MSP registrations">
 
-<title>Admin Setup - Supabase Configuration</title>
+<title>Supabase Setup Guide - Step by Step</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -71,13 +105,13 @@ ul.task-list li input[type="checkbox"] {
 <meta name="keywords" content="marine spatial planning, coastal management, Tanzania, land cover analysis, ecosystem monitoring, Mkoani, Mkuranga, Pemba, Pwani">
 <meta name="author" content="Masumbuko Semba, SOAF-UDSM">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta property="og:title" content="Admin Setup - Supabase Configuration">
-<meta property="og:description" content="Configure Supabase Cloud for collecting workshop registrations">
+<meta property="og:title" content="Supabase Setup Guide - Step by Step">
+<meta property="og:description" content="Complete visual guide to set up Supabase for MSP registrations">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://lugoga.github.io/nc_msp/">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Admin Setup - Supabase Configuration">
-<meta name="twitter:description" content="Configure Supabase Cloud for collecting workshop registrations">
+<meta name="twitter:title" content="Supabase Setup Guide - Step by Step">
+<meta name="twitter:description" content="Complete visual guide to set up Supabase for MSP registrations">
 <style>
   body {
     -webkit-user-select: none;
@@ -248,7 +282,7 @@ ul.task-list li input[type="checkbox"] {
 <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="nav-sidebar floating nav-fixed fullcontent">
+<body class="nav-sidebar floating nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -391,7 +425,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Admin Setup - Supabase Configuration</li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Supabase Setup Guide - Step by Step</li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -484,18 +518,69 @@ ul.task-list li input[type="checkbox"] {
 </div></div></nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#step-1-create-supabase-account" id="toc-step-1-create-supabase-account" class="nav-link active" data-scroll-target="#step-1-create-supabase-account">Step 1: Create Supabase Account</a>
+  <ul class="collapse">
+  <li><a href="#a.-visit-supabase-website" id="toc-a.-visit-supabase-website" class="nav-link" data-scroll-target="#a.-visit-supabase-website">1a. Visit Supabase Website</a></li>
+  <li><a href="#b.-sign-up" id="toc-b.-sign-up" class="nav-link" data-scroll-target="#b.-sign-up">1b. Sign Up</a></li>
+  <li><a href="#c.-create-your-first-project" id="toc-c.-create-your-first-project" class="nav-link" data-scroll-target="#c.-create-your-first-project">1c. Create Your First Project</a></li>
+  <li><a href="#d.-project-details" id="toc-d.-project-details" class="nav-link" data-scroll-target="#d.-project-details">1d. Project Details</a></li>
+  </ul></li>
+  <li><a href="#step-2-get-your-credentials" id="toc-step-2-get-your-credentials" class="nav-link" data-scroll-target="#step-2-get-your-credentials">Step 2: Get Your Credentials</a>
+  <ul class="collapse">
+  <li><a href="#a.-open-project-settings" id="toc-a.-open-project-settings" class="nav-link" data-scroll-target="#a.-open-project-settings">2a. Open Project Settings</a></li>
+  <li><a href="#b.-copy-project-url" id="toc-b.-copy-project-url" class="nav-link" data-scroll-target="#b.-copy-project-url">2b. Copy Project URL</a></li>
+  <li><a href="#c.-copy-api-key" id="toc-c.-copy-api-key" class="nav-link" data-scroll-target="#c.-copy-api-key">2c. Copy API Key</a></li>
+  </ul></li>
+  <li><a href="#step-3-create-the-table-in-supabase" id="toc-step-3-create-the-table-in-supabase" class="nav-link" data-scroll-target="#step-3-create-the-table-in-supabase">Step 3: Create the Table in Supabase</a>
+  <ul class="collapse">
+  <li><a href="#a.-go-to-sql-editor" id="toc-a.-go-to-sql-editor" class="nav-link" data-scroll-target="#a.-go-to-sql-editor">3a. Go to SQL Editor</a></li>
+  <li><a href="#b.-create-new-query" id="toc-b.-create-new-query" class="nav-link" data-scroll-target="#b.-create-new-query">3b. Create New Query</a></li>
+  <li><a href="#c.-copy-paste-sql-code" id="toc-c.-copy-paste-sql-code" class="nav-link" data-scroll-target="#c.-copy-paste-sql-code">3c. Copy &amp; Paste SQL Code</a></li>
+  <li><a href="#d.-run-the-sql" id="toc-d.-run-the-sql" class="nav-link" data-scroll-target="#d.-run-the-sql">3d. Run the SQL</a></li>
+  </ul></li>
+  <li><a href="#step-4-enter-credentials-in-admin-setup-page" id="toc-step-4-enter-credentials-in-admin-setup-page" class="nav-link" data-scroll-target="#step-4-enter-credentials-in-admin-setup-page">Step 4: Enter Credentials in Admin Setup Page</a>
+  <ul class="collapse">
+  <li><a href="#a.-go-to-admin-setup" id="toc-a.-go-to-admin-setup" class="nav-link" data-scroll-target="#a.-go-to-admin-setup">4a. Go to Admin Setup</a></li>
+  <li><a href="#b.-paste-project-url" id="toc-b.-paste-project-url" class="nav-link" data-scroll-target="#b.-paste-project-url">4b. Paste Project URL</a></li>
+  <li><a href="#c.-paste-api-key" id="toc-c.-paste-api-key" class="nav-link" data-scroll-target="#c.-paste-api-key">4c. Paste API Key</a></li>
+  <li><a href="#d.-test-connection" id="toc-d.-test-connection" class="nav-link" data-scroll-target="#d.-test-connection">4d. Test Connection</a></li>
+  <li><a href="#e.-save-configuration" id="toc-e.-save-configuration" class="nav-link" data-scroll-target="#e.-save-configuration">4e. Save Configuration</a></li>
+  </ul></li>
+  <li><a href="#step-5-test-registration" id="toc-step-5-test-registration" class="nav-link" data-scroll-target="#step-5-test-registration">Step 5: Test Registration</a>
+  <ul class="collapse">
+  <li><a href="#a.-go-to-events-page" id="toc-a.-go-to-events-page" class="nav-link" data-scroll-target="#a.-go-to-events-page">5a. Go to Events Page</a></li>
+  <li><a href="#b.-fill-out-test-registration" id="toc-b.-fill-out-test-registration" class="nav-link" data-scroll-target="#b.-fill-out-test-registration">5b. Fill Out Test Registration</a></li>
+  <li><a href="#c.-submit-form" id="toc-c.-submit-form" class="nav-link" data-scroll-target="#c.-submit-form">5c. Submit Form</a></li>
+  <li><a href="#d.-check-supabase-dashboard" id="toc-d.-check-supabase-dashboard" class="nav-link" data-scroll-target="#d.-check-supabase-dashboard">5d. Check Supabase Dashboard</a></li>
+  </ul></li>
+  <li><a href="#all-done" id="toc-all-done" class="nav-link" data-scroll-target="#all-done">All Done! 🎉</a></li>
+  <li><a href="#important-notes" id="toc-important-notes" class="nav-link" data-scroll-target="#important-notes">Important Notes</a>
+  <ul class="collapse">
+  <li><a href="#your-credentials-are-safe" id="toc-your-credentials-are-safe" class="nav-link" data-scroll-target="#your-credentials-are-safe">Your Credentials Are Safe</a></li>
+  <li><a href="#access-your-data-anytime" id="toc-access-your-data-anytime" class="nav-link" data-scroll-target="#access-your-data-anytime">Access Your Data Anytime</a></li>
+  <li><a href="#export-data" id="toc-export-data" class="nav-link" data-scroll-target="#export-data">Export Data</a></li>
+  </ul></li>
+  <li><a href="#troubleshooting" id="toc-troubleshooting" class="nav-link" data-scroll-target="#troubleshooting">Troubleshooting</a></li>
+  <li><a href="#next-steps" id="toc-next-steps" class="nav-link" data-scroll-target="#next-steps">Next Steps</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Admin Setup - Supabase Configuration</h1>
+<h1 class="title">Supabase Setup Guide - Step by Step</h1>
 </div>
 
 <div>
   <div class="description">
-    Configure Supabase Cloud for collecting workshop registrations
+    Complete visual guide to set up Supabase for MSP registrations
   </div>
 </div>
 
@@ -512,287 +597,259 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<div style="background-color: #fff3cd; padding: 15px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #ff9800;">
-<p>⚙️ <strong>Admin Configuration Page</strong> - Set up Supabase to collect all workshop registrations</p>
-</div>
-<div style="max-width: 900px; margin: 20px auto;">
-
-<div id="setupDiv">
-  <h2 class="anchored">Enable Supabase Registration Collection</h2>
-  
-  <p>Supabase is a free, serverless PostgreSQL database in the cloud. All workshop registrations will be automatically collected in your Supabase project.</p>
-
-  <div style="background-color: #e8f4f8; padding: 15px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #3498db;">
-    <strong>Benefits:</strong>
-    <ul>
-      <li>✓ Real-time database (see registrations instantly)</li>
-      <li>✓ Free tier (up to 500 MB storage)</li>
-      <li>✓ Built-in authentication &amp; security</li>
-      <li>✓ Access from anywhere</li>
-      <li>✓ Easy data export &amp; reporting</li>
-    </ul>
-  </div>
-
-  <h3 class="anchored">Step 1: Create Supabase Project</h3>
-  <ol>
-    <li>Go to <a href="https://supabase.com" target="_blank">supabase.com</a> and sign up (free)</li>
-    <li>Create a new project (choose a region closest to you)</li>
-    <li>Wait for project to be ready (takes ~1 minute)</li>
-  </ol>
-
-  <h3 class="anchored">Step 2: Create Table for Registrations</h3>
-  <ol>
-    <li>Go to your Supabase project dashboard</li>
-    <li>Click "SQL Editor" in the left menu</li>
-    <li>Copy and paste this SQL command to create the table:</li>
-  </ol>
-
-  <textarea readonly="" style="width: 100%; padding: 10px; background-color: #f5f5f5; border: 1px solid #ccc; border-radius: 4px; margin: 10px 0; font-family: monospace; height: 250px; color: #333;">CREATE TABLE msp_registrations (
-  id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-  name TEXT NOT NULL,
-  email TEXT NOT NULL,
-  phone TEXT,
-  organization TEXT NOT NULL,
-  role TEXT NOT NULL,
-  gender TEXT NOT NULL,
-  origin TEXT NOT NULL,
-  experience TEXT NOT NULL,
-  interests TEXT NOT NULL,
-  timestamp TEXT NOT NULL,
-  synced_at TIMESTAMP DEFAULT NOW(),
-  UNIQUE(email, timestamp)
-);
-
--- Enable RLS (Row Level Security)
-ALTER TABLE msp_registrations ENABLE ROW LEVEL SECURITY;
-
--- Allow public insert (for visitors to submit)
-CREATE POLICY "Allow public insert" ON msp_registrations
-  FOR INSERT
-  WITH CHECK (TRUE);
-
--- Allow authenticated users to read
-CREATE POLICY "Allow authenticated read" ON msp_registrations
-  FOR SELECT
-  USING (auth.role() = 'authenticated');</textarea>
-
-  <button id="copySqlBtn" style="background-color: #3498db; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;">
-    📋 Copy SQL to Clipboard
-  </button>
-
-  <h3 style="margin-top: 20px;" class="anchored">Step 3: Get Your Credentials</h3>
-  <ol>
-    <li>In your Supabase project, click "Settings" → "API"</li>
-    <li>Copy your <strong>Project URL</strong> and <strong>anon public key</strong></li>
-    <li>Paste them below</li>
-  </ol>
-
-  <div style="margin-bottom: 15px;">
-    <label for="supabaseUrl" style="display: block; margin-bottom: 5px; font-weight: bold;">Supabase Project URL:</label>
-    <input type="url" id="supabaseUrl" placeholder="https://your-project.supabase.co" style="width: 100%; padding: 10px; border: 1px solid #bbb; border-radius: 4px; box-sizing: border-box; font-family: monospace;">
-  </div>
-
-  <div style="margin-bottom: 20px;">
-    <label for="supabaseKey" style="display: block; margin-bottom: 5px; font-weight: bold;">Supabase Anon Public Key:</label>
-    <textarea id="supabaseKey" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." style="width: 100%; padding: 10px; border: 1px solid #bbb; border-radius: 4px; box-sizing: border-box; font-family: monospace; height: 80px;"></textarea>
-  </div>
-
-  <button id="saveConfigBtn" style="background-color: #27ae60; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; font-weight: bold; margin-right: 10px;">
-    ✓ Save Configuration
-  </button>
-  
-  <button id="testConfigBtn" style="background-color: #3498db; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; font-weight: bold;">
-    🧪 Test Connection
-  </button>
-
-  <div id="statusMessage" style="margin-top: 20px; padding: 15px; border-radius: 4px; display: none;"></div>
-</div>
-
-<div id="statusDiv" style="margin-top: 30px; padding: 20px; border: 1px solid #ddd; border-radius: 8px; background-color: #f0f8ff; display: none;">
-  <h3 class="anchored">✓ Supabase Connected!</h3>
-  <p style="color: #666; font-size: 14px;">
-    Your Supabase project is now connected and collecting registrations.
-  </p>
-  
-  <div style="margin: 15px 0; padding: 15px; background-color: white; border: 1px solid #ddd; border-radius: 4px;">
-    <p style="margin: 0;"><strong>View Registrations:</strong></p>
-    <ul style="margin: 10px 0; padding-left: 20px;">
-      <li><a href="#" id="supabaseLink" target="_blank" style="color: #3498db; text-decoration: none;">Open Supabase Dashboard →</a></li>
-      <li>Go to "Table Editor" → "msp_registrations"</li>
-      <li>See all registrations in real-time</li>
-    </ul>
-  </div>
-
-  <button id="resetConfigBtn" style="background-color: #e74c3c; color: white; padding: 8px 15px; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;">
-    🗑️ Reset Configuration
-  </button>
-</div>
-
-</div>
-
-<script src="supabase-config.js"></script>
-<script>
-// Load saved config from localStorage
-function loadConfig() {
-  const url = localStorage.getItem('supabase_url');
-  const key = localStorage.getItem('supabase_key');
-  
-  if (url && key) {
-    document.getElementById('supabaseUrl').value = url;
-    document.getElementById('supabaseKey').value = key;
-    showStatus(url);
-  }
-}
-
-// Save configuration
-document.getElementById('saveConfigBtn').addEventListener('click', function() {
-  const url = document.getElementById('supabaseUrl').value.trim();
-  const key = document.getElementById('supabaseKey').value.trim();
-  
-  if (!url || !key) {
-    showMessage('Please enter both URL and key', 'error');
-    return;
-  }
-  
-  if (!url.includes('supabase.co')) {
-    showMessage('Invalid Supabase URL. Should include "supabase.co"', 'error');
-    return;
-  }
-  
-  // Save to localStorage
-  localStorage.setItem('supabase_url', url);
-  localStorage.setItem('supabase_key', key);
-  
-  // Update SUPABASE_CONFIG
-  SUPABASE_CONFIG.SUPABASE_URL = url;
-  SUPABASE_CONFIG.SUPABASE_ANON_KEY = key;
-  
-  showMessage('✓ Configuration saved! Testing connection...', 'success');
-  
-  // Test connection
-  setTimeout(() => testConnection(url, key), 1000);
-});
-
-// Test connection
-async function testConnection(url, key) {
-  try {
-    const response = await fetch(`${url}/rest/v1/msp_registrations?limit=1`, {
-      headers: {
-        'apikey': key,
-        'Authorization': `Bearer ${key}`
-      }
-    });
-    
-    if (response.ok) {
-      showMessage('✓ Successfully connected to Supabase!', 'success');
-      setTimeout(() => showStatus(url), 1500);
-    } else if (response.status === 401) {
-      showMessage('✗ Invalid API key. Check your credentials.', 'error');
-    } else if (response.status === 404) {
-      showMessage('✗ Table not found. Did you create the table with SQL?', 'error');
-    } else {
-      showMessage(`✗ Connection failed: ${response.statusText}`, 'error');
-    }
-  } catch (error) {
-    showMessage(`✗ Error: ${error.message}`, 'error');
-  }
-}
-
-// Test button
-document.getElementById('testConfigBtn').addEventListener('click', function() {
-  const url = document.getElementById('supabaseUrl').value.trim();
-  const key = document.getElementById('supabaseKey').value.trim();
-  
-  if (!url || !key) {
-    showMessage('Please enter URL and key first', 'error');
-    return;
-  }
-  
-  showMessage('🧪 Testing connection...', 'info');
-  testConnection(url, key);
-});
-
-// Reset configuration
-document.getElementById('resetConfigBtn')?.addEventListener('click', function() {
-  if (confirm('Remove Supabase configuration? Registrations will only save locally.')) {
-    localStorage.removeItem('supabase_url');
-    localStorage.removeItem('supabase_key');
-    document.getElementById('supabaseUrl').value = '';
-    document.getElementById('supabaseKey').value = '';
-    SUPABASE_CONFIG.SUPABASE_URL = '';
-    SUPABASE_CONFIG.SUPABASE_ANON_KEY = '';
-    showMessage('✓ Configuration reset.', 'success');
-    document.getElementById('statusDiv').style.display = 'none';
-  }
-});
-
-// Show message
-function showMessage(text, type) {
-  const msgDiv = document.getElementById('statusMessage');
-  msgDiv.textContent = text;
-  
-  if (type === 'success') {
-    msgDiv.style.backgroundColor = '#d4edda';
-    msgDiv.style.color = '#155724';
-    msgDiv.style.borderLeft = '4px solid #28a745';
-  } else if (type === 'error') {
-    msgDiv.style.backgroundColor = '#f8d7da';
-    msgDiv.style.color = '#721c24';
-    msgDiv.style.borderLeft = '4px solid #dc3545';
-  } else {
-    msgDiv.style.backgroundColor = '#d1ecf1';
-    msgDiv.style.color = '#0c5460';
-    msgDiv.style.borderLeft = '4px solid #17a2b8';
-  }
-  
-  msgDiv.style.display = 'block';
-}
-
-// Show status when configured
-function showStatus(url) {
-  document.getElementById('setupDiv').style.display = 'none';
-  document.getElementById('statusDiv').style.display = 'block';
-  
-  // Update link
-  const projectName = url.split('.')[0].replace('https://', '');
-  document.getElementById('supabaseLink').href = `https://supabase.com/dashboard/project/${projectName}`;
-}
-
-// Copy SQL to clipboard
-document.getElementById('copySqlBtn').addEventListener('click', function() {
-  const sql = document.querySelector('textarea[readonly]').value;
-  navigator.clipboard.writeText(sql).then(() => {
-    this.textContent = '✓ Copied!';
-    setTimeout(() => {
-      this.textContent = '📋 Copy SQL to Clipboard';
-    }, 2000);
-  });
-});
-
-// Load on page load
-window.addEventListener('load', loadConfig);
-</script>
-<hr>
-<section id="features" class="level2">
-<h2 class="anchored" data-anchor-id="features">Features</h2>
+<section id="step-1-create-supabase-account" class="level2">
+<h2 class="anchored" data-anchor-id="step-1-create-supabase-account">Step 1: Create Supabase Account</h2>
+<section id="a.-visit-supabase-website" class="level3">
+<h3 class="anchored" data-anchor-id="a.-visit-supabase-website">1a. Visit Supabase Website</h3>
 <ul>
-<li><strong>Real-time Updates:</strong> See registrations appear instantly</li>
-<li><strong>Automatic Backup:</strong> All data backed up in Supabase cloud</li>
-<li><strong>Free Tier:</strong> 500 MB storage, plenty for thousands of registrations</li>
-<li><strong>Secure:</strong> Only accepts registrations through proper API</li>
-<li><strong>Accessible:</strong> Log in from anywhere to view data</li>
-<li><strong>Easy Export:</strong> Download data as CSV from Supabase dashboard</li>
+<li>Open your browser</li>
+<li>Go to <strong>https://supabase.com</strong></li>
+<li>You’ll see the homepage with a big button that says “Start your project”</li>
 </ul>
+</section>
+<section id="b.-sign-up" class="level3">
+<h3 class="anchored" data-anchor-id="b.-sign-up">1b. Sign Up</h3>
+<ul>
+<li>Click <strong>“Sign Up”</strong> (top right)</li>
+<li>Choose <strong>“Continue with Email”</strong></li>
+<li>Enter your email address</li>
+<li>Create a password</li>
+<li>Click <strong>“Sign Up”</strong></li>
+<li>Check your email for verification link</li>
+<li>Click the verification link</li>
+</ul>
+</section>
+<section id="c.-create-your-first-project" class="level3">
+<h3 class="anchored" data-anchor-id="c.-create-your-first-project">1c. Create Your First Project</h3>
+<p>After email verification, you’ll see:</p>
+<pre><code>Welcome to Supabase!
+[Create a new project] button</code></pre>
+<ul>
+<li>Click <strong>“Create a new project”</strong></li>
+</ul>
+</section>
+<section id="d.-project-details" class="level3">
+<h3 class="anchored" data-anchor-id="d.-project-details">1d. Project Details</h3>
+<p>Fill in:</p>
+<pre><code>Project Name: MSP Registration Database
+(or any name you prefer)
+
+Database Password: (create a strong password)
+Region: Choose closest to Tanzania
+(East Africa / Singapore / Europe)</code></pre>
+<ul>
+<li>Click <strong>“Create new project”</strong></li>
+<li><strong>Wait 1-2 minutes</strong> for the project to be created</li>
+<li>You’ll see “Initializing project…” → then the dashboard opens</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="step-2-get-your-credentials" class="level2">
+<h2 class="anchored" data-anchor-id="step-2-get-your-credentials">Step 2: Get Your Credentials</h2>
+<section id="a.-open-project-settings" class="level3">
+<h3 class="anchored" data-anchor-id="a.-open-project-settings">2a. Open Project Settings</h3>
+<p>In the Supabase dashboard, look for the <strong>Settings icon</strong> (⚙️) in the bottom left sidebar - Click <strong>Settings</strong> - Click <strong>API</strong> tab</p>
+</section>
+<section id="b.-copy-project-url" class="level3">
+<h3 class="anchored" data-anchor-id="b.-copy-project-url">2b. Copy Project URL</h3>
+<p>You’ll see:</p>
+<pre><code>┌─────────────────────────────┐
+│ Project URL                 │
+│ https://your-project-name   │
+│ .supabase.co                │
+│ [Copy button]               │
+└─────────────────────────────┘</code></pre>
+<ul>
+<li>Click the <strong>Copy button</strong> next to Project URL</li>
+<li>Or manually select and copy the full URL</li>
+<li><strong>Keep this ready</strong> - you’ll paste it into the setup page</li>
+</ul>
+</section>
+<section id="c.-copy-api-key" class="level3">
+<h3 class="anchored" data-anchor-id="c.-copy-api-key">2c. Copy API Key</h3>
+<p>Scroll down and you’ll see:</p>
+<pre><code>┌─────────────────────────────┐
+│ anon public                 │
+│ eyJhbGciOiJIUzI1NiIsIn...  │
+│ [Copy button]               │
+└─────────────────────────────┘</code></pre>
+<ul>
+<li>Click <strong>Copy button</strong> next to “anon public” key</li>
+<li>Or manually select and copy the entire long string</li>
+<li><strong>Keep this ready</strong> - you’ll paste it into the setup page</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="step-3-create-the-table-in-supabase" class="level2">
+<h2 class="anchored" data-anchor-id="step-3-create-the-table-in-supabase">Step 3: Create the Table in Supabase</h2>
+<section id="a.-go-to-sql-editor" class="level3">
+<h3 class="anchored" data-anchor-id="a.-go-to-sql-editor">3a. Go to SQL Editor</h3>
+<p>In your Supabase dashboard: - Look at the left sidebar - Click <strong>“SQL Editor”</strong> (or “SQL”)</p>
+</section>
+<section id="b.-create-new-query" class="level3">
+<h3 class="anchored" data-anchor-id="b.-create-new-query">3b. Create New Query</h3>
+<ul>
+<li>Click <strong>“New Query”</strong> or <strong>“+”</strong> button</li>
+<li>You’ll see a blank text editor</li>
+</ul>
+</section>
+<section id="c.-copy-paste-sql-code" class="level3">
+<h3 class="anchored" data-anchor-id="c.-copy-paste-sql-code">3c. Copy &amp; Paste SQL Code</h3>
+<p><strong>Go back to your MSP website</strong> and visit: <code>/admin-setup</code></p>
+<p>On that page, you’ll see a gray box with SQL code. - Click the <strong>“📋 Copy SQL to Clipboard”</strong> button - (This copies the code automatically)</p>
+<p><strong>Back in Supabase:</strong> - In the SQL editor, click in the text area - Paste the code (Ctrl+V or Cmd+V) - You should see something like:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> msp_registrations (</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">id</span> BIGINT <span class="kw">PRIMARY</span> <span class="kw">KEY</span> <span class="kw">GENERATED</span> ALWAYS <span class="kw">AS</span> IDENTITY,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  name TEXT <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  email TEXT <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="op">..</span>.</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="d.-run-the-sql" class="level3">
+<h3 class="anchored" data-anchor-id="d.-run-the-sql">3d. Run the SQL</h3>
+<ul>
+<li>Click the big <strong>blue “Run” button</strong> (top right of editor)</li>
+<li>Wait a few seconds</li>
+<li>You should see: <strong>“Success”</strong> message</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="step-4-enter-credentials-in-admin-setup-page" class="level2">
+<h2 class="anchored" data-anchor-id="step-4-enter-credentials-in-admin-setup-page">Step 4: Enter Credentials in Admin Setup Page</h2>
+<section id="a.-go-to-admin-setup" class="level3">
+<h3 class="anchored" data-anchor-id="a.-go-to-admin-setup">4a. Go to Admin Setup</h3>
+<p>On your MSP website: - Visit: <strong><code>/admin-setup</code></strong> - You’ll see a form with two input fields</p>
+</section>
+<section id="b.-paste-project-url" class="level3">
+<h3 class="anchored" data-anchor-id="b.-paste-project-url">4b. Paste Project URL</h3>
+<ul>
+<li>Click the first field: <strong>“Supabase Project URL”</strong></li>
+<li>Paste the URL you copied (Ctrl+V)</li>
+<li>Example: <code>https://your-project-name.supabase.co</code></li>
+</ul>
+</section>
+<section id="c.-paste-api-key" class="level3">
+<h3 class="anchored" data-anchor-id="c.-paste-api-key">4c. Paste API Key</h3>
+<ul>
+<li>Click the second field: <strong>“Supabase Anon Public Key”</strong></li>
+<li>Paste the API key you copied (Ctrl+V)</li>
+<li>Example: <code>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...</code></li>
+</ul>
+</section>
+<section id="d.-test-connection" class="level3">
+<h3 class="anchored" data-anchor-id="d.-test-connection">4d. Test Connection</h3>
+<ul>
+<li>Click <strong>“🧪 Test Connection”</strong> button</li>
+<li><strong>Wait 5-10 seconds</strong></li>
+<li>You should see: <strong>“✓ Successfully connected to Supabase!”</strong></li>
+</ul>
+<p>If you see an error: - ❌ <strong>“Invalid API key”</strong> → Copy the API key again from Supabase - ❌ <strong>“Table not found”</strong> → Make sure you ran the SQL in step 3c - ❌ <strong>“Connection failed”</strong> → Check your Project URL is correct</p>
+</section>
+<section id="e.-save-configuration" class="level3">
+<h3 class="anchored" data-anchor-id="e.-save-configuration">4e. Save Configuration</h3>
+<ul>
+<li>Once connection is successful, click <strong>“✓ Save Configuration”</strong></li>
+<li>You’ll see: <strong>“✓ Configuration saved!”</strong></li>
+<li>The form will disappear and show a <strong>green success message</strong></li>
+<li>This means <strong>setup is complete!</strong> ✓</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="step-5-test-registration" class="level2">
+<h2 class="anchored" data-anchor-id="step-5-test-registration">Step 5: Test Registration</h2>
+<section id="a.-go-to-events-page" class="level3">
+<h3 class="anchored" data-anchor-id="a.-go-to-events-page">5a. Go to Events Page</h3>
+<ul>
+<li>Visit: <strong><code>/events</code></strong></li>
+<li>You’ll see the workshop registration form</li>
+</ul>
+</section>
+<section id="b.-fill-out-test-registration" class="level3">
+<h3 class="anchored" data-anchor-id="b.-fill-out-test-registration">5b. Fill Out Test Registration</h3>
+<ul>
+<li>Fill in all required fields:
+<ul>
+<li>Full Name: <code>Test User</code></li>
+<li>Email: <code>test@example.com</code></li>
+<li>Organization: <code>Test Org</code></li>
+<li>Role: <code>Test Role</code></li>
+<li>Gender: <code>Male</code> (or any option)</li>
+<li>District/Region: <code>Test Region</code></li>
+<li>Experience: <code>Beginner</code> (or any option)</li>
+<li>Interest: <code>Data Collection Methods</code> (or any option)</li>
+</ul></li>
+</ul>
+</section>
+<section id="c.-submit-form" class="level3">
+<h3 class="anchored" data-anchor-id="c.-submit-form">5c. Submit Form</h3>
+<ul>
+<li>Click <strong>“Register for Workshop”</strong> button</li>
+<li>You should see a <strong>green success message</strong>: ✓</li>
+<li>The form should clear</li>
+</ul>
+</section>
+<section id="d.-check-supabase-dashboard" class="level3">
+<h3 class="anchored" data-anchor-id="d.-check-supabase-dashboard">5d. Check Supabase Dashboard</h3>
+<ul>
+<li>Go back to Supabase</li>
+<li>In left sidebar, click <strong>“Table Editor”</strong></li>
+<li>Click <strong>“msp_registrations”</strong></li>
+<li>You should see your test registration in the table!</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="all-done" class="level2">
+<h2 class="anchored" data-anchor-id="all-done">All Done! 🎉</h2>
+<p>Your registration system is now live:</p>
+<p>✅ <strong>Visitors</strong> visit <code>/events</code> and register<br>
+✅ <strong>Registrations</strong> automatically save to Supabase<br>
+✅ <strong>You</strong> can view data anytime in Supabase dashboard<br>
+✅ <strong>Data</strong> is backed up in the cloud<br>
+✅ <strong>No costs</strong> (free tier)</p>
+<hr>
+</section>
+<section id="important-notes" class="level2">
+<h2 class="anchored" data-anchor-id="important-notes">Important Notes</h2>
+<section id="your-credentials-are-safe" class="level3">
+<h3 class="anchored" data-anchor-id="your-credentials-are-safe">Your Credentials Are Safe</h3>
+<ul>
+<li>URL and API key are stored only in your browser’s localStorage</li>
+<li>Never sent anywhere except directly to Supabase</li>
+<li>API key is “anon public” (read-only access for registrations)</li>
+</ul>
+</section>
+<section id="access-your-data-anytime" class="level3">
+<h3 class="anchored" data-anchor-id="access-your-data-anytime">Access Your Data Anytime</h3>
+<p>To see registrations from anywhere: 1. Go to https://supabase.com 2. Log in with your email 3. Open your “MSP Registration Database” project 4. Click “Table Editor” → “msp_registrations” 5. See all registrations in real-time!</p>
+</section>
+<section id="export-data" class="level3">
+<h3 class="anchored" data-anchor-id="export-data">Export Data</h3>
+<p>In Supabase Table Editor: - Click the menu (⋮) next to table name - Choose “Export” → “Download as CSV” - Get all registrations in a spreadsheet</p>
+<hr>
+</section>
+</section>
+<section id="troubleshooting" class="level2">
+<h2 class="anchored" data-anchor-id="troubleshooting">Troubleshooting</h2>
+<p><strong>Q: I forgot my Supabase password</strong> - Go to supabase.com → “Forgot password”</p>
+<p><strong>Q: Table doesn’t appear in Supabase</strong> - Check that you ran the SQL code in SQL Editor - Make sure you clicked the blue “Run” button</p>
+<p><strong>Q: Connection test fails</strong> - Double-check Project URL is spelled correctly - Double-check API key is complete (no missing characters) - Make sure you created the table first</p>
+<p><strong>Q: Registrations not appearing in Supabase</strong> - Test the registration form at <code>/events</code> - Check browser console (F12 → Console) for errors - Make sure table is named exactly “msp_registrations”</p>
 <hr>
 </section>
 <section id="next-steps" class="level2">
 <h2 class="anchored" data-anchor-id="next-steps">Next Steps</h2>
 <ol type="1">
-<li>Complete setup above</li>
-<li>Visit <code>/events</code> and test registration</li>
-<li>Check your Supabase dashboard to see the data</li>
-<li>Share <code>/events</code> link with participants</li>
+<li>✅ Complete the setup above</li>
+<li>Share the <code>/events</code> link with participants</li>
+<li>Monitor registrations in real-time on Supabase dashboard</li>
+<li>Export data whenever needed</li>
 </ol>
+<p><strong>Questions?</strong> Check the admin page at <code>/admin-setup</code> for more help!</p>
 
 
 </section>

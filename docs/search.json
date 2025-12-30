@@ -12,6 +12,76 @@
     ]
   },
   {
+    "objectID": "supabase-setup-guide.html",
+    "href": "supabase-setup-guide.html",
+    "title": "Supabase Setup Guide - Step by Step",
+    "section": "",
+    "text": "Open your browser\nGo to https://supabase.com\nYou’ll see the homepage with a big button that says “Start your project”\n\n\n\n\n\nClick “Sign Up” (top right)\nChoose “Continue with Email”\nEnter your email address\nCreate a password\nClick “Sign Up”\nCheck your email for verification link\nClick the verification link\n\n\n\n\nAfter email verification, you’ll see:\nWelcome to Supabase!\n[Create a new project] button\n\nClick “Create a new project”\n\n\n\n\nFill in:\nProject Name: MSP Registration Database\n(or any name you prefer)\n\nDatabase Password: (create a strong password)\nRegion: Choose closest to Tanzania\n(East Africa / Singapore / Europe)\n\nClick “Create new project”\nWait 1-2 minutes for the project to be created\nYou’ll see “Initializing project…” → then the dashboard opens"
+  },
+  {
+    "objectID": "supabase-setup-guide.html#step-1-create-supabase-account",
+    "href": "supabase-setup-guide.html#step-1-create-supabase-account",
+    "title": "Supabase Setup Guide - Step by Step",
+    "section": "",
+    "text": "Open your browser\nGo to https://supabase.com\nYou’ll see the homepage with a big button that says “Start your project”\n\n\n\n\n\nClick “Sign Up” (top right)\nChoose “Continue with Email”\nEnter your email address\nCreate a password\nClick “Sign Up”\nCheck your email for verification link\nClick the verification link\n\n\n\n\nAfter email verification, you’ll see:\nWelcome to Supabase!\n[Create a new project] button\n\nClick “Create a new project”\n\n\n\n\nFill in:\nProject Name: MSP Registration Database\n(or any name you prefer)\n\nDatabase Password: (create a strong password)\nRegion: Choose closest to Tanzania\n(East Africa / Singapore / Europe)\n\nClick “Create new project”\nWait 1-2 minutes for the project to be created\nYou’ll see “Initializing project…” → then the dashboard opens"
+  },
+  {
+    "objectID": "supabase-setup-guide.html#step-2-get-your-credentials",
+    "href": "supabase-setup-guide.html#step-2-get-your-credentials",
+    "title": "Supabase Setup Guide - Step by Step",
+    "section": "Step 2: Get Your Credentials",
+    "text": "Step 2: Get Your Credentials\n\n2a. Open Project Settings\nIn the Supabase dashboard, look for the Settings icon (⚙️) in the bottom left sidebar - Click Settings - Click API tab\n\n\n2b. Copy Project URL\nYou’ll see:\n┌─────────────────────────────┐\n│ Project URL                 │\n│ https://your-project-name   │\n│ .supabase.co                │\n│ [Copy button]               │\n└─────────────────────────────┘\n\nClick the Copy button next to Project URL\nOr manually select and copy the full URL\nKeep this ready - you’ll paste it into the setup page\n\n\n\n2c. Copy API Key\nScroll down and you’ll see:\n┌─────────────────────────────┐\n│ anon public                 │\n│ eyJhbGciOiJIUzI1NiIsIn...  │\n│ [Copy button]               │\n└─────────────────────────────┘\n\nClick Copy button next to “anon public” key\nOr manually select and copy the entire long string\nKeep this ready - you’ll paste it into the setup page"
+  },
+  {
+    "objectID": "supabase-setup-guide.html#step-3-create-the-table-in-supabase",
+    "href": "supabase-setup-guide.html#step-3-create-the-table-in-supabase",
+    "title": "Supabase Setup Guide - Step by Step",
+    "section": "Step 3: Create the Table in Supabase",
+    "text": "Step 3: Create the Table in Supabase\n\n3a. Go to SQL Editor\nIn your Supabase dashboard: - Look at the left sidebar - Click “SQL Editor” (or “SQL”)\n\n\n3b. Create New Query\n\nClick “New Query” or “+” button\nYou’ll see a blank text editor\n\n\n\n3c. Copy & Paste SQL Code\nGo back to your MSP website and visit: /admin-setup\nOn that page, you’ll see a gray box with SQL code. - Click the “📋 Copy SQL to Clipboard” button - (This copies the code automatically)\nBack in Supabase: - In the SQL editor, click in the text area - Paste the code (Ctrl+V or Cmd+V) - You should see something like:\nCREATE TABLE msp_registrations (\n  id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,\n  name TEXT NOT NULL,\n  email TEXT NOT NULL,\n  ...\n)\n\n\n3d. Run the SQL\n\nClick the big blue “Run” button (top right of editor)\nWait a few seconds\nYou should see: “Success” message"
+  },
+  {
+    "objectID": "supabase-setup-guide.html#step-4-enter-credentials-in-admin-setup-page",
+    "href": "supabase-setup-guide.html#step-4-enter-credentials-in-admin-setup-page",
+    "title": "Supabase Setup Guide - Step by Step",
+    "section": "Step 4: Enter Credentials in Admin Setup Page",
+    "text": "Step 4: Enter Credentials in Admin Setup Page\n\n4a. Go to Admin Setup\nOn your MSP website: - Visit: /admin-setup - You’ll see a form with two input fields\n\n\n4b. Paste Project URL\n\nClick the first field: “Supabase Project URL”\nPaste the URL you copied (Ctrl+V)\nExample: https://your-project-name.supabase.co\n\n\n\n4c. Paste API Key\n\nClick the second field: “Supabase Anon Public Key”\nPaste the API key you copied (Ctrl+V)\nExample: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...\n\n\n\n4d. Test Connection\n\nClick “🧪 Test Connection” button\nWait 5-10 seconds\nYou should see: “✓ Successfully connected to Supabase!”\n\nIf you see an error: - ❌ “Invalid API key” → Copy the API key again from Supabase - ❌ “Table not found” → Make sure you ran the SQL in step 3c - ❌ “Connection failed” → Check your Project URL is correct\n\n\n4e. Save Configuration\n\nOnce connection is successful, click “✓ Save Configuration”\nYou’ll see: “✓ Configuration saved!”\nThe form will disappear and show a green success message\nThis means setup is complete! ✓"
+  },
+  {
+    "objectID": "supabase-setup-guide.html#step-5-test-registration",
+    "href": "supabase-setup-guide.html#step-5-test-registration",
+    "title": "Supabase Setup Guide - Step by Step",
+    "section": "Step 5: Test Registration",
+    "text": "Step 5: Test Registration\n\n5a. Go to Events Page\n\nVisit: /events\nYou’ll see the workshop registration form\n\n\n\n5b. Fill Out Test Registration\n\nFill in all required fields:\n\nFull Name: Test User\nEmail: test@example.com\nOrganization: Test Org\nRole: Test Role\nGender: Male (or any option)\nDistrict/Region: Test Region\nExperience: Beginner (or any option)\nInterest: Data Collection Methods (or any option)\n\n\n\n\n5c. Submit Form\n\nClick “Register for Workshop” button\nYou should see a green success message: ✓\nThe form should clear\n\n\n\n5d. Check Supabase Dashboard\n\nGo back to Supabase\nIn left sidebar, click “Table Editor”\nClick “msp_registrations”\nYou should see your test registration in the table!"
+  },
+  {
+    "objectID": "supabase-setup-guide.html#all-done",
+    "href": "supabase-setup-guide.html#all-done",
+    "title": "Supabase Setup Guide - Step by Step",
+    "section": "All Done! 🎉",
+    "text": "All Done! 🎉\nYour registration system is now live:\n✅ Visitors visit /events and register\n✅ Registrations automatically save to Supabase\n✅ You can view data anytime in Supabase dashboard\n✅ Data is backed up in the cloud\n✅ No costs (free tier)"
+  },
+  {
+    "objectID": "supabase-setup-guide.html#important-notes",
+    "href": "supabase-setup-guide.html#important-notes",
+    "title": "Supabase Setup Guide - Step by Step",
+    "section": "Important Notes",
+    "text": "Important Notes\n\nYour Credentials Are Safe\n\nURL and API key are stored only in your browser’s localStorage\nNever sent anywhere except directly to Supabase\nAPI key is “anon public” (read-only access for registrations)\n\n\n\nAccess Your Data Anytime\nTo see registrations from anywhere: 1. Go to https://supabase.com 2. Log in with your email 3. Open your “MSP Registration Database” project 4. Click “Table Editor” → “msp_registrations” 5. See all registrations in real-time!\n\n\nExport Data\nIn Supabase Table Editor: - Click the menu (⋮) next to table name - Choose “Export” → “Download as CSV” - Get all registrations in a spreadsheet"
+  },
+  {
+    "objectID": "supabase-setup-guide.html#troubleshooting",
+    "href": "supabase-setup-guide.html#troubleshooting",
+    "title": "Supabase Setup Guide - Step by Step",
+    "section": "Troubleshooting",
+    "text": "Troubleshooting\nQ: I forgot my Supabase password - Go to supabase.com → “Forgot password”\nQ: Table doesn’t appear in Supabase - Check that you ran the SQL code in SQL Editor - Make sure you clicked the blue “Run” button\nQ: Connection test fails - Double-check Project URL is spelled correctly - Double-check API key is complete (no missing characters) - Make sure you created the table first\nQ: Registrations not appearing in Supabase - Test the registration form at /events - Check browser console (F12 → Console) for errors - Make sure table is named exactly “msp_registrations”"
+  },
+  {
+    "objectID": "supabase-setup-guide.html#next-steps",
+    "href": "supabase-setup-guide.html#next-steps",
+    "title": "Supabase Setup Guide - Step by Step",
+    "section": "Next Steps",
+    "text": "Next Steps\n\n✅ Complete the setup above\nShare the /events link with participants\nMonitor registrations in real-time on Supabase dashboard\nExport data whenever needed\n\nQuestions? Check the admin page at /admin-setup for more help!"
+  },
+  {
     "objectID": "schedule.html",
     "href": "schedule.html",
     "title": "Marine Spatial Planning Project - Scope of Work and Deliverables",
@@ -518,6 +588,41 @@
     "title": "Resource 1: Fish Stock Assessments Reports",
     "section": "References",
     "text": "References\n\n\nMlaponi, Enock, Hillary Mrosso, Philemon Nsinda, Masumbuko Semba, Nyamisi Peter, and Ismael Kimerei. 2022. “Lake Victoria Stock Status Report 2022.” Tanzania Fisheries Research Institute (TAFIRI).\n\n\nTAFIRI. 2023. “Lake Tanganyika Hydroacoustic Survey Report 2023.” Tanzania Fisheries Research Institute (TAFIRI).\n\n\n———. 2024. “Tuna Stock Status Report 2024.” Tanzania Fisheries Research Institute (TAFIRI).\n\n\n———. 2025. “Tuna Stock Status Report 2025.” Tanzania Fisheries Research Institute (TAFIRI)."
+  },
+  {
+    "objectID": "supabase-checklist.html",
+    "href": "supabase-checklist.html",
+    "title": "Supabase Setup - Quick Checklist",
+    "section": "",
+    "text": "Follow these steps in order:\n\n\n\nGo to https://supabase.com\nClick “Sign Up”\nCreate account with your email\nVerify email\nClick “Create new project”\nSet:\n\nProject Name: MSP Registration Database (or similar)\nPassword: Create a strong password\nRegion: East Africa or closest to you\n\nClick “Create new project”\n⏳ Wait 1-2 minutes for project to initialize\n\n\n\n\nIn your Supabase dashboard: - [ ] Left sidebar → Click “SQL Editor” - [ ] Click “New Query” button - [ ] Copy this SQL and paste it:\nCREATE TABLE msp_registrations (\n  id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,\n  name TEXT NOT NULL,\n  email TEXT NOT NULL,\n  phone TEXT,\n  organization TEXT NOT NULL,\n  role TEXT NOT NULL,\n  gender TEXT NOT NULL,\n  origin TEXT NOT NULL,\n  experience TEXT NOT NULL,\n  interests TEXT NOT NULL,\n  timestamp TEXT NOT NULL,\n  created_at TIMESTAMP DEFAULT NOW()\n);\n\nALTER TABLE msp_registrations ENABLE ROW LEVEL SECURITY;\n\nCREATE POLICY \"Allow public insert\" ON msp_registrations\n  FOR INSERT\n  WITH CHECK (TRUE);\n\nCREATE POLICY \"Allow all select\" ON msp_registrations\n  FOR SELECT\n  USING (TRUE);\n\nClick the big blue “Run” button\n✓ Wait for “Success” message\n\n\n\n\nIn your Supabase dashboard: - [ ] Bottom left → Click “Settings” (gear icon) - [ ] Click “API” tab - [ ] Copy your “Project URL” (looks like: https://xxxxx.supabase.co) - Click copy button or select and copy - Paste it somewhere safe temporarily - [ ] Copy your “anon public” key (long string) - Click copy button or select and copy - Paste it somewhere safe temporarily\n\n\n\nOn your MSP website: - [ ] Go to Admin → “Setup Registration Sync” (or /admin-setup) - [ ] Paste Project URL in first field - [ ] Paste API Key in second field - [ ] Click “🧪 Test Connection” - [ ] ✓ Wait for: “✓ Successfully connected to Supabase!” - [ ] Click “✓ Save Configuration” - [ ] ✓ See green success message\n\n\n\n\nGo to “Events” page or /events\nFill out form with test data:\n\nName: John Doe\nEmail: john@example.com\nOrganization: Test Org\nRole: Test Role\nGender: Pick one\nDistrict: Test District\nExperience: Beginner\nInterest: Data Collection Methods\n\nClick “Register for Workshop”\n✓ See green confirmation message\n\n\n\n\n\nGo back to Supabase dashboard\nLeft sidebar → “Table Editor”\nClick “msp_registrations” table\n✓ You should see your test registration!"
+  },
+  {
+    "objectID": "supabase-checklist.html#setup-checklist",
+    "href": "supabase-checklist.html#setup-checklist",
+    "title": "Supabase Setup - Quick Checklist",
+    "section": "",
+    "text": "Follow these steps in order:\n\n\n\nGo to https://supabase.com\nClick “Sign Up”\nCreate account with your email\nVerify email\nClick “Create new project”\nSet:\n\nProject Name: MSP Registration Database (or similar)\nPassword: Create a strong password\nRegion: East Africa or closest to you\n\nClick “Create new project”\n⏳ Wait 1-2 minutes for project to initialize\n\n\n\n\nIn your Supabase dashboard: - [ ] Left sidebar → Click “SQL Editor” - [ ] Click “New Query” button - [ ] Copy this SQL and paste it:\nCREATE TABLE msp_registrations (\n  id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,\n  name TEXT NOT NULL,\n  email TEXT NOT NULL,\n  phone TEXT,\n  organization TEXT NOT NULL,\n  role TEXT NOT NULL,\n  gender TEXT NOT NULL,\n  origin TEXT NOT NULL,\n  experience TEXT NOT NULL,\n  interests TEXT NOT NULL,\n  timestamp TEXT NOT NULL,\n  created_at TIMESTAMP DEFAULT NOW()\n);\n\nALTER TABLE msp_registrations ENABLE ROW LEVEL SECURITY;\n\nCREATE POLICY \"Allow public insert\" ON msp_registrations\n  FOR INSERT\n  WITH CHECK (TRUE);\n\nCREATE POLICY \"Allow all select\" ON msp_registrations\n  FOR SELECT\n  USING (TRUE);\n\nClick the big blue “Run” button\n✓ Wait for “Success” message\n\n\n\n\nIn your Supabase dashboard: - [ ] Bottom left → Click “Settings” (gear icon) - [ ] Click “API” tab - [ ] Copy your “Project URL” (looks like: https://xxxxx.supabase.co) - Click copy button or select and copy - Paste it somewhere safe temporarily - [ ] Copy your “anon public” key (long string) - Click copy button or select and copy - Paste it somewhere safe temporarily\n\n\n\nOn your MSP website: - [ ] Go to Admin → “Setup Registration Sync” (or /admin-setup) - [ ] Paste Project URL in first field - [ ] Paste API Key in second field - [ ] Click “🧪 Test Connection” - [ ] ✓ Wait for: “✓ Successfully connected to Supabase!” - [ ] Click “✓ Save Configuration” - [ ] ✓ See green success message\n\n\n\n\nGo to “Events” page or /events\nFill out form with test data:\n\nName: John Doe\nEmail: john@example.com\nOrganization: Test Org\nRole: Test Role\nGender: Pick one\nDistrict: Test District\nExperience: Beginner\nInterest: Data Collection Methods\n\nClick “Register for Workshop”\n✓ See green confirmation message\n\n\n\n\n\nGo back to Supabase dashboard\nLeft sidebar → “Table Editor”\nClick “msp_registrations” table\n✓ You should see your test registration!"
+  },
+  {
+    "objectID": "supabase-checklist.html#done",
+    "href": "supabase-checklist.html#done",
+    "title": "Supabase Setup - Quick Checklist",
+    "section": "🎉 Done!",
+    "text": "🎉 Done!\nYour registration system is now live!\n\nWhat happens now:\n\n✅ Visitors fill out /events form\n✅ Data saves to Supabase automatically\n✅ You see registrations in real-time in Supabase\n\n\n\nView Your Data Anytime:\n\nGo to https://supabase.com\nLog in\nOpen your project\nClick “Table Editor” → “msp_registrations”\nSee all registrations instantly!\n\n\n\nExport Data:\nIn Supabase, click the menu (⋯) next to table name → “Export” → “Download CSV”"
+  },
+  {
+    "objectID": "supabase-checklist.html#troubleshooting",
+    "href": "supabase-checklist.html#troubleshooting",
+    "title": "Supabase Setup - Quick Checklist",
+    "section": "⚠️ Troubleshooting",
+    "text": "⚠️ Troubleshooting\nQ: Connection test says “Table not found” - Make sure you ran the SQL code in Step 2 - Check the blue “Run” button was clicked - Try refreshing Supabase\nQ: Connection test says “Invalid API key” - Double-check the API key is complete - Make sure you copied the “anon public” key, not “service_role” - Try copying again from Supabase\nQ: No registrations appearing in Supabase - Check browser console (F12 → Console) - Submit another test registration - Refresh Supabase dashboard - Check that table is named exactly “msp_registrations”\nQ: Still not working? - Check the browser console for errors (F12 → Console tab) - Copy-paste any error messages - Make sure Supabase credentials are saved (check /admin-setup page)"
+  },
+  {
+    "objectID": "supabase-checklist.html#need-help",
+    "href": "supabase-checklist.html#need-help",
+    "title": "Supabase Setup - Quick Checklist",
+    "section": "Need Help?",
+    "text": "Need Help?\n\nSetup Guide: /supabase-setup-guide\nAdmin Setup: /admin-setup\nView Registrations: /admin-registrations"
   },
   {
     "objectID": "team.html",

@@ -1,0 +1,251 @@
+---
+title: "Supabase Setup Guide - Step by Step"
+description: "Complete visual guide to set up Supabase for MSP registrations"
+toc: true
+---
+
+## Step 1: Create Supabase Account
+
+### 1a. Visit Supabase Website
+- Open your browser
+- Go to **https://supabase.com**
+- You'll see the homepage with a big button that says "Start your project"
+
+### 1b. Sign Up
+- Click **"Sign Up"** (top right)
+- Choose **"Continue with Email"**
+- Enter your email address
+- Create a password
+- Click **"Sign Up"**
+- Check your email for verification link
+- Click the verification link
+
+### 1c. Create Your First Project
+After email verification, you'll see:
+```
+Welcome to Supabase!
+[Create a new project] button
+```
+- Click **"Create a new project"**
+
+### 1d. Project Details
+Fill in:
+```
+Project Name: MSP Registration Database
+(or any name you prefer)
+
+Database Password: (create a strong password)
+Region: Choose closest to Tanzania
+(East Africa / Singapore / Europe)
+```
+- Click **"Create new project"**
+- **Wait 1-2 minutes** for the project to be created
+- You'll see "Initializing project..." → then the dashboard opens
+
+---
+
+## Step 2: Get Your Credentials
+
+### 2a. Open Project Settings
+In the Supabase dashboard, look for the **Settings icon** (⚙️) in the bottom left sidebar
+- Click **Settings**
+- Click **API** tab
+
+### 2b. Copy Project URL
+You'll see:
+```
+┌─────────────────────────────┐
+│ Project URL                 │
+│ https://your-project-name   │
+│ .supabase.co                │
+│ [Copy button]               │
+└─────────────────────────────┘
+```
+- Click the **Copy button** next to Project URL
+- Or manually select and copy the full URL
+- **Keep this ready** - you'll paste it into the setup page
+
+### 2c. Copy API Key
+Scroll down and you'll see:
+```
+┌─────────────────────────────┐
+│ anon public                 │
+│ eyJhbGciOiJIUzI1NiIsIn...  │
+│ [Copy button]               │
+└─────────────────────────────┘
+```
+- Click **Copy button** next to "anon public" key
+- Or manually select and copy the entire long string
+- **Keep this ready** - you'll paste it into the setup page
+
+---
+
+## Step 3: Create the Table in Supabase
+
+### 3a. Go to SQL Editor
+In your Supabase dashboard:
+- Look at the left sidebar
+- Click **"SQL Editor"** (or "SQL")
+
+### 3b. Create New Query
+- Click **"New Query"** or **"+"** button
+- You'll see a blank text editor
+
+### 3c. Copy & Paste SQL Code
+
+**Go back to your MSP website** and visit: `/admin-setup`
+
+On that page, you'll see a gray box with SQL code. 
+- Click the **"📋 Copy SQL to Clipboard"** button
+- (This copies the code automatically)
+
+**Back in Supabase:**
+- In the SQL editor, click in the text area
+- Paste the code (Ctrl+V or Cmd+V)
+- You should see something like:
+
+```sql
+CREATE TABLE msp_registrations (
+  id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+  name TEXT NOT NULL,
+  email TEXT NOT NULL,
+  ...
+)
+```
+
+### 3d. Run the SQL
+- Click the big **blue "Run" button** (top right of editor)
+- Wait a few seconds
+- You should see: **"Success"** message
+
+---
+
+## Step 4: Enter Credentials in Admin Setup Page
+
+### 4a. Go to Admin Setup
+On your MSP website:
+- Visit: **`/admin-setup`**
+- You'll see a form with two input fields
+
+### 4b. Paste Project URL
+- Click the first field: **"Supabase Project URL"**
+- Paste the URL you copied (Ctrl+V)
+- Example: `https://your-project-name.supabase.co`
+
+### 4c. Paste API Key
+- Click the second field: **"Supabase Anon Public Key"**
+- Paste the API key you copied (Ctrl+V)
+- Example: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...`
+
+### 4d. Test Connection
+- Click **"🧪 Test Connection"** button
+- **Wait 5-10 seconds**
+- You should see: **"✓ Successfully connected to Supabase!"**
+
+If you see an error:
+- ❌ **"Invalid API key"** → Copy the API key again from Supabase
+- ❌ **"Table not found"** → Make sure you ran the SQL in step 3c
+- ❌ **"Connection failed"** → Check your Project URL is correct
+
+### 4e. Save Configuration
+- Once connection is successful, click **"✓ Save Configuration"**
+- You'll see: **"✓ Configuration saved!"**
+- The form will disappear and show a **green success message**
+- This means **setup is complete!** ✓
+
+---
+
+## Step 5: Test Registration
+
+### 5a. Go to Events Page
+- Visit: **`/events`**
+- You'll see the workshop registration form
+
+### 5b. Fill Out Test Registration
+- Fill in all required fields:
+  - Full Name: `Test User`
+  - Email: `test@example.com`
+  - Organization: `Test Org`
+  - Role: `Test Role`
+  - Gender: `Male` (or any option)
+  - District/Region: `Test Region`
+  - Experience: `Beginner` (or any option)
+  - Interest: `Data Collection Methods` (or any option)
+
+### 5c. Submit Form
+- Click **"Register for Workshop"** button
+- You should see a **green success message**: ✓
+- The form should clear
+
+### 5d. Check Supabase Dashboard
+- Go back to Supabase
+- In left sidebar, click **"Table Editor"**
+- Click **"msp_registrations"**
+- You should see your test registration in the table!
+
+---
+
+## All Done! 🎉
+
+Your registration system is now live:
+
+✅ **Visitors** visit `/events` and register  
+✅ **Registrations** automatically save to Supabase  
+✅ **You** can view data anytime in Supabase dashboard  
+✅ **Data** is backed up in the cloud  
+✅ **No costs** (free tier)  
+
+---
+
+## Important Notes
+
+### Your Credentials Are Safe
+- URL and API key are stored only in your browser's localStorage
+- Never sent anywhere except directly to Supabase
+- API key is "anon public" (read-only access for registrations)
+
+### Access Your Data Anytime
+To see registrations from anywhere:
+1. Go to https://supabase.com
+2. Log in with your email
+3. Open your "MSP Registration Database" project
+4. Click "Table Editor" → "msp_registrations"
+5. See all registrations in real-time!
+
+### Export Data
+In Supabase Table Editor:
+- Click the menu (⋮) next to table name
+- Choose "Export" → "Download as CSV"
+- Get all registrations in a spreadsheet
+
+---
+
+## Troubleshooting
+
+**Q: I forgot my Supabase password**
+- Go to supabase.com → "Forgot password"
+
+**Q: Table doesn't appear in Supabase**
+- Check that you ran the SQL code in SQL Editor
+- Make sure you clicked the blue "Run" button
+
+**Q: Connection test fails**
+- Double-check Project URL is spelled correctly
+- Double-check API key is complete (no missing characters)
+- Make sure you created the table first
+
+**Q: Registrations not appearing in Supabase**
+- Test the registration form at `/events`
+- Check browser console (F12 → Console) for errors
+- Make sure table is named exactly "msp_registrations"
+
+---
+
+## Next Steps
+
+1. ✅ Complete the setup above
+2. Share the `/events` link with participants
+3. Monitor registrations in real-time on Supabase dashboard
+4. Export data whenever needed
+
+**Questions?** Check the admin page at `/admin-setup` for more help!

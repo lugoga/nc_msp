@@ -1,0 +1,159 @@
+---
+title: "Supabase Setup - Quick Checklist"
+description: "Quick setup checklist for Supabase workshop registrations"
+toc: false
+---
+
+## ✅ Setup Checklist
+
+Follow these steps in order:
+
+### Step 1: Create Supabase Project ⭐
+
+- [ ] Go to https://supabase.com
+- [ ] Click "Sign Up"
+- [ ] Create account with your email
+- [ ] Verify email
+- [ ] Click "Create new project"
+- [ ] Set:
+  - **Project Name:** `MSP Registration Database` (or similar)
+  - **Password:** Create a strong password
+  - **Region:** East Africa or closest to you
+- [ ] Click "Create new project"
+- [ ] ⏳ Wait 1-2 minutes for project to initialize
+
+### Step 2: Create Database Table ⭐
+
+In your Supabase dashboard:
+- [ ] Left sidebar → Click **"SQL Editor"**
+- [ ] Click **"New Query"** button
+- [ ] Copy this SQL and paste it:
+
+```sql
+CREATE TABLE msp_registrations (
+  id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+  name TEXT NOT NULL,
+  email TEXT NOT NULL,
+  phone TEXT,
+  organization TEXT NOT NULL,
+  role TEXT NOT NULL,
+  gender TEXT NOT NULL,
+  origin TEXT NOT NULL,
+  experience TEXT NOT NULL,
+  interests TEXT NOT NULL,
+  timestamp TEXT NOT NULL,
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
+ALTER TABLE msp_registrations ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Allow public insert" ON msp_registrations
+  FOR INSERT
+  WITH CHECK (TRUE);
+
+CREATE POLICY "Allow all select" ON msp_registrations
+  FOR SELECT
+  USING (TRUE);
+```
+
+- [ ] Click the big blue **"Run"** button
+- [ ] ✓ Wait for "Success" message
+
+### Step 3: Get Your Credentials ⭐
+
+In your Supabase dashboard:
+- [ ] Bottom left → Click **"Settings"** (gear icon)
+- [ ] Click **"API"** tab
+- [ ] Copy your **"Project URL"** (looks like: `https://xxxxx.supabase.co`)
+  - Click copy button or select and copy
+  - **Paste it somewhere safe temporarily**
+- [ ] Copy your **"anon public"** key (long string)
+  - Click copy button or select and copy
+  - **Paste it somewhere safe temporarily**
+
+### Step 4: Enter Credentials in Admin Setup ⭐
+
+On your MSP website:
+- [ ] Go to **Admin → "Setup Registration Sync"** (or `/admin-setup`)
+- [ ] Paste Project URL in first field
+- [ ] Paste API Key in second field
+- [ ] Click **"🧪 Test Connection"**
+- [ ] ✓ Wait for: **"✓ Successfully connected to Supabase!"**
+- [ ] Click **"✓ Save Configuration"**
+- [ ] ✓ See green success message
+
+### Step 5: Test Registration ⭐
+
+- [ ] Go to **"Events"** page or `/events`
+- [ ] Fill out form with test data:
+  - Name: `John Doe`
+  - Email: `john@example.com`
+  - Organization: `Test Org`
+  - Role: `Test Role`
+  - Gender: Pick one
+  - District: `Test District`
+  - Experience: `Beginner`
+  - Interest: `Data Collection Methods`
+- [ ] Click **"Register for Workshop"**
+- [ ] ✓ See green confirmation message
+
+### Step 6: Verify in Supabase ⭐
+
+- [ ] Go back to Supabase dashboard
+- [ ] Left sidebar → **"Table Editor"**
+- [ ] Click **"msp_registrations"** table
+- [ ] ✓ **You should see your test registration!**
+
+---
+
+## 🎉 Done!
+
+Your registration system is now live!
+
+### What happens now:
+1. ✅ Visitors fill out `/events` form
+2. ✅ Data saves to Supabase automatically
+3. ✅ You see registrations in real-time in Supabase
+
+### View Your Data Anytime:
+- Go to https://supabase.com
+- Log in
+- Open your project
+- Click "Table Editor" → "msp_registrations"
+- See all registrations instantly!
+
+### Export Data:
+In Supabase, click the menu (⋯) next to table name → "Export" → "Download CSV"
+
+---
+
+## ⚠️ Troubleshooting
+
+**Q: Connection test says "Table not found"**
+- Make sure you ran the SQL code in Step 2
+- Check the blue "Run" button was clicked
+- Try refreshing Supabase
+
+**Q: Connection test says "Invalid API key"**
+- Double-check the API key is complete
+- Make sure you copied the "anon public" key, not "service_role"
+- Try copying again from Supabase
+
+**Q: No registrations appearing in Supabase**
+- Check browser console (F12 → Console)
+- Submit another test registration
+- Refresh Supabase dashboard
+- Check that table is named exactly "msp_registrations"
+
+**Q: Still not working?**
+- Check the browser console for errors (F12 → Console tab)
+- Copy-paste any error messages
+- Make sure Supabase credentials are saved (check `/admin-setup` page)
+
+---
+
+## Need Help?
+
+- Setup Guide: `/supabase-setup-guide`
+- Admin Setup: `/admin-setup`
+- View Registrations: `/admin-registrations`

@@ -56,6 +56,10 @@ website:
     right:
       - text: "Admin"
         menu:
+          - text: "Setup Checklist"
+            href: supabase-checklist.qmd
+          - text: "Setup Guide (How-To)"
+            href: supabase-setup-guide.qmd
           - text: "Setup Registration Sync"
             href: admin-setup.qmd
           - text: "View Registrations"

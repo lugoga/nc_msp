@@ -1,10 +1,11 @@
 // Supabase Registration Sync Configuration
 // This integrates with Supabase Cloud for serverless data collection
 
+// Load credentials from localStorage (set in admin-setup.qmd)
 const SUPABASE_CONFIG = {
   // Get these from your Supabase project settings
-  SUPABASE_URL: 'https://your-project.supabase.co',           // Replace with your Supabase URL
-  SUPABASE_ANON_KEY: 'your-anon-key-here',                   // Replace with your anon public key
+  SUPABASE_URL: localStorage.getItem('supabase_url') || '',
+  SUPABASE_ANON_KEY: localStorage.getItem('supabase_key') || '',
   TABLE_NAME: 'msp_registrations',
   AUTO_SYNC: true,
   SYNC_INTERVAL: 60000, // Sync every 60 seconds
@@ -12,13 +13,21 @@ const SUPABASE_CONFIG = {
 
 // Initialize Supabase client
 let supabaseClient = null;
+let supabaseInitialized = false;
 
 async function initSupabase() {
   if (supabaseClient) return supabaseClient;
   
+  // Check if credentials are configured
+  if (!SUPABASE_CONFIG.SUPABASE_URL || !SUPABASE_CONFIG.SUPABASE_ANON_KEY) {
+    console.warn('Supabase credentials not configured. Registrations will save locally only.');
+    return null;
+  }
+  
   try {
-    // Dynamically load Supabase library
+    // Dynamically load Supabase library if not already loaded
     if (!window.supabase) {
+      console.log('Loading Supabase library...');
       await new Promise((resolve, reject) => {
         const script = document.createElement('script');
         script.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.38.0';
@@ -28,11 +37,15 @@ async function initSupabase() {
       });
     }
     
+    console.log('Initializing Supabase client with URL:', SUPABASE_CONFIG.SUPABASE_URL);
+    
     supabaseClient = window.supabase.createClient(
       SUPABASE_CONFIG.SUPABASE_URL,
       SUPABASE_CONFIG.SUPABASE_ANON_KEY
     );
     
+    supabaseInitialized = true;
+    console.log('✓ Supabase client initialized successfully');
     return supabaseClient;
   } catch (error) {
     console.error('Failed to initialize Supabase:', error);
@@ -43,25 +56,45 @@ async function initSupabase() {
 // Save registration to Supabase
 async function saveRegistrationToSupabase(registrationData) {
   try {
+    console.log('=== SAVING REGISTRATION ===');
+    console.log('Registration data:', registrationData);
+    
     const client = await initSupabase();
     if (!client) {
-      console.warn('Supabase not initialized, saving locally only');
+      console.warn('⚠️ Supabase not initialized. Data saved locally only.');
       return false;
     }
+    
+    console.log('Inserting into table:', SUPABASE_CONFIG.TABLE_NAME);
     
     const { data, error } = await client
       .from(SUPABASE_CONFIG.TABLE_NAME)
-      .insert([registrationData]);
+      .insert([{
+        name: registrationData.name,
+        email: registrationData.email,
+        phone: registrationData.phone || null,
+        organization: registrationData.organization,
+        role: registrationData.role,
+        gender: registrationData.gender,
+        origin: registrationData.origin,
+        experience: registrationData.experience,
+        interests: registrationData.interests,
+        timestamp: registrationData.timestamp
+      }]);
     
     if (error) {
-      console.error('Supabase insert error:', error);
+      console.error('❌ Supabase insert error:', error);
+      console.error('Error code:', error.code);
+      console.error('Error message:', error.message);
+      console.error('Error details:', error.details);
       return false;
     }
     
-    console.log('✓ Registration saved to Supabase');
+    console.log('✓ Registration saved to Supabase successfully');
+    console.log('Response data:', data);
     return true;
   } catch (error) {
-    console.error('Error saving to Supabase:', error);
+    console.error('❌ Exception while saving to Supabase:', error);
     return false;
   }
 }
@@ -69,8 +102,13 @@ async function saveRegistrationToSupabase(registrationData) {
 // Sync local registrations to Supabase
 async function syncToSupabase() {
   try {
+    console.log('Starting sync to Supabase...');
+    
     const client = await initSupabase();
-    if (!client) return false;
+    if (!client) {
+      console.log('Supabase not initialized, skipping sync');
+      return false;
+    }
     
     const registrations = JSON.parse(localStorage.getItem('msp_registrations') || '[]');
     
@@ -79,35 +117,35 @@ async function syncToSupabase() {
       return true;
     }
     
-    // Insert all registrations (Supabase will ignore duplicates based on timestamp + email)
-    const { error } = await client
+    console.log(`Syncing ${registrations.length} registration(s)...`);
+    
+    // Insert all registrations
+    const { data, error } = await client
       .from(SUPABASE_CONFIG.TABLE_NAME)
-      .upsert(
+      .insert(
         registrations.map(reg => ({
           name: reg.name,
           email: reg.email,
-          phone: reg.phone,
+          phone: reg.phone || null,
           organization: reg.organization,
           role: reg.role,
           gender: reg.gender,
           origin: reg.origin,
           experience: reg.experience,
           interests: reg.interests,
-          timestamp: reg.timestamp,
-          synced_at: new Date().toISOString()
-        })),
-        { onConflict: 'email,timestamp' }
+          timestamp: reg.timestamp
+        }))
       );
     
     if (error) {
-      console.error('Supabase sync error:', error);
+      console.error('❌ Supabase sync error:', error);
       return false;
     }
     
     console.log('✓ All registrations synced to Supabase');
     return true;
   } catch (error) {
-    console.error('Error syncing to Supabase:', error);
+    console.error('❌ Error syncing to Supabase:', error);
     return false;
   }
 }
