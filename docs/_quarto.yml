@@ -16,6 +16,7 @@ project:
     - "!posts/ecosystem_health_indicators/*.qmd"
     - "!posts/monitoring_ecosystem_change/*.qmd"
     - "!posts/spatial_ecosystem_motifs/*.qmd"
+    - "!projK_data.qmd"
 
 website:
   # title: "Marine Spatial Planning Initiative - Tanzania"

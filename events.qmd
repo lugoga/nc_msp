@@ -1,62 +1,119 @@
 ---
-title: "Events & Workshops"
-description: "Marine Spatial Planning events, workshops, and training sessions"
+title: "MSP Data Collection & Validation Workshop"
+description: "Workshop for data collection and validation in Marine Spatial Planning initiatives"
 toc: false
 ---
 
-## Upcoming Events
+::: {style="background-color: #e8f4f8; padding: 20px; border-radius: 8px; margin-bottom: 30px; border-left: 4px solid #3498db;"}
+## Data Collection & Validation Workshop for MSP
 
-Stay tuned for upcoming workshops and training sessions on marine spatial planning, coastal management, and ecosystem monitoring.
+**Focus:** Building capacity in data collection protocols, quality assurance, and validation techniques for Marine Spatial Planning initiatives in coastal Tanzania.
+:::
+
+## Workshop Overview
+
+**Date & Time:** To be announced  
+**Location:** SOAF-UDSM, Dar es Salaam  
+**Duration:** 3 days  
+**Target Participants:** Government officials, NGO staff, academic researchers, community representatives
+
+### Workshop Objectives
+
+- Establish standardized data collection protocols for MSP
+- Train participants in data quality assurance and validation methods
+- Build local capacity for sustainable data management
+- Ensure data consistency across coastal districts (Mkoani, Mkuranga)
+- Develop community engagement strategies for data validation
+
+### Topics Covered
+
+- MSP Data Framework & Requirements
+- Data Collection Best Practices
+- Quality Assurance & Validation Protocols
+- Spatial Data Management
+- Community Participation in Data Validation
+- Data Documentation & Metadata Standards
 
 ---
 
-## Workshop Registration
+## Register for the Workshop
 
-Register for our upcoming events using the form below.
+Please provide your information below to register for the MSP Data Collection & Validation Workshop.
 
 ```{=html}
-<form id="eventRegistrationForm" style="max-width: 500px; margin: 20px 0;">
+<div id="successMessage" style="display: none; background-color: #27ae60; color: white; padding: 15px; border-radius: 4px; margin-bottom: 20px; text-align: center; font-weight: bold;">
+  ✓ Thank you for registering! Your information has been saved. We'll contact you with workshop details.
+</div>
+
+<form id="eventRegistrationForm" style="max-width: 600px; margin: 20px auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px; background-color: #f9f9f9;">
   
   <div style="margin-bottom: 15px;">
-    <label for="fullName" style="display: block; margin-bottom: 5px; font-weight: bold;">Full Name *</label>
-    <input type="text" id="fullName" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;">
+    <label for="fullName" style="display: block; margin-bottom: 5px; font-weight: bold;">Full Name <span style="color: red;">*</span></label>
+    <input type="text" id="fullName" placeholder="Enter your full name" required style="width: 100%; padding: 10px; border: 1px solid #bbb; border-radius: 4px; box-sizing: border-box;">
   </div>
 
   <div style="margin-bottom: 15px;">
-    <label for="email" style="display: block; margin-bottom: 5px; font-weight: bold;">Email Address *</label>
-    <input type="email" id="email" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;">
+    <label for="email" style="display: block; margin-bottom: 5px; font-weight: bold;">Email Address <span style="color: red;">*</span></label>
+    <input type="email" id="email" placeholder="your.email@example.com" required style="width: 100%; padding: 10px; border: 1px solid #bbb; border-radius: 4px; box-sizing: border-box;">
   </div>
 
   <div style="margin-bottom: 15px;">
     <label for="phone" style="display: block; margin-bottom: 5px; font-weight: bold;">Phone Number</label>
-    <input type="tel" id="phone" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;">
+    <input type="tel" id="phone" placeholder="+255 712 345 678" style="width: 100%; padding: 10px; border: 1px solid #bbb; border-radius: 4px; box-sizing: border-box;">
   </div>
 
   <div style="margin-bottom: 15px;">
-    <label for="organization" style="display: block; margin-bottom: 5px; font-weight: bold;">Organization</label>
-    <input type="text" id="organization" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;">
+    <label for="organization" style="display: block; margin-bottom: 5px; font-weight: bold;">Organization <span style="color: red;">*</span></label>
+    <input type="text" id="organization" placeholder="e.g., Ministry, NGO, University, Community Organization" required style="width: 100%; padding: 10px; border: 1px solid #bbb; border-radius: 4px; box-sizing: border-box;">
   </div>
 
   <div style="margin-bottom: 15px;">
-    <label for="workshop" style="display: block; margin-bottom: 5px; font-weight: bold;">Workshop of Interest *</label>
-    <select id="workshop" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;">
-      <option value="">-- Select a workshop --</option>
-      <option value="Spatial Analysis">Spatial Analysis Fundamentals</option>
-      <option value="Land Cover">Land Cover Mapping & Change Detection</option>
-      <option value="Coastal Management">Coastal Ecosystem Management</option>
-      <option value="Marine Spatial Planning">Marine Spatial Planning Basics</option>
-      <option value="Data Visualization">Data Visualization for Decision Making</option>
-      <option value="Other">Other/General Interest</option>
+    <label for="role" style="display: block; margin-bottom: 5px; font-weight: bold;">Your Role/Position <span style="color: red;">*</span></label>
+    <input type="text" id="role" placeholder="e.g., Data Officer, Researcher, Community Leader" required style="width: 100%; padding: 10px; border: 1px solid #bbb; border-radius: 4px; box-sizing: border-box;">
+  </div>
+
+  <div style="margin-bottom: 15px;">
+    <label for="gender" style="display: block; margin-bottom: 5px; font-weight: bold;">Gender <span style="color: red;">*</span></label>
+    <select id="gender" required style="width: 100%; padding: 10px; border: 1px solid #bbb; border-radius: 4px; box-sizing: border-box;">
+      <option value="">-- Select Gender --</option>
+      <option value="Male">Male</option>
+      <option value="Female">Female</option>
+      <option value="Other">Other</option>
+      <option value="Prefer not to say">Prefer not to say</option>
     </select>
   </div>
 
-  <button type="submit" style="background-color: #3498db; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; font-weight: bold; width: 100%;">
-    Register Now
-  </button>
-
-  <div id="successMessage" style="display: none; margin-top: 20px; padding: 15px; background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; border-radius: 4px;">
-    ✓ Thank you for registering! Your information has been saved. We'll contact you with event details.
+  <div style="margin-bottom: 15px;">
+    <label for="origin" style="display: block; margin-bottom: 5px; font-weight: bold;">District/Region <span style="color: red;">*</span></label>
+    <input type="text" id="origin" placeholder="e.g., Mkoani, Mkuranga, Dar es Salaam" required style="width: 100%; padding: 10px; border: 1px solid #bbb; border-radius: 4px; box-sizing: border-box;">
   </div>
+
+  <div style="margin-bottom: 15px;">
+    <label for="experience" style="display: block; margin-bottom: 5px; font-weight: bold;">Data Management Experience <span style="color: red;">*</span></label>
+    <select id="experience" required style="width: 100%; padding: 10px; border: 1px solid #bbb; border-radius: 4px; box-sizing: border-box;">
+      <option value="">-- Select Experience Level --</option>
+      <option value="Beginner">Beginner (No prior experience)</option>
+      <option value="Intermediate">Intermediate (Some experience)</option>
+      <option value="Advanced">Advanced (Extensive experience)</option>
+    </select>
+  </div>
+
+  <div style="margin-bottom: 20px;">
+    <label for="interests" style="display: block; margin-bottom: 5px; font-weight: bold;">Primary Interest in MSP Data <span style="color: red;">*</span></label>
+    <select id="interests" required style="width: 100%; padding: 10px; border: 1px solid #bbb; border-radius: 4px; box-sizing: border-box;">
+      <option value="">-- Select Interest --</option>
+      <option value="Data Collection Methods">Data Collection Methods</option>
+      <option value="Data Validation & QA">Data Validation & QA</option>
+      <option value="Spatial Analysis">Spatial Analysis</option>
+      <option value="Community Engagement">Community Engagement</option>
+      <option value="Policy & Implementation">Policy & Implementation</option>
+      <option value="All Topics">All Topics</option>
+    </select>
+  </div>
+
+  <button type="submit" style="width: 100%; background-color: #3498db; color: white; padding: 12px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; font-weight: bold;">
+    Register for Workshop
+  </button>
 </form>
 
 <script>
@@ -65,30 +122,48 @@ document.getElementById('eventRegistrationForm').addEventListener('submit', func
   
   const fullName = document.getElementById('fullName').value;
   const email = document.getElementById('email').value;
-  const workshop = document.getElementById('workshop').value;
+  const phone = document.getElementById('phone').value || 'Not provided';
+  const organization = document.getElementById('organization').value;
+  const role = document.getElementById('role').value;
+  const gender = document.getElementById('gender').value;
+  const origin = document.getElementById('origin').value;
+  const experience = document.getElementById('experience').value;
+  const interests = document.getElementById('interests').value;
   
-  if (!fullName || !email || !workshop) {
+  // Validate required fields
+  if (!fullName || !email || !organization || !role || !gender || !origin || !experience || !interests) {
     alert('Please fill in all required fields (marked with *)');
     return;
   }
   
-  // Save to browser storage
+  // Get existing registrations
   const registrations = JSON.parse(localStorage.getItem('msp_registrations') || '[]');
+  
+  // Create new registration
   registrations.push({
     name: fullName,
     email: email,
-    phone: document.getElementById('phone').value || 'Not provided',
-    organization: document.getElementById('organization').value || 'Not provided',
-    workshop: workshop,
+    phone: phone,
+    organization: organization,
+    role: role,
+    gender: gender,
+    origin: origin,
+    experience: experience,
+    interests: interests,
     timestamp: new Date().toLocaleString()
   });
+  
+  // Save to localStorage
   localStorage.setItem('msp_registrations', JSON.stringify(registrations));
   
   // Show success message
   document.getElementById('successMessage').style.display = 'block';
+  
+  // Reset form
   document.getElementById('eventRegistrationForm').reset();
   
-  console.log('Registration saved:', { fullName, email, workshop });
+  // Log for debugging
+  console.log('Registration saved:', { fullName, email, organization, gender, origin, experience, interests });
 });
 </script>
 ```
@@ -97,21 +172,30 @@ document.getElementById('eventRegistrationForm').addEventListener('submit', func
 
 ## Frequently Asked Questions
 
-**Q: What should I bring to a workshop?**
-A: Please bring a laptop with R or Python installed. We'll provide all datasets and materials.
+**Q: Who should attend this workshop?**  
+A: Government officials working on MSP, NGO representatives, researchers, community leaders, and anyone involved in data collection or validation for coastal management initiatives.
 
-**Q: Is there a registration fee?**
-A: Most workshops are free for participants from partner institutions.
+**Q: Do I need prior experience in data management?**  
+A: No prior experience is required. We accommodate all experience levels, from beginners to advanced practitioners.
 
-**Q: How long are workshops?**
-A: Workshops typically run 2-4 hours depending on the topic.
+**Q: What is the cost of participation?**  
+A: Pricing and fee information will be provided upon confirmation. Some support may be available for government staff and community representatives.
 
-**Q: Do you provide certificates?**
-A: Yes, completion certificates are provided for all workshops.
+**Q: Will training materials be provided?**  
+A: Yes, comprehensive training materials, data collection templates, and validation checklists will be provided to all participants.
 
-**Q: Can I attend remotely?**
-A: Some workshops are held in person at SOAF-UDSM, while others are online. Details provided upon registration.
+**Q: How will this workshop help my organization?**  
+A: This workshop will strengthen your organization's data management capacity, ensure consistency with national MSP standards, and improve the quality of spatial data for decision-making.
+
+**Q: Will there be follow-up support after the workshop?**  
+A: Yes, we provide ongoing technical support and can conduct on-site training at your organization if needed.
 
 ---
 
-**Questions?** Contact us at [lugosemba@gmail.com](mailto:lugosemba@gmail.com)
+## Contact Information
+
+For more information about the MSP Data Collection & Validation Workshop, contact:
+
+**Email:** [msp.coastal.tz@udsm.ac.tz](mailto:msp.coastal.tz@udsm.ac.tz)  
+**Phone:** Available upon request  
+**Organization:** SOAF-UDSM, Marine Spatial Planning Initiative

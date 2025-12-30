@@ -524,13 +524,17 @@ ul.task-list li input[type="checkbox"] {
 <th data-quarto-table-cell-role="th" style="text-align: left; padding: 10px; border: 1px solid #ddd;">Email</th>
 <th data-quarto-table-cell-role="th" style="text-align: left; padding: 10px; border: 1px solid #ddd;">Phone</th>
 <th data-quarto-table-cell-role="th" style="text-align: left; padding: 10px; border: 1px solid #ddd;">Organization</th>
-<th data-quarto-table-cell-role="th" style="text-align: left; padding: 10px; border: 1px solid #ddd;">Workshop</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; padding: 10px; border: 1px solid #ddd;">Role</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; padding: 10px; border: 1px solid #ddd;">Gender</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; padding: 10px; border: 1px solid #ddd;">District/Region</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; padding: 10px; border: 1px solid #ddd;">Experience</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; padding: 10px; border: 1px solid #ddd;">Interest</th>
 <th data-quarto-table-cell-role="th" style="text-align: left; padding: 10px; border: 1px solid #ddd;">Timestamp</th>
 </tr>
 </thead>
 <tbody id="tableBody">
 <tr class="odd">
-<td colspan="7" style="text-align: center; padding: 20px; color: #999;">No registrations yet</td>
+<td colspan="11" style="text-align: center; padding: 20px; color: #999;">No registrations yet</td>
 </tr>
 </tbody>
 </table>
@@ -614,7 +618,11 @@ function loadAndDisplayRegistrations() {
       <td style="padding: 10px; border: 1px solid #ddd;"><a href="mailto:${reg.email}" style="color: #3498db; text-decoration: none;">${reg.email || '-'}</a></td>
       <td style="padding: 10px; border: 1px solid #ddd;">${reg.phone || '-'}</td>
       <td style="padding: 10px; border: 1px solid #ddd;">${reg.organization || '-'}</td>
-      <td style="padding: 10px; border: 1px solid #ddd;"><strong>${reg.workshop || '-'}</strong></td>
+      <td style="padding: 10px; border: 1px solid #ddd;">${reg.role || '-'}</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">${reg.gender || '-'}</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">${reg.origin || '-'}</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">${reg.experience || '-'}</td>
+      <td style="padding: 10px; border: 1px solid #ddd;">${reg.interests || '-'}</td>
       <td style="padding: 10px; border: 1px solid #ddd; font-size: 12px;">${reg.timestamp || '-'}</td>
     </tr>
   `).join('');
@@ -630,7 +638,7 @@ document.getElementById('exportBtn').addEventListener('click', function() {
   }
   
   // Create CSV header
-  const headers = ['Name', 'Email', 'Phone', 'Organization', 'Workshop', 'Timestamp'];
+  const headers = ['Name', 'Email', 'Phone', 'Organization', 'Role', 'Gender', 'District/Region', 'Experience', 'Interest', 'Timestamp'];
   const csvContent = [
     headers.join(','),
     ...registrations.map(reg => [
@@ -638,7 +646,11 @@ document.getElementById('exportBtn').addEventListener('click', function() {
       `"${reg.email || ''}"`,
       `"${reg.phone || ''}"`,
       `"${reg.organization || ''}"`,
-      `"${reg.workshop || ''}"`,
+      `"${reg.role || ''}"`,
+      `"${reg.gender || ''}"`,
+      `"${reg.origin || ''}"`,
+      `"${reg.experience || ''}"`,
+      `"${reg.interests || ''}"`,
       `"${reg.timestamp || ''}"`
     ].join(','))
   ].join('\n');
