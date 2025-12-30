@@ -54,16 +54,16 @@ website:
 
 
     right:
-      - text: "Admin"
-        menu:
-          - text: "Setup Checklist"
-            href: supabase-checklist.qmd
-          - text: "Setup Guide (How-To)"
-            href: supabase-setup-guide.qmd
-          - text: "Setup Registration Sync"
-            href: admin-setup.qmd
-          - text: "View Registrations"
-            href: admin-registrations.qmd
+      # - text: "Admin"
+      #   menu:
+      #     - text: "Setup Checklist"
+      #       href: supabase-checklist.qmd
+      #     - text: "Setup Guide (How-To)"
+      #       href: supabase-setup-guide.qmd
+      #     - text: "Setup Registration Sync"
+      #       href: admin-setup.qmd
+      #     - text: "View Registrations"
+      #       href: admin-registrations.qmd
       - icon: github
         href: https://github.com/lugoga/nc_msp/
         target: "_blank"
