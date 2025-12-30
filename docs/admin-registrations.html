@@ -6,9 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="View all workshop registrations">
 
-<title>Event Registrations (Admin)</title>
+<title>admin-registrations</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -71,13 +70,13 @@ ul.task-list li input[type="checkbox"] {
 <meta name="keywords" content="marine spatial planning, coastal management, Tanzania, land cover analysis, ecosystem monitoring, Mkoani, Mkuranga, Pemba, Pwani">
 <meta name="author" content="Masumbuko Semba, SOAF-UDSM">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta property="og:title" content="Event Registrations (Admin)">
-<meta property="og:description" content="View all workshop registrations">
+<meta property="og:title" content="">
+<meta property="og:description" content="Marine Spatial Planning consultancy for coastal Tanzania districts - Mkoani (Pemba) and Mkuranga (Pwani). Spatial analysis, coastal management, and ecosystem monitoring.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://lugoga.github.io/nc_msp/">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Event Registrations (Admin)">
-<meta name="twitter:description" content="View all workshop registrations">
+<meta name="twitter:title" content="">
+<meta name="twitter:description" content="Marine Spatial Planning consultancy for coastal Tanzania districts - Mkoani (Pemba) and Mkuranga (Pwani). Spatial analysis, coastal management, and ecosystem monitoring.">
 <style>
   body {
     -webkit-user-select: none;
@@ -285,10 +284,6 @@ ul.task-list li input[type="checkbox"] {
     <a class="nav-link" href="./events.html"> 
 <span class="menu-text">Events</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./admin-registrations.html"> 
-<span class="menu-text">Admin</span></a>
-  </li>  
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-reports" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Reports</span>
@@ -326,6 +321,10 @@ ul.task-list li input[type="checkbox"] {
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./admin-registrations.html"> 
+<span class="menu-text">Admin</span></a>
+  </li>  
   <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/lugoga/nc_msp/" target="_blank"> <i class="bi bi-github" role="img">
 </i> 
@@ -372,7 +371,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Event Registrations (Admin)</li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -467,32 +466,12 @@ ul.task-list li input[type="checkbox"] {
 <!-- margin-sidebar -->
     
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Event Registrations (Admin)</h1>
-</div>
-
-<div>
-  <div class="description">
-    View all workshop registrations
-  </div>
-</div>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
 
 
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
 
 
-</header>
-
-
+<p>Only authorized admin users can access the workshop registrations data and management tools</p>
 <div id="loginDiv" style="max-width: 400px; margin: 50px auto; padding: 30px; border: 1px solid #ddd; border-radius: 8px; background-color: #f9f9f9;">
   <h2 style="text-align: center; margin-bottom: 30px;" class="anchored">Admin Login</h2>
   
@@ -685,18 +664,12 @@ document.getElementById('clearBtn').addEventListener('click', function() {
   }
 });
 
-// Load registrations on page load
-window.addEventListener('load', loadAndDisplayRegistrations);
+// Initialize on page load
+window.addEventListener('load', function() {
+  checkLogin();
 });
-
-// Check login status on page load
-window.addEventListener('load', checkLogin);
 </script>
 <hr>
-<!-- Default Credentials:
-
-Username: admin
-Password: msp2025 -->
 
 
 

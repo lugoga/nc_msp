@@ -34,8 +34,6 @@ website:
         href: blog.qmd
       - text: "Events"
         href: events.qmd
-      - text: "Admin"
-        href: admin-registrations.qmd
       - text: "Reports"
         menu:
           - text: "Deliverable One: Inception Report"
@@ -55,6 +53,8 @@ website:
 
 
     right:
+      - text: "Admin"
+        href: admin-registrations.qmd
       - icon: github
         href: https://github.com/lugoga/nc_msp/
         target: "_blank"

@@ -1,8 +1,10 @@
 ---
-title: "Event Registrations (Admin)"
-description: "View all workshop registrations"
+title: ""
+# description: "Only authorized admin users can access the workshop registrations data and management tools."
 toc: false
 ---
+
+Only authorized admin users can access the workshop registrations data and management tools
 
 ```{=html}
 <div id="loginDiv" style="max-width: 400px; margin: 50px auto; padding: 30px; border: 1px solid #ddd; border-radius: 8px; background-color: #f9f9f9;">
@@ -193,20 +195,15 @@ document.getElementById('clearBtn').addEventListener('click', function() {
   }
 });
 
-// Load registrations on page load
-window.addEventListener('load', loadAndDisplayRegistrations);
+// Initialize on page load
+window.addEventListener('load', function() {
+  checkLogin();
 });
-
-// Check login status on page load
-window.addEventListener('load', checkLogin);
 </script>
 ```
 
 ---
 
-<!-- Default Credentials:
 
-Username: admin
-Password: msp2025 -->
 
 

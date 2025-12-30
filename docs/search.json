@@ -382,9 +382,9 @@
   {
     "objectID": "admin-registrations.html",
     "href": "admin-registrations.html",
-    "title": "Event Registrations (Admin)",
+    "title": "",
     "section": "",
-    "text": "Admin Login\n  \n  \n    Username:\n    \n  \n  \n  \n    Password:\n    \n  \n  \n  \n    Login\n  \n  \n  \n\n\n\n  \n    \n      🚪 Logout\n    \n  \n  \n  Workshop Registrations\n  \n  \n    \n      📥 Export to CSV\n    \n    \n      🗑️ Clear All Data\n    \n  \n\n  \n    Total Registrations: 0\n  \n\n  \n    \n\n\n\n#\nName\nEmail\nPhone\nOrganization\nWorkshop\nTimestamp\n\n\n\n\nNo registrations yet"
+    "text": "Only authorized admin users can access the workshop registrations data and management tools\n\n  Admin Login\n  \n  \n    Username:\n    \n  \n  \n  \n    Password:\n    \n  \n  \n  \n    Login\n  \n  \n  \n\n\n\n  \n    \n      🚪 Logout\n    \n  \n  \n  Workshop Registrations\n  \n  \n    \n      📥 Export to CSV\n    \n    \n      🗑️ Clear All Data\n    \n  \n\n  \n    Total Registrations: 0\n  \n\n  \n    \n\n\n\n#\nName\nEmail\nPhone\nOrganization\nWorkshop\nTimestamp\n\n\n\n\nNo registrations yet"
   },
   {
     "objectID": "events.html",
