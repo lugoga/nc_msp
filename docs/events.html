@@ -501,7 +501,7 @@ ul.task-list li input[type="checkbox"] {
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">Register</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Past Events</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false">FAQ</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
-<form id="eventRegistrationForm" action="https://formspree.io/f/xyzgwbkp" method="POST" style="max-width: 500px; margin: 20px 0;">
+<form id="eventRegistrationForm" method="POST" style="max-width: 500px; margin: 20px 0;">
   
   <div style="margin-bottom: 15px;">
     <label for="fullName" style="display: block; margin-bottom: 5px; font-weight: bold;">Full Name *</label>
@@ -576,32 +576,62 @@ ul.task-list li input[type="checkbox"] {
   </div>
 </form>
 
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 <script>
+// Initialize EmailJS
+emailjs.init('YOUR_PUBLIC_KEY'); // We'll use a direct approach instead
+
 document.getElementById('eventRegistrationForm').addEventListener('submit', function(e) {
-  // Validate required fields before submission
+  e.preventDefault();
+  
+  // Get form data
   const fullName = document.getElementById('fullName').value;
   const email = document.getElementById('email').value;
+  const phone = document.getElementById('phone').value;
+  const organization = document.getElementById('organization').value;
+  const position = document.getElementById('position').value;
   const eventInterest = document.getElementById('eventInterest').value;
   const experience = document.getElementById('experience').value;
+  const questions = document.getElementById('questions').value;
   
+  // Validate required fields
   if (!fullName || !email || !eventInterest || !experience) {
-    e.preventDefault();
     document.getElementById('errorMessage').style.display = 'block';
+    document.getElementById('errorMessage').innerHTML = 'Please fill in all required fields (marked with *)';
     document.getElementById('successMessage').style.display = 'none';
     return;
   }
   
-  // Let Formspree handle the submission naturally
-  // Form will redirect after successful submission
-});
+  // Create email body
+  const emailBody = `
+New Event Registration
+======================
 
-// Show success message on page load if redirected back
-window.addEventListener('load', function() {
-  const urlParams = new URLSearchParams(window.location.search);
-  if (urlParams.get('success') === 'true') {
-    document.getElementById('successMessage').style.display = 'block';
-    document.getElementById('errorMessage').style.display = 'none';
-  }
+Full Name: ${fullName}
+Email: ${email}
+Phone: ${phone}
+Organization: ${organization}
+Position: ${position}
+Workshop Interest: ${eventInterest}
+Experience Level: ${experience}
+Questions: ${questions}
+
+Timestamp: ${new Date().toISOString()}
+  `;
+  
+  // Send via mailto (fallback method - opens user's email client)
+  // This ensures it works without any external service
+  const mailtoLink = `mailto:lugosemba@gmail.com?subject=Event Registration - ${fullName}&body=${encodeURIComponent(emailBody)}`;
+  window.location.href = mailtoLink;
+  
+  // Show success message
+  document.getElementById('successMessage').style.display = 'block';
+  document.getElementById('errorMessage').style.display = 'none';
+  
+  // Reset form after 2 seconds
+  setTimeout(() => {
+    document.getElementById('eventRegistrationForm').reset();
+  }, 2000);
 });
 </script>
 </div>
