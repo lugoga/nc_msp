@@ -718,8 +718,89 @@ ul.task-list li input[type="checkbox"] {
   </button>
 </form>
 
-<script src="supabase-config.js"></script>
 <script>
+// Inline Supabase Configuration
+const SUPABASE_CONFIG = {
+  SUPABASE_URL: localStorage.getItem('supabase_url') || '',
+  SUPABASE_ANON_KEY: localStorage.getItem('supabase_key') || '',
+  TABLE_NAME: 'msp_registrations'
+};
+
+let supabaseClient = null;
+
+async function initSupabase() {
+  if (!SUPABASE_CONFIG.SUPABASE_URL || !SUPABASE_CONFIG.SUPABASE_ANON_KEY) {
+    console.log('Supabase credentials not configured. Registrations will save locally only.');
+    return null;
+  }
+  
+  try {
+    console.log('Loading Supabase library...');
+    
+    // Load Supabase JS library
+    if (!window.supabase) {
+      const script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
+      await new Promise((resolve, reject) => {
+        script.onload = resolve;
+        script.onerror = reject;
+        document.head.appendChild(script);
+      });
+    }
+    
+    const { createClient } = window.supabase;
+    supabaseClient = createClient(SUPABASE_CONFIG.SUPABASE_URL, SUPABASE_CONFIG.SUPABASE_ANON_KEY);
+    console.log('✓ Supabase client initialized successfully');
+    return supabaseClient;
+  } catch (error) {
+    console.error('❌ Error initializing Supabase:', error);
+    return null;
+  }
+}
+
+async function saveRegistrationToSupabase(registrationData) {
+  try {
+    const client = supabaseClient || await initSupabase();
+    
+    if (!client) {
+      console.log('Supabase not configured or available. Data saved to localStorage only.');
+      return;
+    }
+    
+    console.log('Saving registration to Supabase...', registrationData);
+    
+    const { data, error } = await client
+      .from(SUPABASE_CONFIG.TABLE_NAME)
+      .insert([{
+        name: registrationData.name,
+        email: registrationData.email,
+        phone: registrationData.phone,
+        organization: registrationData.organization,
+        role: registrationData.role,
+        gender: registrationData.gender,
+        origin: registrationData.origin,
+        experience: registrationData.experience,
+        interests: registrationData.interests,
+        timestamp: registrationData.timestamp
+      }]);
+    
+    if (error) {
+      console.error('❌ Supabase insert error:', error.code, error.message, error.details);
+      return;
+    }
+    
+    console.log('✓ Registration saved to Supabase:', data);
+  } catch (error) {
+    console.error('❌ Error saving to Supabase:', error);
+  }
+}
+
+// Initialize Supabase on page load
+document.addEventListener('DOMContentLoaded', function() {
+  initSupabase();
+});
+
+// Form submission handler
 document.getElementById('eventRegistrationForm').addEventListener('submit', function(e) {
   e.preventDefault();
   
@@ -768,9 +849,7 @@ document.getElementById('eventRegistrationForm').addEventListener('submit', func
   document.getElementById('eventRegistrationForm').reset();
   
   // Save to Supabase if configured
-  if (typeof saveRegistrationToSupabase === 'function') {
-    saveRegistrationToSupabase(newRegistration);
-  }
+  saveRegistrationToSupabase(newRegistration);
   
   // Log for debugging
   console.log('Registration saved:', { fullName, email, organization, gender, origin, experience, interests });
