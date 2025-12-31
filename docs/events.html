@@ -719,7 +719,7 @@ ul.task-list li input[type="checkbox"] {
 </form>
 
 <script>
-// Inline Supabase Configuration - Load from shared JSON file
+// Supabase Configuration - Load from shared JSON file
 let SUPABASE_CONFIG = {
   SUPABASE_URL: '',
   SUPABASE_ANON_KEY: '',
@@ -734,25 +734,24 @@ async function loadCredentialsFromFile() {
     const response = await fetch('supabase-credentials.json');
     const config = await response.json();
     
-    if (config.configured) {
+    if (config.configured && config.SUPABASE_URL && config.SUPABASE_ANON_KEY) {
       SUPABASE_CONFIG.SUPABASE_URL = config.SUPABASE_URL;
       SUPABASE_CONFIG.SUPABASE_ANON_KEY = config.SUPABASE_ANON_KEY;
-      console.log('Loaded Supabase credentials from shared configuration');
+      console.log('✓ Loaded Supabase credentials from configuration');
+      await initSupabase();
     }
   } catch (error) {
-    console.log('No shared Supabase configuration found. Registrations will save locally only.');
+    console.warn('No Supabase configuration found');
   }
 }
 
 async function initSupabase() {
   if (!SUPABASE_CONFIG.SUPABASE_URL || !SUPABASE_CONFIG.SUPABASE_ANON_KEY) {
-    console.log('Supabase credentials not configured. Registrations will save locally only.');
+    console.log('Supabase not configured');
     return null;
   }
   
   try {
-    console.log('Loading Supabase library...');
-    
     // Load Supabase JS library
     if (!window.supabase) {
       const script = document.createElement('script');
@@ -766,7 +765,7 @@ async function initSupabase() {
     
     const { createClient } = window.supabase;
     supabaseClient = createClient(SUPABASE_CONFIG.SUPABASE_URL, SUPABASE_CONFIG.SUPABASE_ANON_KEY);
-    console.log('✓ Supabase client initialized successfully');
+    console.log('✓ Supabase client ready');
     return supabaseClient;
   } catch (error) {
     console.error('❌ Error initializing Supabase:', error);
@@ -776,16 +775,12 @@ async function initSupabase() {
 
 async function saveRegistrationToSupabase(registrationData) {
   try {
-    const client = supabaseClient || await initSupabase();
-    
-    if (!client) {
-      console.log('Supabase not configured or available. Data saved to localStorage only.');
-      return;
+    if (!supabaseClient) {
+      console.error('Supabase client not initialized');
+      return false;
     }
     
-    console.log('Saving registration to Supabase...', registrationData);
-    
-    const { data, error } = await client
+    const { data, error } = await supabaseClient
       .from(SUPABASE_CONFIG.TABLE_NAME)
       .insert([{
         name: registrationData.name,
@@ -801,33 +796,34 @@ async function saveRegistrationToSupabase(registrationData) {
       }]);
     
     if (error) {
-      console.error('❌ Supabase insert error:', error.code, error.message, error.details);
-      return;
+      console.error('❌ Supabase error:', error.message);
+      return false;
     }
     
-    console.log('✓ Registration saved to Supabase:', data);
+    console.log('✓ Registration saved to Supabase');
+    return true;
   } catch (error) {
-    console.error('❌ Error saving to Supabase:', error);
+    console.error('❌ Error saving registration:', error);
+    return false;
   }
 }
 
 // Load credentials on page load
 document.addEventListener('DOMContentLoaded', async function() {
   await loadCredentialsFromFile();
-  initSupabase();
 });
 
 // Form submission handler
-document.getElementById('eventRegistrationForm').addEventListener('submit', function(e) {
+document.getElementById('eventRegistrationForm').addEventListener('submit', async function(e) {
   e.preventDefault();
   
-  const fullName = document.getElementById('fullName').value;
-  const email = document.getElementById('email').value;
-  const phone = document.getElementById('phone').value || 'Not provided';
-  const organization = document.getElementById('organization').value;
-  const role = document.getElementById('role').value;
+  const fullName = document.getElementById('fullName').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const phone = document.getElementById('phone').value.trim() || 'Not provided';
+  const organization = document.getElementById('organization').value.trim();
+  const role = document.getElementById('role').value.trim();
   const gender = document.getElementById('gender').value;
-  const origin = document.getElementById('origin').value;
+  const origin = document.getElementById('origin').value.trim();
   const experience = document.getElementById('experience').value;
   const interests = document.getElementById('interests').value;
   
@@ -837,10 +833,7 @@ document.getElementById('eventRegistrationForm').addEventListener('submit', func
     return;
   }
   
-  // Get existing registrations
-  const registrations = JSON.parse(localStorage.getItem('msp_registrations') || '[]');
-  
-  // Create new registration
+  // Create registration object
   const newRegistration = {
     name: fullName,
     email: email,
@@ -854,22 +847,36 @@ document.getElementById('eventRegistrationForm').addEventListener('submit', func
     timestamp: new Date().toLocaleString()
   };
   
-  registrations.push(newRegistration);
+  // Disable button to prevent double submission
+  const submitBtn = document.querySelector('button[type="submit"]');
+  const originalText = submitBtn.textContent;
+  submitBtn.disabled = true;
+  submitBtn.textContent = '⏳ Submitting...';
   
-  // Save to localStorage
-  localStorage.setItem('msp_registrations', JSON.stringify(registrations));
+  // Save to Supabase
+  const success = await saveRegistrationToSupabase(newRegistration);
   
-  // Show success message
-  document.getElementById('successMessage').style.display = 'block';
+  if (success) {
+    // Show success message
+    document.getElementById('successMessage').style.display = 'block';
+    
+    // Reset form
+    document.getElementById('eventRegistrationForm').reset();
+    
+    // Scroll to success message
+    document.getElementById('successMessage').scrollIntoView({ behavior: 'smooth' });
+    
+    // Hide message after 5 seconds
+    setTimeout(() => {
+      document.getElementById('successMessage').style.display = 'none';
+    }, 5000);
+  } else {
+    alert('Error saving registration. Please try again.');
+  }
   
-  // Reset form
-  document.getElementById('eventRegistrationForm').reset();
-  
-  // Save to Supabase if configured
-  saveRegistrationToSupabase(newRegistration);
-  
-  // Log for debugging
-  console.log('Registration saved:', { fullName, email, organization, gender, origin, experience, interests });
+  // Re-enable button
+  submitBtn.disabled = false;
+  submitBtn.textContent = originalText;
 });
 </script>
 <hr>
