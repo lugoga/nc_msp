@@ -117,14 +117,30 @@ Please provide your information below to register for the MSP Data Collection & 
 </form>
 
 <script>
-// Inline Supabase Configuration
-const SUPABASE_CONFIG = {
-  SUPABASE_URL: localStorage.getItem('supabase_url') || '',
-  SUPABASE_ANON_KEY: localStorage.getItem('supabase_key') || '',
+// Inline Supabase Configuration - Load from shared JSON file
+let SUPABASE_CONFIG = {
+  SUPABASE_URL: '',
+  SUPABASE_ANON_KEY: '',
   TABLE_NAME: 'msp_registrations'
 };
 
 let supabaseClient = null;
+
+// Load credentials from JSON file (shared across all devices)
+async function loadCredentialsFromFile() {
+  try {
+    const response = await fetch('supabase-credentials.json');
+    const config = await response.json();
+    
+    if (config.configured) {
+      SUPABASE_CONFIG.SUPABASE_URL = config.SUPABASE_URL;
+      SUPABASE_CONFIG.SUPABASE_ANON_KEY = config.SUPABASE_ANON_KEY;
+      console.log('Loaded Supabase credentials from shared configuration');
+    }
+  } catch (error) {
+    console.log('No shared Supabase configuration found. Registrations will save locally only.');
+  }
+}
 
 async function initSupabase() {
   if (!SUPABASE_CONFIG.SUPABASE_URL || !SUPABASE_CONFIG.SUPABASE_ANON_KEY) {
@@ -193,8 +209,9 @@ async function saveRegistrationToSupabase(registrationData) {
   }
 }
 
-// Initialize Supabase on page load
-document.addEventListener('DOMContentLoaded', function() {
+// Load credentials on page load
+document.addEventListener('DOMContentLoaded', async function() {
+  await loadCredentialsFromFile();
   initSupabase();
 });
 

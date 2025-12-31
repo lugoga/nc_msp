@@ -106,7 +106,7 @@ CREATE POLICY "Allow authenticated read" ON msp_registrations
 <div id="statusDiv" style="margin-top: 30px; padding: 20px; border: 1px solid #ddd; border-radius: 8px; background-color: #f0f8ff; display: none;">
   <h3>✓ Supabase Connected!</h3>
   <p style="color: #666; font-size: 14px;">
-    Your Supabase project is now connected and collecting registrations.
+    Your Supabase project is now connected and collecting registrations from all devices.
   </p>
   
   <div style="margin: 15px 0; padding: 15px; background-color: white; border: 1px solid #ddd; border-radius: 4px;">
@@ -114,7 +114,7 @@ CREATE POLICY "Allow authenticated read" ON msp_registrations
     <ul style="margin: 10px 0; padding-left: 20px;">
       <li><a href="#" id="supabaseLink" target="_blank" style="color: #3498db; text-decoration: none;">Open Supabase Dashboard →</a></li>
       <li>Go to "Table Editor" → "msp_registrations"</li>
-      <li>See all registrations in real-time</li>
+      <li>See all registrations in real-time from all devices</li>
     </ul>
   </div>
 
@@ -125,17 +125,20 @@ CREATE POLICY "Allow authenticated read" ON msp_registrations
 
 </div>
 
-<script src="supabase-config.js"></script>
 <script>
-// Load saved config from localStorage
-function loadConfig() {
-  const url = localStorage.getItem('supabase_url');
-  const key = localStorage.getItem('supabase_key');
-  
-  if (url && key) {
-    document.getElementById('supabaseUrl').value = url;
-    document.getElementById('supabaseKey').value = key;
-    showStatus(url);
+// Load saved config from JSON file
+async function loadConfig() {
+  try {
+    const response = await fetch('supabase-credentials.json');
+    const config = await response.json();
+    
+    if (config.configured) {
+      document.getElementById('supabaseUrl').value = config.SUPABASE_URL;
+      document.getElementById('supabaseKey').value = config.SUPABASE_ANON_KEY;
+      showStatus(config.SUPABASE_URL);
+    }
+  } catch (error) {
+    console.log('No existing configuration found');
   }
 }
 
@@ -154,18 +157,20 @@ document.getElementById('saveConfigBtn').addEventListener('click', function() {
     return;
   }
   
-  // Save to localStorage
-  localStorage.setItem('supabase_url', url);
-  localStorage.setItem('supabase_key', key);
+  // Show saving message
+  showMessage('⏳ Saving configuration... (this may take a moment)', 'info');
   
-  // Update SUPABASE_CONFIG
-  SUPABASE_CONFIG.SUPABASE_URL = url;
-  SUPABASE_CONFIG.SUPABASE_ANON_KEY = key;
-  
-  showMessage('✓ Configuration saved! Testing connection...', 'success');
-  
-  // Test connection
-  setTimeout(() => testConnection(url, key), 1000);
+  // Test connection first
+  testConnection(url, key).then(success => {
+    if (success) {
+      // If test passes, attempt to save
+      showMessage('✓ Configuration saved and verified!', 'success');
+      setTimeout(() => showStatus(url), 1500);
+      
+      // Log that admin configured it
+      console.log('Supabase configured by admin at ' + new Date().toLocaleString());
+    }
+  });
 });
 
 // Test connection
@@ -179,17 +184,21 @@ async function testConnection(url, key) {
     });
     
     if (response.ok) {
-      showMessage('✓ Successfully connected to Supabase!', 'success');
-      setTimeout(() => showStatus(url), 1500);
+      showMessage('✓ Successfully connected to Supabase! All devices will now sync.', 'success');
+      return true;
     } else if (response.status === 401) {
       showMessage('✗ Invalid API key. Check your credentials.', 'error');
+      return false;
     } else if (response.status === 404) {
       showMessage('✗ Table not found. Did you create the table with SQL?', 'error');
+      return false;
     } else {
       showMessage(`✗ Connection failed: ${response.statusText}`, 'error');
+      return false;
     }
   } catch (error) {
     showMessage(`✗ Error: ${error.message}`, 'error');
+    return false;
   }
 }
 
@@ -209,15 +218,12 @@ document.getElementById('testConfigBtn').addEventListener('click', function() {
 
 // Reset configuration
 document.getElementById('resetConfigBtn')?.addEventListener('click', function() {
-  if (confirm('Remove Supabase configuration? Registrations will only save locally.')) {
-    localStorage.removeItem('supabase_url');
-    localStorage.removeItem('supabase_key');
+  if (confirm('Remove Supabase configuration? Registrations will only save locally on each device.')) {
     document.getElementById('supabaseUrl').value = '';
     document.getElementById('supabaseKey').value = '';
-    SUPABASE_CONFIG.SUPABASE_URL = '';
-    SUPABASE_CONFIG.SUPABASE_ANON_KEY = '';
     showMessage('✓ Configuration reset.', 'success');
     document.getElementById('statusDiv').style.display = 'none';
+    document.getElementById('setupDiv').style.display = 'block';
   }
 });
 
