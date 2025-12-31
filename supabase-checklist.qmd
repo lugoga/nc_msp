@@ -143,7 +143,7 @@ In Supabase, click the menu (⋯) next to table name → "Export" → "Download 
 - Check browser console (F12 → Console)
 - Submit another test registration
 - Refresh Supabase dashboard
-- Check that table is named exactly "msp_registrations"
+- - Check that table is named exactly "msp_registrations"
 
 **Q: Still not working?**
 - Check the browser console for errors (F12 → Console tab)

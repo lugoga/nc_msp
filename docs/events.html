@@ -731,17 +731,29 @@ let supabaseClient = null;
 // Load credentials from sessionStorage (set by admin-setup page)
 async function loadCredentialsFromFile() {
   try {
-    const url = sessionStorage.getItem('supabase_url');
-    const key = sessionStorage.getItem('supabase_key');
+    // Try sessionStorage first
+    let url = sessionStorage.getItem('supabase_url');
+    let key = sessionStorage.getItem('supabase_key');
+    
+    // Fallback to localStorage if sessionStorage is empty
+    if (!url || !key) {
+      url = localStorage.getItem('supabase_url');
+      key = localStorage.getItem('supabase_key');
+      if (url && key) {
+        console.log('ℹ️ Loaded Supabase credentials from localStorage (persistent storage)');
+      }
+    }
     
     if (url && key) {
       SUPABASE_CONFIG.SUPABASE_URL = url;
       SUPABASE_CONFIG.SUPABASE_ANON_KEY = key;
-      console.log('✓ Loaded Supabase credentials from browser session');
+      console.log('✓ Loaded Supabase credentials from browser storage');
       await initSupabase();
+    } else {
+      console.warn('⚠️ No Supabase credentials found. Admin must configure at /admin-setup first.');
     }
   } catch (error) {
-    console.warn('No Supabase configuration found in browser');
+    console.warn('No Supabase configuration found in browser:', error);
   }
 }
 
@@ -776,10 +788,13 @@ async function initSupabase() {
 async function saveRegistrationToSupabase(registrationData) {
   try {
     if (!supabaseClient) {
-      console.error('Supabase client not initialized');
+      console.error('❌ Supabase client not initialized - credentials may not be configured');
+      console.error('   Please ensure admin has run the setup at /admin-setup');
+      alert('⚠️ Registration system not yet configured. Please ask an admin to run the setup page (/admin-setup) first.');
       return false;
     }
     
+    console.log('Saving registration to Supabase...');
     const { data, error } = await supabaseClient
       .from(SUPABASE_CONFIG.TABLE_NAME)
       .insert([{
@@ -796,7 +811,10 @@ async function saveRegistrationToSupabase(registrationData) {
       }]);
     
     if (error) {
-      console.error('❌ Supabase error:', error.message);
+      console.error('❌ Supabase error:', error);
+      console.error('   Error code:', error.code);
+      console.error('   Error message:', error.message);
+      console.error('   Error details:', error.details);
       return false;
     }
     
@@ -804,6 +822,7 @@ async function saveRegistrationToSupabase(registrationData) {
     return true;
   } catch (error) {
     console.error('❌ Error saving registration:', error);
+    console.error('   Stack:', error.stack);
     return false;
   }
 }

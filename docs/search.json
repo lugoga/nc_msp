@@ -615,7 +615,7 @@
     "href": "supabase-checklist.html#troubleshooting",
     "title": "Supabase Setup - Quick Checklist",
     "section": "⚠️ Troubleshooting",
-    "text": "⚠️ Troubleshooting\nQ: Connection test says “Table not found” - Make sure you ran the SQL code in Step 2 - Check the blue “Run” button was clicked - Try refreshing Supabase\nQ: Connection test says “Invalid API key” - Double-check the API key is complete - Make sure you copied the “anon public” key, not “service_role” - Try copying again from Supabase\nQ: No registrations appearing in Supabase - Check browser console (F12 → Console) - Submit another test registration - Refresh Supabase dashboard - Check that table is named exactly “msp_registrations”\nQ: Still not working? - Check the browser console for errors (F12 → Console tab) - Copy-paste any error messages - Make sure Supabase credentials are saved (check /admin-setup page)"
+    "text": "⚠️ Troubleshooting\nQ: Connection test says “Table not found” - Make sure you ran the SQL code in Step 2 - Check the blue “Run” button was clicked - Try refreshing Supabase\nQ: Connection test says “Invalid API key” - Double-check the API key is complete - Make sure you copied the “anon public” key, not “service_role” - Try copying again from Supabase\nQ: No registrations appearing in Supabase - Check browser console (F12 → Console) - Submit another test registration - Refresh Supabase dashboard - - Check that table is named exactly “msp_registrations”\nQ: Still not working? - Check the browser console for errors (F12 → Console tab) - Copy-paste any error messages - Make sure Supabase credentials are saved (check /admin-setup page)"
   },
   {
     "objectID": "supabase-checklist.html#need-help",

@@ -726,11 +726,17 @@ CREATE POLICY "Allow authenticated read" ON msp_registrations
 </div>
 
 <script>
-// Load saved config from sessionStorage
+// Load saved config from browser storage (try sessionStorage first, then localStorage)
 async function loadConfig() {
   try {
-    const url = sessionStorage.getItem('supabase_url');
-    const key = sessionStorage.getItem('supabase_key');
+    let url = sessionStorage.getItem('supabase_url');
+    let key = sessionStorage.getItem('supabase_key');
+    
+    // Fallback to localStorage if sessionStorage is empty
+    if (!url || !key) {
+      url = localStorage.getItem('supabase_url');
+      key = localStorage.getItem('supabase_key');
+    }
     
     if (url && key) {
       document.getElementById('supabaseUrl').value = url;
@@ -760,15 +766,21 @@ document.getElementById('saveConfigBtn').addEventListener('click', function() {
   // Show saving message
   showMessage('⏳ Saving configuration...', 'info');
   
-  // Save to sessionStorage (persists for this browser session)
+  // Save to BOTH sessionStorage and localStorage
+  // - localStorage persists across browser sessions (permanent until cleared)
+  // - sessionStorage provides backup for this session
   sessionStorage.setItem('supabase_url', url);
   sessionStorage.setItem('supabase_key', key);
+  localStorage.setItem('supabase_url', url);
+  localStorage.setItem('supabase_key', key);
+  
+  console.log('Supabase credentials saved to browser storage');
   
   // Test connection first
   testConnection(url, key).then(success => {
     if (success) {
       // If test passes, show success
-      showMessage('✓ Configuration saved and verified!', 'success');
+      showMessage('✓ Configuration saved and verified! All devices can now register.', 'success');
       setTimeout(() => showStatus(url), 1500);
       
       // Log that admin configured it
@@ -823,8 +835,11 @@ document.getElementById('testConfigBtn').addEventListener('click', function() {
 // Reset configuration
 document.getElementById('resetConfigBtn')?.addEventListener('click', function() {
   if (confirm('Remove Supabase configuration? Registrations will only save locally on each device.')) {
+    // Clear from both storages
     sessionStorage.removeItem('supabase_url');
     sessionStorage.removeItem('supabase_key');
+    localStorage.removeItem('supabase_url');
+    localStorage.removeItem('supabase_key');
     document.getElementById('supabaseUrl').value = '';
     document.getElementById('supabaseKey').value = '';
     showMessage('✓ Configuration reset.', 'success');
