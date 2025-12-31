@@ -37,13 +37,88 @@ website:
         href: events.qmd
       - text: "Reports"
         menu:
+          - text: "Project Reports"
+            href: "#"
           - text: "Deliverable One: Inception Report"
             href: reports/UN_Inception report_14092025_SM.pdf
             target: "_blank"
+          - text: "---"
+          - text: "MSP Guidelines & Standards"
+            href: https://www.un.org/regularprocess/content/marine-spatial-planning-0
+            target: "_blank"
+          - text: "UNESCO MSP Guidelines"
+            href: https://www.iocunesco.org/index.php?option=com_oe&task=viewDocumentRecord&docID=5826
+            target: "_blank"
+          - text: "UNEP MSP Handbook"
+            href: https://www.unep.org/resources/report/handbook-maritime-spatial-planning
+            target: "_blank"
+          - text: "---"
+          - text: "Case Studies"
+            href: "#"
+          - text: "WIO Region MSP Case Studies"
+            href: https://www.mspglobal2030.org/resources/
+            target: "_blank"
+          - text: "UNEP Case Study Database"
+            href: https://www.unep.org/explore-topics/oceans-seas/what-we-do/marine-spatial-planning
+            target: "_blank"
+          - text: "---"
+          - text: "Interactive Tools & Dashboards"
+            href: "#"
+          - text: "Global Fishing Watch Dashboard"
+            href: https://globalfishingwatch.org/
+            target: "_blank"
+          - text: "Ocean Health Index"
+            href: https://www.oceanhealthindex.org/
+            target: "_blank"
+          - text: "SeaSketch Marine Planning Tool"
+            href: https://www.seasketch.org/
+            target: "_blank"
+          - text: "---"
+          - text: "Data & Analytics"
+            href: "#"
+          - text: "GEBCO Bathymetry"
+            href: https://www.gebco.net/
+            target: "_blank"
+          - text: "Marine Regions Gazetteer"
+            href: https://www.marineregions.org/
+            target: "_blank"
+          - text: "OBIS Biodiversity Data"
+            href: https://www.obis.org/
+            target: "_blank"
       - text: "Resources"
         menu:
-          - text: "Resources1: TOR"
+          - text: "Project Documents"
             href: TOR_259658.pdf
+            target: "_blank"
+          - text: "---"
+          - text: "WIO Region MSP Resources"
+            href: https://www.wiomsa.org/
+            target: "_blank"
+          - text: "UNEP-CEP Caribbean MSP Guide"
+            href: https://www.unep.org/
+            target: "_blank"
+          - text: "Tanga Coastal Zone Conservation Project"
+            href: https://www.tczcp.go.tz/
+            target: "_blank"
+          - text: "---"
+          - text: "Global MSP Resources"
+            href: https://www.mspglobal2030.org/
+            target: "_blank"
+          - text: "UN MSP Learning Portal"
+            href: https://www.un.org/regularprocess/
+            target: "_blank"
+          - text: "IOC-UNESCO MSP Resources"
+            href: https://www.iocunesco.org/
+            target: "_blank"
+          - text: "---"
+          - text: "Data & Tools"
+            href: https://www.gebco.net/
+            target: "_blank"
+          - text: "Global Fishing Watch"
+            href: https://www.globalfishingwatch.org/
+            target: "_blank"
+          - text: "Marine Regions Gazetteer"
+            href: https://www.marineregions.org/
             target: "_blank"
       - text: "WebApp"
         # href: Visualize.qmd
@@ -54,16 +129,16 @@ website:
 
 
     right:
-      # - text: "Admin"
-      #   menu:
+      - text: "Admin"
+        menu:
       #     - text: "Setup Checklist"
       #       href: supabase-checklist.qmd
       #     - text: "Setup Guide (How-To)"
       #       href: supabase-setup-guide.qmd
-      #     - text: "Setup Registration Sync"
-      #       href: admin-setup.qmd
-      #     - text: "View Registrations"
-      #       href: admin-registrations.qmd
+          - text: "Setup Registration Sync"
+            href: admin-setup.qmd
+          - text: "View Registrations"
+            href: admin-registrations.qmd
       - icon: github
         href: https://github.com/lugoga/nc_msp/
         target: "_blank"
