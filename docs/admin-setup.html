@@ -726,16 +726,16 @@ CREATE POLICY "Allow authenticated read" ON msp_registrations
 </div>
 
 <script>
-// Load saved config from JSON file
+// Load saved config from sessionStorage
 async function loadConfig() {
   try {
-    const response = await fetch('supabase-credentials.json');
-    const config = await response.json();
+    const url = sessionStorage.getItem('supabase_url');
+    const key = sessionStorage.getItem('supabase_key');
     
-    if (config.configured) {
-      document.getElementById('supabaseUrl').value = config.SUPABASE_URL;
-      document.getElementById('supabaseKey').value = config.SUPABASE_ANON_KEY;
-      showStatus(config.SUPABASE_URL);
+    if (url && key) {
+      document.getElementById('supabaseUrl').value = url;
+      document.getElementById('supabaseKey').value = key;
+      showStatus(url);
     }
   } catch (error) {
     console.log('No existing configuration found');
@@ -758,12 +758,16 @@ document.getElementById('saveConfigBtn').addEventListener('click', function() {
   }
   
   // Show saving message
-  showMessage('⏳ Saving configuration... (this may take a moment)', 'info');
+  showMessage('⏳ Saving configuration...', 'info');
+  
+  // Save to sessionStorage (persists for this browser session)
+  sessionStorage.setItem('supabase_url', url);
+  sessionStorage.setItem('supabase_key', key);
   
   // Test connection first
   testConnection(url, key).then(success => {
     if (success) {
-      // If test passes, attempt to save
+      // If test passes, show success
       showMessage('✓ Configuration saved and verified!', 'success');
       setTimeout(() => showStatus(url), 1500);
       
@@ -819,6 +823,8 @@ document.getElementById('testConfigBtn').addEventListener('click', function() {
 // Reset configuration
 document.getElementById('resetConfigBtn')?.addEventListener('click', function() {
   if (confirm('Remove Supabase configuration? Registrations will only save locally on each device.')) {
+    sessionStorage.removeItem('supabase_url');
+    sessionStorage.removeItem('supabase_key');
     document.getElementById('supabaseUrl').value = '';
     document.getElementById('supabaseKey').value = '';
     showMessage('✓ Configuration reset.', 'success');

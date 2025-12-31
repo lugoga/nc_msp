@@ -126,20 +126,20 @@ let SUPABASE_CONFIG = {
 
 let supabaseClient = null;
 
-// Load credentials from JSON file (shared across all devices)
+// Load credentials from sessionStorage (set by admin-setup page)
 async function loadCredentialsFromFile() {
   try {
-    const response = await fetch('supabase-credentials.json');
-    const config = await response.json();
+    const url = sessionStorage.getItem('supabase_url');
+    const key = sessionStorage.getItem('supabase_key');
     
-    if (config.configured && config.SUPABASE_URL && config.SUPABASE_ANON_KEY) {
-      SUPABASE_CONFIG.SUPABASE_URL = config.SUPABASE_URL;
-      SUPABASE_CONFIG.SUPABASE_ANON_KEY = config.SUPABASE_ANON_KEY;
-      console.log('✓ Loaded Supabase credentials from configuration');
+    if (url && key) {
+      SUPABASE_CONFIG.SUPABASE_URL = url;
+      SUPABASE_CONFIG.SUPABASE_ANON_KEY = key;
+      console.log('✓ Loaded Supabase credentials from browser session');
       await initSupabase();
     }
   } catch (error) {
-    console.warn('No Supabase configuration found');
+    console.warn('No Supabase configuration found in browser');
   }
 }
 
