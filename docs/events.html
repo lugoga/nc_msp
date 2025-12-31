@@ -759,39 +759,71 @@ async function loadCredentialsFromFile() {
 
 async function initSupabase() {
   if (!SUPABASE_CONFIG.SUPABASE_URL || !SUPABASE_CONFIG.SUPABASE_ANON_KEY) {
-    console.log('Supabase not configured');
+    console.log('⚠️ Supabase not configured - credentials are empty');
     return null;
   }
   
   try {
     // Load Supabase JS library
     if (!window.supabase) {
+      console.log('Loading Supabase library from CDN...');
       const script = document.createElement('script');
-      script.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
+      script.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.38.0';
       await new Promise((resolve, reject) => {
-        script.onload = resolve;
-        script.onerror = reject;
+        script.onload = () => {
+          console.log('✓ Supabase library loaded');
+          resolve();
+        };
+        script.onerror = () => {
+          console.error('❌ Failed to load Supabase library from CDN');
+          reject(new Error('Failed to load Supabase library'));
+        };
         document.head.appendChild(script);
       });
     }
     
+    if (!window.supabase || !window.supabase.createClient) {
+      throw new Error('Supabase library not properly loaded');
+    }
+    
+    console.log('Creating Supabase client with URL:', SUPABASE_CONFIG.SUPABASE_URL);
     const { createClient } = window.supabase;
     supabaseClient = createClient(SUPABASE_CONFIG.SUPABASE_URL, SUPABASE_CONFIG.SUPABASE_ANON_KEY);
-    console.log('✓ Supabase client ready');
+    console.log('✓ Supabase client ready and initialized');
     return supabaseClient;
   } catch (error) {
     console.error('❌ Error initializing Supabase:', error);
+    console.error('   URL:', SUPABASE_CONFIG.SUPABASE_URL);
+    console.error('   Key present:', !!SUPABASE_CONFIG.SUPABASE_ANON_KEY);
     return null;
   }
 }
 
 async function saveRegistrationToSupabase(registrationData) {
   try {
-    if (!supabaseClient) {
-      console.error('❌ Supabase client not initialized - credentials may not be configured');
+    // Make sure Supabase is initialized before trying to save
+    if (!supabaseClient || !SUPABASE_CONFIG.SUPABASE_URL || !SUPABASE_CONFIG.SUPABASE_ANON_KEY) {
+      console.error('❌ Supabase client not initialized');
+      console.error('   supabaseClient:', !!supabaseClient);
+      console.error('   URL:', SUPABASE_CONFIG.SUPABASE_URL);
+      console.error('   Key:', !!SUPABASE_CONFIG.SUPABASE_ANON_KEY);
       console.error('   Please ensure admin has run the setup at /admin-setup');
-      alert('⚠️ Registration system not yet configured. Please ask an admin to run the setup page (/admin-setup) first.');
-      return false;
+      
+      // Try to reinitialize in case credentials were just set
+      console.log('Attempting to reinitialize Supabase...');
+      const url = sessionStorage.getItem('supabase_url') || localStorage.getItem('supabase_url');
+      const key = sessionStorage.getItem('supabase_key') || localStorage.getItem('supabase_key');
+      
+      if (url && key) {
+        SUPABASE_CONFIG.SUPABASE_URL = url;
+        SUPABASE_CONFIG.SUPABASE_ANON_KEY = key;
+        await initSupabase();
+      }
+      
+      if (!supabaseClient) {
+        alert('⚠️ Registration system not yet configured. Please ask an admin to run the setup page (/admin-setup) first.');
+        return false;
+      }
     }
     
     console.log('Saving registration to Supabase...');
@@ -829,12 +861,25 @@ async function saveRegistrationToSupabase(registrationData) {
 
 // Load credentials on page load
 document.addEventListener('DOMContentLoaded', async function() {
+  console.log('📄 Page loaded - starting Supabase initialization...');
   await loadCredentialsFromFile();
+  
+  // Wait a moment for initialization to complete
+  if (supabaseClient) {
+    console.log('✓ Supabase ready for registrations');
+  } else {
+    console.warn('⚠️ Supabase initialization will be attempted when form is submitted');
+  }
 });
 
 // Form submission handler
 document.getElementById('eventRegistrationForm').addEventListener('submit', async function(e) {
   e.preventDefault();
+  
+  console.log('📝 Form submitted - checking configuration...');
+  console.log('   Supabase client initialized:', !!supabaseClient);
+  console.log('   URL configured:', !!SUPABASE_CONFIG.SUPABASE_URL);
+  console.log('   Key configured:', !!SUPABASE_CONFIG.SUPABASE_ANON_KEY);
   
   const fullName = document.getElementById('fullName').value.trim();
   const email = document.getElementById('email').value.trim();
