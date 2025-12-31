@@ -303,7 +303,7 @@
     "href": "admin-setup.html",
     "title": "Admin Setup - Supabase Configuration",
     "section": "",
-    "text": "⚙️ Admin Configuration Page - Set up Supabase to collect all workshop registrations"
+    "text": "✅ Supabase is Already Configured - All devices can now collect registrations without additional setup"
   },
   {
     "objectID": "admin-setup.html#features",

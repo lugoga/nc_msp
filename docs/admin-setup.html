@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="Configure Supabase Cloud for collecting workshop registrations">
+<meta name="description" content="View Supabase Cloud configuration for workshop registrations">
 
 <title>Admin Setup - Supabase Configuration</title>
 <style>
@@ -72,12 +72,12 @@ ul.task-list li input[type="checkbox"] {
 <meta name="author" content="Masumbuko Semba, SOAF-UDSM">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta property="og:title" content="Admin Setup - Supabase Configuration">
-<meta property="og:description" content="Configure Supabase Cloud for collecting workshop registrations">
+<meta property="og:description" content="View Supabase Cloud configuration for workshop registrations">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://lugoga.github.io/nc_msp/">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Admin Setup - Supabase Configuration">
-<meta name="twitter:description" content="Configure Supabase Cloud for collecting workshop registrations">
+<meta name="twitter:description" content="View Supabase Cloud configuration for workshop registrations">
 <style>
   body {
     -webkit-user-select: none;
@@ -590,7 +590,7 @@ ul.task-list li input[type="checkbox"] {
 
 <div>
   <div class="description">
-    Configure Supabase Cloud for collecting workshop registrations
+    View Supabase Cloud configuration for workshop registrations
   </div>
 </div>
 
@@ -607,80 +607,49 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<div style="background-color: #fff3cd; padding: 15px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #ff9800;">
-<p>⚙️ <strong>Admin Configuration Page</strong> - Set up Supabase to collect all workshop registrations</p>
+<div style="background-color: #d4edda; padding: 15px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #28a745;">
+<p>✅ <strong>Supabase is Already Configured</strong> - All devices can now collect registrations without additional setup</p>
 </div>
 <div style="max-width: 900px; margin: 20px auto;">
 
-<div id="setupDiv">
-  <h2 class="anchored">Enable Supabase Registration Collection</h2>
-  
-  <p>Supabase is a free, serverless PostgreSQL database in the cloud. All workshop registrations will be automatically collected in your Supabase project.</p>
-
-  <div style="background-color: #e8f4f8; padding: 15px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #3498db;">
-    <strong>Benefits:</strong>
-    <ul>
-      <li>✓ Real-time database (see registrations instantly)</li>
-      <li>✓ Free tier (up to 500 MB storage)</li>
-      <li>✓ Built-in authentication &amp; security</li>
-      <li>✓ Access from anywhere</li>
-      <li>✓ Easy data export &amp; reporting</li>
-    </ul>
+<div id="statusDiv" style="display: block;">
+  <div style="background-color: #e8f8f5; padding: 20px; border-radius: 8px; border-left: 4px solid #27ae60; margin-bottom: 20px;">
+    <h2 style="margin-top: 0; color: #27ae60;" class="anchored">✓ Registration System Ready</h2>
+    
+    <p><strong>Status:</strong> <span style="color: #27ae60; font-weight: bold;">CONFIGURED &amp; ACTIVE</span></p>
+    
+    <div style="background-color: white; padding: 15px; border-radius: 4px; margin: 15px 0; border: 1px solid #bbb;">
+      <p><strong>Supabase Project URL:</strong></p>
+      <code style="display: block; background-color: #f5f5f5; padding: 10px; border-radius: 4px; word-break: break-all;">https://nzobsdnyxouxfmiahgak.supabase.co</code>
+      
+      <p style="margin-top: 15px;"><strong>API Key:</strong></p>
+      <code style="display: block; background-color: #f5f5f5; padding: 10px; border-radius: 4px; word-break: break-all;">sb_publishable_4IP9dT8nxXMI-1y--4VTJA_8zhY4NKZ</code>
+    </div>
+    
+    <div style="background-color: #fff3cd; padding: 15px; border-radius: 4px; border-left: 4px solid #ff9800; margin: 15px 0;">
+      <strong>ℹ️ How It Works:</strong>
+      <ul style="margin: 10px 0;">
+        <li>All devices automatically load this configuration</li>
+        <li>No setup needed on phones or tablets</li>
+        <li>Registrations save directly to Supabase</li>
+        <li>Data is backed up in the cloud</li>
+      </ul>
+    </div>
+    
+    <h3 class="anchored">What You Can Do Now:</h3>
+    <ol>
+      <li><strong>Share the Events Page:</strong> Give participants the link to <code>/events</code></li>
+      <li><strong>View Registrations:</strong> Go to <a href="https://app.supabase.com" target="_blank">Supabase Dashboard</a> to see all submissions in real-time</li>
+      <li><strong>Export Data:</strong> Click the menu (⋮) next to the table name → Export → CSV</li>
+    </ol>
   </div>
 
-  <h3 class="anchored">Step 1: Create Supabase Project</h3>
-  <ol>
-    <li>Go to <a href="https://supabase.com" target="_blank">supabase.com</a> and sign up (free)</li>
-    <li>Create a new project (choose a region closest to you)</li>
-    <li>Wait for project to be ready (takes ~1 minute)</li>
-  </ol>
-
-  <h3 class="anchored">Step 2: Create Table for Registrations</h3>
-  <ol>
-    <li>Go to your Supabase project dashboard</li>
-    <li>Click "SQL Editor" in the left menu</li>
-    <li>Copy and paste this SQL command to create the table:</li>
-  </ol>
-
-  <textarea readonly="" style="width: 100%; padding: 10px; background-color: #f5f5f5; border: 1px solid #ccc; border-radius: 4px; margin: 10px 0; font-family: monospace; height: 250px; color: #333;">CREATE TABLE msp_registrations (
-  id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-  name TEXT NOT NULL,
-  email TEXT NOT NULL,
-  phone TEXT,
-  organization TEXT NOT NULL,
-  role TEXT NOT NULL,
-  gender TEXT NOT NULL,
-  origin TEXT NOT NULL,
-  experience TEXT NOT NULL,
-  interests TEXT NOT NULL,
-  timestamp TEXT NOT NULL,
-  synced_at TIMESTAMP DEFAULT NOW(),
-  UNIQUE(email, timestamp)
-);
-
--- Enable RLS (Row Level Security)
-ALTER TABLE msp_registrations ENABLE ROW LEVEL SECURITY;
-
--- Allow public insert (for visitors to submit)
-CREATE POLICY "Allow public insert" ON msp_registrations
-  FOR INSERT
-  WITH CHECK (TRUE);
-
--- Allow authenticated users to read
-CREATE POLICY "Allow authenticated read" ON msp_registrations
-  FOR SELECT
-  USING (auth.role() = 'authenticated');</textarea>
-
-  <button id="copySqlBtn" style="background-color: #3498db; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;">
-    📋 Copy SQL to Clipboard
-  </button>
-
-  <h3 style="margin-top: 20px;" class="anchored">Step 3: Get Your Credentials</h3>
-  <ol>
-    <li>In your Supabase project, click "Settings" → "API"</li>
-    <li>Copy your <strong>Project URL</strong> and <strong>anon public key</strong></li>
-    <li>Paste them below</li>
-  </ol>
+<div id="setupDiv" style="display: none;">
+  <h2 class="anchored">Supabase Configuration</h2>
+  
+  <p>This page is for advanced configuration. The registration system is already set up.</p>
+  
+  <p>If you need to change the Supabase credentials, use the form below:</p>
 
   <div style="margin-bottom: 15px;">
     <label for="supabaseUrl" style="display: block; margin-bottom: 5px; font-weight: bold;">Supabase Project URL:</label>
@@ -696,9 +665,14 @@ CREATE POLICY "Allow authenticated read" ON msp_registrations
     ✓ Save Configuration
   </button>
   
-  <button id="testConfigBtn" style="background-color: #3498db; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; font-weight: bold;">
+  <button id="testConfigBtn" style="background-color: #3498db; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; font-weight: bold; margin-right: 10px;">
     🧪 Test Connection
   </button>
+
+  <button id="resetConfigBtn" style="background-color: #e74c3c; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; font-weight: bold;">
+    🔄 Reset Configuration
+  </button>
+
 
   <div id="statusMessage" style="margin-top: 20px; padding: 15px; border-radius: 4px; display: none;"></div>
 </div>
@@ -919,7 +893,7 @@ window.addEventListener('load', loadConfig);
 
 </section>
 
-</main> <!-- /main -->
+</div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

@@ -126,32 +126,42 @@ let SUPABASE_CONFIG = {
 
 let supabaseClient = null;
 
-// Load credentials from sessionStorage (set by admin-setup page)
+// Load credentials from supabase-credentials.json (configured once by admin)
 async function loadCredentialsFromFile() {
   try {
-    // Try sessionStorage first
-    let url = sessionStorage.getItem('supabase_url');
-    let key = sessionStorage.getItem('supabase_key');
+    console.log('Loading Supabase configuration...');
     
-    // Fallback to localStorage if sessionStorage is empty
-    if (!url || !key) {
-      url = localStorage.getItem('supabase_url');
-      key = localStorage.getItem('supabase_key');
-      if (url && key) {
-        console.log('ℹ️ Loaded Supabase credentials from localStorage (persistent storage)');
+    // First, try to load from the JSON file (preferred method)
+    try {
+      const response = await fetch('/supabase-credentials.json');
+      if (response.ok) {
+        const config = await response.json();
+        if (config.SUPABASE_URL && config.SUPABASE_ANON_KEY) {
+          SUPABASE_CONFIG.SUPABASE_URL = config.SUPABASE_URL;
+          SUPABASE_CONFIG.SUPABASE_ANON_KEY = config.SUPABASE_ANON_KEY;
+          console.log('✓ Loaded Supabase credentials from configuration file');
+          await initSupabase();
+          return;
+        }
       }
+    } catch (fetchError) {
+      console.log('ℹ️ Configuration file not found, trying browser storage...');
     }
+    
+    // Fallback to browser storage (sessionStorage first, then localStorage)
+    let url = sessionStorage.getItem('supabase_url') || localStorage.getItem('supabase_url');
+    let key = sessionStorage.getItem('supabase_key') || localStorage.getItem('supabase_key');
     
     if (url && key) {
       SUPABASE_CONFIG.SUPABASE_URL = url;
       SUPABASE_CONFIG.SUPABASE_ANON_KEY = key;
-      console.log('✓ Loaded Supabase credentials from browser storage');
+      console.log('✓ Loaded Supabase credentials from browser storage (legacy fallback)');
       await initSupabase();
     } else {
-      console.warn('⚠️ No Supabase credentials found. Admin must configure at /admin-setup first.');
+      console.warn('⚠️ No Supabase credentials found in configuration file or browser storage');
     }
   } catch (error) {
-    console.warn('No Supabase configuration found in browser:', error);
+    console.warn('Error loading configuration:', error);
   }
 }
 
